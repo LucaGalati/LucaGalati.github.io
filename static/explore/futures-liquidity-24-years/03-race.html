@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the machines · Liquidity of Futures Markets Over the Last Quarter of a Century</title>
+<meta name="description" content="Side path of an explorable explanation of Frino, Galati and Webb, Liquidity of Futures Markets Over the Last Quarter of a Century: the 1997 race between a trading floor and a screen in Bund futures, and the flash crashes that machine speed made possible.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-race.html">
+<lg-sitebar><noscript><a href="../../publication/futures-liquidity-24-years/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How do you race a floor against a screen?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside the machines · 1 of 2</p>
+    <h2>A fair race between a floor and a screen</h2>
+    <div class="two">
+      <div>
+        <p>For years one contract, the Bund future on German government bonds, traded in two places at once: by open outcry on LIFFE’s floor in London and on the screens of Germany’s DTB. The floor had most of the business, around 70%.</p>
+        <p>Then, nudged by German regulators, volume began to move to the screen; by October 1997 the two had about the same share. Same contract, same volume, two ways of trading: a natural experiment.</p>
+        <p>Over 30 days in October and November 1997, Frino, McInish and Toner (1998) found the screen’s spreads 5–10% narrower. On a spread of about one basis point (0.01%), or 25 marks, the gain per trade was tiny; for traders who would otherwise have used the floor, it came to DM 30–60 million a year.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-machines.html#s4" data-primary-when="01-machines.html">← Return to the main path</a>
+          <button class="btn" type="button" data-next>Machine-made storms&nbsp;→</button>
+        </div>
+        <p class="note">Frino, McInish and Toner (1998), as reported on p. 53–54; equal volumes in October 1997, p. 53; shares approximate, read off Extract 1.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Market shares in Bund futures <span class="tag">approximate, read off Extract 1</span></p>
+        <div class="fig" id="bund-chart"></div>
+        <p class="legend"><span><i class="ln" style="border-color:var(--muted)"></i>LIFFE: floor</span><span><i class="ln tech"></i>DTB: screen</span><span><i class="sq window"></i>the equal-volume window</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Can machines make storms too?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside the machines · 2 of 2</p>
+    <h2>Storms measured in minutes</h2>
+    <div class="two">
+      <div>
+        <p>Speed has its own risk. On 6 May 2010, around 2:45 pm, a single massive sell order in E-mini S&amp;P 500 futures set off a fall of about 1,000 points in the Dow Jones, roughly a trillion in market value; 600 points came back within 30 minutes. Similar machine-speed slumps followed on 8 August 2011 and 24 August 2015.</p>
+        <p>Each reached Sydney, where the SPI’s daily volatility spiked. But these storms are measured in minutes and days, the crises in months and years. The paper judges the flash crash’s impact very short-lived, with little effect on liquidity over the longer term.</p>
+        <p>The authors raise one worry: local traders bore risk on the old floors when markets fell; with high-frequency traders in their place, markets may react more to sudden swings in the appetite for risk.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-machines.html#s4" data-primary-when="01-machines.html">← Return to the main path</a>
+          <a class="btn" href="02-storms.html#s1">Go on to the storms&nbsp;→</a>
+        </div>
+        <p class="note">Flash crash: Kirilenko et al. (2017) and Easley et al. (2011), as reported on p. 56. Other episodes and the SPI’s volatility: p. 57, Figure 2. Durations: p. 56 and p. 57, footnote 6. Local traders and high-frequency traders: Webb, as reported on p. 58.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">How long each episode took <span class="tag">log scale</span></p>
+        <div class="fig" id="dur-chart"></div>
+        <p class="legend"><span><i class="dt tech"></i>made at machine speed</span><span><i class="dt crisis"></i>economic crisis</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/futures-liquidity-24-years/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: LIFFE and DTB shares of Bund futures, schematic after Extract 1 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [year as a decimal, DTB share in %], approximate readings of Extract 1; LIFFE is the rest */
+  var DTB = [[1992.0, 28], [1993.0, 27], [1994.0, 28], [1995.0, 28], [1996.0, 27], [1996.75, 31], [1997.0, 34], [1997.3, 35], [1997.45, 38], [1997.55, 44], [1997.7, 46], [1997.8, 48], [1997.9, 50]];
+  var box = document.getElementById('bund-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var L = 36, R = W - 8, TOP = 12, PH = 200, H = TOP + PH + 26;
+    function X(t) { return L + (R - L) * (t - 1992) / 6; }
+    function Y(v) { return TOP + PH * (1 - v / 100); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Approximate market shares in Bund futures, 1992 to 1997, after Extract 1: the LIFFE floor around 70 percent and the DTB screen around 30 percent until 1996; during 1997 the screen catches up, and by October 1997 the two are about equal. October and November 1997 are marked as the equal-volume window.' }, box);
+    S('rect', { x: X(1997.75), y: TOP, width: X(1997.92) - X(1997.75), height: PH, 'class': 'window' }, root);
+    [0, 25, 50, 75, 100].forEach(function (v) {
+      S('line', { x1: L, x2: R, y1: Y(v), y2: Y(v), 'class': v === 50 ? 'axis zero' : v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, v + '%', { 'text-anchor': 'end' });
+    });
+    for (var yr = 1992; yr <= 1997; yr++) T(root, (X(yr) + X(yr + 1)) / 2, H - 6, W < 440 ? "'" + String(yr).slice(2) : String(yr), { 'text-anchor': 'middle' });
+    function path(f) { return DTB.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(f(p[1])).toFixed(1); }).join(' '); }
+    S('polyline', { points: path(function (v) { return 100 - v; }), 'class': 'line-text', style: 'stroke:var(--muted)' }, root);
+    S('polyline', { points: path(function (v) { return v; }), 'class': 'tech-line' }, root);
+    T(root, X(1993.5), Y(72) - 8, 'LIFFE, floor', { 'text-anchor': 'middle', 'class': 'label halo' });
+    T(root, X(1993.5), Y(28) + 20, 'DTB, screen', { 'text-anchor': 'middle', 'class': 'label halo' });
+    T(root, X(1997.75) - 6, TOP + 14, W < 440 ? 'Oct 1997' : 'October 1997: equal', { 'text-anchor': 'end', 'class': 'strong halo' });
+  }, { min: 290, max: 620 });
+})();
+
+/* ---------- slide 2: how long each episode took, as marks on a log scale of time (p. 56, footnote 6) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var MIN = 10, MAX = 2 * 525600; /* minutes */
+  /* [label, short label, minutes, value label, fill, bound: -1 "under", +1 "more than", 0 about] */
+  var ROWS = [
+    ['Flash crash, 6 May 2010: 600 of 1,000 points back', 'Flash crash: 600 points back', 30, 'about 30 minutes', 'tech-fill', 0],
+    ['Covid-19 stock crash, 2020', 'Covid-19 crash, 2020', 40 * 1440, 'under 40 days', 'crisis-fill', -1],
+    ['GFC stock crash, 2007–09', 'GFC crash, 2007–09', 525600, 'more than a year', 'crisis-fill', 1]
+  ];
+  var TICKS = [[10, '10 min', 1], [60, '1 hour', 0], [1440, '1 day', 1], [10080, '1 week', 0], [43200, '1 month', 1], [525600, '1 year', 1]];
+  var box = document.getElementById('dur-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 54, TOP = 4, H = TOP + ROWS.length * rowH + 26, xMax = W - 8, narrow = W < 480;
+    function X(m) { return xMax * Math.log(m / MIN) / Math.log(MAX / MIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'How long each episode took, on a logarithmic time scale from 10 minutes to 2 years: in the 2010 flash crash, 600 of the 1,000 points lost came back within about 30 minutes; the Covid-19 stock crash lasted under 40 days; the GFC stock crash lasted more than a year.' }, box);
+    TICKS.forEach(function (t) {
+      if (narrow && !t[2]) return;
+      S('line', { x1: X(t[0]), x2: X(t[0]), y1: TOP, y2: H - 20, 'class': t[0] === MIN ? 'axis' : 'grid' }, root);
+      T(root, X(t[0]), H - 5, t[1], { 'text-anchor': t[0] === MIN ? 'start' : 'middle' });
+    });
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH + 4, x = X(r[2]), yc = y + 28;
+      T(root, 0, y + 13, narrow ? r[1] : r[0], { 'class': 'label' });
+      S('line', { x1: 0, x2: xMax, y1: yc, y2: yc, 'class': 'axis' }, root);
+      /* an arrow from the mark says "under" or "more than" */
+      if (r[5]) S('path', { d: 'M' + x + ',' + yc + ' h' + (16 * r[5]) + ' m' + (-5 * r[5]) + ',-5 l' + (5 * r[5]) + ',5 l' + (-5 * r[5]) + ',5', 'class': 'bracket' }, root);
+      S('circle', { cx: x, cy: yc, r: 7, 'class': r[4] }, root);
+      T(root, xMax, y + 13, r[3], { 'class': 'strong', 'text-anchor': 'end' });
+    });
+  }, { min: 290, max: 620 });
+})();
+</script>
+</body>
+</html>

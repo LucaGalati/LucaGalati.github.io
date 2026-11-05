@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why 1 comes first · Elections and Earnings Management</title>
+<meta name="description" content="Side path of an explorable explanation of Capalbo and Galati, Elections and Earnings Management: Further Evidence from Benford’s Law: Newcomb’s worn logarithm tables, and why a steadily growing figure spends longer starting with 1 than with 9.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-why-one.html">
+<lg-sitebar><noscript><a href="../../publication/elections-benford/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why would 1 come first so often?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Why 1 comes first · 1 of 1</p>
+      <h2>Revenue lingers among the <span class="num">1</span>s</h2>
+      <p>In 1881 the astronomer Simon Newcomb noticed that the early pages of his book of logarithms wore out faster than the later ones: people looked up numbers starting with 1 far more often than those starting with 9. In 1938 the physicist Frank Benford checked the hunch on about 20,000 numbers from twenty unrelated sources.</p>
+      <p>Newcomb’s own explanation was that what is spread evenly is not the numbers but their logarithms. A growing company shows what that means. Going from €1 million to €2 million takes a doubling; going from €9 million to €10 million takes a rise of about 11%. At a steady growth rate, revenue lingers among the 1s and hurries through the 9s.</p>
+      <p>Change the toy company’s growth rate: the years change, the shares do not.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="01-digits.html#s3">← Return to the main path</a>
+      </div>
+      <p class="note">The toy company and its growth rates are illustrative. Newcomb and Benford: p. 111 of the paper. The shares are log<sub>10</sub>((d + 1)/d), the paper’s equation (i).</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">A toy company growing from €1 million to €10 million <span class="tag">toy</span></p>
+      <div class="fig" id="g-chart"></div>
+      <p class="legend"><span><i class="sq far"></i>years with a first digit of 1</span><span><i class="sq normal"></i>2 to 9, each its own block</span></p>
+      <label class="ctl" for="g-rate">Growth rate, per year</label>
+      <input type="range" id="g-rate" min="3" max="30" step="1" value="10">
+      <p class="readout" id="g-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/elections-benford/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- a toy company's decade, split by first digit: years on a fixed axis, shares on a fixed bar ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, YEARS = 80;
+  var SH = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (a) { return Math.log10((a + 1) / a); });
+  var box = document.getElementById('g-chart'), slider = document.getElementById('g-rate'), read = document.getElementById('g-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var L = 2, R = 6, H = 196;
+    function X(y) { return L + (W - L - R) * y / YEARS; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Top: years a toy company spends with each first digit while growing from 1 to 10 million euros, on a fixed 80-year axis. Bottom: the same years as shares of the climb from 1 to 10 million, which stay at 30.1% for 1 down to 4.6% for 9 whatever the growth rate.' }, box);
+    T(root, 0, 12, 'Years spent with each first digit', { 'class': 'label' });
+    for (var y = 0; y <= YEARS; y += 10) {
+      S('line', { x1: X(y), x2: X(y), y1: 22, y2: 64, 'class': y ? 'grid' : 'axis' }, root);
+      if (W >= 420 || y % 20 === 0) T(root, X(y), 80, String(y), { 'text-anchor': y === 0 ? 'start' : y === YEARS ? 'end' : 'middle' });
+    }
+    T(root, W - R, 96, 'years', { 'text-anchor': 'end' });
+    T(root, 0, 130, 'Share of the climb from €1 to €10 million', { 'class': 'label' });
+    var x = L, w = W - L - R;
+    /* digit 1 in blue, 2 to 9 neutral: gold keeps its single meaning, election years, elsewhere */
+    SH.forEach(function (s, i) {
+      var ww = w * s;
+      S('rect', { x: x, y: 140, width: Math.max(1, ww - 1), height: 26, 'class': i ? 'surface' : 'far-fill' }, root);
+      if (ww > 18) T(root, x + ww / 2 - 0.5, 157, String(i + 1), { 'text-anchor': 'middle', 'class': i ? 'label' : 'paper-fill' });
+      x += ww;
+    });
+    T(root, 0, 184, '1: 30.1%', { 'class': 'strong' });
+    T(root, W - R, 184, '9: 4.6%', { 'text-anchor': 'end' });
+    geo = { X: X, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var g = +slider.value / 100, k = Math.log(1 + g);
+    var yrs = SH.map(function (s) { return s * Math.LN10 / k; }), total = Math.LN10 / k;
+    slider.setAttribute('aria-valuetext', slider.value + ' percent a year');
+    read.innerHTML = '<strong>At ' + slider.value + '% a year</strong>, the toy company takes ' + total.toFixed(1) + ' years to go from €1 million to €10 million: ' +
+      yrs[0].toFixed(1) + ' of them with a first digit of 1, and ' + yrs[8].toFixed(1) + ' with a 9. Whatever the rate, that is 30.1% and 4.6% of the way.';
+    if (!geo) return;
+    var gg = geo.dyn, x = 0; gg.innerHTML = '';
+    yrs.forEach(function (y, i) {
+      var x0 = geo.X(x), x1 = geo.X(x + y);
+      S('rect', { x: x0, y: 30, width: Math.max(1, x1 - x0 - 1), height: 26, 'class': i ? 'surface' : 'far-fill' }, gg);
+      if (x1 - x0 > 18) T(gg, (x0 + x1) / 2 - 0.5, 47, String(i + 1), { 'text-anchor': 'middle', 'class': i ? 'label' : 'paper-fill' });
+      x += y;
+    });
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

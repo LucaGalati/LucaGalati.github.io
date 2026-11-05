@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The size trap · Local Elections and the Quality of Financial Statements</title>
+<meta name="description" content="Side path of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2023): why the same small departure from Benford’s law passes in a small pile and is flagged in a big one, and how the paper deals with piles of different sizes.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .legend .ln.solid { border-top: 2px solid var(--text); }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-tests.html">
+<lg-sitebar><noscript><a href="../../publication/local-elections-benford-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why does the size of the pile matter?">
+  <div class="inner">
+    <p class="kicker">Side path · The size trap · 1 of 1</p>
+    <h2>Bigger piles flag smaller gaps</h2>
+    <div class="two">
+      <div>
+        <p>Fix one small touch-up, 3 statements in every 100 moved from first digit 1 to first digit 2, and grow the pile. The gaps stay the same, but both tests grow surer: the chi-square rises in step with the number of statements, the adjusted MAD with its square root. At the pre-election pile’s size the touch-up passes; at the ordinary pile’s size the chi-square flags it.</p>
+        <p>Critics call this the chi-square’s “excessive power” in large samples. The older remedy, the plain MAD, the average gap, does not grow with the pile. But even an honest pile’s MAD shrinks as the pile grows, so no single threshold suits piles of different sizes, as Cerqueti and Lupi show.</p>
+        <p>So the paper keeps the two tests and handles size another way: the bigger ordinary pile passes, and subsamples of the pre-election size show what chance alone produces.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-elections.html#s3">← Return to the main path</a>
+        </div>
+        <p class="note">Section 3, p. 3. The touch-up is a toy; p values from the paper’s equations (2), (4) and (5); pile sizes from Table 1. Its plain MAD (equation 3) is 0.0067 at every size; an honest pile’s typical MAD is computed by this page.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">One toy touch-up, piles of every size <span class="tag">toy</span></p>
+        <div class="fig" id="trap"></div>
+        <p class="legend"><span><i class="ln solid"></i>chi-square</span><span><i class="ln dash"></i>adjusted MAD</span><span><i class="sq band"></i>flagged: p below 0.05</span></p>
+        <label class="ctl" for="trap-n">Number of statements in the pile</label>
+        <input type="range" id="trap-n" min="0" max="1000" step="1" value="341">
+        <p class="readout h3l" id="trap-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/local-elections-benford-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- the size trap: one toy touch-up, p values against pile size (Section 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var P = E.B.slice(); P[0] -= 0.03; P[1] += 0.03;           /* toy: 3 in 100 statements moved from 1 to 2 */
+  var NMIN = 100, NMAX = 100000, PMIN = 1e-4;
+  var HONEST = E.B.reduce(function (s, b) { return s + Math.sqrt(b * (1 - b)); }, 0) * Math.sqrt(2 / Math.PI) / 9; /* typical honest MAD × √n */
+  var box = document.getElementById('trap'), slider = document.getElementById('trap-n'), read = document.getElementById('trap-read');
+  var geo = null;
+  function nOf(v) {
+    var n = NMIN * Math.pow(NMAX / NMIN, v / 1000);
+    if (Math.abs(Math.log(n / 1057)) < 0.012) return 1057; /* snap to the paper's two pile sizes */
+    if (Math.abs(Math.log(n / 3964)) < 0.012) return 3964;
+    return Math.round(n);
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 220, 250)), L = 50, R = 12, TOP = 22, BOT = 40;
+    function X(n) { return L + (W - L - R) * Math.log(n / NMIN) / Math.log(NMAX / NMIN); }
+    function Y(p) { return TOP + (H - TOP - BOT) * Math.min(4, -Math.log10(Math.max(p, PMIN))) / 4; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'p values of the chi-square and the adjusted MAD for one fixed toy touch-up, against the number of statements from 100 to 100,000 on a log scale. The chi-square falls below 0.05 at about 1,900 statements, the adjusted MAD at about 5,100.' }, box);
+    S('rect', { x: L, y: Y(0.05), width: W - L - R, height: Y(PMIN) - Y(0.05), 'class': 'flag-zone' }, root);
+    [[1, '1'], [0.05, '0.05'], [0.01, '0.01'], [0.001, '0.001'], [0.0001, '0.0001']].forEach(function (t) {
+      S('line', { x1: L, x2: W - R, y1: Y(t[0]), y2: Y(t[0]), 'class': t[0] === 0.05 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(t[0]) + 4, t[1], { 'text-anchor': 'end' });
+    });
+    [100, 1000, 10000, 100000].forEach(function (n) {
+      S('line', { x1: X(n), x2: X(n), y1: H - BOT, y2: H - BOT + 5, 'class': 'axis' }, root);
+      T(root, X(n), H - BOT + 17, th(n), { 'text-anchor': n === NMAX ? 'end' : 'middle' });
+    });
+    T(root, (L + W - R) / 2, H - 6, 'Statements in the pile (log scale)', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, L - 46, 12, 'p value', { 'class': 'label' });
+    /* each curve stops where it leaves the chart, below p = 0.0001 */
+    function curve(key) {
+      var pts = [];
+      for (var k = 0; k <= 400; k++) {
+        var n = NMIN * Math.pow(NMAX / NMIN, k / 400), p = E.tests(P, n)[key];
+        pts.push(X(n).toFixed(1) + ',' + Y(p).toFixed(1));
+        if (p < PMIN) break;
+      }
+      return pts.join(' ');
+    }
+    S('polyline', { points: curve('pChi'), 'class': 'curve0' }, root);
+    S('polyline', { points: curve('pMad'), 'class': 'curve0', 'stroke-dasharray': '6 4' }, root);
+    [[1057, 'near', 'pre-election pile'], [3964, 'far', 'ordinary pile']].forEach(function (m, i) {
+      var x = X(m[0]);
+      S('line', { x1: x, x2: x, y1: TOP, y2: H - BOT, 'class': m[1] === 'near' ? 'gold-line' : 'far-line' }, root);
+      T(root, x + (i ? 5 : -5), TOP - 6, W < 460 ? th(m[0]) : m[2] + ', ' + th(m[0]), { 'text-anchor': i ? 'start' : 'end', 'class': 'label' });
+    });
+    geo = { X: X, Y: Y, TOP: TOP, H: H, BOT: BOT, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var n = nOf(+slider.value), r = E.tests(P, n), honest = HONEST / Math.sqrt(n);
+    slider.setAttribute('aria-valuetext', th(n) + ' statements');
+    var fc = r.pChi < 0.05, fm = r.pMad < 0.05;
+    read.innerHTML = '<strong>A pile of ' + th(n) + ':</strong> chi-square ' + E.peq(r.pChi) + ', adjusted MAD ' + E.peq(r.pMad) +
+      (fc && fm ? ': flagged by both.' : fc ? ': flagged by the chi-square only.' : fm ? ': flagged by the adjusted MAD only.' : ': passes both.') +
+      ' Its plain MAD is ' + r.mad.toFixed(4) + '; an honest pile this size typically scores ' + honest.toFixed(4) + '.';
+    if (!geo) return;
+    var g = geo.dyn, x = geo.X(n); g.innerHTML = '';
+    S('line', { x1: x, x2: x, y1: geo.TOP, y2: geo.H - geo.BOT, 'class': 'cursor' }, g);
+    S('circle', { cx: x, cy: geo.Y(r.pChi), r: 5, 'class': 'text-fill' }, g);
+    S('circle', { cx: x, cy: geo.Y(r.pMad), r: 5, 'class': 'hollow' }, g);
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

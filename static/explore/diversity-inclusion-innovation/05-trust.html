@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can it be trusted? · Diversity, Inclusion, and Firm Performance</title>
+<meta name="description" content="Side path of an explorable explanation of Monaco, Galati, Dal Maso and Mattei, Diversity, Inclusion, and Firm Performance: who is in the sample, what the comparison holds fixed, which way the arrow may point, and which results survive other choices.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-trust.html">
+<lg-sitebar><noscript><a href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Who is in the sample?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Can it be trusted? · 1 of 4</p>
+      <h2>47,212 firm-years, after a long funnel</h2>
+      <p>The paper starts from every firm-year in Refinitiv’s ESG universe from 2010 to 2023 and keeps those with the data its models need.</p>
+      <p>The biggest cut is missing D&amp;I data: the sample is made of firms whose diversity and inclusion are on record. What remains is 6,948 firms in 55 countries and 45 sectors, 2010–2021. About a third of the observations are American and a tenth Japanese; one robustness check drops both.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>Compared with whom?&nbsp;→</button>
+        <a class="btn return-link" href="01-question.html#s3" data-primary-when="01-question.html">← Return to the main path</a>
+      </div>
+      <p class="note">Table 1; the counts left after each step are computed. Countries (p. 7, untabulated): United States 14,675, Japan 4,517, United Kingdom 2,852, Australia 2,638, Canada 2,148.</p>
+    </div>
+    <div class="stage still">
+      <div class="fig" id="funnel"></div>
+      <p class="legend"><span><i class="sq far"></i>kept</span><span><i class="sq normal"></i>dropped at this step</span><span><i class="sq ink"></i>final sample</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Compared with whom?">
+  <div class="inner">
+    <p class="kicker">Side path · Can it be trusted? · 2 of 4</p>
+    <h2>Like for like can flip a sign</h2>
+    <p>Every comparison in the paper, across its <a href="#s1">47,212 firm-years</a>, is between firms that look alike on size, leverage, sales growth, board size, independence and tenure, stock volatility, intangible assets, cash flow, capital spending and R&amp;D, after average differences between years, sectors and countries are removed. That matters, because raw comparisons can point the other way:</p>
+    <table class="score">
+      <thead><tr><th>Pair</th><th>Raw correlation</th><th>Like for like</th></tr></thead>
+      <tbody>
+        <tr><td>Women executives and patents</td><td class="n">−0.11</td><td class="n">+0.268, 1% level</td></tr>
+        <tr><td>D&amp;I score and return on assets</td><td class="n">0.00, not sig.</td><td class="n">+0.027, 1% level</td></tr>
+        <tr><td>Environmental innovation and Tobin’s Q</td><td class="n">−0.09</td><td class="n">+0.179, 1% level</td></tr>
+      </tbody>
+    </table>
+    <p>Firms with more women executives file fewer patents in the raw data, yet more than comparable firms do. Controls hold fixed only what they measure, though; the next slide is about what they cannot.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Which way does the arrow point?&nbsp;→</button>
+      <a class="btn return-link" href="01-question.html#s3" data-primary-when="01-question.html">← Return to the main path</a>
+    </div>
+    <p class="note">Equation 1: controls as listed, with year, sector and country fixed effects. Raw correlations: Table 4 (−0.111, 0.001 not significant, −0.094). Like for like: Table 7 Panel A (0.268, with inclusion also in the model), Table 5 column 3 (0.027), Table 6 Panel B (0.179). A correlation and a coefficient have different scales: compare the signs.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Which way does the arrow point?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Can it be trusted? · 3 of 4</p>
+      <h2>Which way does the arrow point?</h2>
+      <p>The timing helps: D&amp;I is measured two years before performance. But firms that were already doing well may be the ones that invest in D&amp;I, and good performance tends to persist (p.&nbsp;14, 18).</p>
+      <p>One check aims at this worry directly: it adds last period’s performance as a control, so that firms already doing well are compared with each other; the conclusions hold (p.&nbsp;14). Another aims at the second leg, from innovation to performance. It predicts innovation from how generously a country’s tax system subsidises business R&amp;D, a choice made by legislators rather than by any one firm, so that innovation is not simply a by-product of success; the results stay qualitatively the same (p.&nbsp;13). The authors present it as a sensitivity check, not their main identification (footnote 5). Both are reported in words only.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="02-detour.html#s1" data-primary-when="02-detour.html">← Return to the main path</a>
+        <button class="btn" type="button" data-next>Does it survive other choices?&nbsp;→</button>
+      </div>
+    </div>
+    <div class="stage still">
+      <div class="fig" id="arrows"></div>
+      <p class="caveat">The authors’ own conclusion: the estimates are associations that fit the proposed mechanism, not proof that D&amp;I causes performance (p.&nbsp;18).</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Does it survive other choices?">
+  <div class="inner">
+    <p class="kicker">Side path · Can it be trusted? · 4 of 4</p>
+    <h2>Five checks, one result that weakens</h2>
+    <table class="score">
+      <thead><tr><th>Check</th><th>What the paper reports</th></tr></thead>
+      <tbody>
+        <tr><td>Innovation predicted from national R&amp;D tax relief</td><td>qualitatively consistent</td></tr>
+        <tr><td>Another environmental-innovation measure: five indicators of green products and services</td><td>core conclusions unchanged</td></tr>
+        <tr><td class="mark">Refinitiv’s own D&amp;I scores, from 2016 only</td><td>unchanged, except a weaker environmental detour to ROA</td></tr>
+        <tr><td class="mark">Without the US and Japan; without financials and utilities</td><td>unchanged, except a weaker environmental detour to ROA</td></tr>
+        <tr><td>Last period’s performance as a control</td><td>unchanged</td></tr>
+      </tbody>
+    </table>
+    <p>The result that weakens, twice, is the thinnest detour: environmental innovation to return on assets, already the smallest share (7.4%), with an indirect effect significant at the 5% level (p.&nbsp;13). The authors’ reading: markets see innovation before profits do, so value responds sooner than accounting returns (p.&nbsp;14).</p>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-detour.html#s3" data-primary-when="02-detour.html">← Return to the main path</a>
+      <button class="btn" type="button" data-go="1">Back to the start of this path</button>
+    </div>
+    <p class="note">Section 5.4, p. 13–14; the five checks are untabulated (footnote 4), so no numbers are given for them. Gold marks the two checks where a result weakens. Share and significance: Table 6, Panel B; p. 13.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the sample funnel (Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var START = 148960;
+  var STEPS = [['negative book values', 6465], ['missing book values', 18238], ['missing D&I data', 67133], ['missing accounting data', 8616], ['singleton observations', 1207], ['countries under 20 observations', 89]];
+  var box = document.getElementById('funnel');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 38, H = (STEPS.length + 1) * rowH + 4;
+    function X(v) { return W * v / START; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Sample funnel: 148,960 firm-years in Refinitiv’s ESG universe; dropped 6,465 with negative book values, 18,238 with missing book values, 67,133 with missing D&I data, 8,616 with missing accounting data, 1,207 singletons and 89 from countries with fewer than 20 observations, leaving 47,212.' }, box);
+    T(root, 0, 12, 'Refinitiv ESG universe, 2010–2023', { 'class': 'strong' });
+    T(root, W, 12, th(START), { 'text-anchor': 'end', 'class': 'strong' });
+    S('rect', { x: 0, y: 18, width: X(START), height: 12, 'class': 'far-fill' }, root);
+    var left = START;
+    STEPS.forEach(function (s, i) {
+      var y = (i + 1) * rowH, kept = left - s[1], last = i === STEPS.length - 1;
+      T(root, 0, y + 12, '− ' + th(s[1]) + ' ' + s[0], { 'class': 'label' });
+      T(root, W, y + 12, th(kept) + ' left', { 'text-anchor': 'end', 'class': last ? 'strong' : 'label' });
+      S('rect', { x: 0, y: y + 18, width: Math.max(1, X(kept)), height: 12, 'class': last ? 'text-fill' : 'far-fill' }, root);
+      S('rect', { x: X(kept) + 0.5, y: y + 18.5, width: Math.max(0.5, X(s[1]) - 1), height: 11, 'class': 'surface' }, root);
+      left = kept;
+    });
+  }, { min: 300, max: 600 });
+})();
+
+/* ---------- slide 3: the two directions ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('arrows');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 190, nw = 112, nh = 44, y = 70;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Two arrows between D&I and performance: the paper’s reading, from D&I to later performance, and the worry, from earlier success to D&I.' }, box);
+    [[0, 'D&I', 'year t'], [W - nw, 'Performance', 'year t + 2']].forEach(function (n) {
+      S('rect', { x: n[0], y: y, width: nw, height: nh, rx: 3, 'class': 'node' }, root);
+      T(root, n[0] + nw / 2, y + 19, n[1], { 'text-anchor': 'middle', 'class': 'node-title' });
+      T(root, n[0] + nw / 2, y + 35, n[2], { 'text-anchor': 'middle' });
+    });
+    var xa = nw + 6, xb = W - nw - 6;
+    S('path', { d: 'M' + xa + ',' + (y + 8) + ' Q' + (W / 2) + ',' + (y - 50) + ' ' + xb + ',' + (y + 8), 'class': 'road', style: 'stroke-width:2.5px' }, root);
+    S('polygon', { points: [xb, y + 9, xb - 11, y + 1, xb - 6, y + 12].join(' '), 'class': 'road-head' }, root);
+    T(root, W / 2, y - 30, 'the paper’s reading', { 'text-anchor': 'middle', 'class': 'label halo' });
+    S('path', { d: 'M' + xb + ',' + (y + nh - 8) + ' Q' + (W / 2) + ',' + (y + nh + 50) + ' ' + xa + ',' + (y + nh - 8), 'class': 'ghost' }, root);
+    S('polygon', { points: [xa, y + nh - 9, xa + 11, y + nh - 1, xa + 6, y + nh - 12].join(' '), 'class': 'muted-fill' }, root);
+    T(root, W / 2, y + nh + 42, W < 420 ? 'the worry: success first' : 'the worry: success first, D&I after', { 'text-anchor': 'middle', 'class': 'label halo' });
+  }, { min: 280, max: 520 });
+})();
+</script>
+</body>
+</html>

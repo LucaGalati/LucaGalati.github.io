@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The storms · Liquidity of Futures Markets Over the Last Quarter of a Century</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Frino, Galati and Webb, Liquidity of Futures Markets Over the Last Quarter of a Century: the Global Financial Crisis and Covid-19, a bet on the paper's regression, and its five switches thrown by the reader.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-storms.html">
+<lg-sitebar><noscript><a href="../../publication/futures-liquidity-24-years/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What does a storm do to a market?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The storms · 1 of 4</p>
+    <h2>Meanwhile, two storms</h2>
+    <div class="two">
+      <div>
+        <p>Between the machines came two crises: the Global Financial Crisis of 2007–09, in which the S&amp;P 500 fell 48%, and Covid-19 in 2020–21, in which it fell 34%.</p>
+        <p>In a storm, trading now gets dearer. Prices swing harder. Margin requirements, the cash a trader must post against losses, rise as prices fall and can force selling into the fall. Robert Webb, cited by the authors, argues that markets lean on traders willing to bear risk, whose capital and appetite for it may not last a storm. In Covid the average cost of trading corporate bonds rose almost threefold, to 0.9%.</p>
+        <p>In the SPI the storms are plain to see: its volatility towers in 2008–09 and in 2020, and the depth at the best prices fell sharply in 2008 and again in 2020.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>So which mattered more? Bet on it&nbsp;→</button></div>
+        <p class="note">S&amp;P 500: p. 57. Margin calls: Foley et al. (2021), p. 58. Webb’s argument, as reported on p. 58. Corporate bonds: O’Hara and Zhou (2021), 90 basis points, p. 58. Depth: Figure 5 and p. 59. Volatility: the paper’s yearly price volatility for the SPI, approximate values read off Figure 4, on the figure’s own scale (it starts in 1998); the dip in 2000 falls in the year the underlying index changed (Appendix A; p. 59 notes it for trade size).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">SPI price volatility by year <span class="tag">approximate, read off Figure 4</span></p>
+        <div class="fig" id="vol-chart"></div>
+        <p class="legend"><span><i class="ln"></i>price volatility</span><span><i class="sq window"></i>crisis years</span><span><i class="sq tech"></i>technology switches</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How big was Covid next to the screens?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The storms · 2 of 4</p>
+    <h2>Place your bet: Covid against the screens</h2>
+    <div class="bet-grid t-right">
+      <div class="q">
+        <p>To weigh machines and storms on one scale, the authors give every year five switches: on from the arrival of screens, of high-frequency trading and of co-location, and on during the GFC (2007–09) and Covid (2020–21). A regression on 8,661,139 one-minute snapshots of the SPI then estimates how far the average spread shifts when each switch turns on.</p>
+        <p>The switch for screens comes out at <span class="num">2.4</span>. <strong>How big is the Covid switch next to that 2.4?</strong></p>
+        <div class="actions bet" id="co-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="smaller" aria-pressed="false">Smaller</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">About the same</button>
+          <button class="btn" type="button" data-bet="four" aria-pressed="false">About four times</button>
+          <button class="btn" type="button" data-bet="twenty" aria-pressed="false">About twenty times</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="co-chart"></div>
+        <p class="legend"><span><i class="sq tech"></i>technology switch</span><span><i class="sq crisis"></i>crisis switch</span><span><i class="ln ghost"></i>your bet</span></p>
+        <p class="note" id="co-note" hidden>Table 1, p. 61: coefficients 2.424, 2.344, 2.253, 9.946 and 51.114 (standard errors 0.143, 0.044, 0.043, 0.034 and 0.103); constant 1.523; all significant at the 0.001 level. The paper says “four times” and “20 times” (p. 61); the ratios are computed from Table 1.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="co-verdict" aria-live="polite"></p>
+        <div class="actions" id="co-next" hidden>
+          <button class="btn primary" type="button" data-next>Now throw the switches yourself&nbsp;→</button>
+          <a class="door" href="04-switches.html#s1" data-return="next">Significant at the 0.001 level, every one. What does that buy?&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What do the five switches add up to?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The storms · 3 of 4</p>
+    <h2>Long and low, short and tall</h2>
+    <div class="two">
+      <div>
+        <p>Add the switches up, year by year, and you get the regression’s predicted spread for every year: the technology switches make long, low steps, the crises short, tall ones. Read the columns against one another, the way the authors compare the coefficients.</p>
+        <p><strong>Try this:</strong> switch off the three blue switches and read 2019. Then switch them back on, switch off the GFC and read 2008. Which hole is deeper?</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+        <p class="note">Computed from Table 1 (p. 61): the constant, 1.523, plus the coefficients of the switches that are on. Switches read as on from 2000, 2011 and 2013, for “the years following” 1999, 2010 and 2012 (p. 61).</p>
+      </div>
+      <div class="stage">
+        <div class="switches" id="st-sw" role="group" aria-label="Switches"></div>
+        <div class="ctl"><span>Scale</span><div class="seg" id="st-scale"></div></div>
+        <div class="fig" id="st-chart"></div>
+        <label class="ctl" for="st-year">Step down to one year</label>
+        <input type="range" id="st-year" min="1996" max="2021" step="1" value="2020">
+        <p class="readout" id="st-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The storms · 4 of 4</p>
+    <h2>What to take away</h2>
+    <div class="close-grid">
+    <div>
+    <p class="closer">Machines or storms? For one Australian futures contract over a quarter century, the paper’s answer is the storms, by a wide margin.</p>
+    <ol class="takeaways">
+      <li>Two of the three technology changes, each studied around its own date, narrowed the SPI’s spread a little: about 15% off the floor, about 2.5% with co-location. “Small but highly significant”, in the authors’ words.</li>
+      <li>In the paper’s regression the GFC switch is about four times each technology switch and the Covid switch about twenty times. Liquidity, the authors conclude, is “captive to outlier events”.</li>
+      <li>They read this as consistent with the hypothesis that economic uncertainty is, by far, what moves liquidity.</li>
+    </ol>
+    </div>
+    <div class="close-side">
+    <p class="caveat">The caveat. In the authors’ words, Table 1 is “a simple OLS regression”, run “to provide an indication”. Its five switches are on or off for whole years, three of them staying on once they arrive, so it compares average spreads between blocks of years; together the switches explain about 4% of the minute-to-minute variation.</p>
+    <p>Left open: high-frequency traders replaced the floor’s locals, who once bore risk in a crash. In the next storm, do the machines stand or step back?</p>
+    <p class="prompt">One to try, if you skipped it: on the staircase, which hole is deeper, 2019 without its three machines or 2008 without its storm?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-go="3">Throw the switches again&nbsp;→</button>
+      <a class="btn" href="../../publication/futures-liquidity-24-years/">Read the paper</a>
+      <button class="btn" type="button" data-map>Map</button>
+    </div>
+    <p class="note">Sources: p. 54–56; Table 1 and p. 60–62 (“a simple OLS regression”, “captive to outlier events”, “consistent with the hypothesis”); R² of 0.039, Table 1; locals, p. 58; future research, p. 62. Side paths you may have skipped: <a class="door-link" href="03-race.html#s1">a fair race between a floor and a screen</a> · <a class="door-link" href="03-race.html#s2">storms the machines made</a> · <a class="door-link" href="04-switches.html#s1">how to read a simple regression</a>.</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/futures-liquidity-24-years/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: SPI price volatility by year, approximate readings of Figure 4, over the switchboard ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var VOL = { 1998: 23, 1999: 24, 2000: 7, 2001: 18, 2002: 17, 2003: 16, 2004: 13, 2005: 21, 2006: 28, 2007: 36, 2008: 82, 2009: 83, 2010: 38,
+    2011: 46, 2012: 32, 2013: 34, 2014: 31, 2015: 48, 2016: 43, 2017: 30, 2018: 32, 2019: 29, 2020: 71, 2021: 36 };
+  var box = document.getElementById('vol-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = E.gutter(W), R = W - 6, X = E.yearScale(L, R), TOP = 22, PH = narrow ? 150 : 170, YMAX = 90;
+    var railTop = TOP + PH + 12, H = railTop + 5 * 17 + 24;
+    function Y(v) { return TOP + PH * (1 - v / YMAX); }
+    function cx(y) { return (X(y) + X(y + 1)) / 2; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The SPI’s yearly price volatility, approximate values read off the paper’s Figure 4: around 15 to 30 in most years from 1998, about 82 in 2008 and 83 in 2009, about 71 in 2020, back to about 36 in 2021. Below, the five switches: technology from 2000, 2011 and 2013; crises in 2007 to 2009 and 2020 to 2021.' }, box);
+    E.SW.forEach(function (sw) { if (sw.kind === 'crisis') S('rect', { x: X(sw.from), y: TOP, width: X(sw.to + 1) - X(sw.from), height: PH, 'class': 'window' }, root); });
+    [0, 30, 60, 90].forEach(function (v) {
+      S('line', { x1: L, x2: R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    });
+    T(root, L, TOP - 9, narrow ? 'Price volatility' : 'Price volatility, on Figure 4’s scale', { 'class': 'label' });
+    var pts = [];
+    for (var y = 1998; y <= 2021; y++) pts.push(cx(y).toFixed(1) + ',' + Y(VOL[y]).toFixed(1));
+    S('polyline', { points: pts.join(' '), 'class': 'line-text' }, root);
+    for (var y2 = 1998; y2 <= 2021; y2++) S('circle', { cx: cx(y2), cy: Y(VOL[y2]), r: 2.5, 'class': 'text-fill' }, root);
+    T(root, cx(2009) + 7, Y(83) + 4, '≈ 83', { 'class': 'strong halo' });
+    T(root, cx(2020) - 7, Y(71) + 4, '≈ 71', { 'class': 'strong halo', 'text-anchor': 'end' });
+    E.rails(root, X, railTop, { labelX: L - 8, narrow: narrow, rowH: 17 });
+    E.yearAxis(root, X, railTop + 5 * 17 + 2, narrow);
+  }, { min: 290, max: 640 });
+})();
+
+/* ---------- slide 2: the bet, then Table 1's five coefficients on one ruler ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var SW = E.SW, MAXV = 56;
+  var GUESS = { smaller: 1.2, same: 2.424, four: 9.7, twenty: 48.5 };
+  var LEAD = {
+    smaller: 'Far from it. ',
+    same: 'Far bigger. ',
+    four: 'That is the GFC’s ratio; Covid is bigger still. ',
+    twenty: 'That is it. '
+  };
+  var TAIL = 'The Covid switch is 51.1, about twenty times each technology switch (21 to 23 times, computed from Table 1). All five pass the paper’s strictest significance test (0.001): the differences are unlikely to be chance, which is not to say they are large.';
+  var box = document.getElementById('co-chart'), betBox = document.getElementById('co-bet');
+  var verdict = document.getElementById('co-verdict'), nextBox = document.getElementById('co-next'), note = document.getElementById('co-note');
+  var st = { bet: null, grow: 0 }, geo = null, raf = null;
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 48, TOP = 24, H = TOP + SW.length * rowH + 22, xMax = W - 10;
+    function X(v) { return xMax * v / MAXV; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Table 1’s five coefficients on one scale: screens 2.424, high-frequency trading 2.344, co-location 2.253, the Global Financial Crisis 9.946, Covid-19 51.114.' }, box);
+    T(root, 0, 11, 'Coefficient in Table 1', { 'class': 'label' });
+    [0, 10, 20, 30, 40, 50].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 18, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 4, String(v), { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    geo = { X: X, rowH: rowH, TOP: TOP, W: W, xMax: xMax, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, narrow = geo.W < 480;
+    g.innerHTML = '';
+    SW.forEach(function (sw, i) {
+      var y = geo.TOP + i * geo.rowH, shown = i === 0 || st.bet;
+      var name = { et: 'Screens', hft: 'High-frequency trading', clf: 'Co-location', gfc: 'Global Financial Crisis', cpc: 'Covid-19' }[sw.key];
+      T(g, 0, y + 15, narrow ? sw.name : name, { 'class': 'label' });
+      if (!shown) { if (i === 2) T(g, geo.xMax / 2, y + 4, 'Place your bet to draw the other four', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+      var v = i === 0 ? sw.b : sw.b * st.grow;
+      S('rect', { x: 0, y: y + 21, width: Math.max(1, X(v)), height: 18, 'class': sw.kind === 'tech' ? 'tech-fill' : 'crisis-fill' }, g);
+      if (i === 0 || st.grow >= 1) {
+        var lab = sw.b.toFixed(1) + (sw.key === 'gfc' ? ' · about 4 × screens' : sw.key === 'cpc' ? ' · about 21 × screens' : '');
+        var lx = X(sw.b) + 6, inline = sw.kind === 'tech' && lx + E.textW(lab) < geo.xMax;
+        if (inline) T(g, lx, y + 34, lab, { 'class': 'strong' });
+        else T(g, geo.xMax, y + 15, lab, { 'class': 'strong', 'text-anchor': 'end' });
+      }
+    });
+    if (st.bet) {
+      var yc = geo.TOP + 4 * geo.rowH, gx = X(GUESS[st.bet]);
+      S('line', { x1: gx, x2: gx, y1: yc + 17, y2: yc + 43, 'class': 'ghost' }, g);
+    }
+  }
+  function finish() { st.grow = 1; draw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-covid', bet);
+    if (raf) cancelAnimationFrame(raf);
+    if (!animate || E.still) { finish(); return; }
+    var t0 = null; st.grow = 0;
+    (function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 900);
+      st.grow = 1 - Math.pow(1 - p, 3); draw();
+      if (p < 1) raf = requestAnimationFrame(step); else { raf = null; finish(); }
+    })(performance.now());
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-covid');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 290, max: 640 });
+})();
+
+/* ---------- slide 3: the staircase, built from Table 1; the reader throws the switches ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, SW = E.SW, Y0 = E.Y0, Y1 = E.Y1, C = E.CONST;
+  var box = document.getElementById('st-chart'), swBox = document.getElementById('st-sw'), yearIn = document.getElementById('st-year'), read = document.getElementById('st-read');
+  var on = {}, w = {}, scale = 60, geo = null, raf = null;
+  SW.forEach(function (sw) { on[sw.key] = true; w[sw.key] = 1; });
+  var saved = E.load('switches');
+  if (saved && typeof saved === 'object') SW.forEach(function (sw) { if (saved[sw.key] === false) { on[sw.key] = false; w[sw.key] = 0; } });
+  var NAME = { et: 'screens', hft: 'high-frequency trading', clf: 'co-location', gfc: 'GFC', cpc: 'Covid' };
+  var OFFNAME = { gfc: 'the GFC' };
+  function list(a) { return a.length < 2 ? a[0] : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+  function level(y, weights) { var v = C; SW.forEach(function (sw) { if (E.isOn(sw, y)) v += sw.b * weights[sw.key]; }); return v; }
+  /* blocks of consecutive years with the same set of switches, for the labels */
+  function blocks() {
+    var out = [], cur = null;
+    for (var y = Y0; y <= Y1; y++) {
+      var sig = SW.map(function (sw) { return E.isOn(sw, y) ? 1 : 0; }).join('');
+      if (cur && cur.sig === sig) cur.to = y; else { cur = { sig: sig, from: y, to: y }; out.push(cur); }
+    }
+    return out;
+  }
+  var BLOCKS = blocks();
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = E.gutter(W), R = W - 6, X = E.yearScale(L, R), TOP = 24, PH = narrow ? 170 : 180;
+    var railTop = TOP + PH + 10, H = railTop + 5 * 17 + 24;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img' }, box);
+    T(root, L, TOP - 10, narrow ? 'Predicted spread (Table 1)' : 'Predicted spread, from Table 1', { 'class': 'label' });
+    geo = { root: root, X: X, L: L, R: R, TOP: TOP, PH: PH, railTop: railTop, narrow: narrow, W: W,
+      axis: S('g', {}, root), dyn: S('g', {}, root), rails: S('g', {}, root) };
+    E.yearAxis(root, X, railTop + 5 * 17 + 2, narrow);
+    draw();
+  }
+  function draw() {
+    var yr = +yearIn.value;
+    readout(yr);
+    if (!geo) return;
+    var X = geo.X, TOP = geo.TOP, PH = geo.PH;
+    function Y(v) { return TOP + PH * (1 - Math.min(v, scale) / scale); }
+    var ax = geo.axis; ax.innerHTML = '';
+    (scale === 60 ? [0, 20, 40, 60] : [0, 5, 10, 15]).forEach(function (v) {
+      S('line', { x1: geo.L, x2: geo.R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, ax);
+      T(ax, geo.L - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    });
+    var g = geo.dyn; g.innerHTML = '';
+    for (var y = Y0; y <= Y1; y++) {
+      var x = X(y) + 1, cw = Math.max(1, X(y + 1) - X(y) - 2), base = 0;
+      var segs = [[C, 'base-fill']];
+      SW.forEach(function (sw) { if (E.isOn(sw, y) && w[sw.key] > 0.001) segs.push([sw.b * w[sw.key], sw.kind === 'tech' ? 'tech-fill' : 'crisis-fill']); });
+      segs.forEach(function (s) {
+        var top = Math.min(base + s[0], scale), bot = Math.min(base, scale);
+        if (top > bot) S('rect', { x: x, y: Y(top), width: cw, height: Y(bot) - Y(top), 'class': s[1], style: 'stroke:var(--paper);stroke-width:.75px' }, g);
+        base += s[0];
+      });
+    }
+    /* the year cursor goes under the labels, so their halo keeps them legible where the two meet */
+    S('rect', { x: X(yr) + 0.5, y: TOP - 1, width: X(yr + 1) - X(yr) - 1, height: PH + 1, 'class': 'cursor', fill: 'none' }, g);
+    /* one label per block of years, where there is room and the level differs from the block before;
+       a block cut off by the zoom is labelled beside it */
+    var prev = null, levels = [];
+    BLOCKS.forEach(function (b) {
+      var v = level(b.from, w), x0 = X(b.from), x1 = X(b.to + 1), cxm = (x0 + x1) / 2, lab = v.toFixed(1), same = prev !== null && Math.abs(v - prev) < 0.05;
+      prev = v;
+      levels.push(lab + (b.from === b.to ? ' in ' + b.from : ' in ' + b.from + ' to ' + b.to));
+      if (same) return;
+      if (v > scale + 0.01) { T(g, x0 - 5, TOP + 12, '↑ ' + lab + ', cut off', { 'text-anchor': 'end', 'class': 'strong halo' }); return; }
+      if (x1 - x0 < E.textW(lab) + 4) return;
+      T(g, cxm, Y(v) - 5, lab, { 'text-anchor': 'middle', 'class': 'strong halo' });
+    });
+    var offNames = SW.filter(function (sw) { return !on[sw.key]; }).map(function (sw) { return OFFNAME[sw.key] || NAME[sw.key]; });
+    geo.root.setAttribute('aria-label', 'The regression’s predicted spread for each year from 1996 to 2021, built from Table 1' +
+      (offNames.length ? ', with ' + list(offNames) + ' switched off' : '') + ': ' + levels.join(', ') + '. The switchboard below shows which switches are on.');
+    var rg = geo.rails; rg.innerHTML = '';
+    E.rails(rg, X, geo.railTop, { labelX: geo.L - 8, narrow: geo.narrow, rowH: 17, on: on });
+  }
+  function readout(yr) {
+    var parts = [C.toFixed(3) + ' constant'], total = C, off = [], gone = 0;
+    SW.forEach(function (sw) {
+      if (!E.isOn(sw, yr)) return;
+      if (on[sw.key]) { parts.push(sw.b.toFixed(3) + ' ' + NAME[sw.key]); total += sw.b; }
+      else { off.push(OFFNAME[sw.key] || NAME[sw.key]); gone += sw.b; }
+    });
+    yearIn.setAttribute('aria-valuetext', String(yr));
+    read.innerHTML = '<strong>' + yr + ':</strong> ' + parts.join(' + ') + ' = <strong>' + total.toFixed(3) + '</strong>.' +
+      (off.length ? ' Switched off: ' + list(off) + ', worth <strong>' + gone.toFixed(3) + '</strong>' + (off.length > 1 ? ' together.' : '.') : '');
+  }
+  function animate() {
+    if (raf) cancelAnimationFrame(raf);
+    var from = {}, t0 = null;
+    SW.forEach(function (sw) { from[sw.key] = w[sw.key]; });
+    if (E.still) { SW.forEach(function (sw) { w[sw.key] = on[sw.key] ? 1 : 0; }); draw(); return; }
+    (function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 420), e = 1 - Math.pow(1 - p, 3);
+      SW.forEach(function (sw) { w[sw.key] = from[sw.key] + ((on[sw.key] ? 1 : 0) - from[sw.key]) * e; });
+      draw();
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    })(performance.now());
+  }
+  SW.forEach(function (sw) {
+    var b = E.el('button', sw.kind, ({ et: 'Screens', hft: 'High-frequency', clf: 'Co-location', gfc: 'GFC', cpc: 'Covid' })[sw.key]);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', on[sw.key] ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      on[sw.key] = !on[sw.key];
+      b.setAttribute('aria-pressed', on[sw.key] ? 'true' : 'false');
+      E.save('switches', on);
+      animate();
+    });
+    swBox.appendChild(b);
+  });
+  E.seg(document.getElementById('st-scale'), [['60', '0 to 60'], ['15', '0 to 15, zoomed in']], '60', function (k) { scale = +k; draw(); }, 'Scale');
+  yearIn.setAttribute('aria-label', 'Year, 1996 to 2021');
+  yearIn.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 290, max: 660 });
+})();
+</script>
+</body>
+</html>

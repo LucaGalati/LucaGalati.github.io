@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading the gaps · To Fix or not to Fix, the Fix</title>
+<meta name="description" content="Side path of an explorable explanation of Benenchia, Galati and Lepone, To Fix or not to Fix, the Fix: the average gap against the typical gap, how a test on differences is built, and what the design of the study can and cannot tell.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  @media (min-width: 900px) { .facts.cols { max-width: none; columns: 2; column-gap: 3rem; } .facts.cols li { break-inside: avoid; } .facts.cols li:last-child { border-bottom: 1px solid var(--border); } }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-gaps.html">
+<lg-sitebar><noscript><a href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Average gap or typical gap?">
+  <div class="inner">
+    <p class="kicker">Side path · Reading the gaps · 1 of 2</p>
+    <h2>Where the gaps sit, and how big they are</h2>
+    <div class="two">
+      <div>
+        <p>A pile of daily gaps can be summed up two ways: where they sit on average, and how big they typically are. The paper’s figures follow the typical size, year by year; its t-tests ask whether the average gap shifts when the window grows.</p>
+        <p>The two can tell different stories. In this toy the gaps swing by about 20 pips from day to day under either window, so their typical size hardly moves. A test on the differences looks at each day under both windows: the day’s own swing drops out, and the shift is judged against the small change from one window to the other. With enough days, a tenth of a pip clears the bar.</p>
+        <p>Significant means unlikely to be chance, not large. The authors describe the representativeness shift they find for EUR/USD and GBP/USD at twenty minutes as slight, not enough to warrant a change of method.</p>
+        <div class="actions"><a class="btn primary return-link" href="02-stretch.html#s1">← Return to the main path</a> <button class="btn" type="button" data-next>What the design can and cannot tell&nbsp;→</button></div>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Daily gaps under two windows, in pips <span class="tag">toy</span></p>
+        <div class="ctl"><span class="lab">Days</span><div class="seg" id="g-n"></div></div>
+        <div class="fig" id="g-chart"></div>
+        <p class="legend"><span><i class="dt base"></i>5 minutes: average, ± one typical gap</span><span><i class="dt alt"></i>20 minutes</span><span><i class="sq band-normal"></i>where chance alone easily puts the average</span></p>
+        <label class="ctl" for="g-s">Shift in the average gap at twenty minutes</label>
+        <input type="range" id="g-s" min="0" max="30" step="1" value="10">
+        <p class="readout h3l" id="g-read" aria-live="polite"></p>
+        <p class="note">Toy: invented gaps and changes, to show how a test on differences is built; these are not the paper’s data. The paper’s typical gaps: Table 2; its tests on the average gap: Tables 4–6; the authors’ reading of the shift: Section 4.2.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What can the design tell?">
+  <div class="inner">
+    <p class="kicker">Side path · Reading the gaps · 2 of 2</p>
+    <h2>What the design can and cannot tell</h2>
+    <ul class="facts cols">
+      <li><b>No experiment</b>The window did not change during the sample, so the ten- and twenty-minute fixes are rebuilt from trading that took place under the five-minute rule. How traders would behave under a longer window is not observed.</li>
+      <li><b>A wide yardstick</b>The day’s average price can sit far from the price at 4&nbsp;pm, so the representativeness gap is wide and varies a lot from one day to the next.</li>
+      <li><b>Few month-ends</b>About one day in twenty, 214 per pair, so month-end differences rest on far fewer observations than those for normal days.</li>
+      <li><b>Mixed signs</b>Several differences change sign from one pair to another; the authors draw their conclusions from the pattern across all six pairs.</li>
+      <li><b>The cost of change</b>A longer window would mean re-assessing the surveillance algorithms that look for manipulation and moving resources; that cost lies outside what the data measure.</li>
+      <li><b>Market, not method</b>The data show how the market has affected the fix, not whether the method itself kept market impact down; the authors reworded one research question for that reason.</li>
+      <li><b>Reversals, not causes</b>A test of whether moves into the fix are undone afterwards finds no significant link in most quarters, the exceptions mainly in 2020 and 2021; like the earlier study it follows, the paper does not seek a causal explanation.</li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary return-link" href="03-month-end.html#s3">← Return to the main path</a>
+      <a class="btn" href="06-recipe.html#s1">Is length the wrong knob?&nbsp;→</a>
+    </div>
+    <p class="note">No change in the sample: footnote 5; rebuilt fixes: footnote 10; the day’s average: p.&nbsp;7; month-end days: Tables 4–6; signs: p.&nbsp;8, and the weighing across pairs: Sections 4.2 and 4.3; cost of change: Section 5; the reworded question: footnote 4 and Section 3.3.1; reversals and the causal question: Fig. 7 and p.&nbsp;9.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/fix-4pm-effectiveness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: a toy test on differences, two windows over the same days ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* a seeded random generator, so the toy is the same on every visit */
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function gauss(r) { return Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r()); }
+  function mean(a) { return a.reduce(function (x, y) { return x + y; }, 0) / a.length; }
+  function sdev(a) { var m = mean(a); return Math.sqrt(a.reduce(function (x, y) { return x + (y - m) * (y - m); }, 0) / (a.length - 1)); }
+  /* toy days: a gap that swings by about 20 pips, and a change between the windows of about 1 pip */
+  var r = rng(5), G = [], C = [], i;
+  for (i = 0; i < 5000; i++) { G.push(gauss(r)); C.push(gauss(r)); }
+  /* the first n days, rescaled so the toy's average and spread are exactly as stated */
+  function exact(a, n, m, sd) { var x = a.slice(0, n), mu = mean(x), s = sdev(x); return x.map(function (v) { return m + (v - mu) * sd / s; }); }
+  var cache = {};
+  function days(n) { if (!cache[n]) cache[n] = { g: exact(G, n, -1, 20), c: exact(C, n, 0, 1) }; return cache[n]; }
+  var box = document.getElementById('g-chart'), slider = document.getElementById('g-s'), read = document.getElementById('g-read');
+  var n = 500, geo = null, SHOW = 150;
+  function state() {
+    var d = days(n), s = +slider.value / 100;
+    var ch = d.c.map(function (v) { return v + s; }), g20 = d.g.map(function (v, k) { return v + ch[k]; });
+    var se = sdev(ch) / Math.sqrt(n);
+    return { g5: d.g, g20: g20, ch: ch, s: s, m5: mean(d.g), m20: mean(g20), sd5: sdev(d.g), sd20: sdev(g20), sdc: sdev(ch), se: se, t: mean(ch) / se };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 480, L = 52, R = 12, H = 190;
+    function XA(v) { return L + (W - L - R) * (E.clamp(v, -60, 60) + 60) / 120; }
+    function XB(v) { return L + (W - L - R) * (E.clamp(v, -3, 3) + 3) / 6; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    T(root, 0, 12, 'Each day’s gap', { 'class': 'label' });
+    T(root, 0, 36, '5 min'); T(root, 0, 64, '20 min');
+    S('line', { x1: L, x2: W - R, y1: 80, y2: 80, 'class': 'axis' }, root);
+    [-60, -30, 0, 30, 60].forEach(function (v) {
+      S('line', { x1: XA(v), x2: XA(v), y1: 80, y2: 84, 'class': 'axis' }, root);
+      T(root, XA(v), 96, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + (v === 60 ? ' pips' : ''), { 'text-anchor': v === 60 ? 'end' : 'middle' });
+    });
+    T(root, 0, 124, narrow ? 'Each day’s change, 20 − 5' : 'Each day’s change, 20 − 5 minutes', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: 164, y2: 164, 'class': 'axis' }, root);
+    [-3, -2, -1, 0, 1, 2, 3].forEach(function (v) {
+      S('line', { x1: XB(v), x2: XB(v), y1: 164, y2: 168, 'class': 'axis' }, root);
+      if (!narrow || v % 3 === 0) T(root, XB(v), 180, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + (v === 3 ? ' pips' : ''), { 'text-anchor': v === 3 ? 'end' : 'middle' });
+    });
+    geo = { root: root, XA: XA, XB: XB, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var st = state();
+    slider.setAttribute('aria-valuetext', E.plus(st.s, 2) + ' pips');
+    var sig = Math.abs(st.t) >= 1.96;
+    read.innerHTML = '<strong>Toy, ' + E.thousands(n) + ' days:</strong> the typical gap is ' + st.sd5.toFixed(1) + ' pips under five minutes and ' + st.sd20.toFixed(1) + ' under twenty; the average gap moves from ' + E.fmt(st.m5, 2) + ' to ' + E.fmt(st.m20, 2) + '. Each day’s change varies by about ' + st.sdc.toFixed(1) + ' pip, so t = ' + st.s.toFixed(2) + ' × √' + E.thousands(n) + ' ÷ ' + st.sdc.toFixed(1) + ' = ' + st.t.toFixed(2) +
+      (sig ? ', beyond 1.96: the shift clears the usual 5% bar.' : ', within 1.96: chance alone could easily give it.');
+    if (!geo) return;
+    geo.root.setAttribute('aria-label', 'Toy, ' + n + ' days. Top: each day’s gap under five and under twenty minutes; typical size ' + st.sd5.toFixed(1) + ' and ' + st.sd20.toFixed(1) + ' pips, averages ' + st.m5.toFixed(2) + ' and ' + st.m20.toFixed(2) + '. Bottom: each day’s change between the windows, averaging ' + st.s.toFixed(2) + ' pips; t = ' + st.t.toFixed(2) + '.');
+    var g = geo.dyn, XA = geo.XA, XB = geo.XB; g.innerHTML = '';
+    var k, m = Math.min(n, SHOW);
+    function jit(j) { return ((j * 7) % 5 - 2) * 2.4; }
+    /* each day, faintly; then the average with one typical gap either side */
+    for (k = 0; k < m; k++) {
+      S('circle', { cx: XA(st.g5[k]), cy: 32 + jit(k), r: 1.8, 'class': 'muted-fill', 'fill-opacity': 0.45 }, g);
+      S('circle', { cx: XA(st.g20[k]), cy: 60 + jit(k), r: 1.8, 'class': 'muted-fill', 'fill-opacity': 0.45 }, g);
+      S('circle', { cx: XB(st.ch[k]), cy: 150 + jit(k), r: 1.8, 'class': 'muted-fill', 'fill-opacity': 0.45 }, g);
+    }
+    [[st.m5, st.sd5, 32, 'base'], [st.m20, st.sd20, 60, 'alt']].forEach(function (q) {
+      var a = XA(q[0] - q[1]), b = XA(q[0] + q[1]);
+      S('line', { x1: a, x2: b, y1: q[2], y2: q[2], 'class': q[3], 'stroke-width': 2 }, g);
+      S('line', { x1: a, x2: a, y1: q[2] - 8, y2: q[2] + 8, 'class': q[3] }, g);
+      S('line', { x1: b, x2: b, y1: q[2] - 8, y2: q[2] + 8, 'class': q[3] }, g);
+      S('circle', { cx: XA(q[0]), cy: q[2], r: 5, 'class': q[3] + '-fill' }, g);
+    });
+    /* where chance alone would easily put the average change: within 1.96 of its own noise */
+    var w0 = XB(-1.96 * st.se), w1 = XB(1.96 * st.se);
+    S('rect', { x: w0, y: 138, width: Math.max(2, w1 - w0), height: 24, 'class': 'band-normal', style: 'stroke:var(--border)' }, g);
+    S('line', { x1: XB(0), x2: XB(0), y1: 136, y2: 164, 'class': 'axis zero' }, g);
+    S('circle', { cx: XB(st.s), cy: 150, r: 5.5, 'class': sig ? 'alt-fill' : 'hollow-muted' }, g);
+    T(g, XB(st.s) + 9, 140, 'average ' + E.plus(st.s, 2), { 'class': 'strong halo' });
+  }
+  E.seg(document.getElementById('g-n'), [['50', '50'], ['500', '500'], ['5000', '5,000']], '500', function (v) { n = +v; draw(); }, 'Number of days');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

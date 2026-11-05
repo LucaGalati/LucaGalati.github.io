@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who owns the bus company? · Proportional Appropriation and Financial Statement Quality</title>
+<meta name="description" content="Side path of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2024): what Italian municipally owned entities are, how many there are, and how a city is tied to its companies as owner, client and appointer of the board.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .services { list-style: none; padding: 0; margin: .2rem 0 1rem; display: flex; flex-wrap: wrap; gap: .4rem .45rem; font-family: var(--sans); font-size: .8rem; }
+  .services li { border: 1px solid var(--border); border-radius: 3px; padding: .25em .6em; background: var(--surface); }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-entities.html">
+<lg-sitebar><noscript><a href="../../publication/proportional-appropriation-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What is a municipally owned entity?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Who owns the bus company? · <span class="nw">1 of 2</span></p>
+      <h2>The city’s companies</h2>
+      <p>Much of what an Italian town provides is run not by the town hall but by companies it owns, in whole or in part. The paper calls them <strong>municipally owned entities</strong>. With the public-management reforms of past decades, cities handed most of the services residents use to companies like these.</p>
+      <p>They add up: the state’s stakes in companies were worth nearly a tenth of Italy’s GDP by 2019, and in 2020 about two thirds of the active companies with a public stake were owned directly by local governments.</p>
+      <p>Because these services cannot simply stop, a company that keeps losing money ends up being rescued by its owner. That used to be the only link between a company’s losses and the city’s money: late, and all at once.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>How the city and the company are tied&nbsp;→</button>
+        <a class="btn return-link" href="01-rule.html#s2" data-primary-when="01-rule.html">← Return to the main path</a>
+      </div>
+      <p class="note">Services and the handover to owned companies: p. 348. Nearly 10% of GDP: Casamonti and Gottardo (2020); 67.5% of active entities with a public stake, as of 2020: ISTAT (2023); both cited on p. 348. The rescue as the old link: p. 344–345, 348.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">What they run, in the paper’s list</p>
+      <ul class="services">
+        <li>local public transport</li><li>water</li><li>waste</li><li>electricity and gas</li><li>road maintenance</li><li>children’s education</li><li>services for the elderly, the disabled and children</li><li>municipal police</li><li>building planning and control</li><li>recreation</li><li>libraries</li><li>cemeteries</li>
+      </ul>
+      <p class="stage-title">Active entities with a public stake, 2020</p>
+      <div class="fig" id="share-bar"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why does owning more than half matter?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Who owns the bus company? · <span class="nw">2 of 2</span></p>
+      <h2>Owner, client and appointer</h2>
+      <ul class="facts">
+        <li><b>Owner</b>the city is usually the largest shareholder.</li>
+        <li><b>Client</b>it is often the company’s main customer too, paying for the service under a contract, so its decisions weigh heavily on the company’s finances.</li>
+        <li><b>Appointer</b>the mayor can name and remove the directors, and when the city owns more than half, does so with very wide discretion. Below 50% the city has no formal say in how the company is run.</li>
+      </ul>
+      <p>Many directors come from politics, and because these companies employ many people their results are politically sensitive. A mayor serves five years, a board three, so every mayor gets to renew at least one board: a director who wants another term needs the favour of the mayor in office. The paper calls for shielding managers from politics.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="01-rule.html#s3" data-primary-when="01-rule.html">← Return to the main path</a>
+        <button class="btn" type="button" data-prev>← The city’s companies</button>
+      </div>
+      <p class="note">The three ties, political backgrounds and term lengths: p. 347 and note 2; no formal powers below 50%: p. 357; shielding appointments and bonuses from political influence: p. 358. The timeline is illustrative: the term lengths are the paper’s, the years and the letters are not.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Who names the board, over ten years <span class="tag">illustrative</span></p>
+      <div class="fig" id="terms"></div>
+      <p class="legend"><span><i class="sq far"></i>a board named by mayor A</span><span><i class="sq out"></i>a board named by mayor B</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/proportional-appropriation-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: 67.5% of active entities with a public stake are owned by local governments (ISTAT, cited p. 348) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('share-bar');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 64, x = W * 0.675;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Of the active entities in which the state holds a stake, 67.5% are owned directly by local governments (2020).' }, box);
+    S('rect', { x: 0, y: 6, width: x, height: 20, 'class': 'far-fill' }, root);
+    S('rect', { x: x, y: 6, width: W - x, height: 20, 'class': 'surface' }, root);
+    S('line', { x1: 0, x2: W, y1: 31, y2: 31, 'class': 'rule2' }, root);
+    S('line', { x1: 0, x2: W, y1: 34, y2: 34, 'class': 'rule2' }, root);
+    T(root, 0, 52, '67.5% owned directly by local governments', { 'class': 'strong' });
+    if (W >= 460) T(root, W, 52, 'other public owners', { 'text-anchor': 'end' });
+  }, { min: 290, max: 600 });
+})();
+
+/* ---------- slide 2: five-year mayors, three-year boards (p. 347); years and letters illustrative ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('terms');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var L = 0, R = 8, H = 214;
+    function X(y) { return L + (W - L - R) * y / 10; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Illustrative ten years: mayor A serves years 0 to 5 and mayor B years 5 to 10. Boards serve three years each: the boards starting in years 0 and 3 are named by mayor A, those starting in years 6 and 9 by mayor B, so each mayor renews at least one board.' }, box);
+    T(root, 0, 14, 'Mayor: five-year terms', { 'class': 'label' });
+    [[0, 5, 'mayor A'], [5, 10, 'mayor B']].forEach(function (m) {
+      S('rect', { x: X(m[0]) + 1, y: 22, width: X(m[1]) - X(m[0]) - 2, height: 28, 'class': 'surface' }, root);
+      T(root, (X(m[0]) + X(m[1])) / 2, 40, m[2], { 'text-anchor': 'middle', 'class': 'label' });
+    });
+    T(root, 0, 82, 'Board: three-year terms', { 'class': 'label' });
+    /* [from, to, label, named by A, label centre]: the second board's label sits left of the election line */
+    [[0, 3, 'named by A', true, 1.5], [3, 6, 'named by A', true, 4], [6, 9, 'named by B', false, 7.5], [9, 10, 'B', false, 9.5]].forEach(function (b) {
+      S('rect', { x: X(b[0]) + 1.5, y: 90.5, width: X(b[1]) - X(b[0]) - 3, height: 27, 'class': b[3] ? 'far-fill' : 'out-far' }, root);
+      T(root, X(b[4]), 108, W >= 480 && X(b[1]) - X(b[0]) > 80 ? b[2] : b[2].slice(-1), { 'text-anchor': 'middle', 'class': b[3] ? 'on-blue' : 'label' });
+    });
+    [5, 10].forEach(function (y) {
+      S('line', { x1: X(y), x2: X(y), y1: 20, y2: 124, 'class': 'ghost' }, root);
+      T(root, X(y) - 4, 138, 'election', { 'text-anchor': 'end' });
+    });
+    S('line', { x1: 0, x2: W - R, y1: 150, y2: 150, 'class': 'axis' }, root);
+    for (var y = 0; y <= 10; y += 1) {
+      S('line', { x1: X(y), x2: X(y), y1: 150, y2: 155, 'class': 'axis' }, root);
+      if (y % 2 === 0) T(root, X(y), 169, 'year ' + y, { 'text-anchor': y === 0 ? 'start' : y === 10 ? 'end' : 'middle' });
+    }
+    T(root, X(5), 196, W >= 480 ? 'Each five-year mayor renews at least one board:' : 'Each mayor renews at least one board:', { 'text-anchor': 'middle' });
+    T(root, X(5), 211, W >= 480 ? 'A in year 3, B in years 6 and 9.' : 'A in year 3, B in years 6 and 9.', { 'text-anchor': 'middle' });
+  }, { min: 290, max: 600 });
+})();
+</script>
+</body>
+</html>

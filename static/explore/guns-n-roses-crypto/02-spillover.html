@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The spillover · Guns ’N Roses</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Galati and Russo, Guns ’N Roses (Finance Research Letters, 2026): what a BEKK conditional covariance is and what the paper's before-and-after test of it can detect, how Bitcoin’s co-movement with nine other tokens changed after the shot, and what to take away.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .closing { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; align-items: center; }
+  @media (min-width: 900px) { .closing { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } }
+  #end-rose { max-width: 21rem; margin: 0 auto; }
+</style>
+</head>
+<body data-deck="02-spillover.html">
+<lg-sitebar><noscript><a href="../../publication/guns-n-roses-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What does it mean to move together?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The spillover · 1 of 3</p>
+    <h2>A memory for moving together</h2>
+    <div class="two">
+    <div>
+      <p>The paper’s main hypothesis is the authors’ second question: after the shot, did the tokens move more tightly together?</p>
+      <p>To follow that minute by minute it uses a BEKK model. Each minute the model updates the <strong>conditional covariance</strong> of two tokens from a long-run level, last minute’s two surprises multiplied together (positive when both jumped the same way; weight <span class="num">a</span>) and last minute’s value (weight <span class="num">b</span>).</p>
+      <p class="eq">H<sub>t</sub> = (1 − a − b) · H̄ + a · e<sub>t−1</sub> e′<sub>t−1</sub> + b · H<sub>t−1</sub></p>
+      <p>The test compares the line’s average before the shot with its average after. In the toy, the split in the middle plays the shot. Can one big jolt move an average? What has to change?</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>Bitcoin and the other nine&nbsp;→</button>
+      </div>
+      <p class="note">Equation (2), the scalar BEKK with variance targeting: H̄ is the whole sample’s covariance; a and b are positive, sum to less than 1 and stay the same over the whole sample (Section 3.2). The test: eq. (3), Section 4.1. Toy: surprises, jolt, split, a and b are illustrative values, not the paper’s estimates.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Two tokens, 4,000 minutes, split in the middle <span class="tag">toy</span></p>
+      <div class="ctl"><span>After the split, the surprises are</span><span class="seg" id="bk-rho"></span></div>
+      <label class="ctl check" for="bk-jolt"><input type="checkbox" id="bk-jolt" checked>One big shared jolt, 300 minutes after the split</label>
+      <div class="fig" id="bekk"></div>
+      <label class="ctl" for="bk-a">Reaction to each shared surprise, a (b stays at 0.88)</label>
+      <input type="range" id="bk-a" min="0.02" max="0.08" step="0.01" value="0.06">
+      <p class="readout h3l" id="bk-read" aria-live="polite"></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did Bitcoin’s moves spread further?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The spillover · 2 of 3</p>
+    <h2>In Table 1: closer to Bitcoin for five, further for two</h2>
+    <div class="two">
+    <div>
+      <p>For each of the other nine tokens, the paper averages its BEKK covariance with Bitcoin over the week before the shot and over the week after, and tests the difference. Its <span class="num">t</span> measures how far apart the two averages are relative to their noise; beyond about 3.3 clears the strict bar the paper sets, 0.1%.</p>
+      <p>Five moved more closely with Bitcoin: XRP most, then Shiba Inu, Dogecoin, Solana and Ethereum. Two moved less closely, Avalanche and Chainlink; Polkadot and Litecoin barely changed. The paper reads the rises as contagion, a jolt in one token reaching the others more easily, and notes that it was uneven, perhaps reflecting differences in fundamentals, liquidity and investor base.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>What to take away&nbsp;→</button>
+      </div>
+      <p class="note">Table 1: mean BEKK covariance with Bitcoin, 6–13 and 13–20 July, and the t-statistic; within each group, pairs are ordered by the change, computed from Table 1. The bar: Section 3.2 (α = 0.001, two-sided: |t| above about 3.29, the standard normal value). Litecoin’s t = −2.07 clears 5% but not that bar. The reading: pp. 3–4.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="pairs"></div>
+      <p class="legend"><span><i class="dt far"></i>week before</span><span><i class="dt near"></i>week after</span></p>
+      <p class="readout h2l" id="pairs-read" aria-live="polite"></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner closing">
+    <div>
+      <p class="kicker">Deck 2 · The spillover · 3 of 3</p>
+      <h2>What to take away</h2>
+      <p class="closer">In the week after the shot, the CAR lines of all ten tokens sat higher than in the week before: about 15 percentage points higher on average.</p>
+      <ol class="takeaways">
+        <li>The gains were universal but uneven: about 4 to 5 points for Polkadot and Avalanche, about 31 for XRP.</li>
+        <li>In the paper’s reading, one direction across very different tokens is consistent with information-driven herding, not token-by-token revaluation; narrative-driven tokens gained most.</li>
+        <li>In Table 1, Bitcoin’s co-movement rose with five of the other nine tokens, fell with two and held with two, which the paper reads as contagion, unevenly spread.</li>
+      </ol>
+      <p class="caveat">One event, one exchange, one week either side, no comparison market. XRP had news of its own; footnote 5 reports that the results stay qualitatively the same without XRP and over shorter and longer windows.</p>
+      <p class="prompt">Most studies of crypto contagion follow bad news; this shock was read as good news. Would bad news line crypto up the same way, and how long does such a herd last?</p>
+      <div class="actions">
+        <a class="btn primary" href="01-shot.html#s4">Explore the ten again&nbsp;→</a>
+        <a class="btn" href="../../publication/guns-n-roses-crypto/">Read the paper</a>
+        <button class="btn" type="button" data-map>Map of this explorable</button>
+      </div>
+      <p class="note">Side paths you may have skipped: <a href="03-measure.html#s1">what counts as abnormal</a> · <a href="03-measure.html#s2">what after-minus-before compares</a> · <a href="04-limits.html#s1">what one shot can show</a>. Numbers: Tables 1 and 2; checks: footnote 5.</p>
+    </div>
+    <div>
+      <div class="fig" id="end-rose"></div>
+      <p class="caption" style="text-align:center">Petal area proportional to each gain (Table 2).</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/guns-n-roses-crypto/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the scalar BEKK of equation (2) and the paper's before/after test, as a toy ----------
+   4,000 toy minutes split in the middle. Before the split the two tokens' surprises share a direction with
+   correlation 0.5; after it the reader picks 0.5, 0.85 or 0.15. H̄ is the whole sample's average product of
+   surprises (variance targeting), a is set by the reader, b = 0.88. The test: the line's mean before vs after. */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 4000, SPLIT = 2000, JOLT = 2300, JOLT_SIZE = 5, SD = 0.8, B = 0.88, RHO0 = 0.5;
+  var RHO1 = { same: 0.5, more: 0.85, less: 0.15 };
+  /* seeded surprises, so the toy draws the same afternoon every time */
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  var r = rng(1307), G1 = [], G2 = [];
+  for (var i = 0; i < N; i++) {
+    var u = Math.max(1e-9, r()), v = r(), m = Math.sqrt(-2 * Math.log(u));
+    G1.push(m * Math.cos(2 * Math.PI * v)); G2.push(m * Math.sin(2 * Math.PI * v));
+  }
+  var box = document.getElementById('bekk'), ia = document.getElementById('bk-a'), jolt = document.getElementById('bk-jolt'), read = document.getElementById('bk-read');
+  var mode = 'same', geo = null, YMIN = -0.2, YMAX = 1.0;
+  function mean(arr, a, b) { var s = 0; for (var t = a; t < b; t++) s += arr[t]; return s / (b - a); }
+  function series(rho1, withJolt, a) {
+    var p = [], h = [], t;
+    for (t = 0; t < N; t++) {
+      var rho = t < SPLIT ? RHO0 : rho1, e1 = SD * G1[t], e2 = SD * (rho * G1[t] + Math.sqrt(1 - rho * rho) * G2[t]);
+      if (withJolt && t === JOLT) { e1 = JOLT_SIZE; e2 = JOLT_SIZE; }
+      p.push(e1 * e2);
+    }
+    var hbar = mean(p, 0, N);
+    h.push(hbar);
+    for (t = 1; t < N; t++) h.push((1 - a - B) * hbar + a * p[t - 1] + B * h[t - 1]);
+    return { h: h, pre: mean(h, 0, SPLIT), post: mean(h, SPLIT, N) };
+  }
+  function f2(x) { return (x < -0.005 ? '−' : '') + Math.abs(x).toFixed(2); }
+  function build(W) {
+    box.innerHTML = '';
+    var L = 36, R = 8, TOP = 22, ph = 190, H = TOP + ph + 24;
+    function X(t) { return L + (W - L - R) * t / N; }
+    function Y(v) { return TOP + ph * (YMAX - v) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    var clip = S('clipPath', { id: 'bk-clip' }, S('defs', {}, root));
+    S('rect', { x: L, y: TOP, width: W - L - R, height: ph }, clip);
+    S('rect', { x: X(0), y: TOP, width: X(SPLIT) - X(0), height: ph, 'class': 'week-before' }, root);
+    S('rect', { x: X(SPLIT), y: TOP, width: X(N) - X(SPLIT), height: ph, 'class': 'week-after' }, root);
+    [0, 0.5, 1].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, v === 0 ? '0' : v.toFixed(1), { 'text-anchor': 'end' });
+    });
+    T(root, 0, TOP - 9, W < 420 ? 'Conditional covariance' : 'Conditional covariance, minute by minute', { 'class': 'label' });
+    S('line', { x1: X(SPLIT), x2: X(SPLIT), y1: TOP, y2: TOP + ph, 'class': 'event' }, root);
+    [0, 1000, 2000, 3000, 4000].forEach(function (t) {
+      T(root, X(t), H - 6, t === 4000 ? (W < 420 ? '4,000' : '4,000 min') : t === 0 ? '0' : t.toLocaleString('en'), { 'text-anchor': t === 0 ? 'start' : t === 4000 ? 'end' : 'middle' });
+    });
+    geo = { X: X, Y: Y, W: W, L: L, R: R, TOP: TOP, ph: ph, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var a = +ia.value, rho1 = RHO1[mode], s = series(rho1, jolt.checked, a);
+    var d = s.post - s.pre, half = Math.log(0.5) / Math.log(a + B);
+    ia.setAttribute('aria-valuetext', 'a = ' + a.toFixed(2));
+    var diff = Math.abs(d) < 0.03 ? ' (' + (d < 0 ? '−' : '+') + Math.abs(d).toFixed(2) + ': about the same)' : ' (' + (d < 0 ? '−' : '+') + Math.abs(d).toFixed(2) + ')';
+    var txt = '<strong>Average covariance ' + f2(s.pre) + ' before the split, ' + f2(s.post) + ' after</strong>' + diff + '. ';
+    if (jolt.checked) {
+      var plain = series(rho1, false, a), peak = s.h[JOLT + 1];
+      txt += 'The jolt lifts the line to ' + f2(peak) + ' but halves in about ' + Math.round(half) + ' minutes: it adds only <span class="nw">' + f2(s.post - plain.post) + '</span> to the average after.';
+    } else {
+      txt += 'With a + b = ' + (a + B).toFixed(2) + ', any push halves in about ' + Math.round(half) + ' minutes; only a lasting change in the surprises moves an average.';
+    }
+    read.innerHTML = txt;
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, cols = Math.max(1, Math.round(geo.W - geo.L - geo.R)), dd = '';
+    g.innerHTML = '';
+    /* one hairline per pixel column, from the lowest to the highest value of the minutes it covers */
+    for (var c = 0; c < cols; c++) {
+      var t0 = Math.floor(c * N / cols), t1 = Math.max(t0 + 1, Math.floor((c + 1) * N / cols)), lo = Infinity, hi = -Infinity;
+      for (var t = t0; t < t1; t++) { if (s.h[t] < lo) lo = s.h[t]; if (s.h[t] > hi) hi = s.h[t]; }
+      var x = (geo.L + c + 0.5).toFixed(1), y0 = Y(hi), y1 = Math.max(Y(lo), y0 + 0.8);
+      dd += 'M' + x + ',' + y0.toFixed(1) + 'V' + y1.toFixed(1);
+    }
+    S('path', { d: dd, 'class': 'cov-band', 'clip-path': 'url(#bk-clip)' }, g);
+    /* the two averages the test compares, blue before the split and gold after */
+    S('line', { x1: X(60), x2: X(SPLIT - 60), y1: Y(s.pre), y2: Y(s.pre), 'class': 'lvl-before' }, g);
+    S('line', { x1: X(SPLIT + 60), x2: X(N - 60), y1: Y(s.post), y2: Y(s.post), 'class': 'lvl-after' }, g);
+    /* the averages are written in the clear space below the band, where the line never reaches */
+    var yl = Y(-0.12), word = geo.W < 420 ? 'avg ' : 'average ';
+    S('line', { x1: X(0) + 6, x2: X(0) + 20, y1: yl - 4, y2: yl - 4, 'class': 'lvl-before' }, g);
+    T(g, X(0) + 26, yl, word + f2(s.pre), { 'class': 'label halo' });
+    S('line', { x1: X(N) - 20, x2: X(N) - 6, y1: yl - 4, y2: yl - 4, 'class': 'lvl-after' }, g);
+    T(g, X(N) - 26, yl, word + f2(s.post), { 'class': 'label halo', 'text-anchor': 'end' });
+    T(g, X(SPLIT) - 5, geo.TOP + 12, 'split', { 'class': 'halo', 'text-anchor': 'end' });
+    if (jolt.checked) {
+      S('line', { x1: X(JOLT), x2: X(JOLT), y1: geo.TOP + 16, y2: geo.TOP + 24, 'class': 'jolt' }, g);
+      T(g, X(JOLT) + 4, geo.TOP + 12, 'toy jolt' + (s.h[JOLT + 1] > YMAX ? (geo.W < 420 ? ', ' : ', peak ') + f2(s.h[JOLT + 1]) : ''), { 'class': 'halo' });
+    }
+    geo.root.setAttribute('aria-label', 'Toy conditional covariance of two tokens over 4,000 minutes, split in the middle. After the split the surprises are ' + { same: 'as shared as before', more: 'more shared', less: 'less shared' }[mode] + (jolt.checked ? ', with one big shared jolt 300 minutes after the split' : '') + '. Average ' + f2(s.pre) + ' before the split and ' + f2(s.post) + ' after.');
+  }
+  E.seg(document.getElementById('bk-rho'), [['same', 'as before'], ['more', 'more shared'], ['less', 'less shared']], 'same', function (k) { mode = k; draw(); }, 'How shared the surprises are after the split');
+  ia.addEventListener('input', draw);
+  jolt.addEventListener('change', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: Bitcoin and the other nine, before and after (Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, NAMES = E.NAMES;
+  /* [pre mean, post mean, t] */
+  var T1 = {
+    AVAX: [0.6140, 0.5808, -23.72], DOGE: [0.7337, 0.7709, 32.82], DOT: [0.3889, 0.3873, -0.79],
+    ETH: [0.8139, 0.8405, 39.39], LINK: [0.5596, 0.4787, -40.96], LTC: [0.6633, 0.6607, -2.07],
+    SHIB: [0.6427, 0.6874, 34.29], SOL: [0.7102, 0.7389, 29.79], XRP: [0.3016, 0.4478, 69.21]
+  };
+  function verdict(k) { var t = T1[k][2]; return Math.abs(t) < 3.29 ? 'flat' : t > 0 ? 'up' : 'down'; }
+  var GROUPS = [['up', 'Closer to Bitcoin after the shot'], ['flat', 'No clear change at the 0.1% bar'], ['down', 'Further from Bitcoin after the shot']];
+  var box = document.getElementById('pairs'), read = document.getElementById('pairs-read');
+  var sel = 'XRP', rows = {};
+  function f4(v) { return v.toFixed(4); }
+  function tt(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(1); }
+  function readout() {
+    var d = T1[sel], v = verdict(sel);
+    read.innerHTML = '<strong>Bitcoin and ' + NAMES[sel] + ':</strong> ' + f4(d[0]) + ' before, ' + f4(d[1]) + ' after; t = ' + tt(d[2]) + ', ' +
+      (v === 'flat' ? (Math.abs(d[2]) >= 1.96 ? 'significant at 5% but not at the paper’s 0.1% bar.' : 'no significant change.') : 'clears the paper’s 0.1% bar.');
+    for (var k in rows) { rows[k].hit.setAttribute('class', 'row-hit' + (k === sel ? ' on' : '')); rows[k].g.setAttribute('aria-pressed', k === sel ? 'true' : 'false'); }
+  }
+  E.fit(box, function (W) {
+    box.innerHTML = ''; rows = {};
+    var L = 50, R = 74, rowH = 24, head = 22, TOP = 20, XMIN = 0.25, XMAX = 0.9;
+    function X(v) { return L + (W - L - R) * (v - XMIN) / (XMAX - XMIN); }
+    var H = TOP + GROUPS.length * head + 9 * rowH + 26;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group',
+      'aria-label': 'Mean BEKK covariance of Bitcoin with each of nine tokens, week before and week after the shot (Table 1). Closer after: XRP 0.30 to 0.45, Shiba Inu 0.64 to 0.69, Dogecoin 0.73 to 0.77, Solana 0.71 to 0.74, Ethereum 0.81 to 0.84. No clear change: Polkadot, Litecoin. Further after: Avalanche 0.61 to 0.58, Chainlink 0.56 to 0.48. Each row is a button.' }, box);
+    T(root, 0, 12, W < 420 ? 'Mean covariance with Bitcoin (Table 1)' : 'Mean BEKK covariance with Bitcoin, each week (Table 1)', { 'class': 'label' });
+    [0.3, 0.5, 0.7, 0.9].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 22, 'class': 'grid' }, root);
+      T(root, X(v), H - 6, v.toFixed(1), { 'text-anchor': 'middle' });
+    });
+    var y = TOP;
+    GROUPS.forEach(function (gr) {
+      var ks = Object.keys(T1).filter(function (k) { return verdict(k) === gr[0]; }).sort(function (a, b) { return (T1[b][1] - T1[b][0]) - (T1[a][1] - T1[a][0]); });
+      T(root, 0, y + 15, gr[1], { 'class': 'halo' });
+      y += head;
+      ks.forEach(function (k) {
+        var d = T1[k], cy = y + rowH / 2;
+        var g = S('g', { role: 'button', tabindex: '0', 'aria-label': 'Bitcoin and ' + NAMES[k] + ': ' + f4(d[0]) + ' before, ' + f4(d[1]) + ' after, t = ' + tt(d[2]) }, root);
+        var hit = S('rect', { x: 0, y: y + 1, width: W, height: rowH - 2, rx: 3, 'class': 'row-hit' }, g);
+        T(g, 6, cy + 4, k, { 'class': 'label' });
+        S('line', { x1: X(d[0]), x2: X(d[1]), y1: cy, y2: cy, 'class': 'stem' }, g);
+        S('circle', { cx: X(d[0]), cy: cy, r: 4.5, 'class': 'far-fill' }, g);
+        S('circle', { cx: X(d[1]), cy: cy, r: 5, 'class': 'near-fill' }, g);
+        T(g, W - 2, cy + 4, 't = ' + tt(d[2]), { 'text-anchor': 'end', 'class': verdict(k) === 'flat' ? '' : 'strong' });
+        function pick() { sel = k; readout(); }
+        g.addEventListener('click', pick);
+        g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+        rows[k] = { g: g, hit: hit };
+        y += rowH;
+      });
+    });
+    readout();
+  }, { min: 300, max: 600 });
+  readout();
+})();
+
+/* ---------- slide 3: the rose again, bloomed ---------- */
+(function () {
+  Explore.rose(document.getElementById('end-rose'), { bloom: true, max: 340 });
+})();
+</script>
+</body>
+</html>

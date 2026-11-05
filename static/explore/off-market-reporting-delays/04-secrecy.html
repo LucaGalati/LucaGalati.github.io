@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why secrecy can pay · Reporting Delays and the Information Content of Off-Market Trades</title>
+<meta name="description" content="Side path of an explorable explanation of Frino, Galati and Gerace, Reporting Delays and the Information Content of Off-Market Trades: a toy version of the Grossman and Stiglitz argument that information has to pay for itself, and what a publication delay does to that.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-secrecy.html">
+<lg-sitebar><noscript><a href="../../publication/off-market-reporting-delays/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why would secrecy make prices smarter?">
+  <div class="inner">
+    <p class="kicker">Side path · Why secrecy can pay · 1 of 1</p>
+    <h2>Information has to pay for itself</h2>
+    <div class="two">
+      <div>
+        <p>Picture a trader deciding whether to pay for research into where the FTSE 100 is heading. What she learns is worth something only to whoever trades on it before everyone else knows. If her block is published an hour after she trades, she keeps most of that value; if it is published at once, others see her trade and most of the value is gone.</p>
+        <p>Move the cost of the research and switch the rule. When research pays, she trades, and the price learns the news, an hour late. When it does not pay, nobody does the research, and no block ever brings that news to the price.</p>
+        <p>This is the textbook argument of Grossman and Stiglitz (1980), which the paper’s conclusion invokes: prices must stay noisy enough for information to pay for itself.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-hour.html#s4">← Return to the main path</a>
+        </div>
+        <p class="note">Toy numbers, chosen for illustration: the news is worth 10 to whoever trades on it first; with the hour she keeps 8, at once 2. The paper estimates none of them; it tests only what the argument predicts for blocks (Table 4, p. 2062).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">One trader’s decision <span class="tag">toy, textbook idea</span></p>
+        <div class="ctl"><span>Her block is published</span><div class="seg" id="gs-mode"></div></div>
+        <div class="fig" id="gs-chart"></div>
+        <label class="ctl" for="gs-cost">Cost of the research, toy units</label>
+        <input type="range" id="gs-cost" min="0" max="10" step="0.5" value="5">
+        <p class="readout" id="gs-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/off-market-reporting-delays/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- the Grossman-Stiglitz toy: keep what you learn, or do not learn it ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var VALUE = 10, KEEP = { hour: 8, now: 2 };   /* toy */
+  var box = document.getElementById('gs-chart'), slider = document.getElementById('gs-cost'), read = document.getElementById('gs-read');
+  var mode = 'hour', geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 214, xL = W < 440 ? 96 : 120, xMax = W - xL - 40;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy decision: what the trader keeps from her news against what the research costs, on a scale from 0 to 10, and below it a timeline showing when the price learns the news.' }, box);
+    [0, 5, 10].forEach(function (v) {
+      var x = xL + xMax * v / VALUE;
+      S('line', { x1: x, x2: x, y1: 6, y2: 84, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, x, 98, String(v), { 'text-anchor': 'middle' });
+    });
+    var x0 = 8, x1 = W - 14, yT = 160;
+    function X(m) { return x0 + (x1 - x0) * (m + 15) / 105; }   /* minutes from the handshake, −15 to +90 */
+    S('line', { x1: x0, x2: x1, y1: yT, y2: yT, 'class': 'axis' }, root);
+    T(root, x0, yT - 30, 'When does the price learn the news?', { 'class': 'label' });
+    geo = { W: W, xL: xL, xMax: xMax, X: X, yT: yT, fill: E.hatch(root), dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var c = +slider.value, keep = KEEP[mode], worth = keep > c, cs = c % 1 ? c.toFixed(1) : String(c);
+    slider.setAttribute('aria-valuetext', cs + ' toy units');
+    var when;
+    if (worth && mode === 'hour') { read.innerHTML = '<strong>Worth it:</strong> she keeps ' + keep + ' and the research costs ' + cs + '. She trades a block, and the price learns the news when the block is published, an hour after her trade.'; when = 60; }
+    else if (worth) { read.innerHTML = '<strong>Worth it even at once:</strong> she keeps ' + keep + ' for a cost of ' + cs + '. Cheap news needs no darkness: the price learns it the moment the block is done.'; when = 0; }
+    else if (mode === 'now' && KEEP.hour > c) { read.innerHTML = '<strong>Not worth it:</strong> she would keep ' + keep + ' and the research costs ' + cs + '. With the hour she would have done it; at once, nobody does, and no block ever brings this news to the price.'; when = null; }
+    else { read.innerHTML = '<strong>Not worth it even with the hour:</strong> she would keep ' + keep + ' for a cost of ' + cs + '. Some news is too dear to find out under any rule.'; when = null; }
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, yT = geo.yT, xL = geo.xL, xm = geo.xMax;
+    g.innerHTML = '';
+    T(g, 0, 27, 'She keeps', { 'class': 'label' });
+    S('rect', { x: xL, y: 16, width: xm * keep / VALUE, height: 16, 'class': 'text-fill' }, g);
+    T(g, xL + xm * keep / VALUE + 6, 28, String(keep), { 'class': 'strong' });
+    T(g, 0, 67, 'Research costs', { 'class': 'label' });
+    S('rect', { x: xL, y: 56, width: Math.max(1, xm * c / VALUE), height: 16, 'class': 'hollow-muted' }, g);
+    T(g, xL + xm * c / VALUE + 6, 68, cs, { 'class': 'strong' });
+    var pub = worth && mode === 'hour' ? 60 : 0;   /* no research, no block, no hour */
+    if (pub > 0) {
+      S('rect', { x: X(0), y: yT - 8, width: X(60) - X(0), height: 16, 'class': 'hour-bg' }, g);
+      S('rect', { x: X(0), y: yT - 8, width: X(60) - X(0), height: 16, fill: geo.fill }, g);
+      S('rect', { x: X(0), y: yT - 8, width: X(60) - X(0), height: 16, 'class': 'hour-edge' }, g);
+    }
+    S('circle', { cx: X(0), cy: yT, r: 5, 'class': worth ? 'text-fill' : 'hollow-muted' }, g);
+    T(g, X(0), yT + 22, !worth ? 'no block' : pub ? 'her block' : 'her block, published at once', { 'text-anchor': pub || !worth ? 'middle' : 'start' });
+    if (pub > 0) { S('circle', { cx: X(pub), cy: yT, r: 5, 'class': 'hollow' }, g); T(g, X(pub), yT + 22, 'published', { 'text-anchor': 'middle' }); }
+    if (when !== null) {
+      var xw = X(when);
+      S('line', { x1: xw, x2: xw, y1: yT - 22, y2: yT - 9, 'class': 'cursor' }, g);
+      T(g, xw + (when > 30 ? -6 : 6), yT - 12, 'price learns', { 'text-anchor': when > 30 ? 'end' : 'start', 'class': 'strong halo' });
+    } else T(g, geo.W - 14, yT - 12, 'never, through a block', { 'text-anchor': 'end', 'class': 'strong halo' });
+  }
+  E.seg(document.getElementById('gs-mode'), [['hour', 'After an hour'], ['now', 'At once']], 'hour', function (k) { mode = k; draw(); }, 'Her block is published');
+  slider.setAttribute('aria-label', 'Cost of the research, toy units from 0 to 10');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

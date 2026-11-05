@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three tests · Elections and Earnings Management</title>
+<meta name="description" content="Side path of an explorable explanation of Capalbo and Galati, Elections and Earnings Management: Further Evidence from Benford’s Law: why the paper tests two digits, how the MAD adds up ninety gaps, how a Z statistic is computed, and what a third test, Kolmogorov–Smirnov, finds.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-tests.html">
+<lg-sitebar><noscript><a href="../../publication/elections-benford/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How does one number judge ninety bins?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Three tests · 1 of 3</p>
+      <h2>One number for ninety gaps</h2>
+      <p>Two digits beat one for more than bluntness: people asked to invent numbers can produce first digits that fit the law surprisingly well (p. 118). So, following Nigrini (2020), the paper judges all ninety two-digit bins at once.</p>
+      <p>The mean absolute deviation (MAD) adds up, bin by bin, the gap between the share observed and the share expected, and divides by ninety. The paper’s tables print only some of the bins, for reasons of space, but the MAD fixes the total of all ninety gaps, so the part held by the other bins can be worked out.</p>
+      <p>Switch samples: in each, the printed bins carry well under half of the total; the rest is spread over the many bins not printed.</p>
+      <div class="actions">
+        <a class="btn return-link" href="02-vote.html#s2" data-primary-when="0">← Return to the main path</a>
+        <button class="btn" type="button" data-next>How a Z statistic works&nbsp;→</button>
+      </div>
+      <p class="note">Why two digits: pp. 117–118. MAD formula: p. 118. Gaps of the printed bins computed from the counts in Tables 3, 4 and 5, whose notes say they show part of the bins; total = 90 × MAD; the other bins are the difference, computed.</p>
+    </div>
+    <div class="stage">
+      <div class="ctl"><span class="pair"><span>Sample</span><span class="seg" id="gap-sample"></span></span></div>
+      <div class="fig" id="gap-chart"></div>
+      <p class="legend"><span><i class="sq near"></i>a printed election-year bin</span><span><i class="sq far"></i>a printed bin, other or all years</span><span><i class="sq rest"></i>the bins the paper does not print</span></p>
+      <p class="readout" id="gap-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How is a Z statistic computed?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Three tests · 2 of 3</p>
+      <h2>A Z statistic, step by step</h2>
+      <p>A Z statistic asks how surprising one bin’s gap is, given how many figures there are. Its yardstick is the gap that chance alone would typically produce in a sample of that size: the rarer the bin and the smaller the sample, the larger that typical gap.</p>
+      <p>Pick any bin the paper prints for the election years. The steps are the paper’s formula filled in with that bin’s numbers.</p>
+      <p>The small correction, one over twice the sample size, allows for counting in whole figures; the paper drops it when it would be larger than the gap itself.</p>
+      <div class="actions">
+        <a class="btn return-link" href="02-vote.html#s3" data-primary-when="0">← Return to the main path</a>
+        <button class="btn" type="button" data-next>Does a third test agree?&nbsp;→</button>
+      </div>
+      <p class="note">Formula and bars of 1.64, 1.96 and 2.57: p. 119. Counts and Z: Table 5; the steps fill the paper’s formula with the table’s counts.</p>
+    </div>
+    <div class="stage">
+      <label class="ctl" for="z-i">Choose an election-year bin</label>
+      <input type="range" id="z-i" min="0" max="19" step="1" value="0">
+      <ol class="steps" id="z-steps" aria-live="polite"></ol>
+      <div class="fig" id="z-chart"></div>
+      <p class="readout" id="z-read"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Does a third test, Kolmogorov–Smirnov, agree?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Three tests · 3 of 3</p>
+      <h2>A third test, a different answer</h2>
+      <p>A third test, Kolmogorov–Smirnov, looks at the shape as a whole. Walk along the bins from 10 to 99 keeping a running total: the share of figures starting with 10, then with 10 or 11, and so on. Benford’s law gives one running total and the data another; the test statistic is the widest gap between them.</p>
+      <p>For 490 figures the paper sets the 5% bar at 1.36 ÷ √490 = 0.0614. The widest gap in the election-year figures is 0.0216, about a third of that. On this test alone, the paper notes, there might be no sign of earnings management, a result in contrast with the MAD (p. 127).</p>
+      <p>The paper leaves this disagreement among its tests to future research (pp. 120, 129). It also warns that such tests grow stricter as samples grow: the lower row shows how the bar falls.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="02-vote.html#s6">← Return to the main path</a>
+      </div>
+      <p class="note">K-S statistic, critical value and the paper’s reading: pp. 119–120, 127; the open question: pp. 120, 129. Figure 4’s curves are not redrawn here. The bar at other sizes, 1.36 ÷ √n, is illustrative arithmetic.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">The widest gap, against the 5% bar</p>
+      <div class="fig" id="ks-chart"></div>
+      <p class="legend"><span><i class="dt near"></i>widest gap, election years: 0.0216</span><span><i class="ln link"></i>5% bar, 1.36 ÷ √n</span><span><i class="sq normal"></i>below the bar</span><span><i class="sq bad"></i>past the bar</span></p>
+      <label class="ctl" for="ks-n">Sample size the bar is set for</label>
+      <input type="range" id="ks-n" min="0" max="1000" step="1" value="314">
+      <p class="readout" id="ks-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/elections-benford/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the ninety gaps behind each MAD, printed bins and the rest (Tables 3–5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, D = E.DATA, XMAX = 0.33;
+  var box = document.getElementById('gap-chart'), read = document.getElementById('gap-read');
+  /* election years first only once the reader has bet on their MAD (deck 2, slide 2): the door from deck 1 comes earlier */
+  var cur = E.load('bet-mad') ? 'elec' : 'all', geo = null;
+  function parts(k) {
+    var data = D[k], gaps = data.rows.map(function (r) { return [r[0], Math.abs(r[1] / data.n - E.benford(r[0]))]; });
+    var printed = gaps.reduce(function (s, g) { return s + g[1]; }, 0), total = 90 * data.mad;
+    return { data: data, gaps: gaps, printed: printed, total: total, rest: total - printed };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var L = 2, R = 8, H = 150;
+    function X(v) { return L + (W - L - R) * v / XMAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The ninety gaps behind each MAD laid end to end. Election years: 0.319 in all, 0.114 from the 20 printed bins and 0.205 from the 70 others; MAD 0.319 ÷ 90 = 0.00354. Other years: 0.142 in all, MAD 0.00158. All years: 0.141, MAD 0.00157.' }, box);
+    [0, 0.1, 0.2, 0.3].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: 34, y2: 96, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), 112, v ? v.toFixed(1) : '0', { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    T(root, W - R, 128, 'sum of the ninety gaps', { 'text-anchor': 'end' });
+    geo = { X: X, W: W, H: H, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var p = parts(cur), data = p.data;
+    read.innerHTML = '<strong>' + data.label + ':</strong> the ninety gaps add up to ' + p.total.toFixed(3) + ' (90 × ' + data.mad.toFixed(5) + '). The ' + data.rows.length + ' printed bins give ' + p.printed.toFixed(3) +
+      '; the ' + (90 - data.rows.length) + ' others ' + p.rest.toFixed(3) + ', about ' + (p.rest / (90 - data.rows.length)).toFixed(4) + ' each. MAD = ' + p.total.toFixed(3) + ' ÷ 90 = ' + data.mad.toFixed(5) + '.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, x = 0, cls = cur === 'elec' ? 'near-fill' : 'far-fill'; g.innerHTML = '';
+    T(g, 0, 14, data.label + ', ' + E.thousands(data.n) + ' figures: MAD ' + data.mad.toFixed(5), { 'class': 'label' });
+    p.gaps.forEach(function (gp) {
+      if (gp[1] <= 0) return;
+      S('rect', { x: X(x), y: 40, width: Math.max(0.5, X(x + gp[1]) - X(x)), height: 30, 'class': cls }, g);
+      S('line', { x1: X(x + gp[1]), x2: X(x + gp[1]), y1: 40, y2: 70, 'class': 'sep' }, g);
+      x += gp[1];
+    });
+    S('rect', { x: X(x) + 1, y: 40.5, width: Math.max(1, X(x + p.rest) - X(x) - 1.5), height: 29, 'class': 'rest' }, g);
+    var lab2 = 'not printed ' + p.rest.toFixed(3);
+    T(g, X(0), 33, 'printed ' + p.printed.toFixed(3), { 'class': 'strong' });
+    T(g, Math.max(X(p.printed) + 4 + E.textW('printed 0.000'), X(p.total)), 33, lab2, { 'text-anchor': 'end', 'class': 'strong' });
+  }
+  E.seg(document.getElementById('gap-sample'), [['elec', 'Election years'], ['other', 'Other years'], ['all', 'All years']], cur, function (k) { cur = k; draw(); }, 'Sample');
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: the paper's Z formula filled in for one bin of Table 5 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, D = E.DATA.elec, N = D.n, ZMAX = 3;
+  var slider = document.getElementById('z-i'), steps = document.getElementById('z-steps'), box = document.getElementById('z-chart'), read = document.getElementById('z-read');
+  var geo = null;
+  /* start on bin 88 only after the bet on deck 2, slide 3, which it would otherwise answer */
+  if (E.load('bet-bins')) slider.value = '17';
+  function f4(x) { return x.toFixed(4); }
+  function calc() {
+    var r = D.rows[+slider.value], d = r[0], c = r[1], q = E.benford(d), p = c / N, gap = Math.abs(p - q), corr = 1 / (2 * N);
+    var used = corr < gap, num = used ? gap - corr : gap, unit = Math.sqrt(q * (1 - q) / N);
+    return { d: d, c: c, q: q, p: p, gap: gap, corr: corr, used: used, num: num, unit: unit, z: num / unit, printed: r[2] };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var L = 2, R = 14, H = 74;
+    function X(z) { return L + (W - L - R) * z / ZMAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'The bin’s corrected gap measured in chance units, against the bars of 1.64, 1.96 and 2.57.' }, box);
+    [0, 1, 2, 3].forEach(function (z) {
+      if (z !== 2) S('line', { x1: X(z), x2: X(z), y1: 18, y2: 46, 'class': z ? 'grid' : 'axis' }, root); /* at 2 the 1.96 bar stands */
+      T(root, X(z), 62, String(z), { 'text-anchor': z === 0 ? 'start' : z === ZMAX ? 'end' : 'middle' });
+    });
+    [[1.64, '10%'], [1.96, '5%'], [2.57, '1%']].forEach(function (b) {
+      S('line', { x1: X(b[0]), x2: X(b[0]), y1: 14, y2: 50, 'class': 'axis', 'stroke-dasharray': '3 2' }, root);
+      T(root, X(b[0]), 10, b[1], { 'text-anchor': 'middle' });
+    });
+    geo = { X: X, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var k = calc();
+    slider.setAttribute('aria-valuetext', 'first two digits ' + k.d);
+    steps.innerHTML =
+      '<li><span>Observed share: ' + k.c + ' ÷ 490</span><span class="v">' + f4(k.p) + '</span></li>' +
+      '<li><span>Benford’s share: log<sub>10</sub>(1 + 1/' + k.d + ')</span><span class="v">' + f4(k.q) + '</span></li>' +
+      '<li><span>Gap between them</span><span class="v">' + f4(k.gap) + '</span></li>' +
+      (k.used ? '<li><span>Minus 1 ÷ (2 × 490)</span><span class="v">− ' + f4(k.corr) + ' = ' + f4(k.num) + '</span></li>'
+              : '<li><span>Correction 1 ÷ (2 × 490) = ' + f4(k.corr) + ' is larger than the gap: dropped</span><span class="v">' + f4(k.num) + '</span></li>') +
+      '<li><span>Typical gap from chance: √(' + f4(k.q) + ' × ' + f4(1 - k.q) + ' ÷ 490)</span><span class="v">' + f4(k.unit) + '</span></li>' +
+      '<li class="total"><span>Z = ' + f4(k.num) + ' ÷ ' + f4(k.unit) + '</span><span class="v">' + k.z.toFixed(3) + '</span></li>';
+    read.innerHTML = '<strong>Bin ' + k.d + ':</strong> ' + k.c + ' figure' + (k.c === 1 ? '' : 's') + ' where Benford’s law expects about ' + (k.q * N).toFixed(1) + '. <span class="nw">Z = ' + k.z.toFixed(3) + '</span> (Table 5): ' + E.bar(k.z) + '.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    S('rect', { x: X(0), y: 22, width: Math.max(1, X(Math.min(k.z, ZMAX)) - X(0)), height: 20, 'class': 'near-fill' }, g);
+    T(g, Math.min(X(Math.min(k.z, ZMAX)) + 6, X(ZMAX) - 48), 37, 'Z ' + k.z.toFixed(3), { 'class': 'strong halo' });
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 560 });
+})();
+
+/* ---------- slide 3: the paper's K-S result at 490 figures, and the 5% bar at other sizes (pp. 119–120, 127) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var DOBS = 0.0216, NMIN = 100, NMAX = 10000, YM = 0.14;
+  var box = document.getElementById('ks-chart'), slider = document.getElementById('ks-n'), read = document.getElementById('ks-read');
+  var geo = null;
+  function nOf(v) { var n = NMIN * Math.pow(NMAX / NMIN, v / 1000); return Math.abs(n - 490) < 8 ? 490 : Math.round(n); }
+  slider.value = String(Math.round(1000 * Math.log(490 / NMIN) / Math.log(NMAX / NMIN)));
+  function crit(n) { return 1.36 / Math.sqrt(n); }
+  /* one ruler of distances: the K-S statistic is a single number, the widest gap wherever it falls.
+     Top row: the paper's case, fixed at 490 figures. Bottom row: the bar alone, for the size the slider sets. */
+  function row(g, X, xr, y0, y1, c) {
+    var xc = X(Math.min(c, YM));
+    S('rect', { x: X(0), y: y0, width: Math.max(0, xc - X(0) - 1), height: y1 - y0, 'class': 'zone' }, g);
+    if (xr - xc > 1) S('rect', { x: xc + 1, y: y0, width: xr - xc - 1, height: y1 - y0, 'class': 'zone bad' }, g);
+    S('line', { x1: xc, x2: xc, y1: y0 - 4, y2: y1 + 4, 'class': 'cursor' }, g);
+    return xc;
+  }
+  function label(g, xc, y, str, W, R) {
+    var right = xc + 6 + E.textW(str) > W - R;
+    T(g, right ? xc - 5 : xc + 5, y, str, { 'text-anchor': right ? 'end' : 'start', 'class': 'label halo' });
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var L = 4, R = 12, A0 = 20, A1 = 48, B0 = 96, B1 = 124, H = 176;
+    function X(v) { return L + (W - L - R) * v / YM; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two rulers of distances from 0 to 0.14. Top: the paper’s 490 election-year figures, whose widest gap between the two running totals is 0.0216, against a 5% bar of 0.0614. Bottom: the 5% bar, 1.36 ÷ √n, for the sample size the slider sets.' }, box);
+    T(root, 0, 12, 'The paper: 490 election-year figures', { 'class': 'label' });
+    var xa = row(root, X, X(YM), A0, A1, crit(490));
+    label(root, xa, A0 + 18, '5% bar: 0.0614', W, R);
+    S('circle', { cx: X(DOBS), cy: (A0 + A1) / 2, r: 6, 'class': 'near-fill ringed' }, root);
+    T(root, X(DOBS) - 6, A1 + 15, 'widest gap: 0.0216', { 'class': 'strong' });
+    T(root, 0, B0 - 10, 'The 5% bar at another sample size', { 'class': 'label' });
+    var ty = B1 + 22;
+    [0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: ty - 12, y2: ty - 7, 'class': 'axis' }, root);
+      T(root, X(v), ty + 5, v ? v.toFixed(2) : '0', { 'text-anchor': v === 0 ? 'start' : v === YM ? 'end' : 'middle' });
+    });
+    T(root, W - R, ty + 24, 'Widest gap between the two running totals', { 'text-anchor': 'end' });
+    geo = { X: X, W: W, R: R, B0: B0, B1: B1, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var n = nOf(+slider.value), c = crit(n);
+    slider.setAttribute('aria-valuetext', th(n) + ' figures');
+    read.innerHTML = '<strong>Bar for ' + th(n) + ' figures: ' + c.toFixed(4) + '.</strong> ' +
+      (n === 490 ? 'The paper’s size: the same bar as in the top row.' : 'The bar falls with the square root of the sample: four times the figures, half the bar. That is why such tests grow stricter in large samples, as the paper warns (p. 120).');
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    var xc = row(g, X, X(YM), geo.B0, geo.B1, c);
+    label(g, xc, geo.B0 + 18, th(n) + ' figures: ' + c.toFixed(4), geo.W, geo.R);
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

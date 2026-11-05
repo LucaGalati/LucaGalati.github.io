@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The test · To Fix or Not to Fix</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Benenchia, Galati and Lepone, To fix or not to fix: the three rulers the report will use to judge the WM/R fix, a bet on longer windows, the event study and regression around 4 pm, the design’s limits and what to take away.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .score tr.mine td { background: var(--surface); }
+  .score tr.mine td:first-child { border-left: 3px solid var(--gold); }
+  .measures { columns: 2; column-gap: 1.6rem; padding-left: 1.1em; margin: -.3rem 0 .9rem; max-width: 36em; }
+  .measures li { break-inside: avoid; margin-bottom: .1em; }
+  @media (max-width: 480px) { .measures { columns: 1; } }
+  .score td.wait { color: var(--muted); }
+  .rulers-def { list-style: none; padding: 0; margin: 0 0 .8rem; max-width: 36em; }
+  .rulers-def li { padding: .3em 0; border-bottom: 1px solid var(--border); }
+  .rulers-def li:last-child { border-bottom: 0; }
+  .rulers-def b { font-family: var(--sans); font-size: .78rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); display: block; }
+  .ctl.stack { margin: .45rem 0 .2rem; }
+  .close-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; align-items: start; }
+  @media (min-width: 900px) { .close-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } .close-grid .caveat { margin-top: .4rem; } }
+</style>
+</head>
+<body data-deck="02-test.html">
+<lg-sitebar><noscript><a href="../../publication/wmr-fix-representativeness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="How do you judge a fix?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The test · 1 of 6</p>
+    <h2>Three rulers for one number</h2>
+    <div class="two text-first">
+      <div>
+        <p>Before testing the worry, the report asks how good the fix is at all, and whether a longer window would do better. Three rulers from Evans, O’Neill, Rime and Saakvitne (2018) judge fixes computed over five, ten and twenty minutes.</p>
+        <ul class="rulers-def">
+          <li><b>Representativeness</b>How far is the fix from the day’s median trade price?</li>
+          <li><b>Attainability</b>How far is it from the mean price in the window, roughly what a trader spreading orders evenly through it would get? Can the fix be replicated?</li>
+          <li><b>Robustness</b>How far is it from a “dirty” fix computed without the checks that drop outlying, possibly manipulative trades?</li>
+        </ul>
+        <p>Each gap is squared, averaged over the days and square-rooted: one number per currency and window.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Would a longer window do better?&nbsp;→</button></div>
+        <p class="note">Equations (1)–(3), page 6. Toy days, invented to show what each ruler measures; this report contains no results. The toy check drops picked trades more than 1 pip outside their second’s quotes; it stands in for WM/R’s validation checks, which the toy does not model.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">One toy day, noon to 4:20&nbsp;pm, its last 40 minutes drawn <span class="tag">toy</span></p>
+        <div class="ctl stack"><span class="pair"><span>Window</span><span class="seg" id="r3-win"></span></span></div>
+        <div class="ctl stack"><span class="pair"><span>Toy day</span><span class="seg" id="r3-day"></span></span></div>
+        <p class="hint">Try the burst at 5 minutes, then at 20; then the run-up.</p>
+        <div class="fig" id="r3-chart"></div>
+        <div class="fig" id="r3-bars"></div>
+        <p class="readout" id="r3-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Would a longer window do better?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The test · 2 of 6</p>
+    <h2>Place a bet: would a longer window do better?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Stretch the window from five minutes to twenty, compute the fix the WM/R way, and lay the three rulers against real trades in seven currency pairs, 2015 to 2023.</p>
+        <p><strong>What do you expect the twenty-minute fix to show?</strong></p>
+        <div class="actions bet" id="bet2" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="all" aria-pressed="false">Better on all three rulers</button>
+          <button class="btn" type="button" data-bet="some" aria-pressed="false">Better on some, worse on others</button>
+          <button class="btn" type="button" data-bet="none" aria-pressed="false">No better than five minutes</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <table class="score" id="b2-table">
+          <thead><tr><th>If the twenty-minute rulers come out…</th><th>the report would read it as</th></tr></thead>
+          <tbody>
+            <tr data-row="all"><td>smaller, significantly</td><td class="wait">…</td></tr>
+            <tr data-row="none"><td>no smaller</td><td class="wait">…</td></tr>
+            <tr data-row="some"><td>smaller on some rulers, larger on others</td><td class="wait">…</td></tr>
+          </tbody>
+        </table>
+        <p class="note" id="b2-note" hidden>Pages 3, 6 and 8. The tests: for each window, t-tests that each measure is zero; then tests of the difference from the five-minute fix, for example Representativeness<sup>10</sup> − Representativeness<sup>5</sup>, and their distributions over time. The precedents are as the report cites them: Evans et al. (2018), page 3 and page 6.</p>
+      </div>
+      <div class="t">
+        <p id="b2-verdict" aria-live="polite"></p>
+        <div class="actions" id="b2-next" hidden>
+          <button class="btn primary" type="button" data-next>Watch the market around 4&nbsp;pm&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What happens around 4&nbsp;pm on month-ends?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The test · 3 of 6</p>
+    <h2>Thirty minutes either side, five seconds at a time</h2>
+    <div class="two">
+      <div>
+        <p>The rulers judge the number. The report also watches the market that produces it, and then asks whether the run-up predicts the fix. From half an hour before 4&nbsp;pm to half an hour after, it cuts trading into five-second buckets and measures each one:</p>
+        <ul class="measures">
+          <li>the bid–ask spread</li>
+          <li>the cost of a round trip</li>
+          <li>the 20-second price impact</li>
+          <li>the depth at the best prices</li>
+          <li>trade and quote counts</li>
+          <li>volatility</li>
+        </ul>
+        <p>Then two comparisons, each with t-tests: ordinary days against month-ends, the last trading weekday of the month; and month-ends year by year, to see whether behaviour around the fix has changed.</p>
+        <p class="door-row"><a class="door" href="04-measures.html#s1">What is the cost of a round trip? Try the measures on one trade&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Does the run-up predict the fix?&nbsp;→</button></div>
+        <p class="note">Page 7; footnote 6 adds 15- and 45-minute spans; 720 is computed (60 × 12). Data, page 5: every order-book event on Refinitiv Matching, EBS and Currenex, to the millisecond, for seven pairs (GBP/USD, EUR/USD, CAD/USD, AUD/USD, NZD/USD, JPY/USD, CNH/USD), 15 February 2015 to the end of 2023.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">The frame of the event study</p>
+        <div class="fig" id="ev-chart"></div>
+        <p class="hint">Each row is the hour around 4&nbsp;pm, cut into 720 buckets of five seconds; gold marks the window. The comparisons set rows side by side, measure by measure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Does the run-up predict the fix?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The test · 4 of 6</p>
+    <h2>A switch for month-ends</h2>
+    <div class="two">
+      <div>
+        <p>The direct test of the worry is a regression, a fit of the fix on the market measures. The fix of each pair on each day is set against those measures in seven five-minute slots, from half an hour before 4&nbsp;pm up to the window itself, plus a switch, K, that is on only at month-end. If the month-end terms carry weight, behaviour ahead of the window says something different about the fix at month-end.</p>
+        <p>Controls: volatility in the window and the day’s macro-news intensity, <span class="num">1 to 3</span>; fixed effects absorb what is constant for a pair or a period.</p>
+        <p class="door-row"><a class="door" href="03-before.html#s2">A second test: does the move into the fix reverse? See it on toy days&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What can this design not tell?&nbsp;→</button></div>
+        <p class="note">Equations (9) and (10), pages 7–8; the reversal test is equation (4), page 6. The plan checks the measures’ correlations and VIF and also runs each slot on its own (eq. 10). Each slot is five minutes centred on its label (footnote 7): −30 runs from 32.5 to 27.5 minutes before 4&nbsp;pm, 0 is the window.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>The day is</span><div class="seg" id="k-mode"></div></div>
+        <div class="fig" id="k-chart"></div>
+        <p class="readout" id="k-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What can this design not tell?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The test · 5 of 6</p>
+    <h2>What this design cannot tell you</h2>
+    <p>The authors name these limits themselves, and say what even a null answer would be worth. Keep them in mind before reading any result this plan produces.</p>
+    <ul class="facts">
+      <li><b>No experiment</b>The window has not changed since 2015, so there is no before and after to exploit, as Evans et al. (2018) could for the 2015 change. The plan compares kinds of days and years instead.</li>
+      <li><b>No trader identities</b>Without trader-level data, the earlier study cannot be fully replicated.</li>
+      <li><b>No volumes for every pair</b>So no volume-weighted prices. The authors note that WM/R ignores volume too, and argue that size says less about who is informed in currencies than in shares.</li>
+      <li><b>A null answer counts too</b>The plan says in advance that finding no gain from a longer window would still be of interest to the industry.</li>
+    </ul>
+    <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+    <p class="note">Pages 5 and 7, footnotes 4 and 5 (citing Ranaldo and Somogyi, 2021), page 8.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The test · 6 of 6</p>
+    <h2>What to take away</h2>
+    <div class="close-grid">
+      <div>
+        <p class="closer">Five minutes of a market that never closes set the rate at which much of the world values its currencies. Do they still do the job? This report plans how to find out.</p>
+        <ol class="takeaways">
+          <li>The fix is the midpoint of a median bid and a median ask, from one trade picked each second in five minutes centred on 4&nbsp;pm, a window widened from one minute in 2015, after the scandals.</li>
+          <li>The worry: trading crowds into the window (in the authors’ data, about one GBP/USD dollar in eighteen, early 2023), above all at month-ends, when funds hedge at the fix. If prices move well before 4&nbsp;pm, the fix may stop representing the market; a regression with a month-end switch checks this.</li>
+          <li>The plan judges the fix with three rulers for windows of five, ten and twenty minutes, and watches the market around 4&nbsp;pm on ordinary days and month-ends, 2015 to 2023.</li>
+          <li>It says in advance what the answers would mean: longer windows doing better would point to a method that could be improved; no gain would not support a change, and would still be worth knowing.</li>
+        </ol>
+      </div>
+      <div>
+        <p class="caveat">A pre-registered report: no results here, and none implied. No natural experiment, no trader identities, no volumes for every pair; the findings are to be reported in a later article.</p>
+        <p class="prompt" id="tk-bet">A question to take with you: funds, regulators and central banks all lean on the fix, and the report says they want different things from it. If a longer window turned out harder to push but harder to replicate, who would gain, and who would pay?</p>
+        <div class="actions">
+          <a class="btn primary" href="../../publication/wmr-fix-representativeness/">Read the paper&nbsp;→</a>
+          <button class="btn" type="button" data-map>Map of this explorable</button>
+          <a class="btn" href="01-fix.html#s3">Build a fix again</a>
+        </div>
+        <p class="note">Pages 2–8: the share in the window is computed from page 2 and footnote 1 (4.6 ÷ 85); month-end hedging, page 4; the stakeholders and their different objectives, pages 4–5; the 2015 trade-off between robustness and replication, Evans et al. (2018) as cited on page 3. Side paths: <a href="03-before.html#s1">before 2015</a> · <a href="03-before.html#s2">the snap-back</a> · <a href="04-measures.html#s1">the measuring tape</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/wmr-fix-representativeness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: three rulers on toy days (equations 1-3, page 6) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var BASE = 127000, N = 2400, C = 1200, PRE = 13200; /* seconds from 15:40; 4\u00a0pm is second 1200; prices in 0.00001; the toy day starts at noon, 13,200 s before 15:40 */
+  var WIN = { 5: [C - 150, C + 150], 10: [C - 300, C + 300], 20: [C - 600, C + 600] };
+  var RANGE = { calm: [BASE - 35, BASE + 35], runup: [BASE - 25, BASE + 95], burst: [BASE - 35, BASE + 35] };
+  /* one toy day, same seed for all three: the run-up and the burst are added to the calm day, nothing else changes */
+  function make(kind) {
+    var r = E.rng(313), x = 0, secs = [], all = [];
+    for (var t = -PRE; t < N; t++) {
+      x += -0.01 * x + E.gauss(r) * 0.5;
+      var lift = kind === 'runup' ? 60 * E.clamp((t - 240) / 720, 0, 1) : 0;
+      var mid = BASE + x + lift, spr = 6 + Math.floor(r() * 5), bid = Math.round(mid - spr / 2), ask = bid + spr, n = 1 + Math.floor(r() * 3), tr = [];
+      for (var k = 0; k < n; k++) { var side = r() < 0.5 ? 1 : -1; tr.push({ side: side, p: side > 0 ? ask : bid }); }
+      if (kind === 'burst' && t >= C - 150 && t < C + 30) for (k = 0; k < 15; k++) tr.push({ side: -1, p: bid - 15, b: true });
+      for (k = 0; k < tr.length; k++) all.push(tr[k].p);
+      if (t >= 0) secs.push({ mid: mid, bid: bid, ask: ask, spr: spr, tr: tr });
+    }
+    var pr = E.rng(9);
+    secs.forEach(function (s) { var p = s.tr[Math.floor(pr() * s.tr.length)]; s.pick = { p: p.p, b: p.b, out: Math.max(s.bid - p.p, p.p - s.ask), bid: p.side > 0 ? p.p - s.spr : p.p, ask: p.side > 0 ? p.p : p.p + s.spr }; });
+    secs.day = E.median(all); /* the yardstick of equation (1): the median of every toy trade of the day */
+    return secs;
+  }
+  function measures(secs, w) {
+    var a = WIN[w][0], b = WIN[w][1], picks = [], prices = [];
+    for (var t = a; t < b; t++) { picks.push(secs[t].pick); secs[t].tr.forEach(function (x) { prices.push(x.p); }); }
+    function fx(list) { return (E.median(list.map(function (q) { return q.bid; })) + E.median(list.map(function (q) { return q.ask; }))) / 2; }
+    var kept = picks.filter(function (q) { return q.out <= 10; }); /* toy check: drop picks priced more than 1 pip outside the quotes of their second */
+    var fix = fx(kept), dirty = fx(picks), mean = E.mean(prices);
+    return { fix: fix, dirty: dirty, mean: mean, day: secs.day, R: Math.abs(fix - secs.day) / 10, A: Math.abs(fix - mean) / 10, B: Math.abs(fix - dirty) / 10, dropped: picks.length - kept.length, n: picks.length };
+  }
+  var DAYS = { calm: make('calm'), runup: make('runup'), burst: make('burst') };
+  var M = {};
+  ['calm', 'runup', 'burst'].forEach(function (d) { M[d] = {}; [5, 10, 20].forEach(function (w) { M[d][w] = measures(DAYS[d], w); }); });
+  var box = document.getElementById('r3-chart'), bars = document.getElementById('r3-bars'), read = document.getElementById('r3-read');
+  var cur = { w: 5, d: 'calm' }, geo = null, bgeo = null;
+  function clockOf(t) { var m = 40 + Math.floor(t / 60); return (m < 60 ? '3:' + m : '4:' + ((m - 60) < 10 ? '0' : '') + (m - 60)); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 196, L = 52, Rm = 8, TOP = 10, B = 26;
+    function X(t) { return L + (W - L - Rm) * t / N; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A toy day from 3:40 to 4:20\u00a0pm: the price path, the fix window at the chosen length, the fix, the mean price in the window, the fix without checks, and the day’s median trade price.' }, box);
+    geo = { X: X, W: W, H: H, L: L, Rm: Rm, TOP: TOP, B: B, grid: S('g', {}, root), dyn: S('g', {}, root) };
+    [0, 600, 1200, 1800, 2400].forEach(function (t) {
+      S('line', { x1: X(t), x2: X(t), y1: H - B, y2: H - B + 4, 'class': 'axis' }, root);
+      if (W >= 420 || t % 1200 === 0) T(root, X(t), H - B + 17, clockOf(t), { 'text-anchor': t === 0 ? 'start' : t === N ? 'end' : 'middle' });
+    });
+    S('line', { x1: L, x2: W - Rm, y1: H - B, y2: H - B, 'class': 'axis' }, root);
+    draw();
+  }
+  function draw() {
+    var m = M[cur.d][cur.w], secs = DAYS[cur.d];
+    readout(m);
+    drawBars(m);
+    if (!geo) return;
+    var X = geo.X, lo = RANGE[cur.d][0], hi = RANGE[cur.d][1], H = geo.H, TOP = geo.TOP, B = geo.B;
+    function Y(v) { return TOP + (H - TOP - B) * (hi - v) / (hi - lo); }
+    var gr = geo.grid, g = geo.dyn; gr.innerHTML = ''; g.innerHTML = '';
+    for (var v = Math.ceil(lo / 20) * 20; v <= hi; v += 20) {
+      S('line', { x1: geo.L, x2: geo.W - geo.Rm, y1: Y(v), y2: Y(v), 'class': 'grid' }, gr);
+      T(gr, geo.L - 6, Y(v) + 4, (v / 100000).toFixed(4), { 'text-anchor': 'end' });
+    }
+    var w = WIN[cur.w], xr = X(w[1]);
+    S('rect', { x: X(w[0]), y: TOP, width: X(w[1]) - X(w[0]), height: H - TOP - B, 'class': 'win' }, g);
+    S('line', { x1: geo.L, x2: geo.W - geo.Rm, y1: Y(m.day), y2: Y(m.day), 'class': 'mktdash' }, g);
+    var pts = [];
+    for (var t = 0; t < N; t += 10) pts.push(X(t).toFixed(1) + ',' + Y(secs[t].mid).toFixed(1));
+    S('polyline', { points: pts.join(' '), 'class': 'path' }, g);
+    if (cur.d === 'burst') for (t = C - 150; t < C + 30; t += 4) S('circle', { cx: X(t), cy: Y(secs[t].bid - 15), r: 2.2, 'class': 'burst' }, g);
+    S('line', { x1: X(w[0]), x2: xr, y1: Y(m.mean), y2: Y(m.mean), 'class': 'meanline' }, g);
+    var dirty = Math.abs(m.dirty - m.fix) > 0.01;
+    if (dirty) S('line', { x1: X(w[0]), x2: xr, y1: Y(m.dirty), y2: Y(m.dirty), 'class': 'dirtyline' }, g);
+    S('line', { x1: X(w[0]), x2: xr, y1: Y(m.fix), y2: Y(m.fix), 'class': 'casing' }, g);
+    S('line', { x1: X(w[0]), x2: xr, y1: Y(m.fix), y2: Y(m.fix), 'class': 'fixline' }, g);
+    /* direct labels at the right edge of the window, pushed apart so they never touch */
+    var labs = [['fix', m.fix, 'strong halo'], ['mean', m.mean, 'halo']];
+    if (dirty) labs.push(['no checks', m.dirty, 'halo']);
+    var ys = E.spread(labs.map(function (l) { return Y(l[1]) + 4; }), 14);
+    labs.forEach(function (l, i) { T(g, xr + 6, ys[i], l[0], { 'class': l[2] }); });
+    /* the dashed line's key sits in the empty top-left corner, clear of the price path */
+    S('line', { x1: geo.L + 6, x2: geo.L + 30, y1: TOP + 8, y2: TOP + 8, 'class': 'mktdash' }, g);
+    T(g, geo.L + 36, TOP + 12, 'the toy day’s median trade price', {});
+    if (cur.d === 'burst') T(g, X(C - 150) - 6, Y(secs[C - 150].bid - 15) + 18, 'toy burst', { 'text-anchor': 'end', 'class': 'label halo' });
+  }
+  function bBuild(W) {
+    bars.innerHTML = '';
+    var H = 94, lab = W < 520 ? 128 : 150, Rm = 70;
+    function X(v) { return lab + (W - lab - Rm) * Math.min(v, 7) / 7; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'The three gaps for the chosen toy day and window, in pips: representativeness, attainability and robustness.' }, bars);
+    [0, 2, 4, 6].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: 2, y2: H - 18, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 4, v + (v ? ' pips' : ''), { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    bgeo = { X: X, W: W, lab: lab, dyn: S('g', {}, root) };
+    drawBars(M[cur.d][cur.w]);
+  }
+  function drawBars(m) {
+    if (!bgeo) return;
+    var g = bgeo.dyn, X = bgeo.X; g.innerHTML = '';
+    [['Representativeness', m.R], ['Attainability', m.A], ['Robustness', m.B]].forEach(function (r, i) {
+      var y = 4 + i * 24;
+      T(g, 0, y + 13, r[0], { 'class': 'label' });
+      S('rect', { x: X(0), y: y + 2, width: Math.max(1.5, X(r[1]) - X(0)), height: 14, 'class': 'fix-fill' }, g);
+      T(g, X(r[1]) + 6, y + 14, r[1].toFixed(1) + ' pips', { 'class': 'strong' });
+    });
+  }
+  var DAYTXT = {
+    calm: 'Calm toy day: the price wanders and nobody pushes it.',
+    runup: 'Toy run-up: the price climbs 6 pips between 3:44 and 3:56, all of it before the five-minute window opens, half of it before the twenty-minute one.',
+    burst: 'Toy burst: someone sells 15 times a second, 1.5 pips below the bid, from 3:57:30 to 4:00:30.'
+  };
+  function readout(m) {
+    read.innerHTML = '<strong>' + DAYTXT[cur.d] + '</strong> With a ' + cur.w + '-minute window the toy check drops ' + m.dropped + ' of ' + E.thousands(m.n) + ' picked trades; the fix is <span class="rate">' + (m.fix / 100000).toFixed(5) + '</span>.';
+  }
+  E.seg(document.getElementById('r3-win'), [['5', '5 min, today'], ['10', '10 min'], ['20', '20 min']], '5', function (k) { cur.w = +k; draw(); }, 'Window');
+  E.seg(document.getElementById('r3-day'), [['calm', 'Calm'], ['runup', 'Early run-up'], ['burst', 'Burst in the window']], 'calm', function (k) { cur.d = k; draw(); }, 'Toy day');
+  E.fit(box, build, { min: 300, max: 700 });
+  E.fit(bars, bBuild, { min: 300, max: 700 });
+  readout(M[cur.d][cur.w]);
+})();
+
+/* ---------- slide 2: a bet on longer windows, answered by what the registered tests would have to show ---------- */
+(function () {
+  var E = Explore;
+  var betBox = document.getElementById('bet2'), table = document.getElementById('b2-table'), verdict = document.getElementById('b2-verdict');
+  var nextBox = document.getElementById('b2-next'), note = document.getElementById('b2-note');
+  var READ = {
+    all: 'a sign that today’s method falls short and that a longer window could improve it (page 8)',
+    none: 'no support for changing the window, which the authors call “still an outcome of interest” (page 8)',
+    some: 'a trade-off between the rulers, the kind the report cites for the one real lengthening: in 2015 the longer window bought robustness at the cost of tracking error (page 3)'
+  };
+  var LEAD = {
+    all: 'That would be the case for change. ',
+    some: 'That is the pattern of the one real lengthening: in 2015, a longer window was found harder to manipulate but harder to replicate. ',
+    none: 'That would not support a change, and the authors say in advance it would still be worth knowing. '
+  };
+  var TAIL = 'But nobody knows yet. That is what a registered report is for: the tests were written down before the data were run, and the findings are to be reported in a later article. One more thing to weigh: Evans et al. (2018) found that the window’s length, by itself, does not mechanically change representativeness, so the authors look for the effect that runs through how traders behave around the window.';
+  function place(bet) {
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    [].forEach.call(table.querySelectorAll('tr[data-row]'), function (tr) {
+      var k = tr.getAttribute('data-row'), cell = tr.cells[1];
+      cell.textContent = READ[k]; cell.classList.remove('wait');
+      tr.classList.toggle('mine', k === bet);
+    });
+    verdict.textContent = LEAD[bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    E.save('bet-window', bet);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet')); });
+  var prior = E.load('bet-window');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior);
+})();
+
+/* ---------- slide 3: the event-study frame, both comparisons in one static picture (page 7) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, box = document.getElementById('ev-chart');
+  var YEARS = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'];
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 330, L = W < 480 ? 92 : 104, Rm = 6;
+    function X(m) { return L + (W - L - Rm) * (m + 30) / 60; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The event-study frame: thirty minutes either side of 4\u00a0pm, cut into five-second buckets, with the fix window in gold. First comparison: ordinary days against month-ends. Second: month-ends year by year, 2015 to 2023.' }, box);
+    /* one minute, magnified: the minute before 4\u00a0pm as twelve five-second buckets */
+    var bw = Math.min(20, (W - 8) / 12), sx = E.clamp(X(-0.5) - 6 * bw, 0, W - 12 * bw);
+    T(root, sx + 6 * bw, 12, 'one minute = twelve five-second buckets', { 'text-anchor': 'middle', 'class': 'label' });
+    for (var i = 0; i < 12; i++) S('rect', { x: sx + i * bw + 0.5, y: 20, width: bw - 3, height: 13, 'class': 'surface' }, root);
+    var rows = [], y = 72;
+    rows.push(['Ordinary days', y, 8]); rows.push(['Month-ends', y + 24, 8]);
+    var g2 = y + 64;
+    YEARS.forEach(function (yr, k) { rows.push([yr, g2 + 16 + k * 15, 5]); });
+    var top = 58, bottom = rows[rows.length - 1][1] + 10, yAx = bottom + 8;
+    S('rect', { x: X(-2.5), y: top, width: X(2.5) - X(-2.5), height: bottom - top, 'class': 'win' }, root);
+    S('line', { x1: sx, y1: 34, x2: X(-1), y2: y - 8, 'class': 'thin' }, root);
+    S('line', { x1: sx + 12 * bw - 3, y1: 34, x2: X(0), y2: y - 8, 'class': 'thin' }, root);
+    T(root, 0, top + 4, '1. Kinds of day', { 'class': 'strong' });
+    T(root, 0, g2 + 2, '2. Month-ends, year by year', { 'class': 'strong' });
+    rows.forEach(function (r) {
+      T(root, 0, r[1] + 4, r[0], { 'class': r[2] > 5 ? 'label' : '' });
+      S('line', { x1: X(-30), x2: X(30), y1: r[1], y2: r[1], 'class': 'tick-strong' }, root);
+      for (var m = -30; m <= 30; m++) {
+        var tall = m % 5 === 0 ? r[2] : r[2] / 2;
+        S('line', { x1: X(m), x2: X(m), y1: r[1] - tall, y2: r[1] + tall, 'class': Math.abs(m) <= 2 ? 'comb-win' : 'comb' }, root);
+      }
+    });
+    S('line', { x1: X(-30), x2: X(30), y1: yAx, y2: yAx, 'class': 'axis' }, root);
+    [-30, -15, 0, 15, 30].forEach(function (m) {
+      S('line', { x1: X(m), x2: X(m), y1: yAx, y2: yAx + 4, 'class': 'axis' }, root);
+      T(root, X(m), yAx + 17, m === 0 ? '4\u00a0pm' : (m > 0 ? '+' : '−') + Math.abs(m), { 'text-anchor': m === -30 ? 'start' : m === 30 ? 'end' : 'middle' });
+    });
+    T(root, X(30), yAx + 33, 'minutes from 4\u00a0pm', { 'text-anchor': 'end' });
+  }, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 4: equation (9), the seven slots and the month-end switch ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('k-chart'), read = document.getElementById('k-read');
+  var K = 0, geo = null, SLOTS = [-30, -25, -20, -15, -10, -5, 0];
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, H = narrow ? 254 : 184, L = 4, Rm = narrow ? 4 : 112;
+    function X(m) { return L + (W - L - Rm) * (m + 32.5) / 35; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Seven five-minute slots from 30 minutes before 4\u00a0pm to the window itself, each holding the market measures, all feeding the day’s fix; a second row of month-end terms switches on when the day is the last trading weekday of the month.' }, box);
+    geo = { X: X, W: W, H: H, narrow: narrow, Rm: Rm, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    read.innerHTML = K
+      ? '<strong>Last trading weekday, K = 1.</strong> On top of the slot terms, β<sub>8</sub>K and seven interactions β<sub>9</sub>K·X<sup>−30</sup> … β<sub>15</sub>K·X<sup>0</sup> switch on: what the same market behaviour adds to predicting the fix at month-end. They are the report’s variables of interest.'
+      : '<strong>Any other day, K = 0.</strong> Only the slot terms count: Y = α + β<sub>1</sub>X<sup>−30</sup> + … + β<sub>7</sub>X<sup>0</sup> + controls + fixed effects. Y is the day’s five-minute fix; each X holds one slot’s market measures, and its superscript names the slot, not a power.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, W = geo.W; g.innerHTML = '';
+    var r1 = 40, r2 = 116, bh = 38;
+    S('rect', { x: X(-2.5), y: 22, width: X(2.5) - X(-2.5), height: r2 + bh + 6 - 22, 'class': 'win' }, g);
+    T(g, X(0), 16, 'the window', { 'text-anchor': 'middle' });
+    T(g, X(-32.5), r1 - 8, 'market measures, slot by slot', { 'class': 'label' });
+    T(g, X(-32.5), r2 - 8, K ? '× K: the month-end terms, switched on' : '× K: the month-end terms, off', { 'class': K ? 'label' : '' });
+    var node = geo.narrow ? { x: W / 2, y: geo.H - 22 } : { x: W - geo.Rm + 54, y: (r1 + r2 + bh) / 2 };
+    [[r1, true], [r2, !!K]].forEach(function (row) {
+      var y = row[0], on = row[1], xr = X(2.5);
+      SLOTS.forEach(function (c) {
+        var x0 = X(c - 2.5) + 2, x1 = X(c + 2.5) - 2, cx = (x0 + x1) / 2;
+        S('rect', { x: x0, y: y, width: x1 - x0, height: bh, rx: 3, 'class': on ? (y === r2 ? 'slot-on' : 'slot') : 'slot', 'stroke-dasharray': on ? null : '3 3', 'fill-opacity': on ? null : 0.3 }, g);
+        T(g, cx, y + bh / 2 + 4, (c === 0 ? '0' : '−' + Math.abs(c)), { 'text-anchor': 'middle', 'class': on ? 'label' : '' });
+      });
+      /* one arrow per row into the fix */
+      if (geo.narrow) {
+        S('path', { d: 'M' + (X(-32.5) + 2) + ',' + (y + bh + 4) + ' H' + (xr - 2), 'class': on ? 'thin' : 'grid' }, g);
+      } else {
+        S('path', { d: 'M' + (xr + 2) + ',' + (y + bh / 2) + ' C' + (xr + 26) + ',' + (y + bh / 2) + ' ' + (node.x - 70) + ',' + node.y + ' ' + (node.x - 50) + ',' + node.y, 'class': on ? 'thin' : 'grid' }, g);
+      }
+    });
+    if (geo.narrow) S('line', { x1: node.x, x2: node.x, y1: r2 + bh + 10, y2: node.y - 18, 'class': 'thin' }, g);
+    S('rect', { x: node.x - 46, y: node.y - 16, width: 92, height: 32, rx: 3, 'class': 'surface' }, g);
+    T(g, node.x, node.y + 5, 'Y: the fix', { 'text-anchor': 'middle', 'class': 'strong' });
+    if (!geo.narrow) T(g, X(-32.5), r2 + bh + 22, 'minutes from 4\u00a0pm, slot centres', {});
+  }
+  E.seg(document.getElementById('k-mode'), [['0', 'Any other day'], ['1', 'Last trading weekday']], '0', function (k) { K = +k; draw(); }, 'The day is');
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 6: recall the reader's bet on longer windows ---------- */
+(function () {
+  var E = Explore, b = E.load('bet-window'), p = document.getElementById('tk-bet');
+  var SAY = { all: 'better on all three rulers', some: 'better on some rulers and worse on others', none: 'no better than five minutes' };
+  if (p && Object.prototype.hasOwnProperty.call(SAY, b)) p.textContent = 'You bet that a twenty-minute window would come out ' + SAY[b] + '; the results article will tell. ' + p.textContent;
+})();
+</script>
+</body>
+</html>

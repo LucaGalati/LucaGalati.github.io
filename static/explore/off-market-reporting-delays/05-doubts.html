@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The sample and its limits · Reporting Delays and the Information Content of Off-Market Trades</title>
+<meta name="description" content="Side path of an explorable explanation of Frino, Galati and Gerace, Reporting Delays and the Information Content of Off-Market Trades: how 12,912 blocks became a sample of 3,466, how the comparison group differs from the blocks that lost the hour, and what price moves cannot tell.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-doubts.html">
+<lg-sitebar><noscript><a href="../../publication/off-market-reporting-delays/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Which blocks are in the sample?">
+  <div class="inner">
+    <p class="kicker">Side path · The sample and its limits · 1 of 3</p>
+    <h2>From 12,912 blocks to 3,466</h2>
+    <div class="two">
+      <div>
+        <p>The data come from Refinitiv’s Tick History: every on-screen trade and quote in ICE’s FTSE 100 futures, stamped to the thousandth of a second, plus a separate record of blocks, from 21 August 2017 to 17 August 2018, close to six months either side of the rule change.</p>
+        <p>Two filters do most of the work. Blocks in the ten trading days before each contract’s delivery are dropped, because many of them are traders rolling positions from one contract month to another rather than trading on news. Blocks that span several contract months, “strategy” blocks, are dropped too. The authors report that keeping either gives similar results.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>How alike are the two groups?&nbsp;→</button>
+          <a class="btn return-link" href="02-evidence.html#s3">← Return to the main path</a>
+        </div>
+        <p class="note">p. 2054–2056 and footnotes 5 and 9–11. The split of the 3,466 into 3,174 experimental and 292 control blocks is computed from Table 1. The nine zero-tick blocks are also left out (footnote 8).</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="funnel"></div>
+        <p class="legend"><span><i class="sq exp-solid"></i>500–3,328 lots: experimental</span><span><i class="sq ctl-solid"></i>above 3,328: control</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How alike are the two groups?">
+  <div class="inner">
+    <p class="kicker">Side path · The sample and its limits · 2 of 3</p>
+    <h2>A small comparison group of bigger trades</h2>
+    <div class="two">
+      <div>
+        <p>A comparison group earns its keep by resembling the treated group in everything but the treatment. Here the resemblance is partial. The blocks above <span class="num">3,328</span> lots are roughly four times the size of a typical experimental block, and there are about a tenth as many. The authors say so themselves, calling it “an important albeit limited form of control”.</p>
+        <p>What the larger blocks do show is a lasting move around publication in both half-years: buy-like and sell-like alike, over either window, it is significant at the 1% level. Blocks that kept their hour went on carrying news.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What can prices not tell?&nbsp;→</button>
+          <a class="btn return-link" href="02-evidence.html#s3">← Return to the main path</a>
+        </div>
+        <p class="note">Table 1: median size in lots and number of blocks for each group, side and period; the ratios of medians and counts are computed from Table 1. Quotation: p. 2057. The larger blocks’ lasting moves: Tables 4 and 5, panels A and B, t between <span class="nw">2.95</span> and <span class="nw">7.86</span> in absolute value; p. 2061.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="sizes"></div>
+        <p class="legend"><span><i class="dt exp"></i>500–3,328 lots</span><span><i class="dt ctl"></i>above 3,328</span><span>dot area: number of blocks</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What can prices not tell?">
+  <div class="inner">
+    <p class="kicker">Side path · The sample and its limits · 3 of 3</p>
+    <h2>What the prices cannot tell</h2>
+    <ul class="facts">
+      <li><b>Who left</b>The exit of informed traders is read from prices. The paper does not observe who traded the blocks, or where they went after the change.</li>
+      <li><b>One market</b>One contract on one exchange over one year. The rule change came in the wake of MiFID II, in force from 3 January 2018; the control group is the guard against changes of that kind, and the six-month halves are meant to keep seasonal patterns alike.</li>
+      <li><b>Direction</b>Whether a block was a buy or a sell is inferred from its price, not recorded.</li>
+      <li><b>Checks</b>Keeping strategy blocks or the days before delivery is reported to give similar results, available from the authors on request.</li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-evidence.html#s3">← Return to the main path</a>
+      <a class="btn" href="02-evidence.html#s4">Go on: what the hour was worth&nbsp;→</a>
+    </div>
+    <p class="note">p. 2054–2061; footnotes 3, 5 and 9–11; Section 2.1.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/off-market-reporting-delays/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the sample funnel (p. 2056, Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var box = document.getElementById('funnel');
+  var ROWS = [['Off-market blocks in the sample period', 'All blocks in the period', 12912],
+              ['Without the ten trading days before each delivery', 'Without pre-delivery days', 6321],
+              ['Without strategy blocks: the sample', 'Without strategy blocks', 3466]];
+  var EXP = 3174, CTL = 292;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 54, H = ROWS.length * rowH + 4, xMax = W - 64;
+    function X(v) { return xMax * v / 12912; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': '12,912 off-market blocks in the sample period; 6,321 after dropping the ten trading days before each delivery; 3,466 after dropping strategy blocks, of which 3,174 experimental and 292 control.' }, box);
+    ROWS.forEach(function (r, i) {
+      var y = i * rowH, last = i === ROWS.length - 1;
+      T(root, 0, y + 13, W < 520 ? r[1] : r[0], { 'class': last ? 'strong' : 'label' });
+      if (!last) S('rect', { x: 0, y: y + 21, width: X(r[2]), height: 16, 'class': 'surface' }, root);
+      else {
+        S('rect', { x: 0, y: y + 21, width: X(EXP), height: 16, 'class': 'exp-fill' }, root);
+        S('rect', { x: X(EXP), y: y + 21, width: Math.max(2, X(CTL)), height: 16, 'class': 'ctl-fill' }, root);
+      }
+      T(root, X(r[2]) + 6, y + 34, th(r[2]), { 'class': 'strong' });
+      if (last) T(root, 0, y + 52, th(EXP) + ' experimental · ' + th(CTL) + ' control');
+    });
+  }, { min: 300, max: 600 });
+})();
+
+/* ---------- slide 2: median size and count per group (Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var box = document.getElementById('sizes');
+  /* [row label, experimental median, n, control median, n] */
+  var ROWS = [['Buy-like, before', 1000, 898, 4637, 76], ['Buy-like, after', 1001, 715, 4427, 74],
+              ['Sell-like, before', 1150, 858, 4434, 78], ['Sell-like, after', 1023, 703, 4621, 64]];
+  var LO = 500, HI = 8000;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 48, TOP = 8, H = TOP + ROWS.length * rowH + 44, x0 = 14, x1 = W - 16;
+    function X(v) { return x0 + (x1 - x0) * Math.log(v / LO) / Math.log(HI / LO); }
+    function rad(n) { return Math.max(3, 0.37 * Math.sqrt(n)); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Median block size and number of blocks. Experimental: medians 1,000 to 1,150 lots, 703 to 898 blocks per cell. Control: medians 4,427 to 4,637 lots, 64 to 78 blocks per cell.' }, box);
+    var yA = TOP + ROWS.length * rowH;
+    S('line', { x1: X(3328), x2: X(3328), y1: TOP, y2: yA, 'class': 'grid' }, root);
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH + 30;
+      T(root, x0, y - 17, r[0], { 'class': 'label' });
+      S('line', { x1: x0, x2: x1, y1: y, y2: y, 'class': 'lane' }, root);
+      S('circle', { cx: X(r[1]), cy: y, r: rad(r[2]), 'class': 'exp-fill' }, root);
+      S('circle', { cx: X(r[3]), cy: y, r: rad(r[4]), 'class': 'ctl-fill' }, root);
+      T(root, X(r[1]) + rad(r[2]) + 5, y - 6, th(r[2]), {});
+      T(root, X(r[3]) + rad(r[4]) + 5, y - 6, String(r[4]), {});
+    });
+    S('line', { x1: x0, x2: x1, y1: yA, y2: yA, 'class': 'axis' }, root);
+    [[500, '500'], [1000, '1,000'], [3328, '3,328'], [8000, '8,000']].forEach(function (t, i) {
+      S('line', { x1: X(t[0]), x2: X(t[0]), y1: yA, y2: yA + 5, 'class': 'axis' }, root);
+      T(root, X(t[0]), yA + 18, t[1], { 'text-anchor': i === 0 ? 'start' : i === 3 ? 'end' : 'middle' });
+    });
+    T(root, (x0 + x1) / 2, H - 4, 'Median block size, lots (log scale); number = blocks', { 'text-anchor': 'middle', 'class': 'label' });
+  }, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

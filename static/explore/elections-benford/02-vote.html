@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Before the vote · Elections and Earnings Management</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Capalbo and Galati, Elections and Earnings Management: Further Evidence from Benford’s Law: the data, the MAD yardstick, the election-year digits that stand out or go missing, and what the paper concludes.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-vote.html">
+<lg-sitebar><noscript><a href="../../publication/elections-benford/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Whose accounts, and which years?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · Before the vote · 1 of 6</p>
+      <h2>490 sets of accounts published in an election year</h2>
+      <p>The figures come from the AIDA database of Italian company accounts, as gathered for an earlier study of the same companies (Capalbo and coauthors, 2021): 506 utilities in public transport, gas, water, electricity and waste collection, in each of which a single town holds more than half the shares. With a majority, the paper argues, the town’s incumbents can sway management more easily, and the political stakes are likely to be higher.</p>
+      <p>Each company reports one revenue figure a year from 2009 to 2014: 3,036 in all. Accounts published in the year the town votes cover the year before; the paper calls them election-year accounts. There are 490 of them, from 422 companies, against 2,546 from other years.</p>
+      <p>The two groups are alike in size: a median of €3.6 million in election years and €3.0 million otherwise.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Do their digits still fit the law?&nbsp;→</button></div>
+      <p class="note">Section 3, Table 1 and p. 120. The years in the diagram are illustrative; the paper’s eight election dates fall between 2010 and 2015.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="data-chart"></div>
+      <p class="legend"><span><i class="sq far"></i>accounts from other years</span><span><i class="sq near"></i>election-year accounts</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Do election-year digits still fit the law?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 2 of 6</p>
+    <h2>Place a bet: do the election-year digits still fit the law?</h2>
+    <div class="bet-grid tr">
+      <div class="q">
+        <p>To judge all ninety bins at once, the paper uses the <strong>mean absolute deviation</strong> (MAD): for each bin, the gap between the share observed and the share Benford’s law expects, averaged over the ninety. Following Nigrini (2020), a MAD from 0.0012 to 0.0018 counts as acceptable conformity, up to 0.0022 as marginal, and anything above as nonconformity; lower values mean close conformity.</p>
+        <p>All 3,036 figures give 0.00157; the 2,546 from other years, 0.00158. Both acceptable. <strong>Where do the 490 election-year figures land?</strong></p>
+        <div class="actions bet" id="bet-m" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="close" aria-pressed="false">Close</button>
+          <button class="btn" type="button" data-bet="acc" aria-pressed="false">Acceptable</button>
+          <button class="btn" type="button" data-bet="marg" aria-pressed="false">Marginal</button>
+          <button class="btn" type="button" data-bet="non" aria-pressed="false">Nonconformity</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="m-chart"></div>
+        <p class="legend"><span><i class="dt far"></i>other or all years</span><span><i class="dt near"></i>election years</span><span><i class="sq bad"></i>nonconformity, above 0.0022</span></p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="m-verdict" aria-live="polite"></p>
+        <div class="actions" id="m-next" hidden>
+          <button class="btn primary" type="button" data-next>Which digits stand out?&nbsp;→</button>
+          <a class="door" href="04-tests.html#s1" data-return="next">How one number sums up ninety gaps&nbsp;→</a>
+        </div>
+        <p class="note" id="m-note" hidden>MADs: Tables 3, 4 and 5. Zones: Table 2, after Nigrini (2020). The paper’s reading: pp. 109, 124–125.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Which digits stand out?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 3 of 6</p>
+    <h2>Place a bet: which pair stands out most, against what chance allows?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Each bin also gets its own test, a <strong>Z statistic</strong>: the gap between observed and expected, counted in the units chance alone would produce in a sample this size. Past 1.64, 1.96 or 2.57, a gap clears the 10%, 5% or 1% bar.</p>
+        <p>A bin can stand out by holding too many figures or too few. <strong>Which first two digits have the largest Z among the 490 election-year figures?</strong></p>
+        <div class="actions bet" id="bet-c" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="10" aria-pressed="false">10</button>
+          <button class="btn" type="button" data-bet="20" aria-pressed="false">20</button>
+          <button class="btn" type="button" data-bet="42" aria-pressed="false">42</button>
+          <button class="btn" type="button" data-bet="88" aria-pressed="false">88</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="ctl"><span class="pair"><span>Sample</span><span class="seg" id="c-sample"></span></span></div>
+        <div class="fig" id="c-chart"></div>
+        <p class="legend"><span><i class="ln ink"></i>Benford’s law</span><span><i class="sq near"></i>election years</span><span><i class="sq far"></i>other or all years</span><span>one, two, three dots above a bar: past the 10, 5, 1% bar</span></p>
+        <label class="ctl" for="c-i">Step through the bins the paper prints</label>
+        <input type="range" id="c-i" min="0" max="19" step="1" value="17" disabled>
+        <p class="readout" id="c-read" aria-live="polite">The data draw once you have placed your bet.</p>
+        <p class="note" id="c-note" hidden>Tables 3, 4 and 5 print 21, 17 and 20 of the ninety bins; bars only where printed. Expected counts and shares computed from the counts; Z as printed. On 88 and 42: pp. 124, 128; on the other samples: pp. 121–122.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="c-verdict" aria-live="polite"></p>
+        <div class="actions" id="c-next" hidden>
+          <button class="btn primary" type="button" data-next>And what is missing?&nbsp;→</button>
+          <a class="door" href="04-tests.html#s2" data-return="next">How a Z statistic is computed, step by step&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Where did the 59s and 99s go?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · Before the vote · 4 of 6</p>
+      <h2>Not a single 59, not a single 99</h2>
+      <p>Just as telling, for the paper, is what is missing. Not one of the 490 election-year figures starts with 59, 85, 96 or 99. The paper reads the empty 59 and 99 bins as rounding up past a reference point, as Carslaw described: a figure a little under, say, €6 million or €100 million pushed over the line.</p>
+      <p>These are small bins: in 490 figures Benford’s law expects about 3.6 to start with 59 and 2.1 with 99. Table 5 gives the empty bins Z statistics of 1.633 and 1.123, short of the 10% bar.</p>
+      <p>The paper presents the missing 59s and 99s after its MAD result, as a further pattern in the same accounts, and notes that 85 and 96 are missing too.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>What the paper concludes&nbsp;→</button></div>
+      <p class="note">Counts and Z statistics: Table 5; expected counts computed from it. The paper’s reading of the empty bins and of reference points such as N × 10<sup>k</sup>: p. 124. The euro figures are toy examples, not from the paper.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Election-year bins with no figures</p>
+      <div class="tile-row" role="img" aria-label="Election-year bins with no figures: 59, about 3.6 expected, Z 1.633; 85, about 2.5 expected, Z 1.264; 96, about 2.2 expected, Z 1.151; 99, about 2.1 expected, Z 1.123.">
+        <div class="cell"><span class="figure-line"><span class="t empty">5</span><span class="t empty">9</span></span>expected 3.6<br>found 0 · Z 1.633</div>
+        <div class="cell"><span class="figure-line"><span class="t empty">8</span><span class="t empty">5</span></span>expected 2.5<br>found 0 · Z 1.264</div>
+        <div class="cell"><span class="figure-line"><span class="t empty">9</span><span class="t empty">6</span></span>expected 2.2<br>found 0 · Z 1.151</div>
+        <div class="cell"><span class="figure-line"><span class="t empty">9</span><span class="t empty">9</span></span>expected 2.1<br>found 0 · Z 1.123</div>
+      </div>
+      <p class="stage-title">The paper’s reading: a figure just under a round number, pushed over it <span class="tag">toy</span></p>
+      <div class="tile-row" role="img" aria-label="Toy examples: 5,980,000 euros becomes 6,000,000 euros, first two digits 59 to 60; 99,600,000 euros becomes 100,000,000 euros, first two digits 99 to 10.">
+        <div class="cell"><span class="figure-line"><span class="cur">€</span><span class="t">5</span><span class="t">9</span><span class="rest">80,000</span></span>↓<span class="figure-line"><span class="cur">€</span><span class="t gold">6</span><span class="t gold">0</span><span class="rest">00,000</span></span></div>
+        <div class="cell"><span class="figure-line"><span class="cur">€</span><span class="t">9</span><span class="t">9</span><span class="rest">,600,000</span></span>↓<span class="figure-line"><span class="cur">€</span><span class="t gold">1</span><span class="t gold">0</span><span class="rest">0,000,000</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does the paper conclude?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 5 of 6</p>
+    <h2>From the ballot box to the digits</h2>
+    <p class="lead">The paper’s conclusion: just before the elections, managers under pressure from political cost rounded revenue off to a cognitive reference point (pp. 128–129).</p>
+    <ol class="chain">
+      <li><span class="tag">the vote</span><br>A town holds a local election.<span class="how">Eight election dates, 2010 to 2015 (p. 116).</span></li>
+      <li><span class="tag">the motive</span><br>Its incumbents want their companies to look well run.<span class="how">The political cost hypothesis, from the literature (pp. 106, 109).</span></li>
+      <li><span class="tag">who</span><br>Managers feel the pressure.<span class="how">The paper places it with the managers; the role of incumbents is left to future work (pp. 125, 128).</span></li>
+      <li><span class="tag">the rounding</span><br>Revenue is rounded up past a round number.<span class="how">No figure starts with 59 or 99; 88 and 42 are over-used, which the paper finds hard to explain (Table 5, pp. 124, 128).</span></li>
+      <li><span class="tag">the digits</span><br>The digits drift from Benford’s law.<span class="how">MAD 0.00354, past 0.0022 (Table 5). The K-S statistic, 0.0216, stays below 0.0614, in contrast with the MAD (p. 127).</span></li>
+    </ol>
+    <p>The paper presents Benford’s law as a red flag rather than a fraud detector: a cheap first screen that the bodies guarding public money, such as Italy’s Corte dei Conti, could run on town-owned companies around elections.</p>
+    <p>It also names its own limits: the findings cannot be extended to state-owned enterprises in general; a plain feature of the accounts, such as standardised contracts, can make some digits repeat; the period studied may not be typical; and its tests point in different directions, an ambiguity it leaves to future work.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>What to take away&nbsp;→</button>
+      <a class="door" href="04-tests.html#s3" data-return="next">The tests disagree: what Kolmogorov–Smirnov sees&nbsp;→</a>
+    </div>
+    <p class="note">The paper’s reading and limits: pp. 109–110, 124–129. Counts and MAD: Table 5; the 0.0022 line: Table 2.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 6 of 6</p>
+    <h2>What to take away</h2>
+    <p class="closer">Revenue digits drifted from Benford’s law past the paper’s yardstick in the 490 accounts published in an election year, but not in the other 2,546.</p>
+    <ol class="takeaways">
+      <li>Revenue figures, like many real-world numbers, start with small digits far more often than large ones; the paper’s 3,036 figures follow that pattern overall.</li>
+      <li>Before local elections the fit breaks by the paper’s main yardstick (MAD 0.00354 against 0.0022). The paper reads this as consistent with the political cost hypothesis and with rounding up: 59 and 99 are left empty. The over-used 88 and 42 it finds hard to explain.</li>
+      <li>The method flags rather than proves: the paper offers it to auditors such as the Corte dei Conti as a red flag, not a fraud detector.</li>
+    </ol>
+    <p class="caveat">Limits the paper names: its tests disagree (on <a href="04-tests.html#s3">Kolmogorov–Smirnov</a>, which compares running totals, the widest gap, 0.0216, stays below the 0.0614 bar), an ambiguity left to future research; the results cannot be extended to state-owned enterprises in general; the period studied may not be typical.</p>
+    <p class="prompt">Open, as the paper says: did incumbents actually lean on managers, and would a longer run of elections show the same drift?</p>
+    <div class="actions">
+      <a class="btn primary" href="../../publication/elections-benford/">Read the paper</a>
+      <a class="btn" href="01-digits.html#s4">Round the toy figures again</a>
+    </div>
+    <p class="note">Tables 1–5; K-S: p. 127; the paper’s reading and limits: pp. 124, 128–129. Side paths you may have skipped: <a href="03-why-one.html#s1">why 1 comes first</a> · <a href="04-tests.html#s1">three tests</a></p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/elections-benford/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: when accounts count as election-year accounts, and how many there are (Section 3, Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var box = document.getElementById('data-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 262, L = 4, R = 4, x0 = L, x1 = W - R;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'One company, illustrative years: business years from 2009 to 2014, each with a revenue figure. If its town votes in 2013, the accounts for 2012, published in 2013, are election-year accounts. Across the sample, 2,546 figures come from other years and 490 from election years; median revenue 3.0 and 3.6 million euros.' }, box);
+    T(root, 0, 14, 'One company, one revenue figure a year', { 'class': 'label' });
+    T(root, W, 14, 'illustrative years', { 'text-anchor': 'end' });
+    var yrs = [2009, 2010, 2011, 2012, 2013, 2014], cw = (x1 - x0) / 6, yb = 28, bh = 30;
+    yrs.forEach(function (y, i) {
+      var gold = y === 2012, x = x0 + i * cw;
+      S('rect', { x: x + 2, y: yb, width: cw - 4, height: bh, rx: 3, 'class': gold ? 'near-fill' : 'surface' }, root);
+      T(root, x + cw / 2, yb + 19, String(y), { 'text-anchor': 'middle', 'class': 'label' });
+    });
+    /* the 2012 accounts are published in 2013, the year the town votes: an elbow from one box to the next, text below it */
+    var xa = x0 + 3.5 * cw, xb = x0 + 4.5 * cw, ya = yb + bh + 3;
+    S('path', { d: 'M' + xa + ',' + ya + ' V' + (ya + 12) + ' H' + xb + ' V' + ya, 'class': 'bracket' }, root);
+    S('path', { d: 'M' + (xb - 4) + ',' + (ya + 6) + ' L' + xb + ',' + ya + ' L' + (xb + 4) + ',' + (ya + 6), 'class': 'bracket' }, root);
+    T(root, 0, ya + 34, 'If the town votes in 2013, the accounts for 2012,', {});
+    T(root, 0, ya + 50, 'published that year, are election-year accounts.', { 'class': 'strong' });
+    /* the whole sample as one strip */
+    var ys = 176, sh = 26, n = 3036, xs = function (k) { return x0 + (x1 - x0) * k / n; };
+    T(root, 0, ys - 12, 'All 3,036 revenue figures, 2009 to 2014', { 'class': 'label' });
+    S('rect', { x: xs(0), y: ys, width: xs(2546) - xs(0) - 1, height: sh, 'class': 'far-fill' }, root);
+    S('rect', { x: xs(2546) + 1, y: ys, width: xs(n) - xs(2546) - 1, height: sh, 'class': 'near-fill' }, root);
+    T(root, 0, ys + sh + 17, th(2546) + ' from other years', { 'class': 'label' });
+    T(root, 0, ys + sh + 32, 'median €3.0 million');
+    T(root, W, ys + sh + 17, '490 election-year', { 'text-anchor': 'end', 'class': 'label' });
+    T(root, W, ys + sh + 32, 'median €3.6 million', { 'text-anchor': 'end' });
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: a bet on where the election-year MAD lands (Tables 2–5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var ZONES = [['close', 0, 0.0012, 'close'], ['acc', 0.0012, 0.0018, 'acceptable'], ['marg', 0.0018, 0.0022, 'marginal'], ['non', 0.0022, 0.0045, 'nonconformity']];
+  var LANES = [['All years', '3,036 figures', 0.00157, 'far'], ['Other years', '2,546 figures', 0.00158, 'far'], ['Election years', '490 figures', 0.00354, 'near']];
+  var XMAX = 0.0045;
+  var betBox = document.getElementById('bet-m'), box = document.getElementById('m-chart');
+  var verdict = document.getElementById('m-verdict'), nextBox = document.getElementById('m-next'), note = document.getElementById('m-note');
+  var bet = null, geo = null, fresh = false;
+  function build(W) {
+    box.innerHTML = '';
+    var L = 4, R = 10, lane = 50;
+    function X(v) { return L + (W - L - R) * v / XMAX; }
+    /* every zone is named above the ruler, from its left edge. A name too wide for the row it would share
+       with its right-hand neighbours climbs a row and drops a hairline to its zone; working from the right,
+       no hairline ever crosses a name. */
+    var rows = [], leaders = [], maxRow = 0;
+    ZONES.slice().reverse().forEach(function (z) {
+      var x0 = X(z[1]) + 4, x1 = x0 + E.textW(z[3]), r = 0;
+      function clash(rr) {
+        return (rows[rr] || []).some(function (s) { return x1 + 6 > s[0] && x0 < s[1] + 6; }) ||
+          leaders.some(function (l) { return l[1] > rr && l[0] >= x0 - 2 && l[0] <= x1 + 2; });
+      }
+      while (clash(r)) r++;
+      (rows[r] = rows[r] || []).push([x0, x1]);
+      leaders.push([X(z[1]), r]);
+      z.row = r; maxRow = Math.max(maxRow, r);
+    });
+    var TOP = 24 + 14 * maxRow, H = TOP + 3 * lane + 34;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img' }, box);
+    ZONES.forEach(function (z, i) {
+      S('rect', { x: X(z[1]), y: TOP - 4, width: X(z[2]) - X(z[1]) - (i < 3 ? 1 : 0), height: 3 * lane + 2, 'class': 'zone' + (z[0] === 'non' ? ' bad' : '') }, root);
+      var ly = TOP - 10 - 14 * z.row;
+      if (z.row) S('line', { x1: X(z[1]) + 0.5, x2: X(z[1]) + 0.5, y1: ly + 3, y2: TOP - 4, 'class': 'axis' }, root);
+      T(root, X(z[1]) + 4, ly, z[3], {});
+    });
+    var ty = TOP + 3 * lane + 14;
+    [0, 0.0012, 0.0018, 0.0022, 0.003, 0.004].forEach(function (v) {
+      if (W < 520 && (v === 0.0018 || v === 0.003)) return;
+      S('line', { x1: X(v), x2: X(v), y1: ty - 12, y2: ty - 7, 'class': 'axis' }, root);
+      T(root, X(v), ty + 5, v ? v.toFixed(4) : '0', { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    T(root, W - R, ty + 22, 'MAD: average gap from Benford’s law over 90 bins', { 'text-anchor': 'end' });
+    geo = { X: X, W: W, TOP: TOP, lane: lane, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    if (fresh && !E.still) g.setAttribute('class', 'reveal');
+    /* the description gives the answer only once the bet is placed */
+    geo.root.setAttribute('aria-label', 'Mean absolute deviation from Benford’s law on a ruler with Nigrini’s zones: close conformity, then acceptable from 0.0012 to 0.0018, marginal up to 0.0022, nonconformity above. All years 0.00157 and other years 0.00158, both acceptable; ' +
+      (bet ? 'election years 0.00354, nonconformity.' : 'the election years appear after your bet.'));
+    LANES.forEach(function (ln, i) {
+      var y = geo.TOP + i * geo.lane, cy = y + 30;
+      T(g, X(0) + 5, y + 12, ln[0] + ' · ' + ln[1], { 'class': 'label halo' });
+      if (i === 2 && !bet) { T(g, X(0.00225), cy + 4, 'place your bet', { 'class': 'placeholder halo' }); return; }
+      if (i === 2) {
+        /* the zone the reader bet on, outlined and named: inside the box when it fits, to its left when not */
+        var z = ZONES.filter(function (zz) { return zz[0] === bet; })[0], bx = X(z[1]) + 1, bwid = X(z[2]) - X(z[1]) - 2;
+        S('rect', { x: bx, y: y + 18, width: bwid, height: 24, rx: 3, fill: 'none', 'class': 'cursor' }, g);
+        var inside = E.textW('your bet') + 12 < bwid && !(X(ln[2]) > bx && X(ln[2]) < bx + E.textW('your bet') + 24);
+        T(g, inside ? bx + 6 : bx - 5, cy + 4, 'your bet', { 'text-anchor': inside ? 'start' : 'end', 'class': 'label halo' });
+      }
+      S('circle', { cx: X(ln[2]), cy: cy, r: 6, 'class': ln[3] + '-fill' }, g);
+      var right = X(ln[2]) > geo.W * 0.72;
+      T(g, X(ln[2]) + (right ? -11 : 11), cy + 4, ln[2].toFixed(5), { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+    });
+  }
+  var LEAD = {
+    close: 'Far from it. ', acc: 'That is where the other years sit, but not these. ', marg: 'Further still. ', non: 'Right: nonconformity. '
+  };
+  var TAIL = 'The election-year figures give 0.00354, well past the 0.0022 line; the other years sit at 0.00158. So the paper rejects conformity, ruling out by its yardstick that these digits follow the law, and with it the idea that nobody rounded them. It reads this as consistent with the political cost hypothesis: here, that a coming vote presses managers to make the accounts look better.';
+  function place(b, animate) {
+    bet = b; fresh = !!animate;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-mad', b);
+    verdict.textContent = LEAD[b] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    draw(); fresh = false;
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-mad');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: a bet on the most over-used pair, then the printed bins of Tables 3–5 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, D = E.DATA;
+  var betBox = document.getElementById('bet-c'), box = document.getElementById('c-chart'), slider = document.getElementById('c-i');
+  var read = document.getElementById('c-read'), verdict = document.getElementById('c-verdict'), nextBox = document.getElementById('c-next'), note = document.getElementById('c-note');
+  var st = { bet: null, sample: 'elec', d: 88 }, f = null, fresh = false;
+  var setSample = E.seg(document.getElementById('c-sample'), [['elec', 'Election years'], ['other', 'Other years'], ['all', 'All years']], 'elec', function (k) {
+    if (!st.bet) { setSample('elec'); return; }
+    st.sample = k; nearest(); sync(); render();
+  }, 'Sample');
+  [].forEach.call(document.querySelectorAll('#c-sample button'), function (b) { b.disabled = true; });
+  function rows() { return D[st.sample].rows; }
+  function nearest() {
+    var r = rows(), best = r[0][0];
+    r.forEach(function (x) { if (Math.abs(x[0] - st.d) < Math.abs(best - st.d)) best = x[0]; });
+    st.d = best;
+  }
+  function sync() {
+    var r = rows(); slider.max = r.length - 1;
+    r.forEach(function (x, i) { if (x[0] === st.d) slider.value = i; });
+  }
+  function cnt(x) { return x < 10 ? x.toFixed(1) : String(Math.round(x)); }
+  function build(W) {
+    f = E.binFrame(box, W, { H: Math.round(E.clamp(W * 0.46, 220, 260)), title: 'Share of figures starting with each pair, bins the paper prints', short: 'Share of figures, printed bins' });
+    f.dyn = S('g', {}, f.root);
+    render();
+  }
+  function render() {
+    var d = st.d, data = D[st.sample];
+    if (st.bet) {
+      var row = rows().filter(function (x) { return x[0] === d; })[0], q = E.benford(d), p = row[1] / data.n;
+      slider.setAttribute('aria-valuetext', 'first two digits ' + d);
+      read.innerHTML = '<strong>' + d + ', ' + data.label.toLowerCase() + ':</strong> ' + row[1] + ' of ' + E.thousands(data.n) + ' figures (' + E.pct(p) + '), where Benford’s law expects ' + E.pct(q, q < 0.01 ? 2 : 1) +
+        ', about ' + cnt(q * data.n) + '. <span class="nw">Z = ' + row[2].toFixed(3) + '</span> (' + data.table + '), ' + E.bar(row[2]) + '.' +
+        /* outside election years, a bin past a bar gets the paper's own reading of such bins (pp. 121–122) */
+        (st.sample !== 'elec' && row[2] > 1.64 ? ' In this sample the paper reads such bins as a few outliers in an acceptable overall fit (pp. 121–122).' : '');
+    }
+    if (!f) return;
+    f.root.setAttribute('aria-label', st.bet
+      ? 'Benford’s two-digit curve and the bins ' + data.table + ' prints for ' + data.label.toLowerCase() + '. Election years: 88 holds 7 figures where about 2.4 are expected (Z 2.648), the largest Z; 42 holds 10 against about 5 (Z 2.018); 38 holds 10 (Z 1.699); 59, 85, 96 and 99 are empty.'
+      : 'Benford’s two-digit curve; the paper’s bins appear after your bet.');
+    var g = f.dyn; g.innerHTML = '';
+    if (fresh && !E.still) g.setAttribute('class', 'reveal'); else g.removeAttribute('class');
+    if (!st.bet) {
+      E.benfordLine(g, f);
+      T(g, (f.L + f.W - f.R) / 2, f.Y(0.032), 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' });
+      return;
+    }
+    var bw = Math.max(2, f.bw - 1), cls = st.sample === 'elec' ? 'near-fill' : 'far-fill';
+    S('rect', { x: f.X(d) - f.bw / 2 - 1, y: f.TOP, width: f.bw + 2, height: f.H - f.B - f.TOP, 'class': 'sel' }, g);
+    rows().forEach(function (x) {
+      var p = x[1] / data.n, X0 = f.X(x[0]) - bw / 2;
+      if (x[1] > 0) S('rect', { x: X0, y: f.Y(p), width: bw, height: f.Y(0) - f.Y(p), 'class': cls }, g);
+      else S('rect', { x: X0 + 0.5, y: f.Y(E.benford(x[0])), width: Math.max(1, bw - 1), height: f.Y(0) - f.Y(E.benford(x[0])), 'class': 'drained' }, g);
+      /* one, two or three stacked dots: past the 10, 5 or 1% bar; a bin wide, so neighbours never collide */
+      var lv = E.stars(x[2]).length, top = Math.min(f.Y(p), f.Y(E.benford(x[0]))) - 6;
+      for (var k = 0; k < lv; k++) S('circle', { cx: f.X(x[0]), cy: top - k * 5, r: 1.9, 'class': 'text-fill' }, g);
+    });
+    E.benfordLine(g, f);
+    var pd = rows().filter(function (x) { return x[0] === d; })[0][1] / data.n, xd = f.X(d), right = xd > f.W * 0.62;
+    T(g, xd + (right ? -10 : 10), Math.min(f.Y(pd), f.Y(E.benford(d))) - 22, String(d), { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+  }
+  var LEAD = {
+    '10': 'Not 10: in election years it is slightly under-used, 18 figures where Benford’s law expects about 20. ',
+    '20': 'Of the printed bins, 20 has the most extra figures, 16 where about 10 are expected, but for a bin that common the gap is within what chance allows: Z 1.605, short of the 10% bar. ',
+    '42': 'Second: 42 holds 10 figures against about 5 expected, Z 2.018, past the 5% bar. ',
+    '88': 'Right. '
+  };
+  var TAIL = 'Against chance, 88 stands out most: 7 figures where Benford’s law expects about 2.4, Z 2.648, past the 1% bar. Then come 42 (Z 2.018, past the 5% bar) and 38 (Z 1.699, past the 10% bar). The paper finds the overuse of 88 and 42 hard to explain in economic terms.';
+  function place(b, animate) {
+    st.bet = b; st.sample = 'elec'; st.d = +b; fresh = !!animate;
+    setSample('elec');
+    [].forEach.call(document.querySelectorAll('#c-sample button'), function (x) { x.disabled = false; });
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-bins', b);
+    slider.disabled = false; sync();
+    verdict.textContent = LEAD[b] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    render(); fresh = false;
+  }
+  slider.addEventListener('input', function () { st.d = rows()[+slider.value][0]; render(); });
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-bins');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 720 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not counting this arrow · A Network-Based MTD Approach to Portfolio Optimization</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: why each arrow is judged by the excess strengths of its two ends, worked through the paper's Table 1, and how a stock's arrows add up to its local assortativity.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  #ex-chart { max-width: 30rem; margin-left: auto; margin-right: auto; }
+  .t1 { border-collapse: collapse; font-family: var(--sans); font-size: .76rem; width: 100%; max-width: 34rem; margin: .3rem 0 .1rem; }
+  .t1 th, .t1 td { padding: .24em .45em; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .t1 th { font-weight: 500; color: var(--muted); font-size: .72rem; }
+  .t1 thead tr:first-child th { border-bottom: 0; padding-bottom: 0; text-align: center; }
+  .t1 th:first-child, .t1 td:first-child { text-align: left; }
+  .t1 tr.sel td { background: var(--surface); font-weight: 500; }
+  .t1 td:first-child { border-left: 3px solid transparent; }
+  .t1 tr.sel td:first-child { border-left-color: var(--hi); }
+  @media (max-width: 640px) { .t1 th { white-space: normal; } .t1 th, .t1 td { padding: .24em .3em; } }
+  .fig .sum-row { cursor: pointer; }
+  .fig .sum-row:focus { outline: none; }
+  .fig .sum-row:focus-visible rect.hit { stroke: var(--focus); stroke-width: 2; }
+  .fig rect.hit { fill: transparent; }
+</style>
+</head>
+<body data-deck="05-excess.html">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why leave the arrow itself out?">
+  <div class="inner">
+    <p class="kicker">Side path · Not counting this arrow · 1 of 2</p>
+    <h2>Each arrow is judged without itself</h2>
+    <div class="two">
+      <div>
+        <p>Stock E leads four stocks, and its out-strength, 1.853, adds up all four arrows. To ask whether the arrow from E to A joins a leader to a follower, the paper first takes that arrow out: on this arrow E’s <strong>excess</strong> out-strength is <span class="num">1.853 − 0.669 = 1.184</span>.</p>
+        <p>What is left, the paper says, is the influence outside this arrow. The target is judged the same way: its in-strength without the arrow that reaches it. Excess strengths are a common choice in work on assortativity since Newman (2003).</p>
+        <p>Click one of E’s arrows, or its row.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>Add the arrows up into E’s score&nbsp;→</button>
+          <a class="btn return-link" href="01-leaders.html#s4" data-primary-when="01-leaders.html">← Return to the main path</a>
+        </div>
+        <p class="note">Table 1 (page 7) and Section 2.4. Strengths are row and column sums of the Section 2.6 matrix; they equal those printed in Table 1.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>E’s arrow to</span><span class="seg" id="ex-pick"></span></div>
+        <div class="fig" id="ex-chart"></div>
+        <p class="legend"><span><i class="ln hi"></i>the arrow judged</span><span><i class="ln"></i>E’s other arrows</span></p>
+        <table class="t1" aria-label="Table 1: E’s out-strength and each target’s in-strength, in all and without the arrow judged">
+          <thead>
+            <tr><th colspan="2"></th><th colspan="2">E’s out-strength</th><th colspan="2">target’s in-strength</th></tr>
+            <tr><th>Arrow</th><th>weight</th><th>in all</th><th>excess</th><th>in all</th><th>excess</th></tr>
+          </thead>
+          <tbody id="ex-rows"></tbody>
+        </table>
+        <p class="readout" id="ex-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How do arrows add up to a stock’s score?">
+  <div class="inner">
+    <p class="kicker">Side path · Not counting this arrow · 2 of 2</p>
+    <h2>A stock’s score adds up its own arrows</h2>
+    <div class="two">
+      <div>
+        <p>A stock’s score, its local assortativity, is built from the arrows it sends. Each arrow counts its weight, times the source’s excess strength, times how far the target’s excess strength sits from the average target’s. The four are summed and divided by one scale shared by all ten stocks, so the ten scores add up to the network’s assortativity.</p>
+        <p>Under In–In, E’s arrows to A and J point at stocks led far less than the average target once E’s own arrow is set aside. They outweigh the rest: E scores −0.555, the lowest in Table 2. Switch the modality and the same arrows add up differently.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-portfolio.html#s2">← Return to the main path</a>
+          <a class="btn" href="02-portfolio.html#s1">Go on to the portfolio&nbsp;→</a>
+        </div>
+        <p class="note">Equation (9) applied to the Section 2.6 matrix. E’s four scores equal Table 2: In–In −0.555, In–Out −0.040, Out–In −0.411, Out–Out −0.058. The average target and the scale are computed over all 28 arrows, each weighted by its weight.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Modality</span><span class="seg" id="sum-mode"></span></div>
+        <div class="fig" id="sum-chart"></div>
+        <p class="legend"><span><i class="sq base" style="opacity:.55"></i>one arrow’s share</span><span><i class="sq hi"></i>the arrow you picked</span><span><i class="sq" style="background:var(--text)"></i>E’s score</span></p>
+        <p class="readout" id="sum-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/mtd-portfolio-optimization/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+var SRC = 4, TARGETS = [0, 1, 5, 9];   /* E's four arrows: to A, B, F, J */
+
+/* ---------- slide 1: Table 1, arrow by arrow ---------- */
+(function () {
+  var E = Explore, N = E.net.names, W0 = E.net.W0, ST = E.net.strengths(W0);
+  var sel = 0, box = document.getElementById('ex-chart'), read = document.getElementById('ex-read'), tbody = document.getElementById('ex-rows');
+  var setSeg;
+  function row(j) {
+    var w = W0[SRC][j];
+    return { w: w, eo: ST.out[SRC] - w, ti: ST['in'][j] - w };
+  }
+  function f3(x) { return x.toFixed(3); }
+  function table() {
+    tbody.innerHTML = '';
+    TARGETS.forEach(function (j, k) {
+      var r = row(j), tr = document.createElement('tr');
+      if (k === sel) tr.className = 'sel';
+      tr.innerHTML = '<td>E → ' + N[j] + '</td><td>' + f3(r.w) + '</td><td>' + f3(ST.out[SRC]) + '</td><td>' + f3(r.eo) + '</td><td>' + f3(ST['in'][j]) + '</td><td>' + f3(r.ti) + '</td>';
+      tr.style.cursor = 'pointer';
+      tr.addEventListener('click', function () { choose(k); });
+      tbody.appendChild(tr);
+    });
+  }
+  function readout() {
+    var j = TARGETS[sel], r = row(j), t = N[j];
+    read.innerHTML = '<strong>E → ' + t + ' (' + f3(r.w) + '):</strong> E leads ' + f3(ST.out[SRC]) + ' in all, ' + f3(r.eo) + ' without this arrow. ' +
+      t + ' is led ' + f3(ST['in'][j]) + ' in all, ' + f3(r.ti) + ' without E’s arrow.';
+  }
+  function build(W, vh) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.6, 190, Math.max(190, vh * 0.29)));
+    var root = E.svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group', 'aria-label': 'The ten-stock network with E’s four arrows highlighted; the arrow to ' + N[TARGETS[sel]] + ' is selected. Stocks A, B, F and J can be clicked.' }, box);
+    var out = E.net.draw(root, W0, { x: 0, y: 0, w: W, h: H }, { R: 11,
+      nodeClass: function (i) { return i === SRC || i === TARGETS[sel] ? 'hi' : TARGETS.indexOf(i) >= 0 ? '' : 'dim'; },
+      edgeClass: function (i, j) { return i === SRC && j === TARGETS[sel] ? 'lead' : i === SRC && TARGETS.indexOf(j) >= 0 ? 'led' : 'dim'; },
+      onNode: function (i) { var k = TARGETS.indexOf(i); if (k >= 0) choose(k); } });
+    /* only E's four targets are controls; the other six stocks are scenery */
+    out.nodes.forEach(function (g, i) {
+      if (TARGETS.indexOf(i) >= 0) return;
+      g.removeAttribute('tabindex'); g.removeAttribute('role'); g.removeAttribute('aria-label'); g.style.cursor = 'default';
+    });
+  }
+  var redraw = E.fit(box, build, { min: 280, max: 520, useHeight: true });
+  function choose(k) { sel = k; if (setSeg) setSeg(String(k)); redraw(); table(); readout(); }
+  setSeg = E.seg(document.getElementById('ex-pick'), TARGETS.map(function (j, k) { return [String(k), N[j]]; }), '0', function (k) { choose(+k); }, 'E’s arrow to');
+  table(); readout();
+})();
+
+/* ---------- slide 2: E's local assortativity, arrow by arrow (equation 9) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, N = E.net.names, W0 = E.net.W0;
+  var MODES = { ii: ['in', 'in', 'In–In'], io: ['in', 'out', 'In–Out'], oi: ['out', 'in', 'Out–In'], oo: ['out', 'out', 'Out–Out'] };
+  var mode = 'ii', pick = 0, box = document.getElementById('sum-chart'), read = document.getElementById('sum-read');
+  /* the pieces of equation (9) for E: each arrow's weight × source excess × (target excess − weighted average target), over one shared scale */
+  function parts() {
+    var md = MODES[mode], A = E.net.assort(W0, md[0], md[1]), O = 0, Sx = 0, Sy = 0, Sxx = 0, Syy = 0;
+    A.edges.forEach(function (e) { var x = e.src[md[0]], y = e.tgt[md[1]]; O += e.w; Sx += e.w * x; Sy += e.w * y; Sxx += e.w * x * x; Syy += e.w * y * y; });
+    var scale = Math.sqrt(Sxx - Sx * Sx / O) * Math.sqrt(Syy - Sy * Sy / O), avg = Sy / O;
+    var rows = A.edges.filter(function (e) { return e.i === SRC; }).map(function (e) {
+      var xs = e.src[md[0]], yt = e.tgt[md[1]];
+      return { j: e.j, w: e.w, xs: xs, yt: yt, raw: e.w * xs * (yt - avg), c: e.w * xs * (yt - avg) / scale };
+    });
+    return { rows: rows, avg: avg, scale: scale, total: A.local[SRC], md: md };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var P = parts(), lw = 64, rw = 58, rowH = 34, TOP = 6, H = TOP + 5 * rowH + 26;
+    var run = 0, ends = [0];
+    P.rows.forEach(function (r) { run += r.c; ends.push(run); });
+    var m = 0; P.rows.forEach(function (r) { m = Math.max(m, Math.abs(r.c)); }); ends.forEach(function (v) { m = Math.max(m, Math.abs(v)); });
+    m = Math.max(0.1, m * 1.08);
+    function X(v) { return lw + (W - lw - rw) * (v + m) / (2 * m); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group', 'aria-label': 'E’s ' + P.md[2] + ' score built from its four arrows: ' + P.rows.map(function (r) { return 'E to ' + N[r.j] + ' ' + E.plus(r.c, 3); }).join(', ') + '; total ' + E.plus(P.total, 3) + '.' }, box);
+    S('line', { x1: X(0), x2: X(0), y1: TOP, y2: TOP + 5 * rowH, 'class': 'axis zero' }, root);
+    T(root, X(-m), H - 6, E.plus(-m, 2), { 'text-anchor': 'start' });
+    T(root, X(0), H - 6, '0', { 'text-anchor': 'middle' });
+    T(root, X(m), H - 6, E.plus(m, 2), { 'text-anchor': 'end' });
+    run = 0;
+    P.rows.forEach(function (r, k) {
+      var y = TOP + k * rowH, a = run, b = run + r.c, hi = k === pick;
+      run = b;
+      var g = S('g', { 'class': 'sum-row', role: 'button', tabindex: '0', 'aria-label': 'Arrow E to ' + N[r.j] + ', share ' + E.plus(r.c, 3) + (hi ? ', picked' : '') }, root);
+      S('rect', { x: 0, y: y, width: W, height: rowH, 'class': 'hit' }, g);
+      T(g, 0, y + rowH / 2 + 4, 'E → ' + N[r.j], { 'class': hi ? 'strong' : 'label' });
+      S('rect', { x: Math.min(X(a), X(b)), y: y + 8, width: Math.max(1.5, Math.abs(X(b) - X(a))), height: rowH - 16, 'class': hi ? 'hi-fill' : 'base-fill', 'fill-opacity': hi ? 1 : 0.55 }, g);
+      if (k > 0) S('line', { x1: X(a), x2: X(a), y1: y - rowH + 8, y2: y + rowH - 8, 'class': 'grid' }, g);
+      T(g, W, y + rowH / 2 + 4, E.plus(r.c, 3), { 'text-anchor': 'end', 'class': hi ? 'strong' : '' });
+      (function (kk) {
+        g.addEventListener('click', function () { pick = kk; build(W); });
+        g.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pick = kk; build(W); var f = box.querySelectorAll('.sum-row')[kk]; if (f) f.focus(); } });
+      })(k);
+    });
+    var yT = TOP + 4 * rowH;
+    T(root, 0, yT + rowH / 2 + 4, 'E’s score', { 'class': 'strong' });
+    S('rect', { x: Math.min(X(0), X(P.total)), y: yT + 7, width: Math.max(1.5, Math.abs(X(P.total) - X(0))), height: rowH - 14, 'class': 'text-fill' }, root);
+    T(root, W, yT + rowH / 2 + 4, E.plus(P.total, 3), { 'text-anchor': 'end', 'class': 'strong' });
+    var r = P.rows[pick], md = P.md, t = N[r.j];
+    read.innerHTML = '<strong>E → ' + t + ', ' + md[2] + ':</strong> weight ' + r.w.toFixed(3) + '; this arrow’s share of E’s score is <strong>' + E.plus(r.c, 3) + '</strong>. The four shares add up to E’s ' + md[2] + ' score, ' + E.plus(P.total, 3) + ', the value in Table 2.';
+  }
+  var redraw = E.fit(box, build, { min: 290, max: 600 });
+  E.seg(document.getElementById('sum-mode'), [['ii', 'In–In'], ['io', 'In–Out'], ['oi', 'Out–In'], ['oo', 'Out–Out']], mode, function (k) { mode = k; redraw(); }, 'Modality');
+})();
+</script>
+</body>
+</html>

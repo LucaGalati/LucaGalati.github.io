@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: The Information Content of Delayed Block Trades in Cryptocurrency Markets</title>
+<meta name="description" content="An explorable explanation of Galati and De Blasis, The information content of delayed block trades in cryptocurrency markets: what large bitcoin trades tell the market, and what happened when Gemini let trades of 5 to 10 bitcoin be printed ten minutes late.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <p class="kicker">An explorable explanation</p>
+  <h1>The Information Content of Delayed Block Trades in Cryptocurrency Markets</h1>
+  <p class="byline">Luca Galati and Riccardo De Blasis · The British Accounting Review, 2026</p>
+  <div class="fig ornament" id="tape"></div>
+  <p class="lede">On 6 December 2019 the Gemini exchange halved the size a bitcoin trade needed before it could be done away from the order book and shown to everyone else ten minutes later. This explorable uses that one change to ask what a large trade tells the market, and whether the right to keep it quiet for ten minutes draws in the traders who know something. Three decks on the main path, three side paths, a few things to play with, about fifteen minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-upstairs.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-upstairs.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the motif: a trade tape where a book trade is printed at once and a block is printed ten minutes after it happened */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('tape');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 74, y = 44, n = Math.floor(W / 13);
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A trade tape: a book trade appears on the tape the moment it happens; a block trade happens out of sight and appears on the tape ten minutes later.' }, box);
+    S('line', { x1: 0, x2: W, y1: y, y2: y, 'class': 'tape' }, root);
+    for (var i = 0; i < n; i++) {
+      var x = 6 + i * 13, h = 4 + ((i * 7) % 5);
+      S('line', { x1: x, x2: x, y1: y - h, y2: y, 'class': 'tick' }, root);
+    }
+    var xb = Math.round(W * 0.16), xe = Math.round(W * 0.42), xp = Math.round(W * 0.84);
+    S('rect', { x: xb - 6, y: y - 6, width: 12, height: 12, 'class': 'book-fill' }, root);
+    S('rect', { x: xe - 6, y: y - 6, width: 12, height: 12, 'class': 'blk-hollow' }, root);
+    S('path', { d: 'M' + xe + ',' + (y - 9) + ' C' + xe + ',' + 16 + ' ' + xp + ',' + 16 + ' ' + xp + ',' + (y - 9), 'class': 'arc' }, root);
+    T(root, (xe + xp) / 2, 13, '10 min', { 'text-anchor': 'middle' });
+    S('rect', { x: xp - 6, y: y - 6, width: 12, height: 12, 'class': 'blk-fill' }, root);
+    T(root, xb, H - 4, 'book trade, printed', { 'text-anchor': W < 520 ? 'start' : 'middle' });
+    if (W >= 520) T(root, xe, H - 4, 'block, executed', { 'text-anchor': 'middle' });
+    T(root, xp, H - 4, W < 520 ? 'block, printed' : 'block, printed 10 min later', { 'text-anchor': 'end' });
+  }, { min: 300, max: 760 });
+})();
+</script>
+</body>
+</html>

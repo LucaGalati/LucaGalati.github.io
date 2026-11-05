@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the map measures · Information Flow in the FTX Bankruptcy</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati, Grassi and Rizzini, Information Flow in the FTX Bankruptcy: how the month is split into two periods, how long each is, and what a map of correlations measures and leaves out.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-limits.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-information-flow/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How is the month split?">
+  <div class="inner">
+    <p class="kicker">Side path · What the map measures · <span class="nw">1 of 2</span></p>
+    <h2>Three weeks before, six and a half days during</h2>
+    <div class="two">
+      <div>
+        <p>The before-and-after comparison splits the month at event (c), when Binance moved the FTT. The authors chose that point from the price series, where the break is plain.</p>
+        <p>The two parts differ in length and in mood: about three weeks that already include the first news, against six and a half days in which FTT’s one-minute swings were about 22 times wider.</p>
+        <p>The paper also follows the market without the split. Table 5 reports the correlations over the whole month as well, and the hourly maps of Section 3.5 are each built from the 24 hours before them.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What a correlation map cannot say&nbsp;→</button>
+          <a class="btn return-link" href="03-reshaped.html#s2">← Return to the main path</a>
+        </div>
+        <p class="note">The split: p.6. Lengths computed from p.5 and Table 4; the starting hour on 16 October is not given. FTT’s volatility: Table 6 and p.8. Whole month: Table 5. Hourly maps: Section 3.5 and Fig. 6.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">How much data each map is built from</p>
+        <div class="fig" id="len-chart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What can a correlation map not say?">
+  <div class="inner">
+    <p class="kicker">Side path · What the map measures · <span class="nw">2 of 2</span></p>
+    <h2>What a map of correlations cannot say</h2>
+    <div class="two">
+      <div>
+        <ul class="facts">
+          <li><b>Information</b>Here it is a property of the map: a coin carries information when cheap roads of co-movement run through it. The paper observes prices, not messages, orders or traders.</li>
+          <li><b>Sign</b>Correlations are counted by size, so two coins moving against each other look like two moving together. The authors report very few negative correlations, so that this choice does not affect their results, and name signed networks, harder to handle mathematically, as a fuller option for future work.</li>
+          <li><b>Data</b>One-minute prices from Refinitiv; the paper’s data statement says they are confidential.</li>
+        </ul>
+        <div class="actions">
+          <a class="btn primary return-link" href="03-reshaped.html#s4">← Return to the main path</a>
+          <a class="btn" href="03-reshaped.html#s7">Skip to the takeaways&nbsp;→</a>
+        </div>
+        <p class="note">Information centrality: eq. (6). Sign: p.7, fn. 12 and p.18. Data: p.5–6 and p.21.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Same link, opposite moves <span class="tag">toy</span></p>
+        <div class="fig" id="sign-chart"></div>
+        <p class="caption">Invented returns. Coin B mirrors coin A in the second pair, a correlation of −0.8; the map, which keeps only the size, draws both pairs as a link of 0.8.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-information-flow/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: how long each map's data run (computed from p.5 and Table 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var ROWS = [
+    ['Before the collapse', '16 Oct to 5 Nov, 14:09', 20.6, 'far-fill', 'about 20½ days'],
+    ['The collapse, on FTX', '5 Nov, 14:09 to 12 Nov, 03:28', 6.55, 'near-fill', '6½ days'],
+    ['Each hourly map', 'the 24 hours before it', 1, 'muted-fill', '1 day']
+  ], MAX = 21;
+  var box = document.getElementById('len-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 58, H = ROWS.length * rowH + 20, xMax = W - 110;
+    function X(v) { return xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Length of data behind each map: before the collapse about 20 and a half days, the collapse on FTX 6 and a half days, each hourly map one day.' }, box);
+    [0, 7, 14, 21].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: 0, y2: H - 20, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 5, v + ' days', { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    ROWS.forEach(function (r, i) {
+      var y = i * rowH;
+      T(root, 0, y + 13, r[0], { 'class': 'label' });
+      T(root, 0, y + 28, r[1]);
+      S('rect', { x: 0, y: y + 34, width: Math.max(2, X(r[2])), height: 13, 'class': r[3] }, root);
+      T(root, X(r[2]) + 6, y + 45, r[4], { 'class': 'strong' });
+    });
+  }, { min: 280, max: 560 });
+})();
+
+/* ---------- slide 2: same size, opposite sign (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var A = [0.6, -0.9, 1.4, 0.2, -1.2, 0.8, -0.4, 1.1, -0.7, 0.3, -1.4, 0.9, 0.1, -0.5, 1.2, -1.0];
+  var NOISE = [0.2, -0.1, 0.25, -0.3, 0.1, -0.2, 0.3, -0.15, 0.2, -0.25, 0.1, 0.15, -0.2, 0.3, -0.1, 0.2];
+  /* B = ±0.8 × A + 0.6 × noise, with A and the noise standardised and the noise made orthogonal to A, so the correlation is exactly ±0.8 */
+  function std(v) { var m = v.reduce(function (a, b) { return a + b; }, 0) / v.length, s = Math.sqrt(v.reduce(function (a, b) { return a + (b - m) * (b - m); }, 0) / v.length); return v.map(function (x) { return (x - m) / s; }); }
+  var ZA = std(A), ZN = std(NOISE), dot = ZA.reduce(function (s, x, k) { return s + x * ZN[k]; }, 0) / ZA.length;
+  var ZO = std(ZN.map(function (x, k) { return x - dot * ZA[k]; }));
+  function partner(sign) { return ZA.map(function (x, k) { return (sign * 0.8 * x + 0.6 * ZO[k]) * 0.7; }); }
+  A = ZA.map(function (x) { return x * 0.7; });
+  var box = document.getElementById('sign-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 236, N = A.length, bw = (W - 96) / N;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two invented pairs of coins. In the first, B moves with A; in the second, B moves against A. Both pairs become a link of strength 0.8 on the map.' }, box);
+    function pair(y0, sign, title) {
+      T(root, 0, y0 - 6, title, { 'class': 'label' });
+      [[A, 'far-fill', 0], [partner(sign), 'muted-fill', 1]].forEach(function (s) {
+        var yy = y0 + 22 + s[2] * 46;
+        T(root, 0, yy + 4, s[2] ? 'B' : 'A', { 'class': 'strong' });
+        S('line', { x1: 16, x2: 16 + N * bw, y1: yy, y2: yy, 'class': 'axis' }, root);
+        s[0].forEach(function (v, k) { var h = v * 14; S('rect', { x: (16 + k * bw + bw * 0.2).toFixed(1), y: (h > 0 ? yy - h : yy).toFixed(1), width: (bw * 0.6).toFixed(1), height: Math.max(0.8, Math.abs(h)).toFixed(1), 'class': s[1] }, root); });
+      });
+      var lx = W - 60, ly1 = y0 + 22, ly2 = y0 + 68;
+      S('line', { x1: lx, x2: lx, y1: ly1, y2: ly2, 'class': 'edge', 'stroke-width': 6.6 }, root);
+      S('circle', { cx: lx, cy: ly1, r: 10, 'class': 'node' }, root);
+      S('circle', { cx: lx, cy: ly2, r: 10, 'class': 'node' }, root);
+      T(root, lx + 16, (ly1 + ly2) / 2 + 4, '0.8', { 'class': 'strong' });
+    }
+    pair(16, 1, 'Moving together: +0.8');
+    pair(136, -1, 'Moving against each other: −0.8');
+  }, { min: 280, max: 520 });
+})();
+</script>
+</body>
+</html>

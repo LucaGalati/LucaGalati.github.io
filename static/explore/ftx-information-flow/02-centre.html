@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What makes a coin central · Information Flow in the FTX Bankruptcy</title>
+<meta name="description" content="Deck 2 of an explorable explanation of De Blasis, Galati, Grassi and Rizzini, Information Flow in the FTX Bankruptcy: the paper’s own five-node network, road lengths, degree, closeness and information centrality, and what the network loses when a node is cut.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .net-fig { max-width: 30rem; margin-left: auto; margin-right: auto; }
+  #ce-table td, #ce-table th { text-align: right; padding: .3em .6em; }
+  #ce-table { margin: .3rem 0 .4rem; }
+  #ce-table td:first-child, #ce-table th:first-child { text-align: left; }
+  #rw-pair { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); width: 100%; max-width: 24rem; }
+  #rw-pair button { padding: .35em .3em; }
+  /* on a laptop the ten links sit in one row beside their label, and the strength slider beside its own */
+  .rw-row { margin-bottom: 0; }
+  .rw-row input[type="range"] { margin: 0; }
+  @media (min-width: 820px) {
+    #rw-pair { grid-template-columns: repeat(10, minmax(0, 1fr)); max-width: none; width: auto; flex: 1 1 0; min-width: 0; }
+    .rw-row { flex-wrap: nowrap; }
+    .rw-row label { flex: none; width: 10.5em; }
+    .rw-row input[type="range"] { flex: 1 1 auto; }
+  }
+  #rw-tag { visibility: hidden; }
+  #rw-tag.on { visibility: visible; }
+</style>
+</head>
+<body data-deck="02-centre.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-information-flow/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How far apart are two coins?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What makes a coin central · 1 of 4</p>
+    <h2>A strong link is a short road</h2>
+    <div class="two">
+      <div>
+        <p>Before the real network, the paper’s own small example: five coins, <em>a</em> to <em>e</em>, and six links with their strengths.</p>
+        <p>To say how far apart two coins are, the authors turn each strength into a <strong>road length</strong>: one divided by the strength. A strong link of 0.5 is a road of 2; a weak one of 0.1, a road of 10. The distance between two coins is the cheapest way from one to the other, and it may well run through a third coin.</p>
+        <p>Pick two coins. Watch which one keeps turning up on the cheapest road.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Three ways to be central&nbsp;→</button></div>
+        <p class="note">The network of the paper’s eq. (7) and Fig. 1(a); road lengths as in eq. (2). The cheapest roads and their costs match Table 2, panel A; the four roads from <em>d</em> to <em>c</em> are listed on p.5.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Label the links by</span><div class="seg" id="rd-mode"></div></div>
+        <div class="fig net-fig" id="rd-chart"></div>
+        <div class="ctl"><span class="pair"><span>From</span><span class="seg" id="rd-from"></span></span><span class="pair"><span>To</span><span class="seg" id="rd-to"></span></span></div>
+        <p class="readout" id="rd-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Two weak links or one strong one?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What makes a coin central · 2 of 4</p>
+    <h2>Two weak links or one strong one?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>There is more than one way to be central:</p>
+        <ul class="facts">
+          <li><b>Degree</b>how many links a coin has.</li>
+          <li><b>Closeness</b>how short its roads to all the others are.</li>
+          <li><b>Information centrality</b>how much the whole network slows when the coin’s links are cut.</li>
+        </ul>
+        <p><strong>Coin <em>c</em> has two links, 0.2 to <em>a</em> and 0.1 to <em>b</em>. Coin <em>e</em> has one, 0.4 to the hub <em>a</em>. Which matters more to the network?</strong></p>
+        <div class="actions bet" id="ce-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="c" aria-pressed="false"><em>c</em>, two links</button>
+          <button class="btn" type="button" data-bet="e" aria-pressed="false"><em>e</em>, one strong link</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">Equally</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig net-fig" id="ce-chart"></div>
+        <table class="score" id="ce-table">
+          <thead><tr><th>Coin</th><th>Degree</th><th>Closeness</th><th>Information</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="t">
+        <p id="ce-verdict" aria-live="polite"></p>
+        <div class="actions" id="ce-next" hidden>
+          <button class="btn primary" type="button" data-next>Cut a coin and see&nbsp;→</button>
+        </div>
+        <p class="note" id="ce-note" hidden>Table 1 of the paper, ordered by information centrality. Degree is the share of the other four coins a coin links to; closeness is eq. (3) and information centrality eq. (6), with the values as printed in Table 1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does the network lose without a node?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What makes a coin central · 3 of 4</p>
+    <h2>Take a coin out and the whole network slows</h2>
+    <div class="two">
+      <div>
+        <p>Information centrality works by subtraction. First measure the network’s <strong>efficiency</strong>: one over the cheapest road for every pair of coins, averaged. Then cut one coin’s links and measure again. The share of efficiency lost is that coin’s information centrality.</p>
+        <p>Cut each coin in turn and fill in the bars. Cutting the hub <em>a</em> leaves only three roads standing, and they are long ones.</p>
+        <p class="door-row"><a class="door" href="05-limits.html#s2" data-return="3">What does “information” mean on a map built from prices?&nbsp;→</a></p>
+        <div class="actions">
+          <a class="btn primary" href="03-reshaped.html#s1">Now the real network, on FTX&nbsp;→</a>
+          <button class="btn" type="button" data-next>First, rewire this one yourself&nbsp;→</button>
+        </div>
+        <p class="note">Efficiency is eq. (5), information centrality eq. (6), both computed here from eq. (7): 0.239 for the full network (0.24 in Fig. 1); with a cut, a 0.037, b 0.132, c 0.179, d 0.160, e 0.146 (Table 3 rounds to two decimals). The bars reproduce Table 1’s last column.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Cut the links of</span><div class="seg" id="cut-pick"></div></div>
+        <div class="fig net-fig" id="cut-chart"></div>
+        <p class="readout" id="cut-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Can you rewire it?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What makes a coin central · 4 of 4</p>
+    <h2>Rewire it yourself</h2>
+    <div class="two">
+      <div>
+        <p>Pick any pair of coins and set the strength of its link; zero removes it. The scoreboard recomputes every coin’s links, its rank by closeness and its information centrality.</p>
+        <p class="prompt">A puzzle: make <em>c</em> matter more to the network than <em>e</em>. Then try to make the hub <em>a</em> matter less than <em>b</em>.</p>
+        <p>The moment you change a strength the numbers are yours, not the paper’s.</p>
+        <div class="actions">
+          <a class="btn primary" href="03-reshaped.html#s1">Now the real network, on FTX&nbsp;→</a>
+          <button class="btn" type="button" id="rw-reset">Reset to the paper’s network</button>
+        </div>
+        <p class="note">Same formulas as before, eq. (2) to (6), applied to your strengths. Closeness is shown as a rank; a coin with no road to some other coin gets no closeness rank.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Your network <span class="tag" id="rw-tag">toy values: yours, not the paper’s</span></p>
+        <div class="ctl"><span>Link</span><div class="seg" id="rw-pair"></div></div>
+        <div class="ctl rw-row">
+          <label for="rw-w" id="rw-wlab">Strength</label>
+          <input type="range" id="rw-w" min="0" max="1" step="0.05" value="0.5">
+        </div>
+        <div class="fig net-fig" id="rw-chart"></div>
+        <p class="readout" id="rw-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-information-flow/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- the paper's five-node network (eq. 7, Fig. 1a) and the formulas of Section 2.2 ---------- */
+var Net = (function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var NAMES = ['a', 'b', 'c', 'd', 'e'];
+  var PAPER = [[0, .5, .2, .3, .4], [.5, 0, .1, .2, 0], [.2, .1, 0, 0, 0], [.3, .2, 0, 0, 0], [.4, 0, 0, 0, 0]];
+  var POS = [[0.5, 0.40], [0.5, 0.93], [0.89, 0.66], [0.11, 0.66], [0.5, 0.07]];
+  var n = 5;
+  function copy(m) { return m.map(function (r) { return r.slice(); }); }
+  function has(m, i, j, cut) { return i !== cut && j !== cut && m[i][j] > 0; }
+  /* every simple road from s to t with its cost (sum of 1/strength, eq. 2) */
+  function roads(m, s, t) {
+    var out = [];
+    (function walk(path, cost) {
+      var u = path[path.length - 1];
+      if (u === t) { out.push({ p: path.slice(), c: cost }); return; }
+      for (var v = 0; v < n; v++) if (m[u][v] > 0 && path.indexOf(v) < 0) { path.push(v); walk(path, cost + 1 / m[u][v]); path.pop(); }
+    })([s], 0);
+    return out.sort(function (x, y) { return x.c - y.c; });
+  }
+  /* all-pairs cheapest roads (Dijkstra), with the links of `cut` removed */
+  function dist(m, cut) {
+    var D = [];
+    for (var s = 0; s < n; s++) {
+      var d = [], done = [], k, v;
+      for (k = 0; k < n; k++) { d.push(Infinity); done.push(false); }
+      d[s] = 0;
+      for (k = 0; k < n; k++) {
+        var u = -1;
+        for (v = 0; v < n; v++) if (!done[v] && (u < 0 || d[v] < d[u])) u = v;
+        if (d[u] === Infinity) break;
+        done[u] = true;
+        for (v = 0; v < n; v++) if (has(m, u, v, cut) && d[u] + 1 / m[u][v] < d[v]) d[v] = d[u] + 1 / m[u][v];
+      }
+      D.push(d);
+    }
+    return D;
+  }
+  /* efficiency, eq. (5) */
+  function eff(m, cut) {
+    var D = dist(m, cut), s = 0;
+    for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) if (i !== j && D[i][j] < Infinity) s += 1 / D[i][j];
+    return s / (n * (n - 1));
+  }
+  /* information centrality, eq. (6) */
+  function info(m) { var e0 = eff(m, -1); return NAMES.map(function (x, i) { return e0 > 0 ? 1 - eff(m, i) / e0 : 0; }); }
+  /* closeness, eq. (3); 0 when some coin cannot be reached */
+  function closeness(m) {
+    var D = dist(m, -1);
+    return D.map(function (d) { var s = 0; for (var j = 0; j < n; j++) s += d[j]; return s === Infinity ? 0 : (n - 1) / s; });
+  }
+  function degree(m) { return m.map(function (r) { return r.filter(function (w) { return w > 0; }).length; }); }
+  function fmtLen(w) { return String(+(1 / w).toFixed(2)); }
+  /* point at t on the quadratic curve p0–c–p1, and the distance from point q to the segment a–b */
+  function qb(p0, c, p1, t) { var u = 1 - t; return [u * u * p0[0] + 2 * u * t * c[0] + t * t * p1[0], u * u * p0[1] + 2 * u * t * c[1] + t * t * p1[1]]; }
+  function segDist(q, a, b) {
+    var dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy || 1;
+    var t = Math.max(0, Math.min(1, ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) / L2));
+    return Math.hypot(q[0] - a[0] - t * dx, q[1] - a[1] - t * dy);
+  }
+  /* draw the network into root at width W and height H. o: { m, labels: 'w'|'d'|null, hiNodes, ringNodes, path, cut, pairs } */
+  function draw(root, W, H, o) {
+    var m = o.m, pad = 22;
+    function P(i) { return [pad + (W - 2 * pad) * POS[i][0], pad + (H - 2 * pad) * POS[i][1]]; }
+    var onPath = {};
+    if (o.path) for (var k = 1; k < o.path.length; k++) { onPath[o.path[k - 1] + '-' + o.path[k]] = 1; onPath[o.path[k] + '-' + o.path[k - 1]] = 1; }
+    var g = S('g', {}, root), labels = [], segs = [];
+    for (var i = 0; i < n; i++) for (var j = i + 1; j < n; j++) {
+      if (!(m[i][j] > 0)) continue;
+      var a = P(i), b = P(j), cutEdge = o.cut === i || o.cut === j, hi = !!onPath[i + '-' + j] || (o.hiPair && o.hiPair[0] === i && o.hiPair[1] === j);
+      var cls = 'edge' + (cutEdge ? ' ghost-edge' : hi ? ' hi' : ''), sw = cutEdge ? null : (1 + 7 * m[i][j]).toFixed(1);
+      var cand;
+      if ((i === 1 && j === 4)) { /* b–e would run through a: bend it */
+        var cx = pad + (W - 2 * pad) * 0.86, cy = pad + (H - 2 * pad) * 0.32;
+        S('path', { d: 'M' + b[0] + ',' + b[1] + ' Q' + cx + ',' + cy + ' ' + a[0] + ',' + a[1], 'class': cls, 'stroke-width': sw }, g);
+        cand = [[0.25 * a[0] + 0.5 * cx + 0.25 * b[0] + 12, 0.25 * a[1] + 0.5 * cy + 0.25 * b[1]]];
+        /* the curve as four straight pieces, for keeping other labels off it */
+        for (var s0 = 0; s0 < 4; s0++) segs.push([qb(b, [cx, cy], a, s0 / 4), qb(b, [cx, cy], a, (s0 + 1) / 4)]);
+      } else {
+        S('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], 'class': cls, 'stroke-width': sw }, g);
+        segs.push([a, b]);
+        var dx = b[0] - a[0], dy = b[1] - a[1], len = Math.sqrt(dx * dx + dy * dy) || 1, nx = -dy / len * 16, ny = dx / len * 16;
+        cand = [];
+        [0.5, 0.32, 0.68].forEach(function (t) { var px = a[0] + dx * t, py = a[1] + dy * t; cand.push([px + nx, py + ny], [px - nx, py - ny]); });
+      }
+      if (o.labels && !cutEdge) labels.push({ cand: cand, txt: o.labels === 'w' ? String(m[i][j]) : fmtLen(m[i][j]), hi: hi });
+    }
+    /* labels after the links, each at the first spot clear of the other labels, of the nodes and of every link */
+    var placedL = [];
+    labels.forEach(function (l) {
+      var spot = l.cand[0];
+      for (var c = 0; c < l.cand.length; c++) {
+        var q = l.cand[c], clear = placedL.every(function (r) { return Math.abs(r[0] - q[0]) > 30 || Math.abs(r[1] - q[1]) > 15; });
+        for (var v2 = 0; v2 < n && clear; v2++) { var pv = P(v2); if (Math.abs(pv[0] - q[0]) < 30 && Math.abs(pv[1] - q[1]) < 24) clear = false; }
+        for (var k2 = 0; k2 < segs.length && clear; k2++) if (segDist(q, segs[k2][0], segs[k2][1]) < 13) clear = false;
+        if (clear) { spot = q; break; }
+      }
+      placedL.push(spot);
+      T(g, spot[0], spot[1] + 4, l.txt, { 'text-anchor': 'middle', 'class': 'w-label halo' + (l.hi ? ' hi' : '') });
+    });
+    for (var v = 0; v < n; v++) {
+      var p = P(v), hiN = o.hiNodes && o.hiNodes.indexOf(v) >= 0, ring = o.ringNodes && o.ringNodes.indexOf(v) >= 0;
+      S('circle', { cx: p[0], cy: p[1], r: 16, 'class': 'node' + (o.cut === v ? ' cut' : hiN ? ' hi' : ring ? ' ring' : '') }, g);
+      T(g, p[0], p[1] + 5, NAMES[v], { 'text-anchor': 'middle', 'class': 'node-label' + (hiN && o.cut !== v ? ' on-gold' : ''), 'font-style': 'italic' });
+    }
+  }
+  return { NAMES: NAMES, PAPER: PAPER, n: n, copy: copy, roads: roads, eff: eff, info: info, closeness: closeness, degree: degree, draw: draw };
+})();
+
+/* ---------- slide 1: road lengths and the cheapest road ---------- */
+(function () {
+  var E = Explore, S = E.svg, N = Net.NAMES;
+  var box = document.getElementById('rd-chart'), read = document.getElementById('rd-read');
+  var st = { mode: 'w', from: 3, to: 2 }, W0 = 0;
+  function render() {
+    if (!W0) return;
+    box.innerHTML = '';
+    var H = Math.round(W0 * 0.78);
+    var r = st.from !== st.to ? Net.roads(Net.PAPER, st.from, st.to) : [];
+    var root = S('svg', { viewBox: '0 0 ' + W0 + ' ' + H, role: 'img',
+      'aria-label': 'The paper’s five-node network: a linked to b (0.5), c (0.2), d (0.3) and e (0.4); b linked to c (0.1) and d (0.2). ' + (r.length ? 'Cheapest road from ' + N[st.from] + ' to ' + N[st.to] + ': ' + r[0].p.map(function (k) { return N[k]; }).join('–') + ', cost ' + r[0].c.toFixed(2) + '.' : '') }, box);
+    Net.draw(root, W0, H, { m: Net.PAPER, labels: st.mode, path: r.length ? r[0].p : null, hiNodes: r.length ? [st.from, st.to] : [] });
+  }
+  function readout() {
+    if (st.from === st.to) { read.innerHTML = 'Pick two different coins.'; return; }
+    var r = Net.roads(Net.PAPER, st.from, st.to), best = r[0];
+    function em(k) { return '<em>' + N[k] + '</em>'; }
+    function name(p) { return p.map(em).join('–'); }
+    var legs = [];
+    for (var k = 1; k < best.p.length; k++) legs.push((1 / Net.PAPER[best.p[k - 1]][best.p[k]]).toFixed(2));
+    var others = r.slice(1, 4).map(function (x) { return name(x.p) + ' ' + x.c.toFixed(2); });
+    read.innerHTML = '<strong>From ' + em(st.from) + ' to ' + em(st.to) + ', the cheapest road is ' + name(best.p) + ': ' + (legs.length > 1 ? legs.join(' + ') + ' = ' : '') + best.c.toFixed(2) + '.</strong>' +
+      (others.length ? ' Other roads: ' + others.join(' · ') + (r.length > 4 ? ' · …' : '') + '.' : ' No other road.');
+  }
+  function update() { readout(); render(); }
+  E.seg(document.getElementById('rd-mode'), [['w', 'strength'], ['d', 'road length']], 'w', function (k) { st.mode = k; update(); }, 'Label the links by');
+  E.seg(document.getElementById('rd-from'), N.map(function (x, i) { return [String(i), x]; }), '3', function (k) { st.from = +k; update(); }, 'From');
+  E.seg(document.getElementById('rd-to'), N.map(function (x, i) { return [String(i), x]; }), '2', function (k) { st.to = +k; update(); }, 'To');
+  readout();
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 280, max: 480 });
+})();
+
+/* ---------- slide 2: the bet on c and e, then Table 1 ---------- */
+(function () {
+  var E = Explore, S = E.svg;
+  /* Table 1, ordered by information centrality: [coin, degree, closeness, information] */
+  var T1 = [['a', '1.00', '0.28', '0.85'], ['b', '0.75', '0.19', '0.45'], ['e', '0.25', '0.17', '0.39'], ['d', '0.50', '0.16', '0.33'], ['c', '0.50', '0.13', '0.25']];
+  var betBox = document.getElementById('ce-bet'), box = document.getElementById('ce-chart'), tbody = document.querySelector('#ce-table tbody');
+  var verdict = document.getElementById('ce-verdict'), nextBox = document.getElementById('ce-next'), note = document.getElementById('ce-note');
+  var bet = null, W0 = 0;
+  function table() {
+    tbody.innerHTML = '';
+    /* alphabetical until the bet, so the order gives nothing away; then the paper's order, by information centrality */
+    var rows = bet ? T1 : T1.slice().sort(function (x, y) { return x[0] < y[0] ? -1 : 1; });
+    rows.forEach(function (r) {
+      var tr = E.el('tr', r[0] === 'c' || r[0] === 'e' ? 'mark' : null);
+      var td0 = E.el('td'); var em = E.el('em', null, r[0]); td0.appendChild(em); tr.appendChild(td0);
+      for (var k = 1; k < 4; k++) { var td = E.el('td', bet ? null : 'q'); td.appendChild(E.el('span', 'num', bet ? r[k] : '?')); tr.appendChild(td); }
+      tbody.appendChild(tr);
+    });
+  }
+  function render() {
+    if (!W0) return;
+    box.innerHTML = '';
+    var H = Math.round(W0 * 0.5);
+    var root = S('svg', { viewBox: '0 0 ' + W0 + ' ' + H, role: 'img',
+      'aria-label': 'The five-node network with coins c and e ringed: c has links of 0.2 to a and 0.1 to b; e has one link of 0.4 to a.' }, box);
+    Net.draw(root, W0, H, { m: Net.PAPER, labels: 'w', ringNodes: [2, 4] });
+  }
+  var LEAD = {
+    c: 'Only if you count links. ',
+    e: 'Yes, on both measures that follow the roads. ',
+    same: 'Not on any of the three measures. '
+  };
+  var TAIL = 'Degree sides with <em>c</em>, two links to one. Both measures that follow the roads side with <em>e</em>: closeness 0.17 against 0.13, information centrality 0.39 against 0.25. One short road to the hub beats two long ones.';
+  function place(b) {
+    bet = b;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-ce', b);
+    verdict.innerHTML = LEAD[b] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    table();
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet')); });
+  table();
+  var prior = E.load('bet-ce');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior);
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 280, max: 420 });
+})();
+
+/* ---------- slide 3: cut a node, watch efficiency fall, collect information centrality ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, N = Net.NAMES;
+  var E0 = Net.eff(Net.PAPER, -1), CI = Net.info(Net.PAPER);
+  var box = document.getElementById('cut-chart'), read = document.getElementById('cut-read');
+  var cut = -1, found = [], W0 = 0;
+  var prior = E.load('cuts');
+  if (Array.isArray(prior)) found = prior.filter(function (k) { return k >= 0 && k < 5; });
+  E.seg(document.getElementById('cut-pick'), [['-1', 'nobody']].concat(N.map(function (x, i) { return [String(i), x]; })), '-1', function (k) { pick(+k); }, 'Cut the links of');
+  function pick(k) {
+    cut = k;
+    if (k >= 0 && found.indexOf(k) < 0) { found.push(k); E.save('cuts', found); }
+    readout(); render();
+  }
+  function readout() {
+    if (cut < 0) { read.innerHTML = '<strong>Nothing cut:</strong> the network’s efficiency is ' + E0.toFixed(3) + '. Cut a coin to see how much of it depends on that coin.'; return; }
+    var e1 = Net.eff(Net.PAPER, cut);
+    read.innerHTML = '<strong>Without <em>' + N[cut] + '</em>’s links, efficiency falls from ' + E0.toFixed(3) + ' to ' + e1.toFixed(3) + '.</strong> Information centrality of <em>' + N[cut] + '</em> = 1 − ' + e1.toFixed(3) + ' ÷ ' + E0.toFixed(3) + ' = <strong>' + CI[cut].toFixed(2) + '</strong>. ' +
+      (found.length < 5 ? 'Found ' + found.length + ' of 5.' : 'All five found: Table 1’s last column.');
+  }
+  function render() {
+    if (!W0) return;
+    box.innerHTML = '';
+    var NH = Math.round(W0 * 0.54), H = NH + 150;
+    var e1 = cut >= 0 ? Net.eff(Net.PAPER, cut) : E0;
+    var root = S('svg', { viewBox: '0 0 ' + W0 + ' ' + H, role: 'img',
+      'aria-label': 'The five-node network' + (cut >= 0 ? ' with the links of ' + N[cut] + ' cut' : '') + '. Network efficiency ' + e1.toFixed(3) + ' of ' + E0.toFixed(3) + '. Information centrality found so far: ' + (found.length ? found.map(function (k) { return N[k] + ' ' + CI[k].toFixed(2); }).join(', ') : 'none') + '.' }, box);
+    Net.draw(root, W0, NH, { m: Net.PAPER, labels: 'w', cut: cut });
+    var y = NH + 10, L = 22, xMax = W0 - 64;
+    function X(v) { return L + (xMax - L) * v; }
+    T(root, 0, y + 12, 'Network efficiency', { 'class': 'label' });
+    S('rect', { x: L, y: y + 20, width: X(E0 / 0.25) - L, height: 12, 'class': 'bar-empty' }, root);
+    S('rect', { x: L, y: y + 20, width: Math.max(1, X(e1 / 0.25) - L), height: 12, 'class': cut >= 0 ? 'bar-hi' : 'bar-base' }, root);
+    T(root, X(E0 / 0.25) + 6, y + 31, e1.toFixed(3), { 'class': 'strong' });
+    T(root, 0, y + 56, 'Information centrality, coin by coin', { 'class': 'label' });
+    N.forEach(function (x, k) {
+      var yy = y + 64 + k * 16, got = found.indexOf(k) >= 0;
+      T(root, 4, yy + 10, x, { 'font-style': 'italic', 'class': 'label' });
+      S('rect', { x: L, y: yy + 1, width: X(1) - L, height: 10, 'class': 'bar-empty' }, root);
+      if (got) S('rect', { x: L, y: yy + 1, width: X(CI[k]) - L, height: 10, 'class': k === cut ? 'bar-hi' : 'bar-base' }, root);
+      T(root, X(got ? CI[k] : 0) + 6, yy + 10, got ? CI[k].toFixed(2) : '?', { 'class': got ? 'label' : '' });
+    });
+  }
+  readout();
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 280, max: 440 });
+})();
+
+/* ---------- slide 4: rewire the network (the reader's own values) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, N = Net.NAMES;
+  var PAIRS = [];
+  for (var i = 0; i < 5; i++) for (var j = i + 1; j < 5; j++) PAIRS.push([i, j]);
+  var m = Net.copy(Net.PAPER), pair = 0;
+  var prior = E.load('rewire');
+  if (Array.isArray(prior) && prior.length === 5) {
+    var ok = prior.every(function (r) { return Array.isArray(r) && r.length === 5 && r.every(function (w) { return typeof w === 'number' && w >= 0 && w <= 1; }); });
+    if (ok) m = Net.copy(prior);
+  }
+  var box = document.getElementById('rw-chart'), slider = document.getElementById('rw-w'), wlab = document.getElementById('rw-wlab'), read = document.getElementById('rw-read'), tag = document.getElementById('rw-tag');
+  var W0 = 0;
+  E.seg(document.getElementById('rw-pair'), PAIRS.map(function (p, k) { return [String(k), N[p[0]] + '–' + N[p[1]]]; }), '0', function (k) { pair = +k; syncSlider(); render(); }, 'Link to change');
+  function changed() { for (var a = 0; a < 5; a++) for (var b = 0; b < 5; b++) if (Math.abs(m[a][b] - Net.PAPER[a][b]) > 1e-9) return true; return false; }
+  function syncSlider() {
+    var p = PAIRS[pair], w = m[p[0]][p[1]];
+    slider.value = w;
+    wlab.textContent = 'Strength of ' + N[p[0]] + '–' + N[p[1]] + ': ' + (w > 0 ? w.toFixed(2) : '0, no link');
+    slider.setAttribute('aria-valuetext', w.toFixed(2));
+  }
+  function render() {
+    tag.classList.toggle('on', changed());
+    var ci = Net.info(m), cl = Net.closeness(m), dg = Net.degree(m);
+    var order = [0, 1, 2, 3, 4].filter(function (k) { return cl[k] > 0; }).sort(function (x, y) { return cl[y] - cl[x]; });
+    var rank = N.map(function (x, k) { var r = order.indexOf(k); return r < 0 ? '—' : '#' + (r + 1); });
+    var msg;
+    if (ci[2] > ci[4] + 1e-9 && ci[0] < ci[1] - 1e-9) msg = '<strong>Both puzzles solved.</strong> <em>c</em> now matters more than <em>e</em>, and the hub <em>a</em> less than <em>b</em>. Look at which roads you strengthened.';
+    else if (ci[2] > ci[4] + 1e-9) msg = '<strong>Solved: <em>c</em> ' + ci[2].toFixed(2) + ', <em>e</em> ' + ci[4].toFixed(2) + '.</strong> Now try to make the hub <em>a</em> matter less than <em>b</em>.';
+    else msg = '<em>c</em> ' + ci[2].toFixed(2) + ' against <em>e</em> ' + ci[4].toFixed(2) + ': <em>e</em> still matters more. Which of <em>c</em>’s roads would you shorten?';
+    read.innerHTML = msg;
+    if (!W0) return;
+    box.innerHTML = '';
+    /* on a phone the network needs more height, or e and a overlap */
+    var NH = Math.round(W0 * (W0 < 520 ? 0.62 : 0.35)), H = NH + 100;
+    var root = S('svg', { viewBox: '0 0 ' + W0 + ' ' + H, role: 'img',
+      'aria-label': 'Your network and its scoreboard. ' + N.map(function (x, k) { return x + ': ' + dg[k] + ' links, closeness rank ' + rank[k] + ', information centrality ' + ci[k].toFixed(2); }).join('; ') + '.' }, box);
+    Net.draw(root, W0, NH, { m: m, labels: 'w', hiPair: PAIRS[pair] });
+    var y = NH + 8, cols = W0 < 400 ? [0, 22, 82, 150] : [0, 26, 100, 190];
+    T(root, cols[1], y + 10, 'links', { 'class': 'label' });
+    T(root, cols[2], y + 10, 'closeness', { 'class': 'label' });
+    T(root, cols[3], y + 10, 'information centrality', { 'class': 'label' });
+    var xMax = W0 - 44;
+    N.forEach(function (x, k) {
+      var yy = y + 16 + k * 16;
+      T(root, cols[0] + 4, yy + 11, x, { 'font-style': 'italic', 'class': 'strong' });
+      T(root, cols[1], yy + 11, String(dg[k]));
+      T(root, cols[2], yy + 11, rank[k]);
+      S('rect', { x: cols[3], y: yy + 2, width: xMax - cols[3], height: 10, 'class': 'bar-empty' }, root);
+      S('rect', { x: cols[3], y: yy + 2, width: Math.max(0, (xMax - cols[3]) * ci[k]), height: 10, 'class': k === 2 || k === 4 ? 'bar-hi' : 'bar-base' }, root);
+      T(root, xMax + 6, yy + 11, ci[k].toFixed(2), { 'class': 'label' });
+    });
+  }
+  slider.addEventListener('input', function () {
+    var p = PAIRS[pair], w = Math.round(+slider.value * 100) / 100;
+    m[p[0]][p[1]] = w; m[p[1]][p[0]] = w;
+    E.save('rewire', m);
+    syncSlider(); render();
+  });
+  document.getElementById('rw-reset').addEventListener('click', function () { m = Net.copy(Net.PAPER); E.save('rewire', null); syncSlider(); render(); });
+  syncSlider(); render();
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 280, max: 480 });
+})();
+</script>
+</body>
+</html>

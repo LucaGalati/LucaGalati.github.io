@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: To Fix or Not to Fix</title>
+<meta name="description" content="An explorable explanation of Benenchia, Galati and Lepone, To fix or not to fix, a pre-registered report: how the WM/R 4 pm foreign-exchange fix is computed, how much trading crowds into its five-minute window, and how the authors plan to test whether it still represents the market.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/wmr-fix-representativeness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <p class="kicker">An explorable explanation</p>
+  <h1>To fix or not to fix</h1>
+  <p class="subtitle">The representativeness of the WM/R methodology that underpins the FX benchmark rates. A pre-registered report.</p>
+  <p class="byline">Matteo Benenchia, Luca Galati and Andrew Lepone · Pacific-Basin Finance Journal <span style="white-space: nowrap">84, 102311 · 2024</span></p>
+  <div class="fig" id="hub-ruler"></div>
+  <p class="lede">The currency market never closes, yet every afternoon at four o’clock in London it gets a closing price: the WM/R fix, computed from five minutes of trading and used to value portfolios around the world. This report is a plan written before its study was run. It asks whether that number still represents the market, above all on the last day of the month, and whether a ten- or twenty-minute window would do better. Build a fix from a stream of trades, bet on how much trading crowds into five minutes, and see exactly what the registered tests will measure: two decks on the main path, two side paths, about fifteen minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-fix.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-fix.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/wmr-fix-representativeness/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the motif: a day of trading drawn to scale, the five-minute window a gold sliver at 16:00 */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, box = document.getElementById('hub-ruler');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 52, L = 2, R = 2, y = 20;
+    function X(min) { return L + (W - L - R) * min / 1440; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A 24-hour day of currency trading drawn to scale, with the five-minute fix window at 4\u00a0pm London shown as a thin gold sliver.' }, box);
+    S('line', { x1: X(0), x2: X(1440), y1: y, y2: y, 'class': 'tick-strong' }, root);
+    for (var h = 0; h <= 24; h++) {
+      var big = h % 6 === 0;
+      S('line', { x1: X(h * 60), x2: X(h * 60), y1: y - (big ? 7 : 4), y2: y + (big ? 7 : 4), 'class': big ? 'tick-strong' : 'tick' }, root);
+      if (big) T(root, X(h * 60), y + 22, (h < 10 ? '0' : '') + h + ':00', { 'text-anchor': h === 0 ? 'start' : h === 24 ? 'end' : 'middle' });
+    }
+    S('rect', { x: X(957.5), y: y - 12, width: Math.max(2, X(962.5) - X(957.5)), height: 24, 'class': 'sliver' }, root);
+    T(root, X(957.5) - 8, y - 4 - 2, W < 520 ? '4\u00a0pm: 5 min' : '4\u00a0pm London: five minutes', { 'text-anchor': 'end', 'class': 'label' });
+  }, { min: 300, max: 1000 });
+})();
+</script>
+</body>
+</html>

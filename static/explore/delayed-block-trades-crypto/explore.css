@@ -1,0 +1,334 @@
+/* explore.css: the visual identity of this explorable on lucagalati.com.
+   Fonts are self-hosted by the site; nothing here reaches the network. */
+
+@font-face { font-family: "Vollkorn"; src: url("../../fonts/vollkorn-latin-wght-normal.woff2") format("woff2"); font-weight: 400 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Vollkorn"; src: url("../../fonts/vollkorn-latin-wght-italic.woff2") format("woff2"); font-weight: 400 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Geist"; src: url("../../fonts/geist-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+
+:root {
+  color-scheme: light dark;
+  --blue: #003262;
+  --gold: #FDB515;
+  --paper: #FCFBF8;
+  --surface: #F3F0E8;
+  --text: #1C1C1A;
+  --muted: #5A5A56;
+  --border: #D9D6CE;
+  --link: #003262;
+  --book: #003262;     /* order-book trades, and nothing else */
+  --blk: #FDB515;      /* blocks, and nothing else; the experiment's treated-minus-control gap is drawn in ink */
+  --cta-bg: #003262;
+  --cta-fg: #FCFBF8;
+  --on-gold: #1C1C1A;
+  --focus: #003262;    /* focus ring, current dot, slider thumb: gold is below 3:1 on paper, so blue in light mode */
+  --serif: "Vollkorn", Georgia, "Times New Roman", serif;
+  --sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bar-h: 56px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0B1A2E;
+    --surface: #122540;
+    --text: #E8EDF3;
+    --muted: #A7B3C3;
+    --border: #2B3F5C;
+    --link: #8EC1E6;
+    --book: #8EC1E6;
+    --cta-bg: #FDB515;
+    --cta-fg: #1C1C1A;
+    --focus: #FDB515;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { font-size: 17px; }
+@media (min-width: 900px) { html { font-size: 19px; } }
+/* laptops: keep each slide inside one screen, call-to-action above the bottom bar */
+@media (min-width: 900px) and (max-height: 920px) { html { font-size: 17px; } }
+@media (min-width: 900px) and (max-height: 760px) { html { font-size: 16px; } }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.55;
+  /* Vollkorn's default figures are old-style, where 10 reads like "IO": lining figures throughout */
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body.map-open { overflow: hidden; }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.12; margin: 0 0 .65em; letter-spacing: -.005em; text-wrap: balance; }
+h1 { font-size: 2.35rem; }
+h2 { font-size: 1.85rem; }
+h3 { font-size: 1.12rem; margin: 1em 0 .3em; }
+h1:focus, h2:focus { outline: none; }
+p { margin: 0 0 .9em; max-width: 36em; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 500; }
+a { color: var(--link); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+kbd { font-family: var(--sans); font-size: .72em; border: 1px solid var(--border); border-radius: 3px; padding: 0 .35em; margin-left: .35em; }
+sub, sup { font-size: .7em; line-height: 0; }
+ol, ul { padding-left: 1.2em; }
+
+.kicker { font-family: var(--sans); font-size: .74rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.1rem; }
+.note { font-family: var(--sans); font-size: .76rem; line-height: 1.45; color: var(--muted); max-width: 48em; margin-top: .9rem; }
+.note a { color: inherit; }
+/* a source note that belongs to an answer: its space is kept before the bet, so the stage never changes size */
+.note.pending { visibility: hidden; }
+.lead { max-width: 40em; }
+.caveat { font-family: var(--sans); font-size: .82rem; line-height: 1.45; color: var(--muted); border-left: 1px solid var(--border); padding-left: .8em; max-width: 44em; }
+
+/* ---------- slides ---------- */
+.deck { padding-bottom: var(--bar-h); }
+/* the site bar (../sitebar.js) sits above everything: full-height slides make room for its height */
+/* ---------- site bar: its content lines up with the hub column (and the map), and in a deck with the
+   first and last control of the full-width bottom bar ---------- */
+lg-sitebar { --lg-sitebar-max: 66rem; --lg-sitebar-pad: 16px; }
+body[data-deck] lg-sitebar { --lg-sitebar-max: none; --lg-sitebar-pad: 12px; }
+/* without JavaScript the element is unknown and shows only its <noscript> link back to the paper */
+lg-sitebar:not(:defined) { display: block; padding: 10px 16px; font-family: var(--sans); font-size: .85rem; }
+
+.slide { display: none; min-height: calc(100vh - var(--bar-h) - var(--lg-sitebar-h, 0px)); min-height: calc(100dvh - var(--bar-h) - var(--lg-sitebar-h, 0px)); padding: max(12px, calc(7vh - var(--lg-sitebar-h, 0px))) 16px 6vh; }
+.slide.active { display: flex; flex-direction: column; justify-content: center; align-items: center; animation: rise .5s ease-out both; }
+.slide.play.active { justify-content: flex-start; }
+@media (min-width: 900px) and (max-height: 920px) { .slide { padding: 8px 16px; } } /* 4vh + 3vh before the site bar: its 40px come out of these paddings */
+@media (min-width: 900px) and (max-height: 760px) { .slide { padding: 6px 16px; } }
+/* Both animations start from a readable state, so a page whose animations never
+   run (frozen background tab, snapshot, print) still shows everything. */
+@keyframes rise { from { transform: translateY(8px); } to { transform: none; } }
+@keyframes fadein { from { opacity: .45; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.slide > .inner { width: 100%; max-width: 42rem; }
+.slide.wide > .inner { max-width: 66rem; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.2rem 3rem; align-items: start; }
+@media (min-width: 820px) { .two { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+/* on one column, the playable (figure, controls, readout as one unit) comes before the explanation */
+@media (max-width: 819px) { .two > .stage { order: -1; } }
+.stage { min-width: 0; }
+.stage + p, .readout + p { margin-top: .9rem; }
+.stage-title { font-family: var(--sans); font-size: .82rem; font-weight: 500; margin: 0 0 .4rem; max-width: none; }
+.tag { font-weight: 400; color: var(--muted); border: 1px solid var(--border); border-radius: 3px; padding: .05em .45em; margin-left: .4em; white-space: nowrap; font-size: .9em; }
+
+/* the bet slide: question, then chart, then verdict on a phone; question and verdict beside the chart on a laptop */
+.bet-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; align-items: start; }
+@media (min-width: 820px) {
+  .bet-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-rows: auto 1fr; grid-template-areas: "q c" "t c"; }
+  .bet-grid .q { grid-area: q; } .bet-grid .c { grid-area: c; } .bet-grid .t { grid-area: t; }
+}
+
+/* ---------- controls ---------- */
+.btn {
+  display: inline-block; font-family: var(--sans); font-weight: 500; font-size: .88rem; line-height: 1.2;
+  padding: .6em 1em; border: 1px solid var(--border); border-radius: 3px;
+  background: transparent; color: var(--text); cursor: pointer; text-decoration: none;
+}
+.btn:hover { border-color: var(--link); }
+.btn.primary { background: var(--cta-bg); color: var(--cta-fg); border-color: var(--cta-bg); }
+.btn.primary:hover { opacity: .9; }
+.btn[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); border-color: var(--gold); }
+.btn[hidden] { display: none; }
+.btn:disabled { opacity: .4; cursor: default; }
+.btn.primary:disabled { background: transparent; color: var(--muted); border-color: var(--border); opacity: 1; }
+.actions { display: flex; flex-wrap: wrap; gap: .6rem .9rem; align-items: center; margin-top: 1.3rem; }
+.door {
+  display: inline-block; font-family: var(--sans); font-size: .8rem; line-height: 1.35;
+  padding: .45em .8em .45em .7em; border-left: 3px solid var(--gold); border-radius: 0 3px 3px 0;
+  background: var(--surface); color: var(--text); text-decoration: none; max-width: 32em;
+}
+.door:hover { background: var(--border); }
+.door-row { margin: .8rem 0 1rem; }
+.ctl { display: flex; flex-wrap: wrap; gap: .45rem 1.2rem; align-items: center; font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: .7rem 0 .3rem; }
+.ctl .pair { display: inline-flex; flex-wrap: wrap; gap: .35rem .6rem; align-items: center; }
+.two h3 { margin-top: .75em; }
+label.ctl { display: block; margin-bottom: 0; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+.seg button { flex: 1 1 auto; font: inherit; font-weight: 500; background: var(--paper); border: 0; padding: .4em .75em; color: var(--muted); cursor: pointer; }
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); }
+/* .seg clips anything outside it, so the focus ring is drawn inside the button, in ink to show on gold too */
+.seg button:focus-visible { outline: 2px solid var(--text); outline-offset: -4px; }
+.seg button:disabled { cursor: default; opacity: .5; }
+.seg button:disabled:hover { color: var(--muted); }
+@media (max-width: 640px) { .seg { display: flex; width: 100%; } .ctl .pair { display: flex; width: 100%; } }
+
+/* hairline range slider */
+input[type="range"] { -webkit-appearance: none; appearance: none; background: transparent; width: 100%; max-width: 30rem; height: 26px; display: block; margin: .1rem 0 .3rem; cursor: pointer; }
+input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--border); border-radius: 1px; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--focus); border: 0; margin-top: -7px; }
+input[type="range"]::-moz-range-track { height: 2px; background: var(--border); border-radius: 1px; }
+input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--focus); border: 0; }
+input[type="range"]:focus-visible { outline-offset: 3px; }
+input[type="range"]:disabled { cursor: default; opacity: .35; }
+
+.readout { font-family: var(--sans); font-size: .88rem; line-height: 1.45; margin: .5rem 0 0; padding: .6em .85em; border-left: 3px solid var(--gold); background: var(--surface); max-width: 44em; }
+.readout strong { font-weight: 500; }
+/* readouts keep their height whatever they say, so nothing below them jumps */
+.r3 { min-height: 4.4em; }
+.r4 { min-height: 5.8em; }
+.r5 { min-height: 7.2em; }
+@media (max-width: 819px) { .r3 { min-height: 5.8em; } .r4 { min-height: 7.2em; } .r5 { min-height: 10em; } }
+.bet { margin-top: .8rem; }
+
+/* ---------- figures ---------- */
+.fig { width: 100%; margin: .6rem 0; }
+.fig svg { width: 100%; height: auto; display: block; font-family: var(--sans); font-size: 12px; overflow: visible; }
+.fig text { fill: var(--muted); }
+.fig .label { fill: var(--text); }
+.fig .strong { fill: var(--text); font-weight: 500; }
+.fig .halo { paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; }
+.fig .axis { stroke: var(--border); stroke-width: 1; }
+.fig .axis.zero { stroke: var(--muted); }
+.fig .grid { stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 4; }
+/* a cursor is ink over a paper halo, so it stays visible on blue, gold and paper alike */
+.fig .cursor-halo { stroke: var(--paper); stroke-width: 4.5; }
+.fig .cursor { stroke: var(--text); stroke-width: 1.5; }
+.fig .cursor-dot { fill: var(--text); stroke: var(--paper); stroke-width: 2; }
+/* gold: blocks; blue: order-book trades; ink: the experiment's gap between treated and control */
+.fig .blk { stroke: var(--blk); stroke-width: 2.5; fill: none; stroke-linejoin: round; }
+.fig .ink { stroke: var(--text); stroke-width: 2.5; fill: none; stroke-linejoin: round; }
+.fig .ink-dash { stroke: var(--text); stroke-width: 2.5; fill: none; stroke-dasharray: 7 4; }
+.fig .nochange { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 1.5 3.5; stroke-linecap: round; fill: none; }
+.fig .halo-line { stroke: var(--paper); stroke-width: 4; fill: none; }
+.fig .book { stroke: var(--book); stroke-width: 2.5; fill: none; stroke-linejoin: round; }
+.fig .blk-dash { stroke: var(--blk); stroke-width: 2.5; fill: none; stroke-dasharray: 6 4; }
+.fig .blk-fill { fill: var(--blk); }
+.fig .book-fill { fill: var(--book); }
+.fig .blk-hollow { fill: var(--paper); stroke: var(--blk); stroke-width: 2; }
+.fig .book-hollow { fill: var(--paper); stroke: var(--book); stroke-width: 2; }
+.fig .text-fill { fill: var(--text); }
+.fig .link-fill { fill: var(--link); }
+.fig .hollow { fill: var(--paper); stroke: var(--text); stroke-width: 1.5; }
+.fig .hollow-muted { fill: var(--paper); stroke: var(--muted); stroke-width: 1.5; }
+.fig .surface { fill: var(--surface); stroke: var(--border); }
+.fig .band-muted { fill: var(--muted); fill-opacity: .12; }
+.fig .ghost { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
+.fig .bracket { stroke: var(--text); stroke-width: 1; fill: none; }
+.fig .bracket.hi { stroke: var(--text); stroke-width: 2; }
+.fig .bracket.lo { stroke: var(--muted); }
+.fig .path { stroke: var(--text); stroke-width: 1.5; fill: none; stroke-linejoin: round; }
+.fig .placeholder { fill: var(--muted); font-style: italic; }
+/* the tape: one tick per trade, a block drawn where it happened and again where it was printed */
+.fig .tick { stroke: var(--muted); stroke-width: 1; }
+.fig .tape { stroke: var(--border); stroke-width: 1; }
+.fig .arc { stroke: var(--muted); stroke-width: 1; fill: none; stroke-dasharray: 3 3; }
+.fig .lane { fill: var(--surface); }
+.slide.active .appear { animation: fadein .5s ease-out both; }
+.legend { display: flex; flex-wrap: wrap; gap: .25rem 1.1rem; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: .2rem 0 .3rem; max-width: none; }
+.legend span { white-space: nowrap; }
+.legend i { display: inline-block; vertical-align: middle; margin-right: .45em; font-style: normal; }
+.legend .ln { width: 22px; height: 0; border-top: 2.5px solid var(--text); }
+.legend .ln.blk { border-color: var(--blk); }
+.legend .ln.book { border-color: var(--book); }
+.legend .ln.blk.dash { border-top-style: dashed; }
+.legend .ln.book.dash { border-top-style: dashed; }
+.legend .ln.ink { border-color: var(--text); }
+.legend .ln.ink.dash { border-top-style: dashed; }
+.legend .ln.nochange { border-top: 2px dotted var(--muted); }
+.legend .ln.zero { border-top: 1px solid var(--muted); }
+.legend .whisker { width: 9px; height: 13px; border: 1px solid var(--text); border-left: 0; border-right: 0; position: relative; }
+.legend .whisker::after { content: ""; position: absolute; left: 4px; top: 0; bottom: 0; border-left: 1px solid var(--text); }
+.legend .sq.ring { border: 1.5px solid var(--muted); background: var(--paper); border-radius: 50%; }
+.legend .sq.dot { background: var(--text); border-radius: 50%; }
+.legend .sq { width: 11px; height: 11px; border-radius: 1px; }
+.legend .sq.blk { background: var(--blk); }
+.legend .sq.book { background: var(--book); }
+.legend .sq.blk-hollow { border: 2px solid var(--blk); background: var(--paper); }
+.legend .sq.muted { background: var(--surface); border: 1px solid var(--border); }
+.fig.narrow { max-width: 32rem; margin-left: auto; margin-right: auto; }
+
+/* ---------- small layouts ---------- */
+.score { border-collapse: collapse; width: 100%; max-width: 44rem; font-family: var(--sans); font-size: .82rem; margin: .8rem 0 1rem; }
+.score th, .score td { text-align: left; padding: .4em .6em; border-bottom: 1px solid var(--border); vertical-align: top; }
+.score th { font-weight: 500; color: var(--muted); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+.score td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.score tr.on td { background: var(--surface); }
+.score td:first-child { border-left: 3px solid transparent; }
+.score tr.on td:first-child { border-left-color: var(--gold); }
+.facts { list-style: none; padding: 0; margin: 0 0 .8rem; font-size: .98rem; max-width: 38em; }
+.facts li { padding: .35em 0; border-bottom: 1px solid var(--border); }
+.facts li:last-child { border-bottom: 0; }
+.facts b { font-family: var(--sans); font-size: .76rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-right: .5em; }
+.takeaways { font-size: 1.05rem; max-width: 36em; padding-left: 1.4em; margin: 0 0 1rem; }
+.takeaways li { margin-bottom: .5em; }
+.takeaways li::marker { font-family: var(--sans); color: var(--muted); font-size: .8em; }
+.closer { font-size: 1.15rem; max-width: 34em; }
+
+/* ---------- bottom bar ---------- */
+.bar {
+  position: fixed; left: 0; right: 0; bottom: 0; height: var(--bar-h); z-index: 20;
+  background: var(--paper); border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 12px;
+  font-family: var(--sans); font-size: .78rem;
+}
+.bar-left { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.bar-right { display: flex; justify-content: flex-end; gap: 6px; align-items: center; }
+.bar a.back { color: var(--muted); text-decoration: none; white-space: nowrap; }
+.bar a.back:hover { color: var(--text); }
+.bar a.back .short { display: none; }
+.bar .mapbtn { font: inherit; background: none; border: 1px solid var(--border); border-radius: 3px; padding: .4em .6em; color: var(--muted); cursor: pointer; white-space: nowrap; }
+.bar .mapbtn:hover { color: var(--text); border-color: var(--link); }
+.dots { display: flex; gap: 10px; align-items: center; }
+.dot { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--muted); background: transparent; padding: 0; cursor: pointer; }
+.dot.seen { background: var(--muted); border-color: var(--muted); }
+.dot.current { background: var(--focus); border-color: var(--focus); transform: scale(1.45); }
+.dot:disabled { cursor: default; opacity: .4; }
+.arrow { font: inherit; font-size: 1rem; width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 3px; background: none; color: var(--text); cursor: pointer; }
+.arrow:hover { border-color: var(--link); }
+.arrow:disabled { opacity: .3; cursor: default; }
+@media (max-width: 640px) {
+  .bar a.back .long { display: none; }
+  .bar a.back .short { display: inline; }
+  .bar .mapbtn kbd { display: none; }
+  .dots { gap: 8px; }
+}
+
+/* ---------- map: the main path as a spine, side paths hanging from their doors ---------- */
+.map { position: fixed; inset: var(--lg-sitebar-h, 0px) 0 0; z-index: 30; background: var(--paper); overflow: auto; padding: 24px 16px 48px; font-family: var(--sans); }
+.map[hidden] { display: none; }
+.map-inner { max-width: 66rem; margin: 0 auto; }
+.map header { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border-bottom: 1px solid var(--border); padding-bottom: .7rem; margin-bottom: 1.2rem; }
+.map h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0; }
+.map-links { color: var(--muted); font-size: .85rem; margin-top: 1.4rem; }
+.map-tree { display: grid; grid-template-columns: 1fr; gap: 1.6rem 2.4rem; font-family: var(--sans); }
+@media (min-width: 860px) { .map-tree { grid-template-columns: 1fr 1fr; } }
+.map-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .2rem .6rem; margin-bottom: .35rem; }
+.map-deck.here > .map-head .map-deck-title { text-decoration: underline; text-decoration-color: var(--focus); text-decoration-thickness: 2px; }
+.map-kind { font-size: .66rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.map-deck-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--text); text-decoration: none; }
+.map-branch .map-deck-title { font-size: 1rem; }
+.map-deck-title:hover { color: var(--link); }
+.map-meta { color: var(--muted); font-size: .74rem; }
+.map-slides { list-style: none; padding: 0; margin: 0; position: relative; }
+.map-slides.main::before { content: ""; position: absolute; left: calc(.68rem - .5px); top: .9rem; bottom: .9rem; border-left: 1px solid var(--border); }
+.map-slide { display: flex; gap: .65rem; align-items: baseline; padding: .26rem 0; color: var(--text); text-decoration: none; font-size: .86rem; line-height: 1.35; position: relative; }
+.map-slide:hover .name { color: var(--link); text-decoration: underline; text-decoration-color: var(--gold); }
+.map-slide .n { display: inline-block; width: 1.36rem; height: 1.36rem; border-radius: 50%; border: 1.5px solid var(--muted); background: var(--paper); text-align: center; line-height: 1.22rem; font-size: .68rem; flex: none; position: relative; }
+.map-slide.seen .n { background: var(--muted); color: var(--paper); border-color: var(--muted); }
+.map-slide.current .n { background: var(--focus); border-color: var(--focus); color: var(--paper); }
+.map-slide.current .name { font-weight: 500; }
+.map-slide .you { font-size: .68rem; color: var(--muted); border: 1px solid var(--border); border-radius: 3px; padding: 0 .35em; white-space: nowrap; }
+.map-branch { margin: .15rem 0 .5rem 2rem; padding: .45rem 0 .2rem .9rem; border-left: 1px dashed var(--muted); position: relative; }
+.map-branch::before { content: ""; position: absolute; left: -1.33rem; top: -.15rem; width: 1.33rem; height: 1rem; border-left: 1px dashed var(--muted); border-bottom: 1px dashed var(--muted); border-bottom-left-radius: 3px; }
+.map-branch .map-slide .n { border-style: dashed; }
+.map-branch .map-slide.seen .n, .map-branch .map-slide.current .n { border-style: solid; }
+.map-cross { font-size: .76rem; color: var(--muted); margin: 0 0 .35rem 2rem; max-width: none; }
+.map-cross a { color: var(--text); }
+
+/* ---------- hub ---------- */
+.hub-main { max-width: 66rem; margin: 0 auto; padding: max(16px, calc(7vh - var(--lg-sitebar-h, 0px))) 16px 8vh; }
+.hub h1 { font-size: 2.6rem; max-width: 18em; }
+.byline { font-family: var(--sans); font-size: .88rem; color: var(--muted); margin-bottom: 1.4rem; }
+.lede { font-size: 1.1rem; max-width: 34em; }
+.hub-map { margin-top: 2.6rem; }
+.hub-map > h2 { font-size: 1.3rem; margin-bottom: 1rem; }
+.ornament { max-width: 40rem; margin: 0 0 1.6rem; }
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

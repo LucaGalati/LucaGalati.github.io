@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Going upstairs · The Information Content of Delayed Block Trades</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Galati and De Blasis, The information content of delayed block trades in cryptocurrency markets: the order book and the block facility, a market maker's blind auction, and the rule change of December 2019.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  /* what the maker sees, and what the customer really sent once the auction closes */
+  .sees { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .2em .9em; font-family: var(--sans); font-size: .8rem; margin: 0 0 .2rem; padding: .45em .75em; border: 1px solid var(--border); border-radius: 3px; }
+  .sees dt { color: var(--muted); font-size: .7rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; padding-top: .15em; }
+  .sees dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .sees dd#tk { color: var(--muted); }
+  .sees dd#tk.shown { color: var(--text); font-weight: 500; }
+  @media (max-width: 480px) { .sees { grid-template-columns: minmax(0, 1fr); gap: 0; } .sees dd + dt { margin-top: .35em; } }
+</style>
+</head>
+<body data-deck="01-upstairs.html">
+<lg-sitebar><noscript><a href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="If you could hide a big trade for ten minutes, who would want to?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Galati &amp; De Blasis</p>
+    <h1>If you could hide a big trade for ten minutes, who would want to?</h1>
+    <p>Say you want to buy a lot of bitcoin in one go. On an exchange’s open order book, the public list of offers to buy and sell, your trade is printed for everyone to see the moment it happens. A big one can push the price against you, and it tells everyone else that somebody wanted a lot of bitcoin, fast.</p>
+    <p>On 6 December 2019 the Gemini exchange changed one number. Trades of 5 to 10 bitcoin, which until then went through the open book and were printed at once, could from that day be arranged away from the book, as a <strong>block</strong>, and printed ten minutes later.</p>
+    <p>Ten minutes of silence are worth most to someone who knows something the market does not know yet. In futures markets, a delay of this kind drew such traders in. Did it here?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>See the two floors&nbsp;→</button>
+      <a class="door" href="04-size.html#s1" data-return="next">Why does a big order move the price at all? Walk one up a book&nbsp;→</a>
+    </div>
+    <p class="note">The rule change: pages 2 and 4 of the paper. The futures evidence: Frino, Galati and Gerace (2022), discussed on page 3.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What is a block trade?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Going upstairs · 2 of 4</p>
+    <h2>Downstairs, everyone sees at once. Upstairs, ten minutes later.</h2>
+    <div class="two">
+      <div>
+        <p>The open order book is <strong>downstairs</strong>: buyers and sellers post prices, trades happen against them and are printed straight away. A block facility is <strong>upstairs</strong>: large trades are arranged away from the book.</p>
+        <p>Gemini opened its block facility on 12 April 2018. A customer sends an indication of interest: side, size, the smallest fill they will accept, and a limit price within 5% of the book’s midpoint, halfway between the best offer to buy and the best offer to sell. It goes at once to every participating market maker, a firm that stands ready to buy or sell; an auction runs for a minute, and the result is printed for everyone ten minutes after it is executed. Any customer may send one; only market makers the exchange authorises may fill it.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Step into a market maker’s shoes&nbsp;→</button></div>
+        <p class="note">Section 2, footnotes 4, 5 and 10, Figs. 1 and 2 of the paper. The small ticks on the tape stand for other trades and are decorative.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Send a large buy to</span><div class="seg" id="route-mode"></div></div>
+        <div class="fig" id="route"></div>
+        <p class="legend"><span><i class="sq book"></i>book trade</span><span><i class="sq blk-hollow"></i>block, executed</span><span><i class="sq blk"></i>block, printed</span></p>
+        <p class="readout r3" id="route-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What does a market maker see?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Going upstairs · 3 of 4</p>
+    <h2>You are the market maker. Nobody tells you which way the customer is going.</h2>
+    <div class="two">
+      <div>
+        <p>This is the paper’s own worked example. A customer has sent an indication of interest. As a market maker you see only the smallest fill, 10 BTC, and the book’s midpoint when it arrived: not the side, not the full size, not who is asking. On Gemini, the paper argues, a block is closer to an auction in the dark than to a private deal between two parties.</p>
+        <p>Three makers have answered. Add yours, buying or selling 10 BTC at a price of your choice, and send it. One minute later the exchange matches the answers. Then find out what winning was worth.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What changed in December 2019?&nbsp;→</button></div>
+        <p class="note">Section 2, Fig. 1 and footnote 11: the order, the three answers and the matching rule are the paper’s illustration, not market data; your answer is your own. The price twenty trades on is a toy, of the size of the footprints the paper measures. The auction in the dark: pages 13–14.</p>
+      </div>
+      <div class="stage">
+        <dl class="sees">
+          <dt>You see</dt><dd>side ?, size ?, smallest fill 10 BTC, midpoint 1,000.00 USD</dd>
+          <dt>The customer sent</dt><dd id="tk">hidden until the auction closes</dd>
+        </dl>
+        <div class="fig" id="auction"></div>
+        <p class="legend"><span><i class="sq ring"></i>an answer</span><span><i class="sq dot"></i>your answer</span><span><i class="sq blk-hollow"></i>the answer that fills</span><span>× cancelled</span></p>
+        <div class="ctl"><span class="pair"><span>Your answer, 10 BTC:</span><span class="seg" id="my-side"></span></span></div>
+        <label class="ctl" for="my-price">Your price: <strong id="my-price-out">999.80</strong> USD</label>
+        <input type="range" id="my-price" min="999" max="1001" step="0.1" value="999.8">
+        <div class="actions" style="margin-top:.4rem"><button class="btn primary" type="button" id="send" disabled>Send your answer</button><button class="btn" type="button" id="again" hidden>Answer again</button></div>
+        <div class="ctl"><span class="pair"><span>Did the customer know something? <span class="tag">toy</span></span><span class="seg" id="after"></span></span></div>
+        <p class="readout r5" id="auc-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What changed in December 2019?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Going upstairs · 4 of 4</p>
+    <h2>One number changed, and only the middle trades changed with it</h2>
+    <div class="two">
+      <div>
+        <p>Until 6 December 2019 a bitcoin block had to be at least 10 BTC; from that day 5 BTC was enough. Slide a trade’s size and see where it could go in each year.</p>
+        <p>That is the paper’s experiment. Trades of 5 to 10 BTC are the <strong>treated</strong> group: printed at once before the change, free to go upstairs and be printed late after it. Blocks over 10 BTC are the <strong>control</strong>: delayed in both years, so they soak up whatever else changed in bitcoin between the two years. Trades under 5 BTC are left out.</p>
+        <p>The data run a year either side of the change, from 6 December 2018 to 5 December 2020: 18,084 trades of at least 5 BTC, 8.07% of them blocks.</p>
+        <div class="actions">
+          <a class="btn primary" href="02-footprints.html#s1">How do you measure what a trade tells?&nbsp;→</a>
+          <a class="door" href="05-data.html#s1">How do they know which trades were blocks?&nbsp;→</a>
+        </div>
+        <p class="note">Pages 2, 4 and 7 and Fig. 3 of the paper.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="thresh"></div>
+        <p class="legend"><span><i class="sq book"></i>order book only: printed at once</span><span><i class="sq blk"></i>may go upstairs: printed 10 min late</span><span><i class="sq muted"></i>book only, not studied</span></p>
+        <label class="ctl" for="size">Size of the trade: <strong id="size-out">7</strong> BTC</label>
+        <input type="range" id="size" min="1" max="20" step="1" value="7">
+        <p class="readout r3" id="size-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/delayed-block-trades-crypto/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: one large buy, sent downstairs or upstairs (Section 2, Figs. 1 and 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('route'), read = document.getElementById('route-read');
+  var mode = 'block';
+  var TEXT = {
+    book: '<strong>On the order book:</strong> the buy trades against the posted offers and is on the tape at minute 0, for everyone to see.',
+    block: '<strong>Upstairs:</strong> offered to market makers at minute 0, matched when the one-minute auction closes, printed on the tape at minute 11. For ten minutes the rest of the market does not know it happened.'
+  };
+  /* the tape runs between the two floors: each floor feeds it from its own side, and a block never crosses the book */
+  function draw(W) {
+    box.innerHTML = '';
+    var H = 240, x0 = 10, x1 = W - 14, yUp = 46, yTape = 118, yDown = 170, yAx = 204;
+    function X(m) { return x0 + (x1 - x0) * (m + 0.4) / 12.8; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': mode === 'book' ? 'A large buy sent to the order book is printed on the tape at minute 0.'
+        : 'A large buy sent to the block facility: offered to market makers at minute 0, executed after a one-minute auction, unseen for ten minutes, printed on the tape at minute 11. It never touches the order book.' }, box);
+    [[yUp, 'Upstairs: the block facility'], [yDown, 'Downstairs: the order book']].forEach(function (r) {
+      S('rect', { x: x0, y: r[0] - 11, width: x1 - x0, height: 22, 'class': 'lane' }, root);
+      T(root, x0, r[0] - 17, r[1], { 'class': 'label' });
+    });
+    T(root, x0, yTape - 17, 'The tape: what everyone sees', { 'class': 'label' });
+    S('line', { x1: x0, x2: x1, y1: yTape, y2: yTape, 'class': 'tape' }, root);
+    for (var t = 0.25; t < 12.3; t += 0.42) S('line', { x1: X(t), x2: X(t), y1: yTape - 4 - ((t * 10) % 3), y2: yTape, 'class': 'tick' }, root);
+    var step = W < 480 ? 2 : 1;
+    for (var m = 0; m <= 12; m += step) {
+      S('line', { x1: X(m), x2: X(m), y1: yAx - 4, y2: yAx, 'class': 'axis' }, root);
+      T(root, X(m), yAx + 13, String(m), { 'text-anchor': 'middle' });
+    }
+    T(root, x1, yAx + 30, 'minutes after the order is sent', { 'text-anchor': 'end' });
+    var g = S('g', {}, root);
+    if (mode === 'book') {
+      S('rect', { x: X(0) - 6, y: yDown - 6, width: 12, height: 12, 'class': 'book-fill appear' }, g);
+      S('line', { x1: X(0), x2: X(0), y1: yDown - 7, y2: yTape + 8, 'class': 'ghost appear' }, g);
+      S('rect', { x: X(0) - 6, y: yTape - 6, width: 12, height: 12, 'class': 'book-fill appear', style: 'animation-delay:.25s' }, g);
+      T(g, X(0) + 14, yTape + 18, 'printed at once', { 'class': 'strong halo appear', style: 'animation-delay:.25s' });
+      T(g, X(6), yUp + 4, 'not used', { 'text-anchor': 'middle' });
+    } else {
+      S('rect', { x: X(0), y: yUp - 8, width: X(1) - X(0), height: 16, 'class': 'surface appear' }, g);
+      S('circle', { cx: X(0), cy: yUp, r: 4, 'class': 'text-fill appear' }, g);
+      S('rect', { x: X(1) - 6, y: yUp - 6, width: 12, height: 12, 'class': 'blk-hollow appear', style: 'animation-delay:.3s' }, g);
+      T(g, X(1) - 6, yUp + 27, W < 480 ? 'executed' : 'executed after a 1-minute auction', { 'class': 'strong appear', style: 'animation-delay:.3s' });
+      /* the unseen minutes stay upstairs, then the print drops straight onto the tape */
+      S('path', { d: 'M' + (X(1) + 8) + ',' + yUp + ' H' + X(11) + ' V' + (yTape - 8), 'class': 'arc appear', style: 'animation-delay:.6s' }, g);
+      T(g, (X(1) + X(11)) / 2, yUp + 4, W < 480 ? '10 min unseen' : '10 minutes unseen', { 'text-anchor': 'middle', 'class': 'strong halo appear', style: 'animation-delay:.6s; stroke: var(--surface)' });
+      T(g, X(0) + 4, yDown + 4, 'the block never touches the book');
+      S('rect', { x: X(11) - 6, y: yTape - 6, width: 12, height: 12, 'class': 'blk-fill appear', style: 'animation-delay:.9s' }, g);
+      T(g, X(11) - 12, yTape + 18, W < 480 ? 'printed' : 'printed at minute 11', { 'text-anchor': 'end', 'class': 'strong halo appear', style: 'animation-delay:.9s' });
+    }
+    read.innerHTML = TEXT[mode];
+  }
+  var redraw = E.fit(box, draw, { min: 300, max: 700 });
+  E.seg(document.getElementById('route-mode'), [['book', 'the order book'], ['block', 'the block facility']], mode, function (k) { mode = k; redraw(); }, 'Send a large buy to');
+  read.innerHTML = TEXT[mode];
+})();
+
+/* ---------- slide 3: the blind auction, the paper's worked example (Section 2, Fig. 1, footnote 11) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var TAKER = { side: 'buy', size: 15, min: 10, limit: 1000.10 };
+  var MAKERS = [['Titius', 'buy', 1000.50], ['Gaius', 'sell', 999.25], ['Sempronius', 'sell', 999.50]];
+  /* toy, not from the paper: where the price stands twenty trades after the print, if the customer knew something or not */
+  var SETTLE = { knew: 1001.00, not: 1000.00 }, MID = 1000.00;
+  var box = document.getElementById('auction'), slider = document.getElementById('my-price'), out = document.getElementById('my-price-out');
+  var send = document.getElementById('send'), again = document.getElementById('again'), read = document.getElementById('auc-read');
+  var st = { side: null, price: 999.8, done: false, after: null };
+  var saved = E.load('auction');
+  if (saved && (saved.side === 'buy' || saved.side === 'sell') && typeof saved.price === 'number')
+    st = { side: saved.side, price: saved.price, done: !!saved.done, after: saved.done && SETTLE[saved.after] ? saved.after : null };
+  function money(p) { return p.toFixed(2).replace(/^(\d)(\d{3})/, '$1,$2'); }
+  /* who fills: right side, within the customer's limit, best price for the customer; the rest is cancelled */
+  function result() {
+    var all = MAKERS.map(function (m) { return { name: m[0], side: m[1], price: m[2] }; });
+    all.push({ name: 'You', side: st.side, price: st.price, you: true });
+    var ok = all.filter(function (a) { return a.side === 'sell' && a.price <= TAKER.limit + 1e-9; });
+    ok.sort(function (a, b) { return a.price - b.price; });
+    return { all: all, win: ok[0] || null };
+  }
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 156, L = 10, R = 16, ySell = 50, yBuy = 104, yAx = 128, lo = 998.9, hi = 1001.1;
+    function X(p) { return L + (W - L - R) * (p - lo) / (hi - lo); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Answers to the block order on a price line from 999 to 1,001 dollars: Titius buys 10 bitcoin at 1,000.50, Gaius sells 10 at 999.25, Sempronius sells 10 at 999.50, plus your own answer. After the auction the customer, who was buying 15 with a limit of 1,000.10, is filled by the cheapest seller within the limit.' }, box);
+    T(root, L, ySell - 24, W < 520 ? 'Sells' : 'Sell 10 BTC', { 'class': 'label' });
+    T(root, L, yBuy - 24, W < 520 ? 'Buys' : 'Buy 10 BTC', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: ySell, y2: ySell, 'class': 'grid' }, root);
+    S('line', { x1: L, x2: W - R, y1: yBuy, y2: yBuy, 'class': 'grid' }, root);
+    S('line', { x1: L, x2: W - R, y1: yAx, y2: yAx, 'class': 'axis' }, root);
+    [999, 999.5, 1000, 1000.5, 1001].forEach(function (p) {
+      S('line', { x1: X(p), x2: X(p), y1: yAx, y2: yAx + 4, 'class': 'axis' }, root);
+      if (W >= 420 || p !== 999.5 && p !== 1000.5) T(root, X(p), yAx + 17, money(p), { 'text-anchor': 'middle' });
+    });
+    S('line', { x1: X(1000), x2: X(1000), y1: 8, y2: yAx, 'class': 'ghost' }, root);
+    T(root, X(1000) - 5, 12, 'midpoint', { 'text-anchor': 'end' });
+    geo = { X: X, W: W, ySell: ySell, yBuy: yBuy, yAx: yAx, dyn: S('g', {}, root) };
+    drawDyn();
+  }
+  function drawDyn() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, r = st.done ? result() : null;
+    g.innerHTML = '';
+    if (st.done) {
+      S('line', { x1: X(TAKER.limit), x2: X(TAKER.limit), y1: 8, y2: geo.yAx, 'class': 'cursor-halo' }, g);
+      S('line', { x1: X(TAKER.limit), x2: X(TAKER.limit), y1: 8, y2: geo.yAx, 'class': 'cursor' }, g);
+      T(g, X(TAKER.limit) + 5, 12, 'customer’s limit', { 'class': 'strong' });
+    }
+    if (st.done && st.after) { /* toy: the price twenty trades on, as an arrow from the midpoint */
+      var xs = X(SETTLE[st.after]), xm = X(MID), ya = 28;
+      if (st.after === 'knew') {
+        S('path', { d: 'M' + xm + ',' + ya + ' H' + (xs - 2), 'class': 'path' }, g);
+        S('path', { d: 'M' + (xs - 8) + ',' + (ya - 4) + ' L' + xs + ',' + ya + ' L' + (xs - 8) + ',' + (ya + 4) + ' Z', 'class': 'text-fill' }, g);
+        T(g, xs, ya + 15, '20 trades on (toy)', { 'text-anchor': 'end', 'class': 'strong halo' });
+      } else {
+        S('circle', { cx: xm, cy: ya, r: 4, 'class': 'text-fill' }, g);
+        T(g, xm + 7, ya + 15, '20 trades on (toy)', { 'class': 'strong halo' });
+      }
+    }
+    var list = MAKERS.map(function (m) { return { name: m[0], side: m[1], price: m[2] }; });
+    if (st.side) list.push({ name: 'You', side: st.side, price: st.price, you: true });
+    list.forEach(function (a) {
+      var x = X(a.price), y = a.side === 'sell' ? geo.ySell : geo.yBuy;
+      var won = r && r.win && r.win.name === a.name;
+      if (won) S('rect', { x: x - 7, y: y - 7, width: 14, height: 14, 'class': 'blk-hollow' }, g);
+      else S('circle', { cx: x, cy: y, r: a.you ? 6 : 5, 'class': a.you ? 'text-fill' : 'hollow-muted' }, g);
+      if (r && !won) S('path', { d: 'M' + (x - 5) + ',' + (y - 5) + ' L' + (x + 5) + ',' + (y + 5) + ' M' + (x + 5) + ',' + (y - 5) + ' L' + (x - 5) + ',' + (y + 5), 'class': 'bracket' }, g);
+      var anchor = x > geo.W - 70 ? 'end' : x < 50 ? 'start' : 'middle';
+      /* on a narrow chart Gaius and Sempronius sit close together: lift Sempronius's name a line */
+      var up = a.name === 'Sempronius' && geo.W < 520 ? 26 : 12;
+      T(g, x, a.you ? y + 21 : y - up, a.name, { 'text-anchor': anchor, 'class': (a.you || won ? 'strong' : 'label') + ' halo' });
+    });
+  }
+  function readout() {
+    if (!st.done) {
+      read.innerHTML = st.side ? 'You will <strong>' + st.side + ' 10 BTC at ' + money(st.price) + '</strong>. Send it when you are ready; you cannot see what the others will do with theirs.'
+        : 'Choose to buy or to sell, and a price. You are betting on a side you cannot see.';
+      return;
+    }
+    var w = result().win, p = w.price, who = w.you ? 'You' : 'Gaius';
+    if (st.after === 'knew') {
+      read.innerHTML = '<strong>' + who + ' sold 10 BTC at ' + money(p) + '. Toy: the customer knew something.</strong> Twenty trades after the print the price stands at 1,001.00, 0.1% above the midpoint. Selling at ' + money(p) +
+        ' what is now worth 1,001.00 is a loss of ' + (10 * (SETTLE.knew - p)).toFixed(2) + ' USD, 10.00 of it from what the customer knew. A move that lasts is what the paper measures as permanent price impact.';
+      return;
+    }
+    if (st.after === 'not') {
+      read.innerHTML = '<strong>' + who + ' sold 10 BTC at ' + money(p) + '. Toy: the customer knew nothing.</strong> The price drifts back to the midpoint, 1,000.00. ' + (w.you ? 'Your' : 'His') + ' loss is ' +
+        (10 * (MID - p)).toFixed(2) + ' USD, the discount that won the auction, and no more: no lasting move, no permanent price impact.';
+      return;
+    }
+    var head;
+    if (st.side === 'buy') head = '<strong>Cancelled.</strong> The customer was buying, so buy answers, yours and Titius’s, had nobody to meet. Gaius’s sell at 999.25 was the best price and filled 10 BTC.';
+    else if (st.price > TAKER.limit + 1e-9) head = '<strong>Cancelled:</strong> your ' + money(st.price) + ' is above the customer’s limit of 1,000.10. Gaius’s 999.25 filled 10 BTC.';
+    else if (w.you) head = '<strong>Filled.</strong> You sold 10 BTC at ' + money(st.price) + ', below Gaius’s 999.25, to a buyer you never saw.';
+    else head = '<strong>Cancelled:</strong> Gaius offered 999.25, a better price for the buyer than your ' + money(st.price) + ', and filled 10 BTC.';
+    read.innerHTML = head + ' Everything else is cancelled, the customer’s last 5 BTC included, and the fill is printed at minute 11. Did the customer know something?';
+  }
+  var sideBtns = document.getElementById('my-side'), afterBox = document.getElementById('after'), tk = document.getElementById('tk');
+  function render() {
+    out.textContent = money(st.price);
+    slider.value = st.price;
+    slider.setAttribute('aria-valuetext', money(st.price) + ' US dollars');
+    slider.disabled = st.done;
+    send.disabled = st.done || !st.side;
+    send.hidden = st.done; again.hidden = !st.done;
+    setSide(st.side); setAfter(st.after);
+    [].forEach.call(sideBtns.querySelectorAll('button'), function (b) { b.disabled = st.done; });
+    [].forEach.call(afterBox.querySelectorAll('button'), function (b) { b.disabled = !st.done; });
+    tk.textContent = st.done ? 'buy 15 BTC, smallest fill 10 BTC, limit 1,000.10 USD' : 'hidden until the auction closes';
+    tk.classList.toggle('shown', st.done);
+    readout(); drawDyn();
+    E.save('auction', st);
+  }
+  var setSide = E.seg(sideBtns, [['buy', 'Buy'], ['sell', 'Sell']], st.side, function (k) { if (st.done) { setSide(st.side); return; } st.side = k; render(); }, 'Your side');
+  var setAfter = E.seg(afterBox, [['knew', 'Yes'], ['not', 'No']], st.after, function (k) { if (!st.done) { setAfter(null); return; } st.after = k; render(); }, 'Did the customer know something? A toy');
+  slider.addEventListener('input', function () { st.price = Math.round(+slider.value * 10) / 10; render(); });
+  send.addEventListener('click', function () { if (!st.side) return; st.done = true; st.after = null; render(); again.focus(); });
+  again.addEventListener('click', function () { st.done = false; st.after = null; render(); send.focus(); });
+  render();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 4: the size threshold before and after 6 December 2019 (pages 2, 4, 7) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('thresh'), slider = document.getElementById('size'), out = document.getElementById('size-out'), read = document.getElementById('size-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 196, L = 6, R = 14, rows = [[34, 'Before 6 December 2019', 10], [96, 'From 6 December 2019', 5]], yAx = 128, BH = 26;
+    function X(s) { return L + (W - L - R) * s / 20; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Trade sizes from 0 to 20 bitcoin. Before 6 December 2019, only trades of 10 bitcoin or more could go upstairs as blocks; from that date, trades of 5 or more. Under 5 bitcoin: order book only and not studied. 5 to 10: the treated trades. Over 10: blocks form the control group.' }, box);
+    rows.forEach(function (r) {
+      T(root, L, r[0] - 7, r[1], { 'class': 'label' });
+      S('rect', { x: X(0), y: r[0], width: X(5) - X(0), height: BH, 'class': 'surface' }, root);
+      S('rect', { x: X(5), y: r[0], width: X(r[2]) - X(5), height: BH, 'class': 'book-fill' }, root);
+      S('rect', { x: X(r[2]), y: r[0], width: X(20) - X(r[2]), height: BH, 'class': 'blk-fill' }, root);
+    });
+    S('line', { x1: X(0), x2: X(20), y1: yAx, y2: yAx, 'class': 'axis' }, root);
+    [0, 5, 10, 15, 20].forEach(function (s) {
+      S('line', { x1: X(s), x2: X(s), y1: yAx, y2: yAx + 4, 'class': 'axis' }, root);
+      T(root, X(s), yAx + 16, s + (s === 20 ? ' BTC' : ''), { 'text-anchor': s === 0 ? 'start' : s === 20 ? 'end' : 'middle' });
+    });
+    /* the three groups, bracketed under the axis */
+    var yb = yAx + 30;
+    [[0, 5, 'not studied'], [5, 10, 'treated'], [10, 20, W < 480 ? 'control: blocks' : 'control: the blocks']].forEach(function (b) {
+      var a = X(b[0]) + 2, z = X(b[1]) - 2;
+      S('path', { d: 'M' + a + ',' + yb + ' V' + (yb + 5) + ' H' + z + ' V' + yb, 'class': 'bracket' }, root);
+      T(root, (a + z) / 2, yb + 21, b[2], { 'text-anchor': 'middle', 'class': b[2] === 'treated' ? 'strong' : 'label' });
+    });
+    geo = { X: X, top: rows[0][0] - 2, bot: rows[1][0] + BH + 2, dyn: S('g', {}, root) };
+    marker();
+  }
+  function marker() {
+    var s = +slider.value;
+    out.textContent = s;
+    slider.setAttribute('aria-valuetext', s + ' bitcoin');
+    var txt;
+    if (s < 5) txt = '<strong>' + s + ' BTC:</strong> the order book only, in both years, printed at once. Too small for this study.';
+    else if (s < 10) txt = '<strong>' + s + ' BTC:</strong> before the change, the order book only, printed at once. After it, free to go upstairs and be printed ten minutes late. <strong>A treated trade.</strong>';
+    else if (s === 10) txt = '<strong>10 BTC</strong> is the old minimum itself: a trade of this size could go upstairs in both years, and before the change it was the most common block size.';
+    else txt = '<strong>' + s + ' BTC:</strong> upstairs was open in both years. Traded as a block, it is in the <strong>control group</strong>: its rules never changed.';
+    read.innerHTML = txt;
+    if (!geo) return;
+    var g = geo.dyn, x = geo.X(s);
+    g.innerHTML = '';
+    /* ink over a paper halo: visible on the blue and gold bars, in both colour schemes */
+    S('line', { x1: x, x2: x, y1: geo.top - 18, y2: geo.bot + 2, 'class': 'cursor-halo' }, g);
+    S('line', { x1: x, x2: x, y1: geo.top - 18, y2: geo.bot + 2, 'class': 'cursor' }, g);
+    S('circle', { cx: x, cy: geo.top - 18, r: 4.5, 'class': 'cursor-dot' }, g);
+  }
+  slider.addEventListener('input', marker);
+  marker();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

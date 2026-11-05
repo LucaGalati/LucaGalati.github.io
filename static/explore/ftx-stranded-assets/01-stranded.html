@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stranded · Trading Stranded Assets on FTX</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Galati, Webb and Webb, Trading Stranded Assets on FTX: the week FTX froze withdrawals, a bet on whether trading stopped, the run into Tether, a dollar coin that was not worth a dollar, and why one coin can have two prices.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .hook-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.2rem 3rem; align-items: center; }
+  @media (min-width: 900px) { .hook-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+  .ledger { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; margin: .4rem 0 .8rem; }
+  .ledger th, .ledger td { text-align: left; padding: .42em .5em; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .ledger th { font-weight: 500; color: var(--muted); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; }
+  .ledger td:first-child { font-family: var(--serif); font-size: .98rem; }
+  .ledger td.g { width: 28px; padding-right: 0; }
+  .ledger td.src { color: var(--muted); white-space: nowrap; font-size: .76rem; }
+  .ledger tr.big td { font-weight: 500; }
+  .glyph { display: block; width: 22px; height: 16px; }
+  .glyph path { stroke: var(--ftx); stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .glyph .flat { stroke: var(--muted); }
+  .push-btns { display: flex; flex-wrap: wrap; gap: .5rem .6rem; margin: .5rem 0 .2rem; }
+  .peg-slide .fig { margin: 1.2rem 0 .4rem; }
+</style>
+</head>
+<body data-deck="01-stranded.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-stranded-assets/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What do you do when you can trade but not leave?">
+  <div class="inner hook-grid">
+    <div>
+      <p class="kicker">An explorable explanation · Galati, Webb &amp; Webb</p>
+      <h1><span class="ln">You could trade.</span> <span class="ln">You could not leave.</span></h1>
+      <p>On the morning of 8 November 2022, FTX, which that year handled between 5% and 9% of all crypto trading, stopped letting most customers withdraw their coins. Its trading screen stayed on: until 03:28 UTC on 12 November, anyone with a balance could buy and sell as before. Next door, Binance, the largest exchange, still let its customers withdraw.</p>
+      <p>Exchanges have closed in crises before; New York’s stock exchange shut for over four months in 1914. This was the reverse: the market open, the exit shut. The paper calls the balances caught inside <strong>stranded assets</strong>.</p>
+      <p class="prompt">What would you do with money you can rearrange but not take home? And what happens to prices that can no longer be checked against the rest of the world?</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>Watch the week unfold&nbsp;→</button>
+        <a class="door" href="03-bank.html#s1" data-return="next">Why does an exchange hold your coins at all?&nbsp;→</a>
+      </div>
+      <p class="note">Dates: pp. 2 and 13. FTX’s share of 2022 crypto trading, 5–9%, against Binance’s 39–62%: footnote 3; only FTX halted withdrawals: p. 6. New York closed from 30 July to 12 December 1914: p. 4. The drawing is schematic.</p>
+    </div>
+    <div class="motif" id="hook-motif"></div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What happened that week?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Stranded · 2 of 7</p>
+    <h2>From rumour to bankruptcy in a week</h2>
+    <div class="two">
+      <div>
+        <p>FTX had its own coin, <strong>FTT</strong>. Between 4 and 11 November its price went from $24.35 to $2.75, a fall of 89%, while its daily trading volume rose from $103 million to $3.31 billion at the peak. The hatched band is the stranded window: withdrawals frozen, trading open.</p>
+        <p>Walk through the days to see what set it off.</p>
+        <p class="door-row"><a class="door" href="03-bank.html#s2">What was FTT really worth?&nbsp;→</a></p>
+        <p class="door-row"><a class="door" href="05-wallet.html#s2">What happened on the last night?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Did trading stop?&nbsp;→</button></div>
+        <p class="note">FTT price and volume at 00:00 UTC each day: Table 1; the fall and the rise are computed from it. Events: Appendix A, times as printed there. The hatched band runs from 06:37 UTC on 8 November, where the paper’s analysis starts the withdrawal halt (pp. 2, 5, 13), to 03:28 UTC on 12 November.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="wk-chart"></div>
+        <p class="legend"><span><i class="ln ftx"></i>FTT price</span><span><i class="sq ftx-before"></i>FTT daily volume</span><span><svg class="sw" viewBox="0 0 16 10" aria-hidden="true"><path d="M0 4L4 0M0 9L9 0M4 10L14 0M9 10L16 3M14 10L16 8"/><rect x=".5" y=".5" width="15" height="9"/></svg>withdrawals frozen, trading open</span></p>
+        <label class="ctl" for="wk-day">Walk through the days</label>
+        <input type="range" id="wk-day" min="0" max="8" step="1" value="4">
+        <p class="readout" id="wk-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Did trading stop?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Stranded · 3 of 7 · Place your bet</p>
+    <h2>Did trading stop when the exit closed?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>From the morning of 8 November almost no customer could withdraw. Whatever you bought on FTX, you could not take it away.</p>
+        <p><strong>Over the four days of the freeze, how many trades went through on FTX, compared with the four days before?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="none" aria-pressed="false">Almost none</button>
+          <button class="btn" type="button" data-bet="half" aria-pressed="false">About half as many</button>
+          <button class="btn" type="button" data-bet="more" aria-pressed="false">As many or more</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="tr-chart"></div>
+        <p class="legend"><span><i class="sq ftx-before"></i>four days before the freeze</span><span><i class="sq ftx"></i>four days of the freeze</span></p>
+        <p class="note" id="tr-note" hidden>Trades per coin in each window: the n behind Table 2’s trade-based measures (effective spread, price impact, realized spread), which are computed trade by trade. Ratios computed from Table 2. Peaks: Section 5.2, p. 9, and Section 6, p. 14.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="tr-verdict" aria-live="polite"></p>
+        <div class="actions" id="tr-next" hidden>
+          <button class="btn primary" type="button" data-next>What were they trading into?&nbsp;→</button>
+          <a class="door" href="05-wallet.html#s1" data-return="next">Trading went on. Did any money get out?&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What did traders move into?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Stranded · 4 of 7</p>
+    <h2>Into Tether, or out altogether</h2>
+    <div class="two">
+      <div>
+        <p>Why rearrange money you cannot take out? The freeze said two things at once: your coins are locked, and the exchange may be going under. What you hold on the day it fails may decide what you get back.</p>
+        <p>The trade data record which side started each trade. For every coin traded against <strong>Tether</strong>, a <em>stablecoin</em> built to stay worth one dollar, <strong>selling pressure</strong> rose: more trades were started by sellers than by buyers. Coins were also sold for dollars, which the authors read as attempts to leave crypto altogether. They call the pattern a flight to safety.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Was Tether still worth a dollar inside?&nbsp;→</button></div>
+        <p class="note">Selling pressure: Figures 4a and 4b (pp. 11–13), read for direction only; stablecoin turnover: Figure 3. The paper’s reasons for Tether, outside the US banking system and easy to move, are its reading (pp. 11–12). The bankruptcy motive: p. 4. The paper recalls Mt. Gox (p. 13): its customers lost most of their coins, but the long bankruptcy gave bitcoin time to climb, so in dollars they probably ended up ahead. Stablecoins: footnotes 2 and 6.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Where the selling went <span class="tag">schematic: direction only</span></p>
+        <div class="fig" id="flow-chart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide peg-slide" data-title="Was a dollar coin still worth a dollar?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Stranded · 5 of 7</p>
+    <h2>Inside FTX, a dollar coin was not worth a dollar</h2>
+    <p>A stablecoin has one job: to be worth one dollar. Inside the frozen exchange two of them lost it. Tether, the coin traders were selling into, changed hands at around $1.20. DAI, a smaller stablecoin that traders were selling hard, at one point traded about 30% below its dollar.</p>
+    <div class="fig" id="peg-chart"></div>
+    <p class="prompt">Normally someone would buy Tether elsewhere for a dollar, bring it in and sell it here for $1.20, again and again, until the gap closed. Why did nobody?</p>
+    <div class="actions"><button class="btn primary" type="button" data-next>Why did nobody close the gap?&nbsp;→</button></div>
+    <p class="note">Tether at around $1.20: p. 2. DAI about 30% below its $1 peg: p. 11; the $0.70 on the scale is computed from that. Heavier selling of DAI than of Tether: Figure 4a and p. 11.</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Why can one coin have two prices?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Stranded · 6 of 7</p>
+    <h2>One coin, two prices</h2>
+    <div class="two">
+      <div>
+        <p>Normally a coin costs about the same on every exchange, because traders keep it so. If it is cheaper on one, they buy it there, move it, and sell it where it is dearer, until the gap closes.</p>
+        <p>Try it on a toy coin listed on both exchanges. Trade on FTX a few times with withdrawals open; then freeze them and trade again.</p>
+        <p>Frozen withdrawals do not stop anyone trading. They stop the trip between exchanges: whoever tried to close a gap would end with money stuck inside FTX. So nobody does, and the price inside drifts wherever the stranded traders push it.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>How far did real prices drift?&nbsp;→</button></div>
+        <p class="note">Toy: price index 100, each trade on FTX moves its price by 3%. The arbitrage logic is the textbook one, not a test in the paper; the paper notes that FTX customers could not move assets to Binance (p. 14).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Withdrawals</span><span class="seg" id="push-mode"></span></div>
+        <div class="fig" id="push-chart"></div>
+        <div class="push-btns">
+          <button class="btn" type="button" id="push-buy">A stranded trader buys</button>
+          <button class="btn" type="button" id="push-sell">A stranded trader sells</button>
+          <button class="btn" type="button" id="push-reset">Reset</button>
+        </div>
+        <p class="readout" id="push-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How far did prices on FTX drift?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Stranded · 7 of 7</p>
+    <h2>Bitcoin held its price. BNB did not.</h2>
+    <div class="two">
+      <div>
+        <p>On the real exchange, prices stayed close to the market for about a day after the freeze, then began to drift; by 11&nbsp;November most coins in the study had drifted far from it.</p>
+        <p>Bitcoin, the first and most popular coin, kept its price: nobody inside paid extra for it. The puzzle is <strong>BNB</strong>, the token of Binance, FTX’s rival, which had just walked away from buying it. Inside the frozen exchange it traded at several times its market price. The authors pass the reason on to future research.</p>
+        <p>Prices drifted. What did it cost to trade at them?</p>
+        <div class="actions"><a class="btn primary" href="02-toll.html#s1">What did trading cost?&nbsp;→</a></div>
+        <p class="note">Section 5.2 (p. 13) and Figure 5, which plots each coin on FTX and on Binance, against Tether and against the dollar. Sizes are given only where the paper’s text states them.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="drift-chart"></div>
+        <table class="ledger">
+          <thead><tr><th></th><th>Coin</th><th>On FTX, against the market</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td class="g"><svg class="glyph" viewBox="0 0 22 16" aria-hidden="true"><path class="flat" d="M2 8 H20"/></svg></td><td>Bitcoin</td><td>no divergence</td><td class="src">p. 13</td></tr>
+            <tr><td class="g"><svg class="glyph" viewBox="0 0 22 16" aria-hidden="true"><path d="M3 12 L19 4 M13 4 H19 V10"/></svg></td><td>Ether</td><td>a premium</td><td class="src">p. 13</td></tr>
+            <tr><td class="g"><svg class="glyph" viewBox="0 0 22 16" aria-hidden="true"><path d="M3 4 L19 12 M13 12 H19 V6"/></svg></td><td>Litecoin, Dogecoin</td><td>a discount</td><td class="src">p. 13</td></tr>
+            <tr><td class="g"><svg class="glyph" viewBox="0 0 22 16" aria-hidden="true"><path d="M11 2 V14 M8 5 L11 2 L14 5 M8 11 L11 14 L14 11"/></svg></td><td>FTT</td><td>about 10% from the market price</td><td class="src">p. 13</td></tr>
+            <tr class="big"><td class="g"><svg class="glyph" viewBox="0 0 22 16" aria-hidden="true"><path d="M3 15 L19 1 M11 1 H19 V9"/></svg></td><td>BNB</td><td>a premium of over 400% to the market</td><td class="src">p. 13</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-stranded-assets/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the motif ---------- */
+Explore.motif(document.getElementById('hook-motif'));
+
+/* ---------- slide 2: the week, FTT price and volume (Table 1), events (Appendix A) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var LABEL = ['4 Nov', '5 Nov', '6 Nov', '7 Nov', '8 Nov', '9 Nov', '10 Nov', '11 Nov', '12 Nov'];
+  var PRICE = [24.35, 24.97, 25.49, 23.06, 22.57, 17.36, 4.54, 2.75];
+  var VOL = [103.07, 96.26, 92.48, 277.98, 774.5, 1420, 3310, 986.69];
+  var VOLTXT = ['$103m', '$96m', '$92m', '$278m', '$775m', '$1.42bn', '$3.31bn', '$987m'];
+  var EVENTS = [
+    'The paper’s sample begins. Two days earlier CoinDesk had reported that Alameda Research, the trading firm tied to FTX, held much of its balance sheet in FTT.',
+    'Binance’s founder tweets “Crypto is high risk”. Under two hours later Binance moves 22,999,999 FTT, worth about $585 million.',
+    'Posts on Twitter claim FTX is insolvent. Binance says it will sell all the FTT it still holds.',
+    'FTX’s chief executive tweets that FTX and its assets are fine. The tweet is later deleted.',
+    'FTX appears to stop processing withdrawals. Binance agrees to buy FTX, pending due diligence.',
+    'At 21:00 Binance pulls out of the deal.',
+    'At 19:08 FTX says it has begun to let Bahamian customers withdraw, on its home regulator’s instructions.',
+    'FTX files for Chapter 11 bankruptcy protection in the United States.',
+    'At 03:28 UTC trading on FTX stops. The stranded window closes.'
+  ];
+  var H0 = 0, H1 = 8 * 24 + 14, HALT0 = 4 * 24 + 6 + 37 / 60, HALT1 = 8 * 24 + 3 + 28 / 60;
+  var box = document.getElementById('wk-chart'), slider = document.getElementById('wk-day'), read = document.getElementById('wk-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = narrow ? 40 : 46, R = 8, TOP = 22, PH = 128, GAP = 34, VH = 64, H = TOP + PH + GAP + VH + 30;
+    function X(h) { return L + (W - L - R) * (h - H0) / (H1 - H0); }
+    function YP(v) { return TOP + PH * (1 - v / 30); }
+    var v0 = TOP + PH + GAP;
+    function YV(v) { return v0 + VH * (1 - v / 3500); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'FTT price and daily volume, 4 to 11 November 2022, from Table 1: price 24.35, 24.97, 25.49, 23.06, 22.57, 17.36, 4.54 and 2.75 dollars; volume 103, 96, 92, 278 and 775 million, then 1.42 and 3.31 billion, then 987 million dollars. The period with withdrawals frozen, 8 to 12 November, is hatched.' }, box);
+    var fillUrl = E.hatch(root, 'hatch-line');
+    S('rect', { x: X(HALT0), y: TOP, width: X(HALT1) - X(HALT0), height: v0 + VH - TOP, fill: fillUrl, opacity: 0.55 }, root);
+    [0, 10, 20, 30].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: YP(v), y2: YP(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, YP(v) + 4, '$' + v, { 'text-anchor': 'end' });
+    });
+    T(root, L, TOP - 9, narrow ? 'FTT price, $' : 'FTT price, $, at 00:00 UTC', { 'class': 'label' });
+    [0, 1000, 2000, 3000].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: YV(v), y2: YV(v), 'class': v ? 'grid' : 'axis' }, root);
+      if (v) T(root, L - 6, YV(v) + 4, '$' + (v / 1000) + 'bn', { 'text-anchor': 'end' });
+    });
+    T(root, L, v0 - 9, narrow ? 'FTT daily volume' : 'FTT daily trading volume', { 'class': 'label' });
+    for (var d = 0; d <= 8; d++) {
+      S('line', { x1: X(d * 24), x2: X(d * 24), y1: v0 + VH, y2: v0 + VH + 4, 'class': 'axis' }, root);
+      if (!narrow || d % 2 === 0) T(root, X(d * 24), v0 + VH + 17, narrow && d ? String(4 + d) : LABEL[d], { 'text-anchor': d === 0 && narrow ? 'start' : d === 8 && narrow ? 'end' : 'middle' });
+    }
+    var bw = Math.max(6, (X(24) - X(0)) * 0.42);
+    var bars = VOL.map(function (v, i) { return S('rect', { x: X(i * 24) - bw / 2, y: YV(v), width: bw, height: v0 + VH - YV(v), 'class': 'ftx-before' }, root); });
+    S('polyline', { points: PRICE.map(function (p, i) { return X(i * 24).toFixed(1) + ',' + YP(p).toFixed(1); }).join(' '), 'class': 'ftx' }, root);
+    var dots = PRICE.map(function (p, i) { return S('circle', { cx: X(i * 24), cy: YP(p), r: 3.5, 'class': 'ftx-fill' }, root); });
+    geo = { X: X, YP: YP, TOP: TOP, bot: v0 + VH, bars: bars, dots: dots, dyn: S('g', {}, root), W: W };
+    /* line the slider's thumb up with the day ticks of the chart */
+    var s = box.clientWidth / W || 1;
+    slider.style.maxWidth = 'none';
+    slider.style.marginLeft = Math.max(0, X(0) * s - 8).toFixed(1) + 'px';
+    slider.style.width = ((X(8 * 24) - X(0)) * s + 16).toFixed(1) + 'px';
+    draw();
+  }
+  function draw() {
+    var i = +slider.value;
+    slider.setAttribute('aria-valuetext', LABEL[i] + ' 2022');
+    read.innerHTML = '<strong>' + LABEL[i] + '</strong>' + (i < 8 ? ' · FTT <span class="nw">$' + PRICE[i].toFixed(2) + '</span> · daily volume <span class="nw">' + VOLTXT[i] + '</span>' : '') + '. ' + EVENTS[i];
+    if (!geo) return;
+    var g = geo.dyn, x = geo.X(i * 24);
+    g.innerHTML = '';
+    S('line', { x1: x, x2: x, y1: geo.TOP, y2: geo.bot, 'class': 'cursor' }, g);
+    geo.bars.forEach(function (b, k) { b.setAttribute('class', k === i ? 'ftx-before sel' : 'ftx-before'); });
+    geo.dots.forEach(function (c, k) { c.setAttribute('r', k === i ? 6 : 3.5); });
+    if (i < 8) {
+      var right = x > geo.W * 0.7;
+      E.text(g, x + (right ? -9 : 9), geo.YP(PRICE[i]) - 8, '$' + PRICE[i].toFixed(2), { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+    }
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 3: the bet on trading, then trades per coin (Table 2, n) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var ROWS = [['Bitcoin', 138073, 269145], ['Ether', 183173, 366230], ['FTT', 107204, 309619], ['BNB', 45057, 102547], ['Dogecoin', 49595, 46499], ['Litecoin', 17484, 14005]];
+  var MAX = 400000;
+  var ARIA = 'Trades on FTX in the four days before and the four days of the freeze: Bitcoin 138,073 then 269,145; Ether 183,173 then 366,230; FTT 107,204 then 309,619; BNB 45,057 then 102,547; Dogecoin 49,595 then 46,499; Litecoin 17,484 then 14,005.';
+  var betBox = document.getElementById('bet'), box = document.getElementById('tr-chart'), verdict = document.getElementById('tr-verdict');
+  var nextBox = document.getElementById('tr-next'), note = document.getElementById('tr-note');
+  var st = { bet: null, p: 0 }, geo = null, raf = null;
+  function k(n) { return n >= 100000 ? Math.round(n / 1000) + 'k' : (n / 1000).toFixed(1) + 'k'; }
+  function build(W) {
+    box.innerHTML = '';
+    var lab = W < 480 ? 62 : 74, rowH = 40, TOP = 4, H = TOP + ROWS.length * rowH + 24, xMax = W - lab - 96;
+    function X(v) { return lab + xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Chart of trades per coin; it appears after you place your bet.' }, box);
+    [0, 100000, 200000, 300000, 400000].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 20, 'class': v ? 'grid' : 'axis' }, root);
+    });
+    ROWS.forEach(function (r, i) { T(root, 0, TOP + i * rowH + 20, r[0], { 'class': 'label' }); });
+    geo = { X: X, TOP: TOP, rowH: rowH, W: W, H: H, lab: lab, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, p = st.p;
+    g.innerHTML = '';
+    geo.root.setAttribute('aria-label', st.bet ? ARIA : 'Chart of trades per coin; it appears after you place your bet.');
+    if (!st.bet) { T(g, geo.lab + (geo.W - geo.lab) / 2 - 20, geo.H / 2, 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    /* the scale is drawn only after the bet, so it gives nothing away */
+    [0, 100000, 200000, 300000, 400000].forEach(function (v) {
+      if (geo.W >= 480 || v % 200000 === 0) T(g, X(v), geo.H - 5, v ? (v / 1000) + 'k' : '0', { 'text-anchor': 'middle' });
+    });
+    T(g, geo.W, geo.H - 5, 'trades', { 'text-anchor': 'end' });
+    ROWS.forEach(function (r, i) {
+      var y = geo.TOP + i * geo.rowH + 6;
+      S('rect', { x: X(0), y: y, width: Math.max(1, (X(r[1]) - X(0)) * p), height: 12, 'class': 'ftx-before' }, g);
+      S('rect', { x: X(0), y: y + 15, width: Math.max(1, (X(r[2]) - X(0)) * p), height: 12, 'class': 'ftx-fill' }, g);
+      if (p >= 1) {
+        T(g, X(Math.max(r[1], r[2])) + 7, y + 11, k(r[1]) + ' → ' + k(r[2]), { 'class': 'label' });
+        T(g, X(Math.max(r[1], r[2])) + 7, y + 26, '×' + (r[2] / r[1]).toFixed(1), { 'class': 'strong' });
+      }
+    });
+  }
+  var LEAD = {
+    none: 'Not at all. Trading went on, and for four of the six coins it grew. ',
+    half: 'More than that. Trading went on, and for four of the six coins it grew. ',
+    more: 'Right. Trading went on, and for four of the six coins it grew. '
+  };
+  var TAIL = 'Bitcoin, Ether and BNB saw about twice as many trades as in the four days before; FTT, the exchange’s own coin, nearly three times as many. Only Dogecoin and Litecoin saw fewer. The totals hide a shape: for every coin but FTT, activity peaked on 8 November and then fell away, while FTT’s trading on FTX kept rising, to a peak at 17:55\u00a0UTC on 11\u00a0November.';
+  function finish() { st.p = 1; draw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-trades', bet);
+    if (raf) cancelAnimationFrame(raf);
+    if (!animate || E.still) { finish(); return; }
+    verdict.textContent = ''; nextBox.hidden = true; note.hidden = true;
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var q = Math.min(1, (ts - t0) / 900);
+      st.p = 1 - Math.pow(1 - q, 3);
+      if (q < 1) { draw(); raf = requestAnimationFrame(step); } else { raf = null; finish(); }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-trades');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 4: where the selling went (schematic, Fig. 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var flow = document.getElementById('flow-chart');
+  var COINS = ['BTC', 'ETH', 'BNB', 'FTT', 'LTC', 'DOGE'];
+  E.fit(flow, function (W) {
+    flow.innerHTML = '';
+    var H = 150, x0 = 4, cw = Math.min(56, (W * 0.5 - 10) / 3.2), y0 = 18;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Schematic: selling pressure rose for Bitcoin, Ether, BNB, FTT, Litecoin and Dogecoin against Tether, and also against US dollars. Direction only, from Figures 4a and 4b; the paper reads Tether as a haven and the dollar sales as a way out.' }, flow);
+    COINS.forEach(function (c, i) {
+      var col = i % 3, row = Math.floor(i / 3), x = x0 + col * (cw + 6), y = y0 + row * 40;
+      S('rect', { x: x, y: y, width: cw, height: 28, rx: 3, 'class': 'hollow-muted' }, root);
+      T(root, x + cw / 2, y + 18, c, { 'text-anchor': 'middle', 'class': 'label' });
+    });
+    var sx = x0 + 3 * (cw + 6) + 8, tx = W - 118;
+    var tY = 26, dY = 108;
+    S('rect', { x: tx, y: tY - 18, width: 114, height: 38, rx: 3, 'class': 'box' }, root);
+    T(root, tx + 57, tY - 1, 'USDT, Tether', { 'text-anchor': 'middle', 'class': 'strong' });
+    T(root, tx + 57, tY + 14, 'read as a haven', { 'text-anchor': 'middle' });
+    S('rect', { x: tx, y: dY - 18, width: 114, height: 38, rx: 3, 'class': 'box' }, root);
+    T(root, tx + 57, dY - 1, 'USD, dollars', { 'text-anchor': 'middle', 'class': 'strong' });
+    T(root, tx + 57, dY + 14, 'read as a way out', { 'text-anchor': 'middle' });
+    S('path', { d: 'M' + sx + ',' + (y0 + 34) + ' C' + (sx + 40) + ',' + (y0 + 34) + ' ' + (tx - 46) + ',' + tY + ' ' + (tx - 6) + ',' + tY, 'class': 'arrow-ftx' }, root);
+    S('path', { d: 'M' + (tx - 13) + ',' + (tY - 5) + ' L' + (tx - 5) + ',' + tY + ' L' + (tx - 13) + ',' + (tY + 5), 'class': 'arrow-ftx' }, root);
+    S('path', { d: 'M' + sx + ',' + (y0 + 40) + ' C' + (sx + 40) + ',' + (y0 + 40) + ' ' + (tx - 46) + ',' + dY + ' ' + (tx - 6) + ',' + dY, 'class': 'arrow-line' }, root);
+    S('path', { d: 'M' + (tx - 13) + ',' + (dY - 5) + ' L' + (tx - 5) + ',' + dY + ' L' + (tx - 13) + ',' + (dY + 5), 'class': 'arrow-line' }, root);
+    T(root, x0, H - 6, 'selling pressure rose for every coin', {});
+  }, { min: 300, max: 560 });
+})();
+
+/* ---------- slide 5: two dollar coins, priced inside FTX (pp. 2, 11) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var peg = document.getElementById('peg-chart');
+  E.fit(peg, function (W) {
+    peg.innerHTML = '';
+    var L = 10, R = 14, H = 112, yA = 64, LO = 0.6, HI = 1.3;
+    function X(v) { return L + (W - L - R) * (v - LO) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Price in dollars inside FTX: Tether around 1.20, DAI at one point about 0.70, against a peg of 1.00.' }, peg);
+    S('line', { x1: L, x2: W - R, y1: yA, y2: yA, 'class': 'axis' }, root);
+    [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: yA, y2: yA + 5, 'class': 'axis' }, root);
+      if (W >= 440 || Math.round(v * 10) % 2 === 0) T(root, X(v), yA + 19, '$' + v.toFixed(2), { 'text-anchor': 'middle' });
+    });
+    S('line', { x1: X(1), x2: X(1), y1: 12, y2: yA, 'class': 'ghost' }, root);
+    T(root, X(1), 10, 'the $1 peg', { 'text-anchor': 'middle', 'class': 'label' });
+    S('circle', { cx: X(1.2), cy: yA, r: 8, 'class': 'ftx-fill' }, root);
+    T(root, X(1.2), yA - 16, 'Tether ≈ $1.20', { 'text-anchor': 'middle', 'class': 'strong halo' });
+    S('circle', { cx: X(0.7), cy: yA, r: 8, 'class': 'ftx-fill' }, root);
+    T(root, X(0.7) - 4, yA - 16, 'DAI ≈ $0.70 at one point', { 'text-anchor': W < 400 ? 'start' : 'middle', 'class': 'strong halo' });
+    T(root, W - R, H - 4, 'price inside FTX', { 'text-anchor': 'end' });
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 6: one coin, two prices (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('push-chart'), read = document.getElementById('push-read');
+  var st = { open: true, p: 100, hist: [0], last: null }, geo = null, anim = null, pend = null;
+  var LO = 82, HI = 118;
+  /* stop whatever is pending or running, so an arbitrage never lands after the exit has been shut */
+  function halt() {
+    clearTimeout(pend); pend = null;
+    if (anim) { cancelAnimationFrame(anim); anim = null; if (Math.abs(st.p - (100 + st.hist[st.hist.length - 1])) > 0.05) st.hist.push(st.p - 100); }
+  }
+  var setMode = E.seg(document.getElementById('push-mode'), [['open', 'open'], ['frozen', 'frozen']], 'open', function (k) {
+    halt();
+    st.open = k === 'open';
+    if (st.open && Math.abs(st.p - 100) > 0.05) { st.last = st.p > 100 ? 'up' : 'down'; arbitrage(); }
+    else { say(); draw(0); }
+  }, 'Withdrawals');
+  function gapTxt(p) { var g = p - 100; return (g > 0 ? '+' : g < 0 ? '−' : '') + Math.abs(g).toFixed(0) + '%'; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 286, TOP = 50, PH = 128, L = 40, cB = L + (W - L) * 0.24, cF = L + (W - L) * 0.76;
+    function Y(v) { return TOP + PH * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy: the same coin on Binance and on FTX. Trades on FTX move its price; with withdrawals open an arbitrageur closes the gap, with withdrawals frozen the gap stays. Below, the gap after each trade.' }, box);
+    [85, 100, 115].forEach(function (v) {
+      S('line', { x1: L, x2: W, y1: Y(v), y2: Y(v), 'class': v === 100 ? 'axis' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    });
+    T(root, 0, 12, 'Toy price index', { 'class': 'label' });
+    T(root, cB, TOP + PH + 22, 'Binance', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, cF, TOP + PH + 22, 'FTX', { 'text-anchor': 'middle', 'class': 'label' });
+    var fillUrl = E.hatch(root, 'hatch-line');
+    geo = { Y: Y, cB: cB, cF: cF, W: W, H: H, TOP: TOP, L: L, fillUrl: fillUrl, dyn: S('g', {}, root) };
+    draw(0);
+  }
+  function draw(dotT) {
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, cB = geo.cB, cF = geo.cF, bw = Math.min(70, (geo.W - geo.L) * 0.24), yb = geo.TOP - 16;
+    g.innerHTML = '';
+    /* the bridge between the exchanges */
+    S('line', { x1: cB + bw / 2, x2: cF - bw / 2, y1: yb, y2: yb, 'class': st.open ? 'link-line' : 'thin' }, g);
+    var mid = (cB + cF) / 2;
+    if (st.open) T(g, mid, yb - 6, 'coins can move', { 'text-anchor': 'middle' });
+    else {
+      S('rect', { x: mid - 8, y: yb - 14, width: 16, height: 28, fill: geo.fillUrl }, g);
+      S('rect', { x: mid - 8, y: yb - 14, width: 16, height: 28, fill: 'none', stroke: 'var(--ftx)', 'stroke-width': 1.4 }, g);
+      T(g, mid + 14, yb - 4, 'exit barred', { 'class': 'label' });
+    }
+    if (dotT > 0 && dotT < 1) {
+      var from = st.last === 'up' ? cB : cF, to = st.last === 'up' ? cF : cB;
+      S('circle', { cx: from + (to - from) * dotT, cy: yb, r: 5, 'class': 'link-fill' }, g);
+    }
+    S('rect', { x: cB - bw / 2, y: Y(100) - 3, width: bw, height: 6, 'class': 'bin-fill' }, g);
+    S('rect', { x: cF - bw / 2, y: Y(st.p) - 3, width: bw, height: 6, 'class': 'ftx-fill' }, g);
+    T(g, cB + bw / 2 + 6, Y(100) + 4, '100', { 'class': 'label' });
+    T(g, cF - bw / 2 - 6, Y(st.p) + 4, st.p.toFixed(0), { 'text-anchor': 'end', 'class': 'label' });
+    if (Math.abs(st.p - 100) >= 1) {
+      var bx = cF + bw / 2 + 8;
+      S('path', { d: 'M' + (bx - 4) + ',' + Y(100).toFixed(1) + ' H' + bx + ' V' + Y(st.p).toFixed(1) + ' H' + (bx - 4), 'class': 'bracket' }, g);
+      T(g, bx + 5, (Y(100) + Y(st.p)) / 2 + 4, gapTxt(st.p), { 'class': 'strong' });
+    }
+    /* the gap after each trade, in points of the toy index (= % of 100) */
+    var sy = geo.H - 46, sh = 44, n = 16, h = st.hist.slice(-n), x0 = geo.L, x1 = geo.W - 4;
+    function SX(i) { return x0 + (x1 - x0) * i / (n - 1); }
+    function SY(v) { return sy + sh / 2 - sh / 2 * v / 16; }
+    [10, -10].forEach(function (v) {
+      S('line', { x1: x0, x2: x1, y1: SY(v), y2: SY(v), 'class': 'grid' }, g);
+      T(g, x0 - 6, SY(v) + 4, (v > 0 ? '+' : '−') + '10%', { 'text-anchor': 'end' });
+    });
+    S('line', { x1: x0, x2: x1, y1: SY(0), y2: SY(0), 'class': 'axis' }, g);
+    T(g, x0 - 6, SY(0) + 4, '0', { 'text-anchor': 'end' });
+    T(g, x0, sy - 18, 'Gap after each trade, FTX minus Binance', {});
+    if (h.length > 1) S('polyline', { points: h.map(function (v, i) { return SX(i).toFixed(1) + ',' + SY(v).toFixed(1); }).join(' '), 'class': 'ftx' }, g);
+    S('circle', { cx: SX(h.length - 1), cy: SY(h[h.length - 1]), r: 3.5, 'class': 'ftx-fill' }, g);
+  }
+  function say(kind) {
+    var g = st.p - 100;
+    if (kind === 'arb') read.innerHTML = '<strong>Gap closed.</strong> An arbitrageur ' + (st.last === 'up' ? 'bought the coin on Binance, moved it to FTX and sold it there' : 'bought the coin on FTX, moved it to Binance and sold it there') + ', pocketing the difference until both prices matched.';
+    else if (Math.abs(g) < 0.5) read.innerHTML = st.open ? 'Both exchanges show the toy coin at 100. Press a button to trade on FTX.' : '<strong>Withdrawals frozen.</strong> Trade on FTX and watch the gap.';
+    else if (st.open) read.innerHTML = 'FTX at ' + st.p.toFixed(0) + '. Watch the bridge.';
+    else read.innerHTML = '<strong>FTX ' + Math.abs(g).toFixed(0) + '% ' + (g > 0 ? 'above' : 'below') + ' Binance, and it stays.</strong> Closing the gap would leave the arbitrageur’s money stuck inside FTX, so nobody does it.';
+  }
+  function arbitrage() {
+    pend = null;
+    if (anim) cancelAnimationFrame(anim);
+    if (!st.open) { anim = null; say(); draw(0); return; }
+    var p0 = st.p, t0 = null, dur = E.still ? 0 : 900;
+    say(); draw(0);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var q = dur ? Math.min(1, (ts - t0) / dur) : 1;
+      var d = Math.min(1, q / 0.55), c = Math.max(0, (q - 0.45) / 0.55);
+      st.p = p0 + (100 - p0) * (1 - Math.pow(1 - c, 3));
+      draw(d);
+      if (q < 1) anim = requestAnimationFrame(step);
+      else { anim = null; st.p = 100; st.hist.push(0); draw(0); say('arb'); }
+    }
+    anim = requestAnimationFrame(step);
+  }
+  function trade(dir) {
+    clearTimeout(pend); pend = null;
+    if (anim) { cancelAnimationFrame(anim); anim = null; if (st.open) { st.p = 100; } }
+    st.p = E.clamp(st.p + dir * 3, LO + 1, HI - 1);
+    st.last = dir > 0 ? 'up' : 'down';
+    st.hist.push(st.p - 100);
+    draw(0); say();
+    if (st.open) pend = setTimeout(arbitrage, E.still ? 0 : 250);
+  }
+  document.getElementById('push-buy').addEventListener('click', function () { trade(1); });
+  document.getElementById('push-sell').addEventListener('click', function () { trade(-1); });
+  document.getElementById('push-reset').addEventListener('click', function () {
+    halt();
+    st.p = 100; st.hist = [0]; st.open = true; setMode('open'); say(); draw(0);
+  });
+  say();
+  E.fit(box, build, { min: 300, max: 600 });
+})();
+
+/* ---------- slide 7: when the drift began (p. 13) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('drift-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 70, L = 2, R = 2, H0 = 0, H1 = 4 * 24 + 6, a = 6 + 37 / 60, b = 4 * 24 + 3 + 28 / 60, c = a + 24, y = 24;
+    function X(h) { return L + (W - L - R) * (h - H0) / (H1 - H0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Timing of the drift during the freeze, 8 to 12 November: near the market for about the first 24 hours, drifting afterwards, most coins drifting far by 11 November.' }, box);
+    S('rect', { x: X(a), y: y, width: X(c) - X(a), height: 14, 'class': 'surface' }, root);
+    S('rect', { x: X(c), y: y, width: X(b) - X(c), height: 14, 'class': 'ftx-fill' }, root);
+    S('line', { x1: X(0), x2: X(H1), y1: y + 14, y2: y + 14, 'class': 'axis' }, root);
+    for (var d = 0; d <= 4; d++) {
+      S('line', { x1: X(d * 24), x2: X(d * 24), y1: y + 14, y2: y + 18, 'class': 'axis' }, root);
+      T(root, X(d * 24), y + 32, (8 + d) + ' Nov', { 'text-anchor': d === 0 ? 'start' : 'middle' });
+    }
+    T(root, X(a), y - 8, W < 460 ? 'near market' : 'about a day near the market', { 'class': 'label' });
+    S('line', { x1: X(72), x2: X(72), y1: y - 4, y2: y + 14, 'class': 'cursor' }, root);
+    T(root, X(72) - 6, y - 8, W < 460 ? 'drifting' : 'then drifting', { 'text-anchor': 'end', 'class': 'label' });
+    T(root, X(72) + 6, y - 8, W < 460 ? '11 Nov' : '11 Nov: most diverging', { 'class': 'strong' });
+  }, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

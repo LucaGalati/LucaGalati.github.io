@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Counting D&amp;I · Diversity, Inclusion, and Firm Performance</title>
+<meta name="description" content="Side path of an explorable explanation of Monaco, Galati, Dal Maso and Mattei, Diversity, Inclusion, and Firm Performance: why diversity is counted among executives rather than on the board, which five practices count as inclusion, and what these measures miss.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-measure.html">
+<lg-sitebar><noscript><a href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why count executives, not the board?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Counting D&amp;I · 1 of 2</p>
+      <h2>Diversity is counted where decisions are made</h2>
+      <p>Most studies count women on the board. But a board meets periodically to monitor and advise; the executives (the chief executive, the finance chief and the other officers) decide budgets, research and which projects go ahead (p.&nbsp;3). A firm can have a diverse board and an all-male executive suite, so the paper counts women among the executives.</p>
+      <p>That share is low in most firms: in at least a quarter of the <span class="nw">47,212 firm-years</span> no executive is a woman, the median is 11%, and three in four stay at or below 22%.</p>
+      <p class="caveat">What the measure cannot see: it records gender, not differences in values, experience or ways of thinking (footnote 2), and gender is one dimension among many; ethnic, cultural, educational and age diversity are left to future work (Section 6.2).</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="01-question.html#s2">← Return to the main path</a>
+        <button class="btn" type="button" data-next>Next: the five practices&nbsp;→</button>
+      </div>
+      <p class="note">Diversity: Refinitiv’s percentage of female executive members (Appendix A). Table 3: mean 0.134, first quartile 0, median 0.111, third quartile 0.222, maximum 1. The board-and-executives drawing is illustrative.</p>
+    </div>
+    <div class="stage still">
+      <p class="stage-title">Same firm, two tables <span class="tag">illustrative</span></p>
+      <div class="fig" id="two-tables"></div>
+      <p class="stage-title">Share of women among executives, <span class="nw">47,212 firm-years</span></p>
+      <div class="fig" id="d-strip"></div>
+      <p class="legend"><span><i class="sq normal"></i>middle half of firm-years</span><span><i class="ln far"></i>average</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Which five practices count as inclusion?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Counting D&amp;I · 2 of 2</p>
+      <h2>Inclusion is five practices, counted</h2>
+      <p>Following Dey and co-authors (2023), the paper counts which of five practices a firm reports and divides by five. Three firm-years in four report at most two.</p>
+      <p>A list of policies is not the same as feeling included: the paper sees what firms disclose, not what employees experience (footnote 7). Employee surveys would be richer but would shrink an international sample. Refinitiv’s own D&amp;I scores were set aside as less transparent and available only from 2016; used as a check, they leave the conclusions unchanged except for a weaker environmental-innovation detour to return on assets (p.&nbsp;13).</p>
+      <p>A property of the average: inclusion varies more than diversity, so the D&amp;I score moves mostly with it.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="03-ingredients.html#s1" data-primary-when="03-ingredients.html">← Return to the main path</a>
+        <button class="btn" type="button" data-prev>← Why executives</button>
+      </div>
+      <p class="note">Section 4.1 and Appendix A. Table 3, inclusion on its 0–1 scale: first quartile 0.2, median 0.4, third quartile 0.4, maximum 1, mean 0.347, standard deviation 0.218 (diversity 0.142). Table 4: correlation of the D&amp;I score with inclusion 0.861, with diversity 0.621.</p>
+    </div>
+    <div class="stage still">
+      <ul class="facts">
+        <li><b>1</b>A diversity target</li>
+        <li><b>2</b>A diversity and equal-opportunity policy</li>
+        <li><b>3</b>An employee resource group</li>
+        <li><b>4</b>Day-care services</li>
+        <li><b>5</b>A board diversity policy</li>
+      </ul>
+      <p class="stage-title">Practices reported, <span class="nw">47,212 firm-years</span></p>
+      <div class="fig" id="i-strip"></div>
+      <p class="legend"><span><i class="sq normal"></i>middle half of firm-years</span><span><i class="ln far"></i>average</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* a quartile strip: whisker from minimum to maximum, box from first to third quartile, median line, blue average tick */
+function quartiles(box, q, ticks, fmt, aria) {
+  var E = Explore, S = E.svg, T = E.text;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var L = 10, R = 14, H = 84, y = 30;
+    function X(v) { return L + (W - L - R) * (v - ticks[0]) / (ticks[ticks.length - 1] - ticks[0]); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': aria }, box);
+    ticks.forEach(function (v, i) {
+      S('line', { x1: X(v), x2: X(v), y1: y + 20, y2: y + 25, 'class': 'axis' }, root);
+      T(root, X(v), y + 40, fmt(v), { 'text-anchor': i === 0 ? 'start' : i === ticks.length - 1 ? 'end' : 'middle' });
+    });
+    S('line', { x1: X(q.min), x2: X(q.max), y1: y, y2: y, 'class': 'axis zero' }, root);
+    S('rect', { x: X(q.q1) - 1, y: y - 10, width: Math.max(2, X(q.q3) - X(q.q1) + 2), height: 20, 'class': 'band-normal', stroke: 'var(--muted)' }, root);
+    S('line', { x1: X(q.med), x2: X(q.med), y1: y - 10, y2: y + 10, stroke: 'var(--text)', 'stroke-width': 2 }, root);
+    S('line', { x1: X(q.mean), x2: X(q.mean), y1: y - 15, y2: y + 15, 'class': 'far', 'stroke-width': 2.5 }, root);
+    T(root, X(q.med), y - 17, 'median ' + fmt(q.med), { 'text-anchor': 'start', 'class': 'label halo' });
+    T(root, X(q.max), y - 17, 'max ' + fmt(q.max), { 'text-anchor': 'end', 'class': 'halo' });
+  }, { min: 280, max: 620 });
+}
+
+/* ---------- slide 1: a diverse board beside an all-male executive team (illustrative), then Table 3 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('two-tables');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 150, w = W / 2;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Illustration: a board of ten with four women next to an executive team of six with no women.' }, box);
+    E.seats(root, w / 2, 62, Math.min(70, w / 2 - 30), 30, 10, 4, null);
+    E.seats(root, w + w / 2, 62, Math.min(52, w / 2 - 30), 30, 6, 0, null);
+    T(root, w / 2, 136, 'Board: 4 women of 10', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, w + w / 2, 136, 'Executives: none of 6', { 'text-anchor': 'middle', 'class': 'label' });
+  }, { min: 300, max: 560 });
+  quartiles(document.getElementById('d-strip'), { min: 0, q1: 0, med: 0.111, q3: 0.222, max: 1, mean: 0.134 }, [0, 0.25, 0.5, 0.75, 1],
+    function (v) { return Math.round(v * 100) + '%'; },
+    'Share of women among executives across 47,212 firm-years: first quartile 0%, median 11%, third quartile 22%, maximum 100%, mean 13%.');
+})();
+
+/* ---------- slide 2: practices reported (Table 3, inclusion times five) ---------- */
+quartiles(document.getElementById('i-strip'), { min: 0, q1: 1, med: 2, q3: 2, max: 5, mean: 1.735 }, [0, 1, 2, 3, 4, 5],
+  function (v) { return String(Math.round(v)); },
+  'Number of the five inclusion practices reported, across 47,212 firm-years: first quartile 1, median 2, third quartile 2, maximum 5, mean 1.7.');
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>An exchange that is also a bank · Trading Stranded Assets on FTX</title>
+<meta name="description" content="Side path of an explorable explanation of Galati, Webb and Webb, Trading Stranded Assets on FTX: why a crypto exchange holds its customers' coins, and what FTT was really worth.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-bank.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-stranded-assets/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why does an exchange hold your coins?">
+  <div class="inner">
+    <p class="kicker">Side path · An exchange that is also a bank · 1 of 2</p>
+    <h2>An exchange that is also a bank</h2>
+    <div class="two">
+      <div>
+        <p>Buy a share in London or New York and the exchange never touches your money. A broker keeps your account; the exchange only matches orders.</p>
+        <p>FTX did it all in one place: it matched orders, kept your account, turned dollars into coins and held those coins, as a bank holds deposits. So a halt on withdrawals could strand customers’ money while trading carried on.</p>
+        <p>Add its own token, FTT, and a sister trading firm, Alameda Research, and the paper sees an exchange, broker, dealer, token issuer and hedge fund rolled into one, with little of the oversight a stock exchange faces.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What was FTT really worth?&nbsp;→</button>
+          <a class="btn return-link" href="01-stranded.html#s2" data-primary-when="01-stranded.html">← Return to the main path</a>
+        </div>
+        <p class="note">Section 1 (p. 1) and Section 3 (pp. 4–5). Alameda Research was founded in 2017; FTX in 2019, co-founded by Sam Bankman-Fried and Gary Wang (p. 4, Appendix A).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Show</span><span class="seg" id="bank-kind"></span></div>
+        <div class="fig" id="bank-chart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What was FTT really worth?">
+  <div class="inner">
+    <p class="kicker">Side path · An exchange that is also a bank · 2 of 2</p>
+    <h2>FTT seems to have been priced as if all of it could be sold</h2>
+    <div class="two">
+      <div>
+        <p>FTT gave holders perks on FTX and promised that its supply would shrink through regular “burns”, destroyed tokens, much like a share buyback. Its market value rose from $0.54 billion at the start of 2021 to $9.61 billion that September.</p>
+        <p>Around 6 November 2022 the tokens actually on the market were worth about $3 billion, while the “fully diluted” value, counting every FTT in existence, was about $8 billion. The paper suggests the gap was tokens FTX kept off the market while valuing them as if they could be sold at market prices.</p>
+        <p>Customers could not tell how much FTX could pay back, and FTX could not tell how many would ask: the paper’s picture of a bank run driven by what nobody could see.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-stranded.html#s2">← Return to the main path</a>
+        </div>
+        <p class="note">Burns and market values: Section 3 (p. 5) and footnote 11. The run: Section 2 (p. 3). Alameda’s side, from the CoinDesk article of 2 November 2022 that Appendix A cites: at 30 June 2022 it held over $6 billion in FTT-related assets ($3.66 billion of unlocked FTT, $2.16 billion of “FTT collateral”, $292 million of locked FTT); all FTT in circulation was put at $5.1 billion.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="ftt-chart"></div>
+        <p class="legend"><span><i class="sq ftx"></i>market value</span><span><svg class="sw" viewBox="0 0 16 10" aria-hidden="true"><path d="M0 4L4 0M0 9L9 0M4 10L14 0M9 10L16 3M14 10L16 8"/><rect x=".5" y=".5" width="15" height="9"/></svg>valued, but not on the market</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-stranded-assets/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: a stock market against FTX (Sections 1 and 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('bank-chart'), kind = 'stock';
+  function boxed(g, x, y, w, h, title, sub, cls) {
+    S('rect', { x: x, y: y, width: w, height: h, rx: 3, 'class': cls || 'box' }, g);
+    T(g, x + 10, y + 19, title, { 'class': 'strong' });
+    if (sub) T(g, x + 10, y + 36, sub, {});
+  }
+  /* a straight arrow, its head pointing along the line: down when stacked on a phone, right on a laptop */
+  function arrow(g, x1, y1, x2, y2) {
+    if (x1 === x2) {
+      S('line', { x1: x1, y1: y1, x2: x2, y2: y2 - 2, 'class': 'arrow-line' }, g);
+      S('path', { d: 'M' + (x2 - 4) + ',' + (y2 - 8) + ' L' + x2 + ',' + y2 + ' L' + (x2 + 4) + ',' + (y2 - 8), 'class': 'arrow-line' }, g);
+      return;
+    }
+    S('line', { x1: x1, y1: y1, x2: x2 - 2, y2: y2, 'class': 'arrow-line' }, g);
+    S('path', { d: 'M' + (x2 - 8) + ',' + (y2 - 4) + ' L' + x2 + ',' + y2 + ' L' + (x2 - 8) + ',' + (y2 + 4), 'class': 'arrow-line' }, g);
+  }
+  function draw(W) {
+    box.innerHTML = '';
+    var H = 300, narrow = W < 500;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': kind === 'stock'
+      ? 'A stock market: you trade through a broker, who keeps your account and holds your money; the exchange only matches orders.'
+      : 'FTX: one firm that matches orders, keeps your account, holds your coins and issues its own token, FTT, closely tied to the trading firm Alameda Research. The exit for withdrawals is barred.' }, box);
+    var g = S('g', { 'class': 'fade' }, root);
+    if (kind === 'stock') {
+      var bw = narrow ? W - 2 : (W - 60) / 3, bh = 48;
+      if (narrow) {
+        boxed(g, 1, 10, bw, bh, 'You', 'place an order');
+        arrow(g, W / 2, 10 + bh, W / 2, 10 + bh + 30);
+        boxed(g, 1, 10 + bh + 32, bw, bh + 14, 'Your broker', 'keeps your account');
+        T(g, 11, 10 + bh + 32 + 52, 'and holds your money', {});
+        arrow(g, W / 2, 10 + 2 * bh + 46, W / 2, 10 + 2 * bh + 76);
+        boxed(g, 1, 10 + 2 * bh + 78, bw, bh, 'The exchange', 'matches orders, nothing more');
+      } else {
+        boxed(g, 1, 100, bw, 58, 'You', 'place an order');
+        arrow(g, bw + 4, 129, bw + 28, 129);
+        boxed(g, bw + 30, 90, bw, 78, 'Your broker', 'keeps your account');
+        T(g, bw + 40, 142, 'and holds your money', {});
+        arrow(g, 2 * bw + 33, 129, 2 * bw + 57, 129);
+        boxed(g, 2 * bw + 59, 100, bw - 1, 58, 'The exchange', 'matches orders');
+      }
+      T(g, 0, narrow ? H - 30 : 214, 'Separate firms, each with its own job and its own rules.', { 'class': 'label' });
+      T(g, 0, narrow ? H - 12 : 232, 'Your money never sits at the exchange.', {});
+    } else {
+      var fx = narrow ? 1 : W * 0.3, fw = narrow ? W - 2 : W * 0.7 - 2, fy = narrow ? 70 : 20, fh = narrow ? 156 : 184;
+      var fillUrl = E.hatch(root, 'hatch-line');
+      if (narrow) {
+        boxed(g, 1, 4, W * 0.42, 44, 'You', '');
+        S('rect', { x: W * 0.2 - 12, y: 52, width: 24, height: 12, fill: fillUrl }, g);
+        S('rect', { x: W * 0.2 - 12, y: 52, width: 24, height: 12, fill: 'none', stroke: 'var(--ftx)', 'stroke-width': 1.2 }, g);
+        T(g, W * 0.2 + 18, 62, 'withdrawals barred', { 'class': 'label' });
+      } else {
+        boxed(g, 1, 90, W * 0.2, 58, 'You', 'an account');
+        S('line', { x1: fx - 16, y1: 119, x2: W * 0.2 + 5, y2: 119, 'class': 'arrow-line', 'stroke-dasharray': '3 3' }, g);
+        S('path', { d: 'M' + (W * 0.2 + 12) + ',115 L' + (W * 0.2 + 4) + ',119 L' + (W * 0.2 + 12) + ',123', 'class': 'arrow-line' }, g);
+        S('rect', { x: fx - 14, y: 101, width: 12, height: 36, fill: fillUrl }, g);
+        S('rect', { x: fx - 14, y: 101, width: 12, height: 36, fill: 'none', stroke: 'var(--ftx)', 'stroke-width': 1.2 }, g);
+        T(g, 1, 170, 'withdrawals:', {});
+        T(g, 1, 185, 'barred', { 'class': 'label' });
+      }
+      S('rect', { x: fx, y: fy, width: fw, height: fh, rx: 3, 'class': 'box' }, g);
+      T(g, fx + 12, fy + 22, 'FTX', { 'class': 'strong' });
+      [['market', 'matches orders'], ['broker', 'keeps your account'], ['vault', 'holds your coins'], ['issuer', 'its own token, FTT']].forEach(function (r, i) {
+        var y = fy + 48 + i * (narrow ? 28 : 34);
+        S('rect', { x: fx + 12, y: y - 15, width: fw - 24, height: narrow ? 24 : 28, rx: 3, 'class': 'surface' }, g);
+        T(g, fx + 22, y + 2, r[0], { 'class': 'label' });
+        T(g, fx + 92, y + 2, r[1], {});
+      });
+      var ay = fy + fh + 20;
+      S('line', { x1: fx + fw / 2, x2: fx + fw / 2, y1: fy + fh, y2: ay + 2, 'class': 'ghost' }, g);
+      boxed(g, fx + fw / 2 - 110, ay + 2, 220, 44, 'Alameda Research', 'trading firm, same founder', 'box');
+    }
+  }
+  var redraw = E.fit(box, draw, { min: 300, max: 600 });
+  E.seg(document.getElementById('bank-kind'), [['stock', 'A stock market'], ['ftx', 'FTX']], 'stock', function (k) { kind = k; redraw(); }, 'Show');
+})();
+
+/* ---------- slide 2: FTT's market value (Section 3, p. 5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('ftt-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 480, lab = narrow ? 0 : 150, rowH = narrow ? 58 : 50, MAX = 10, H = 3 * rowH + 48, xMax = W - lab - 70;
+    function X(v) { return lab + xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'FTT market value: 0.54 billion dollars on 1 January 2021; 9.61 billion on 10 September 2021; around 6 November 2022 about 3 billion on the market against about 8 billion fully diluted, a gap of about 5 billion.' }, box);
+    var fillUrl = E.hatch(root, 'hatch-line');
+    [0, 2, 4, 6, 8, 10].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: 0, y2: H - 22, 'class': v ? 'grid' : 'axis' }, root);
+      if (!narrow || v % 4 === 0) T(root, X(v), H - 6, '$' + v + 'bn', { 'text-anchor': 'middle' });
+    });
+    var rows = [['1 January 2021', 0.54, 0, '$0.54bn'], ['10 September 2021', 9.61, 0, '$9.61bn, its peak'], ['around 6 November 2022', 3, 5, '≈ $3bn traded · ≈ $8bn in all']];
+    rows.forEach(function (r, i) {
+      var y = i * rowH + (narrow ? 18 : 6);
+      if (narrow) T(root, 0, y - 4, r[0], { 'class': 'label' });
+      else T(root, 0, y + 15, r[0], { 'class': 'label' });
+      S('rect', { x: X(0), y: y, width: X(r[1]) - X(0), height: 20, 'class': 'ftx-fill' }, root);
+      if (r[2]) {
+        S('rect', { x: X(r[1]), y: y, width: X(r[1] + r[2]) - X(r[1]), height: 20, fill: fillUrl }, root);
+        S('rect', { x: X(r[1]), y: y, width: X(r[1] + r[2]) - X(r[1]), height: 20, fill: 'none', stroke: 'var(--ftx)', 'stroke-width': 1.2 }, root);
+        T(root, X(0), y + 38, narrow ? '≈ $3bn traded + ≈ $5bn held back = ≈ $8bn' : '≈ $3bn on the market + ≈ $5bn held back = ≈ $8bn fully diluted', { 'class': 'strong halo' });
+      }
+      if (i < 2) {
+        if (X(r[1]) + 6 + E.textW(r[3]) > W) T(root, narrow ? W : X(r[1]), y - 4, r[3], { 'text-anchor': 'end', 'class': 'strong' });
+        else T(root, X(r[1]) + 6, y + 15, r[3], { 'class': 'strong' });
+      }
+    });
+  }, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

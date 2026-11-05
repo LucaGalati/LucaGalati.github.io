@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Did it pay? · A Network-Based MTD Approach to Portfolio Optimization</title>
+<meta name="description" content="Deck 3 of an explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: a bet on twelve contests against the classic recipe, the other columns of the paper's tables, its Model Confidence Set, and what to take away.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .mcs { border-collapse: collapse; font-family: var(--sans); font-size: .86rem; margin: .2rem 0 .8rem; width: 100%; max-width: 36rem; }
+  .slide .two .closer { font-size: 1.12rem; }
+  .mcs th, .mcs td { padding: .38em .55em; text-align: left; border-bottom: 1px solid var(--border); }
+  .mcs th { font-weight: 500; color: var(--muted); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+  .mcs td:first-child { font-family: var(--serif); font-size: .98rem; }
+  .mcs td.v span { display: inline-block; min-width: 3.6em; padding: .08em .45em; border: 1px solid var(--muted); border-radius: 3px; text-align: center; }
+  .mcs tr.base td.v span { border-color: var(--base); border-width: 1.5px; }
+  .mcs td.v.out span { border-style: dashed; color: var(--muted); }
+  .mcs td.v.out::after { content: "out"; margin-left: .45em; font-size: .78em; color: var(--muted); }
+  .mcs-key { font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: -.3rem 0 .9rem; }
+  .mcs-key span { display: inline-block; padding: 0 .4em; border: 1px solid var(--muted); border-radius: 3px; margin-right: .3em; }
+  .mcs-key span.d { border-style: dashed; }
+</style>
+</head>
+<body data-deck="03-results.html">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="Did the network beat the classic recipe?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · Did it pay? · 1 of 4</p>
+    <h2>Place your bet: twelve contests</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The score is the <strong>Sharpe ratio</strong>: average return per unit of risk, with risk measured by volatility and the risk-free rate set to zero. Higher is better. Every figure is an average over the rolling windows, out of sample.</p>
+        <p>Four network rules in three markets make twelve contests against the classic recipe. <strong>How many did the network rules win?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="12" aria-pressed="false">All twelve</button>
+          <button class="btn" type="button" data-bet="half" aria-pressed="false">About half</button>
+          <button class="btn" type="button" data-bet="few" aria-pressed="false">Only a few</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="ct-chart"></div>
+        <p class="legend"><span><i class="dt hi"></i>network rule beat the classic recipe</span><span><i class="dt hollow-hi"></i>it did not</span></p>
+      </div>
+      <div class="t">
+        <p id="ct-verdict" aria-live="polite"></p>
+        <div class="actions" id="ct-next" hidden><button class="btn primary" type="button" data-next>See the other columns&nbsp;→</button></div>
+        <p class="note" id="ct-note" hidden>Sharpe ratios out of sample, main measure (the extended Piraveenan et al. 2010): Tables 4, 5 and 6. The tally matches Table A5, panel B; against the correlation-network benchmark it is also seven of twelve (panel A).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What do the other columns show?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · Did it pay? · 2 of 4</p>
+    <h2>Return, volatility and size, side by side</h2>
+    <div class="two">
+      <div>
+        <p>Pick a market and a yardstick. Blue marks the two baselines; each gold arrow runs from the classic recipe’s score to a network rule’s.</p>
+        <p>The Sharpe ratio is one column of the paper’s tables; three more stand beside it. Switch to volatility: in every market the six portfolios sit within 0.005 of each other. Expected returns range more widely, on the Dow from 0.102 to 0.152. On average every portfolio holds three to seven stocks.</p>
+        <p>The authors read the higher Sharpe ratios of the network rules as better diversification: portfolios built from stocks with different roles in the network.</p>
+        <p class="door-row"><a class="door" href="06-checks.html#s2">And on the days they were fitted&nbsp;to?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>How sure can we be?&nbsp;→</button></div>
+        <p class="note">Tables 4, 5 and 6, main measure; the ranges are computed from them. Every figure is an average over the rolling windows, out of sample. The authors’ reading: pages 9–10.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Market</span><span class="seg" id="bd-mkt"></span></div>
+        <div class="ctl"><span>Yardstick</span><span class="seg" id="bd-y"></span></div>
+        <div class="fig" id="bd-chart"></div>
+        <p class="legend"><span><i class="dt base"></i>classic recipe</span><span><i class="dt hollow"></i>correlation network</span><span><i class="ln hi"></i>network rule, from the classic score</span></p>
+        <p class="readout" id="board-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How sure can we be?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · Did it pay? · 3 of 4</p>
+    <h2>Seventeen of eighteen stay among the best</h2>
+    <div class="two">
+      <div>
+        <p>Are these gaps more than luck? The paper checks its Sharpe ratios with a <strong>Model Confidence Set</strong> (Hansen, Lunde and Nason, 2011): the group of portfolios that cannot be told apart from the best one at the 95% level.</p>
+        <p>Seventeen of the eighteen are in, the two baselines among them; only Out–Out on the FTSE 100 drops out. The authors read this as a sign that their findings are robust: almost every network rule, in every market, stays in the best-performing set.</p>
+        <p class="door-row"><a class="door" href="06-checks.html#s1" data-return="next">Two more checks: does a second measure&nbsp;agree?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+        <p class="note">Asterisks and MCS p-values in the Sharpe ratio column of Tables 4, 5 and 6; the authors’ reading, page 10. Out–Out on the FTSE 100 has p = 0.010.</p>
+      </div>
+      <div class="stage">
+        <table class="mcs" aria-label="Sharpe ratios out of sample and membership of the 95% Model Confidence Set">
+          <thead><tr><th>Portfolio</th><th>Dow Jones 30</th><th>Euro Stoxx 50</th><th>FTSE 100</th></tr></thead>
+          <tbody>
+            <tr class="base"><td>Classic recipe</td><td class="v"><span>0.805</span></td><td class="v"><span>0.687</span></td><td class="v"><span>0.912</span></td></tr>
+            <tr class="base"><td>Correlation network</td><td class="v"><span>0.820</span></td><td class="v"><span>0.676</span></td><td class="v"><span>0.925</span></td></tr>
+            <tr><td>In–In</td><td class="v"><span>1.059</span></td><td class="v"><span>0.759</span></td><td class="v"><span>0.894</span></td></tr>
+            <tr><td>In–Out</td><td class="v"><span>0.872</span></td><td class="v"><span>0.692</span></td><td class="v"><span>0.976</span></td></tr>
+            <tr><td>Out–In</td><td class="v"><span>0.907</span></td><td class="v"><span>0.686</span></td><td class="v"><span>0.913</span></td></tr>
+            <tr><td>Out–Out</td><td class="v"><span>0.774</span></td><td class="v"><span>0.664</span></td><td class="v out"><span>0.895</span></td></tr>
+          </tbody>
+        </table>
+        <p class="mcs-key"><span>0.805</span>among the best at 95% · <span class="d">0.895</span>left out · blue frame: the two baselines</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · Did it pay? · 4 of 4</p>
+    <h2>What to take away</h2>
+    <div class="two">
+      <div>
+        <p class="closer">In these tests, more often than not. Over twenty years and three markets, tilting the classic recipe by where each stock sits in a network of who leads whom gave a higher average Sharpe ratio in seven of twelve tries, and in all three markets when In–Out links were avoided.</p>
+        <ol class="takeaways">
+          <li>The MTD model turns days of ups and downs into a directed, weighted network of who leads whom, which a correlation network cannot show.</li>
+          <li>Minimizing In–Out, which favours stocks with clearly different roles, gave the most consistent gains over both yardsticks; Out–Out never helped. The authors read this as better diversification.</li>
+          <li>The portfolios are small, three to seven stocks on average, with almost the same annual volatility under every rule.</li>
+        </ol>
+      </div>
+      <div>
+        <p class="caveat">The Model Confidence Set keeps seventeen of the eighteen portfolios, both baselines included, among the best at the 95% level. With the appendix’s second scoring method, In–Out wins in two markets of three. And in the authors’ words, results become “slightly less consistent” as markets grow and the network gets more complex.</p>
+        <p class="prompt">A question to take with you: in the ten-stock network, which pair other than D and G ranks in the top ten of 45 under all four rules at once? Two do.</p>
+        <div class="actions">
+          <a class="btn primary" href="02-portfolio.html#s2">Back to the ten stocks&nbsp;→</a>
+          <a class="btn" href="../../publication/mtd-portfolio-optimization/">Read the paper</a>
+          <button class="btn" type="button" data-map>Map</button>
+        </div>
+        <p class="note">Takeaways: Tables 4–6 and A5; pages 9–12. The authors’ next steps: following shocks along the arrows, other asset classes, larger networks (page 12). The pairs are computed from the Section 2.6 example with equation (9). Side paths you may have skipped: <a href="04-correlation.html#s1">what correlation misses</a> · <a href="05-excess.html#s1">an arrow judged without itself</a> · <a href="06-checks.html#s1">two more checks</a> · <a href="07-limits.html#s1">what the test leaves out</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/mtd-portfolio-optimization/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* the paper's out-of-sample results, main measure: [expected return, annual volatility, Sharpe ratio, stocks held]
+   Tables 4 (Dow Jones 30), 5 (Euro Stoxx 50) and 6 (FTSE 100) */
+var RES = {
+  dj: { name: 'Dow Jones 30', n: 28, cl: [0.103, 0.214, 0.805, 3.23], co: [0.102, 0.212, 0.820, 3.38],
+        ii: [0.152, 0.210, 1.059, 3.07], io: [0.121, 0.215, 0.872, 3.03], oi: [0.118, 0.212, 0.907, 3.24], oo: [0.103, 0.215, 0.774, 3.2] },
+  sx: { name: 'Euro Stoxx 50', n: 46, cl: [0.048, 0.215, 0.687, 4.16], co: [0.045, 0.215, 0.676, 4.12],
+        ii: [0.068, 0.214, 0.759, 3.9], io: [0.050, 0.216, 0.692, 3.78], oi: [0.051, 0.216, 0.686, 4.07], oo: [0.048, 0.215, 0.664, 4.08] },
+  ft: { name: 'FTSE 100', n: 78, cl: [0.099, 0.197, 0.912, 6.59], co: [0.099, 0.196, 0.925, 6.61],
+        ii: [0.080, 0.195, 0.894, 6.47], io: [0.106, 0.194, 0.976, 6.31], oi: [0.096, 0.197, 0.913, 6.56], oo: [0.096, 0.197, 0.895, 6.49] }
+};
+var RULES = [['ii', 'In–In'], ['io', 'In–Out'], ['oi', 'Out–In'], ['oo', 'Out–Out']];
+
+/* ---------- slide 1: twelve contests, a bet, then the grid fills ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, MK = ['dj', 'sx', 'ft'];
+  var betBox = document.getElementById('bet'), box = document.getElementById('ct-chart'), verdict = document.getElementById('ct-verdict'),
+      nextBox = document.getElementById('ct-next'), note = document.getElementById('ct-note');
+  var st = { bet: null, k: 0 }, timer = null, geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var lw = W < 440 ? 58 : 74, cw = (W - lw) / 3, ch = 54, top = 70, H = top + 4 * ch + 6;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Twelve contests, four network rules by three markets, Sharpe ratio against the classic recipe. Won: In–In on the Dow and the Euro Stoxx 50; In–Out in all three; Out–In on the Dow and the FTSE 100. Lost: In–In on the FTSE 100, Out–In on the Euro Stoxx 50, Out–Out in all three. Seven of twelve.' }, box);
+    MK.forEach(function (m, c) {
+      var x = lw + cw * c;
+      T(root, x + cw / 2, top - 23, W < 440 ? ['Dow', 'Euro Stoxx', 'FTSE'][c] : RES[m].name, { 'text-anchor': 'middle', 'class': 'label' });
+      T(root, x + cw / 2, top - 8, 'classic ' + RES[m].cl[2].toFixed(3), { 'text-anchor': 'middle' });
+    });
+    RULES.forEach(function (r, i) { T(root, 0, top + i * ch + ch / 2 + 4, r[1], { 'class': 'label' }); });
+    geo = { lw: lw, cw: cw, ch: ch, top: top, W: W, H: H, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    var k = 0, wins = 0;
+    RULES.forEach(function (r, i) {
+      MK.forEach(function (m, c) {
+        var x = geo.lw + geo.cw * c, y = geo.top + i * geo.ch, shown = k < st.k;
+        var v = RES[m][r[0]][2], cl = RES[m].cl[2], won = v > cl;
+        S('rect', { x: x + 2, y: y + 2, width: geo.cw - 4, height: geo.ch - 4, 'class': shown && won ? 'win' : 'surface-fill' }, g);
+        if (shown) {
+          if (won) wins++;
+          S('circle', { cx: x + 15, cy: y + geo.ch / 2, r: 6.5, 'class': won ? 'hi-fill' : 'hollow-hi' }, g);
+          T(g, x + 29, y + geo.ch / 2 - 3, v.toFixed(3), { 'class': 'strong big' });
+          T(g, x + 29, y + geo.ch / 2 + 14, (won ? '+' : '−') + Math.abs(v - cl).toFixed(3) + (geo.cw > 150 ? ' vs classic' : ''));
+        }
+        k++;
+      });
+    });
+    if (st.k > 0) T(g, 0, 16, 'Network wins: ' + wins + ' of ' + Math.min(12, st.k), { 'class': 'big label' });
+    if (st.k === 0) T(g, geo.lw + geo.cw * 1.5, geo.top + 2 * geo.ch + 4, 'Place your bet to fill the grid', { 'text-anchor': 'middle', 'class': 'placeholder halo' });
+  }
+  var redraw = E.fit(box, build, { min: 290, max: 620 });
+  var LEAD = {
+    '12': 'Fewer: the network rules won seven of the twelve contests. ',
+    'half': 'You called it: seven of twelve, just over half. ',
+    'few': 'More than that: seven of twelve. '
+  };
+  var TAIL = 'One rule won everywhere: minimizing In–Out beat the classic recipe in all three markets, 0.872 against 0.805 on the Dow, 0.692 against 0.687 on the Euro Stoxx 50 and 0.976 against 0.912 on the FTSE 100. Out–Out lost everywhere. Two contests were settled by a thousandth: Out–In lost on the Euro Stoxx 50 (0.686 against 0.687) and won on the FTSE 100 (0.913 against 0.912).';
+  function finish() { if (timer) { clearInterval(timer); timer = null; } st.k = 12; draw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-contests', bet);
+    if (!animate || E.still) { finish(); return; }
+    if (timer) clearInterval(timer);
+    verdict.textContent = ''; nextBox.hidden = true; note.hidden = true; st.k = 0; draw();
+    timer = setInterval(function () { if (st.k >= 12) { finish(); return; } st.k++; draw(); }, 140);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-contests');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+})();
+
+/* ---------- slide 2: the scoreboard, each rule an arrow from the classic score ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var YS = {
+    sh: { i: 2, name: 'Sharpe ratio', lo: 0.6, hi: 1.1, ticks: [0.6, 0.7, 0.8, 0.9, 1.0, 1.1], d: 3 },
+    er: { i: 0, name: 'Expected return', lo: 0.03, hi: 0.16, ticks: [0.04, 0.08, 0.12, 0.16], d: 3 },
+    vo: { i: 1, name: 'Annual volatility', lo: 0.15, hi: 0.25, ticks: [0.15, 0.175, 0.2, 0.225, 0.25], d: 3 },
+    ns: { i: 3, name: 'Stocks held', lo: 0, hi: 7, ticks: [0, 1, 2, 3, 4, 5, 6, 7], d: 2 }
+  };
+  var mk = 'dj', ys = 'sh', box = document.getElementById('bd-chart'), read = document.getElementById('board-read');
+  function build(W) {
+    box.innerHTML = '';
+    var y = YS[ys], R = RES[mk], lw = W < 440 ? 84 : 132, rw = 46, rowH = 30, TOP = 8, H = TOP + 6 * rowH + 44;
+    if (ys === 'ns') { /* stocks held: a scale per market, so the six values do not crowd into one corner */
+      var nv = ['cl', 'co', 'ii', 'io', 'oi', 'oo'].map(function (k) { return R[k][3]; }), lo = Math.floor(Math.min.apply(null, nv)) - 1, hi = Math.ceil(Math.max.apply(null, nv)) + 1;
+      y = { i: 3, name: y.name, lo: lo, hi: hi, ticks: [], d: 2 };
+      for (var t = lo; t <= hi; t++) y.ticks.push(t);
+    }
+    function X(v) { return lw + (W - lw - rw) * (v - y.lo) / (y.hi - y.lo); }
+    var rows = [['cl', 'Classic recipe'], ['co', W < 440 ? 'Correlation' : 'Correlation network']].concat(RULES);
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': R.name + ', ' + y.name + ': ' + rows.map(function (r) { return r[1] + ' ' + R[r[0]][y.i]; }).join(', ') + '.' }, box);
+    y.ticks.forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 38, 'class': 'grid' }, root);
+      T(root, X(v), H - 22, v.toFixed(ys === 'ns' ? 0 : ys === 'vo' ? 3 : (ys === 'sh' ? 1 : 2)), { 'text-anchor': 'middle' });
+    });
+    T(root, (lw + W - rw) / 2, H - 4, y.name + (ys === 'vo' ? ', annual' : ys === 'sh' ? ', risk-free rate zero' : ys === 'ns' ? ', average per window' : ', average over windows'), { 'text-anchor': 'middle', 'class': 'label' });
+    var xc = X(R.cl[y.i]);
+    S('line', { x1: xc, x2: xc, y1: TOP, y2: H - 38, 'class': 'base-line', 'stroke-dasharray': '3 3', 'stroke-width': 1 }, root);
+    rows.forEach(function (r, k) {
+      var cy = TOP + k * rowH + rowH / 2, v = R[r[0]][y.i], x = X(v);
+      T(root, 0, cy + 4, r[1], { 'class': k < 2 ? 'label' : 'strong' });
+      if (k === 0) S('circle', { cx: x, cy: cy, r: 6, 'class': 'base-fill' }, root);
+      else if (k === 1) S('circle', { cx: x, cy: cy, r: 5.5, 'class': 'hollow-base' }, root);
+      else {
+        var dx = x - xc, dir = dx >= 0 ? 1 : -1, len = Math.abs(dx);
+        if (len > 7) {
+          S('line', { x1: xc, y1: cy, x2: x - dir * 7, y2: cy, 'class': 'hi-line' }, root);
+          S('path', { d: 'M' + x.toFixed(1) + ',' + cy + ' l' + (-dir * 9) + ',-5 l0,10 Z', 'class': 'hi-fill' }, root);
+        } else S('circle', { cx: x, cy: cy, r: 4.5, 'class': 'hi-fill' }, root);
+      }
+      var lab = v.toFixed(y.d), right = k < 2 || x >= xc;
+      T(root, right ? Math.max(x, xc) + 9 : Math.min(x, xc) - 9, cy + 4, lab, { 'text-anchor': right ? 'start' : 'end', 'class': 'label halo' });
+    });
+  }
+  function readout() {
+    var y = YS[ys], R = RES[mk], cl = R.cl[y.i];
+    var parts = RULES.map(function (r) { return r[1] + ' ' + R[r[0]][y.i].toFixed(y.d); }).join(', ');
+    var vals = ['cl', 'co', 'ii', 'io', 'oi', 'oo'].map(function (k) { return R[k][y.i]; });
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+    var tail = ys === 'vo' ? ' All six within ' + (hi - lo).toFixed(3) + ' of each other.' :
+      ys === 'ns' ? ' Out of ' + R.n + ' stocks in the index.' :
+      ys === 'er' ? ' Spread from ' + lo.toFixed(3) + ' to ' + hi.toFixed(3) + '.' :
+      ' Higher than the classic recipe: ' + RULES.filter(function (r) { return R[r[0]][2] > cl; }).map(function (r) { return r[1]; }).join(', ') + '.';
+    read.innerHTML = '<strong>' + R.name + ', ' + (ys === 'sh' ? y.name : y.name.toLowerCase()) + ':</strong> classic recipe ' + cl.toFixed(y.d) + ', correlation network ' + R.co[y.i].toFixed(y.d) + '; ' + parts + '.' + tail;
+  }
+  var redraw = E.fit(box, build, { min: 290, max: 620 });
+  E.seg(document.getElementById('bd-mkt'), [['dj', 'Dow Jones 30'], ['sx', 'Euro Stoxx 50'], ['ft', 'FTSE 100']], mk, function (k) { mk = k; redraw(); readout(); }, 'Market');
+  E.seg(document.getElementById('bd-y'), [['sh', 'Sharpe'], ['er', 'Return'], ['vo', 'Volatility'], ['ns', 'Stocks held']], ys, function (k) { ys = k; redraw(); readout(); }, 'Yardstick');
+  readout();
+})();
+</script>
+</body>
+</html>

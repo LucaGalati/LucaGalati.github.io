@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checking the result · The Information Content of Delayed Block Trades</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and De Blasis, The information content of delayed block trades in cryptocurrency markets: what the comparison accounts for, where the evidence stops, and a second method that agrees.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: .4rem 2.6rem; }
+  @media (min-width: 820px) { .cols { grid-template-columns: 1fr 1fr; } }
+  .cols h3 { font-family: var(--sans); font-size: .74rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin: .2rem 0 .3rem; }
+  .cols .facts { font-size: .95rem; }
+</style>
+</head>
+<body data-deck="06-doubts.html">
+<lg-sitebar><noscript><a href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How do they keep the comparison fair?">
+  <div class="inner">
+    <p class="kicker">Side path · Checking the result · 1 of 2</p>
+    <h2>How the paper keeps the comparison fair</h2>
+    <p class="lead">The experiment compares 5 to 10 BTC trades with blocks over 10 BTC, before and after 6 December 2019. Here is what the paper does to keep that comparison fair, and where its evidence stops.</p>
+    <div class="cols">
+      <div>
+        <h3>What the paper accounts for</h3>
+        <ul class="facts">
+          <li>A control group whose rules never changed, plus a second one of 5 to 10 BTC book trades; without the second, the results are almost identical.</li>
+          <li>Swings that hit everyone: a before-and-after marker, trading volume, volatility, a marker for COVID-19 and the 2020 bubble, bitcoin’s own return. The estimate barely moves.</li>
+          <li>Windows from 5 to 35 trades around each block: similar results.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Where the evidence stops</h3>
+        <ul class="facts">
+          <li>Around execution and print together, the decline is significant for sells but not for buys; the paper finds less evidence for buys there.</li>
+          <li>Nobody’s identity is in the data, so why the shift happened is the authors’ reading.</li>
+          <li>One exchange, one coin, one rule change.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn primary return-link" href="03-experiment.html#s3">← Return to the main path</a>
+      <button class="btn" type="button" data-next>A second method&nbsp;→</button>
+    </div>
+    <p class="note">Section 3.3, footnotes 14 to 16, Tables 5 and 6, pages 12–13.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Does a different method agree?">
+  <div class="inner">
+    <p class="kicker">Side path · Checking the result · 2 of 2</p>
+    <h2>A second method agrees: book buying moves the price, block buying barely</h2>
+    <div class="two">
+      <div>
+        <p>Instead of following single trades, the authors cut the two years into one-minute slices and use Hasbrouck’s (1991) vector autoregression to ask how bitcoin’s price responds, over the next ten minutes, to an extra $1 million of net buying through book trades, or through blocks.</p>
+        <p>Ten minutes on, book buying has lifted the price by about 0.2%; block buying by about 0.02%, with a band that includes zero. Split by period, the response to block buying fades to nothing before the change and leaves a small mark after it, while the response to book buying is the larger one before.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-footprints.html#s3">← Return to the main path</a>
+          <button class="btn" type="button" data-prev>← How the comparison is kept fair</button>
+        </div>
+        <p class="note">Section 4.5, Figs. 5 and 6; values read off the figures, so approximate. One-minute slices because blocks are too rare for finer ones (footnote 19).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Price response after ten minutes to $1 million of net buying <span class="tag">read off Fig. 5</span></p>
+        <div class="fig" id="var"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/delayed-block-trades-crypto/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: the impulse responses after ten minutes, approximately as in Fig. 5 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [label, response, band low, band high, class]: values read off Fig. 5 at ten minutes, approximate */
+  var ROWS = [['Book buying', 0.20, 0.14, 0.24, 'book-fill'], ['Block buying', 0.02, -0.17, 0.21, 'blk-fill']];
+  var LO = -0.2, HI = 0.3, box = document.getElementById('var');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var L = 8, R = 16, rowH = 78, TOP = 8, H = TOP + ROWS.length * rowH + 28;
+    function X(v) { return L + (W - L - R) * (v - LO) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Cumulative price response after ten minutes to one million dollars of net buying, read approximately off the paper’s Fig. 5: about 0.2 percent for book buying, with a band from about 0.14 to 0.24; about 0.02 percent for block buying, with a band from about minus 0.17 to 0.21 that includes zero.' }, box);
+    [-0.2, -0.1, 0, 0.1, 0.2, 0.3].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 22, 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, X(v), H - 6, E.pct(v, 1, true), { 'text-anchor': 'middle' });
+    });
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH, yb = y + 42;
+      T(root, L, y + 14, r[0], { 'class': 'label' });
+      var x0 = X(0), x1 = X(r[1]);
+      S('rect', { x: Math.min(x0, x1), y: yb - 8, width: Math.max(2, Math.abs(x1 - x0)), height: 16, 'class': r[4] }, root);
+      /* the band runs just above its bar, never across it, so both ends show on the blue bar and the gold one */
+      var yw = yb - 14;
+      S('path', { d: 'M' + X(r[2]) + ',' + (yw - 4) + ' V' + (yw + 4) + ' M' + X(r[2]) + ',' + yw + ' H' + X(r[3]) + ' M' + X(r[3]) + ',' + (yw - 4) + ' V' + (yw + 4), 'class': 'bracket' }, root);
+      var lab = 'about ' + (r[1] < 0.1 ? r[1].toFixed(2) : r[1].toFixed(1)) + '%', lx = X(r[3]) + 6;
+      if (lx + E.textW(lab) > W) T(root, X(r[3]), yb + 24, lab, { 'text-anchor': 'end', 'class': 'strong halo' });
+      else T(root, lx, yb + 4, lab, { 'class': 'strong' });
+    });
+  }, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

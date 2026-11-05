@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A fingerprint in the digits · Proportional Appropriation and Financial Statement Quality</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2024): Benford's law for first digits, why the paper uses them as a stand-in for steered results, what rounding a result up to a round figure does to them, and the four groups of city-owned companies before the rule.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .ctl output { color: var(--text); font-weight: 500; }
+  .score td.n, .score th.n { text-align: right; }
+  .score.groups { margin-top: 0; }
+  .score.groups td:first-child { font-family: var(--sans); font-size: .84rem; }
+  .score .pv { display: block; font-size: .78em; color: var(--muted); }
+  @media (max-width: 640px) { .score.groups { font-size: .78rem; } .score.groups th { font-size: .72rem; letter-spacing: .03em; } .score.groups th, .score.groups td { padding-left: .3em; padding-right: .3em; } }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-digits.html">
+<lg-sitebar><noscript><a href="../../publication/proportional-appropriation-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What should the first digits look like?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · A fingerprint in the digits · <span class="nw">1 of 3</span></p>
+      <h2>Nine digits, one law</h2>
+      <p>Take the net incomes in a stack of company accounts and look only at their first digits. You might expect each of the nine about equally often. Instead, about 30% start with a 1 and fewer than 5% with a 9.</p>
+      <p>This is <strong>Benford’s law</strong>. It holds for numbers that range over many sizes and are built from other numbers, as a net income is: revenues, less costs, less taxes. Accounting data fit it well.</p>
+      <p>Here is why that helps. A first digit cannot show a loss turned into a profit, but numbers someone has adjusted often stray from the law, so the paper takes the quality of the digits as a stand-in for steering. And a good year, which scales results up, changes how many are losses but, under mild conditions, not their first digits.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>What does adjusting do to them?&nbsp;→</button>
+        <a class="door" href="05-why-digits.html#s1" data-return="next">Why would digits follow a law?&nbsp;→</a>
+      </div>
+    </div>
+    <div class="stage">
+      <p class="stage-title">How often each first digit appears, by Benford’s law</p>
+      <div class="fig" id="dig-chart"></div>
+      <p class="note">The paper’s equation (1): the share of first digit d is log<sub>10</sub>(1 + 1/d); every share on this slide is computed from it. Net income as a sum of items, deviations as a sign of low data quality, and data quality as a proxy for earnings management: p. 351. A good year and the digits: note 5 (p. 359), after Berger and Hill (2015). The dashed line is 1/9, what nine equally likely digits would give.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What does rounding up do to the digits?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · A fingerprint in the digits · <span class="nw">2 of 3</span></p>
+      <h2>Rounding up leaves a mark</h2>
+      <p>Which adjustments leave a mark? The best known is rounding up: a company that made €99,873 may prefer to report €100,000, and accounting research has long found managers doing just that. Look at the first digit: a 9 becomes a 1.</p>
+      <p>Try it on 2,320 invented results that follow the law. The readout scores the gap with the paper’s χ² test; its p-value is the chance of a gap at least this large if nobody had touched the numbers. Below 0.10 is a warning, below 0.01 strong evidence.</p>
+      <p>Remember this shape: more 1s, fewer 9s. You will soon test real accounts for it. The toy cannot say how much rounding real data would hide.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Did the digits pass before the rule?&nbsp;→</button></div>
+      <p class="note">Toy: 2,320 invented results between €100 and €10 million, as many as the paper has per period for its 100% owned companies; “just short” means within 5% below a power of ten. χ²: the paper’s equation (2), each squared gap between observed and expected share divided by the law’s share, summed, times the number of results; the toy’s p-value uses 8 degrees of freedom. The €99,873 example and the rounding reading: p. 352, 355, after Carslaw (1988) and Thomas (1989).</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="rnd-chart"></div>
+      <p class="legend"><span><i class="sq far"></i>results left as they were</span><span><i class="sq near"></i>results rounded up to a 1</span><span><i class="sq was"></i>before rounding</span><span><i class="bench"></i>Benford’s law</span></p>
+      <label class="ctl" for="rnd-round">Round up results just short of a round figure: <output id="rnd-round-v"></output></label>
+      <input type="range" id="rnd-round" min="0" max="100" step="5" value="0">
+      <p class="readout" id="rnd-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did the digits pass before the rule?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · A fingerprint in the digits · <span class="nw">3 of 3</span></p>
+      <h2>Before the rule, every group passes</h2>
+      <p>The paper sorts the companies by the stake of their largest municipal owner and tests each group twice: before the rule, 2010–2014, and under it, 2015–2019.</p>
+      <p>Besides χ² it runs a second test, on the excess <strong>mean absolute deviation (MAD)</strong>: the average gap between the observed shares and the law, less the gap that chance alone leaves with that many results, so that a large group does not fail on trifles.</p>
+      <p>Before the rule, every group passes both tests. That clean start matters: it says the data suit the method, and that whatever shows up later was not there before.</p>
+    </div>
+    <div>
+      <table class="score groups">
+        <thead><tr><th>Largest city stake</th><th class="n">Companies</th><th class="n">Results per period</th><th class="n">Before the rule</th></tr></thead>
+        <tbody>
+          <tr><td>Up to 50%</td><td class="n">1,285</td><td class="n">6,425</td><td class="n">passes <span class="pv">p 0.77 and 0.68</span></td></tr>
+          <tr><td>Over 50%</td><td class="n">835</td><td class="n">4,175</td><td class="n">passes <span class="pv">p 0.25 and 0.42</span></td></tr>
+          <tr class="sub"><td>of which 100% owned</td><td class="n">464</td><td class="n">2,320</td><td class="n">passes <span class="pv">p 0.74 and 0.85</span></td></tr>
+          <tr><td>All companies</td><td class="n">2,120</td><td class="n">10,600</td><td class="n">passes <span class="pv">p 0.59 and 0.66</span></td></tr>
+        </tbody>
+      </table>
+      <div class="actions">
+        <a class="btn primary" href="03-verdict.html#s1">Under the rule: place your bet&nbsp;→</a>
+        <a class="door" href="06-sample.html#s1">Where do the 2,120 companies come from?&nbsp;→</a>
+      </div>
+      <p class="note">Groups and periods: p. 349. Excess MAD: equations (3) and (4), after Cerqueti and Lupi (2021). The p-values, χ² test first, excess-MAD test second: Table 2, pre-period columns; Figure 4 shows the same fit. Results per period: Table 2; companies: Table 1’s observations ÷ 10 years, computed.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/proportional-appropriation-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- shared: a first-digit bar chart with Benford's line (equation 1) ---------- */
+function digitFrame(E, box, W, H, YMAX, aria) {
+  var S = E.svg, T = E.text, L = 40, R = 10, TOP = 22, B = 36;
+  function X(d) { return L + (W - L - R) * (d - 0.5) / 9; }
+  function Y(v) { return TOP + (H - TOP - B) * (1 - v / YMAX); }
+  var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': aria }, box);
+  for (var v = 0; v <= YMAX + 1e-9; v += 0.1) {
+    S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+    T(root, L - 6, Y(v) + 4, Math.round(v * 100) + '%', { 'text-anchor': 'end' });
+  }
+  for (var d = 1; d <= 9; d++) T(root, X(d), H - B + 16, String(d), { 'text-anchor': 'middle', 'class': 'label' });
+  T(root, (L + W - R) / 2, H - 4, 'First digit', { 'text-anchor': 'middle' });
+  return { root: root, X: X, Y: Y, bw: Math.min(34, (W - L - R) / 9 * 0.62), TOP: TOP, L: L };
+}
+function benfordLine(E, g, f) {
+  var pts = E.BENFORD.map(function (b, i) { return f.X(i + 1).toFixed(1) + ',' + f.Y(b).toFixed(1); });
+  E.svg('polyline', { points: pts.join(' '), 'class': 'bench' }, g);
+  E.BENFORD.forEach(function (b, i) { E.svg('circle', { cx: f.X(i + 1), cy: f.Y(b), r: 3, 'class': 'bench-dot' }, g); });
+}
+
+/* ---------- slide 1: Benford's shares (equation 1), a static picture ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('dig-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var f = digitFrame(E, box, W, 250, 0.35, 'Benford’s law: the share of numbers starting with each digit, from 30.1% for 1 down to 4.6% for 9, against 11.1% each if all digits were equally likely.');
+    var all = W >= 460, y9 = f.Y(1 / 9);
+    /* the equal-shares line goes under the bars, so the bar labels sit on top of it */
+    S('line', { x1: f.L, x2: f.X(9) + f.bw / 2 + 4, y1: y9, y2: y9, 'class': 'ghost' }, f.root);
+    E.BENFORD.forEach(function (v, i) {
+      var d = i + 1;
+      S('rect', { x: f.X(d) - f.bw / 2, y: f.Y(v), width: f.bw, height: f.Y(0) - f.Y(v), 'class': 'far-fill' }, f.root);
+      if (all || d === 1 || d === 9) T(f.root, f.X(d), f.Y(v) - 6, (v * 100).toFixed(1) + '%', { 'text-anchor': 'middle', 'class': d === 1 || d === 9 ? 'strong halo' : 'halo' });
+    });
+    T(f.root, f.X(all ? 6.2 : 6.4), y9 - 18, 'if every digit were equally likely: 11.1%', { 'text-anchor': 'middle', 'class': 'halo' });
+  }, { min: 290, max: 600 });
+})();
+
+/* ---------- slide 2: round up 2,320 invented results (toy, seed 12) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var N = 2320, rand = E.rng(12), items = [];
+  for (var i = 0; i < N; i++) {
+    var v = Math.pow(10, 2 + 5 * rand()), m = v / Math.pow(10, Math.floor(Math.log(v) / Math.LN10));
+    items.push({ d: Math.floor(m), near: m >= 9.5, r: rand() });
+    rand(); rand(); /* two spare draws per result fix this set of invented results (untouched χ² = 4.83) */
+  }
+  var honest = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  items.forEach(function (it) { honest[it.d - 1]++; });
+  var box = document.getElementById('rnd-chart'), rs = document.getElementById('rnd-round'), read = document.getElementById('rnd-read');
+  var rv = document.getElementById('rnd-round-v');
+  var f = null;
+  function state() {
+    var s = +rs.value / 100, keep = [0, 0, 0, 0, 0, 0, 0, 0, 0], moved = [0, 0, 0, 0, 0, 0, 0, 0, 0], nr = 0;
+    items.forEach(function (it) {
+      if (it.near && it.r < s) { moved[0]++; nr++; } else keep[it.d - 1]++;
+    });
+    var counts = keep.map(function (k, j) { return k + moved[j]; });
+    return { keep: keep, moved: moved, counts: counts, nr: nr, x: E.chi2(counts) };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    f = digitFrame(E, box, W, 252, 0.35, 'First-digit shares of 2,320 invented results against Benford’s law; rounding up results just short of a round figure moves them from digit 9 to digit 1.');
+    f.dyn = S('g', {}, f.root);
+    draw();
+  }
+  function verdictOf(p) { return p < 0.01 ? 'strong evidence against the law' : p < 0.10 ? 'a warning' : 'the digits pass'; }
+  function draw() {
+    var st = state(), p = E.chi2p(st.x);
+    rv.textContent = rs.value + '% of them';
+    rs.setAttribute('aria-valuetext', rs.value + ' percent of results just short of a round figure');
+    read.innerHTML = (st.nr ? th(st.nr) + ' of 2,320 rounded up. ' : 'No result touched. ') + 'Digit 1: ' + (st.counts[0] / N * 100).toFixed(1) + '%, digit 9: ' + (st.counts[8] / N * 100).toFixed(1) + '%. ' +
+      '<strong class="nw">χ² = ' + st.x.toFixed(2) + ', p ' + (p < 0.001 ? 'below 0.001' : '= ' + E.pText(p)) + '</strong>: ' + verdictOf(p) + '.';
+    if (!f) return;
+    var g = f.dyn; g.innerHTML = '';
+    for (var j = 0; j < 9; j++) {
+      var x = f.X(j + 1) - f.bw / 2, k = st.keep[j] / N, mv = st.moved[j] / N, h = honest[j] / N;
+      S('rect', { x: x, y: f.Y(k), width: f.bw, height: f.Y(0) - f.Y(k), 'class': 'far-fill' }, g);
+      if (mv > 0) S('rect', { x: x, y: f.Y(k + mv), width: f.bw, height: f.Y(k) - f.Y(k + mv), 'class': 'near-fill' }, g);
+      if (Math.abs(k + mv - h) * N >= 1) S('rect', { x: x - 2.5, y: f.Y(h), width: f.bw + 5, height: f.Y(0) - f.Y(h), 'class': 'was' }, g);
+    }
+    benfordLine(E, g, f);
+    [0, 8].forEach(function (j) { T(g, f.X(j + 1) + (j ? -2 : 2), f.Y(Math.max(st.counts[j] / N, E.BENFORD[j], honest[j] / N)) - 8, (st.counts[j] / N * 100).toFixed(1) + '%', { 'text-anchor': 'middle', 'class': 'strong halo' }); });
+  }
+  rs.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 290, max: 600 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the hour was worth · Reporting Delays and the Information Content of Off-Market Trades</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Frino, Galati and Gerace, Reporting Delays and the Information Content of Off-Market Trades: prices around the handshake, a bet on what happened at publication, the comparison with blocks that kept their hour, and what the delay was worth.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-evidence.html">
+<lg-sitebar><noscript><a href="../../publication/off-market-reporting-delays/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Did the rule change show at the handshake?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What the hour was worth · 1 of 5</p>
+    <h2>At the handshake, the jump looks the same</h2>
+    <div class="two">
+      <div>
+        <p>Start where earlier research looked: the moment a block is done. Gemmill (1996) did this for blocks on the London Stock Exchange under different publication rules, and found no simple effect of the rules.</p>
+        <p>Here too the jump at the block, step 0, is about the same size before the change as after it, and the next step takes much of it back. Each point is an <strong>excess return</strong>: the average move at that step beyond the price’s usual drift.</p>
+        <p>Look only here and the hour seems not to matter. But this data set also records when each block was published.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Look at publication&nbsp;→</button></div>
+        <p class="note">Table 3 and Figure 1 (p. 2058–2060), means in percent with t statistics as printed; steps numbered as in Table 3. Usual drift: the benchmark return of Gemmill (1996), as described in the note to Table 3.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Blocks</span><div class="seg" id="ex-dir"></div></div>
+        <div class="fig" id="ex-chart"></div>
+        <p class="legend"><span><i class="ln"></i>before 19 Feb 2018</span><span><i class="ln after"></i>from 19 Feb 2018</span></p>
+        <label class="ctl" for="ex-step">Walk through the steps</label>
+        <input type="range" id="ex-step" min="-5" max="5" step="1" value="0">
+        <p class="readout" id="ex-read" aria-live="polite"></p>
+        <p class="def"><strong>t</strong> says how many standard errors a mean lies from zero; beyond about 2, chance is an unlikely explanation. Stars mark the 10% (*), 5% (**) and 1% (***) levels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What happened at publication?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What the hour was worth · 2 of 5</p>
+    <h2>Place your bet: what happened at publication?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>On 19 February 2018 blocks of <span class="num">500</span> to <span class="num">3,328</span> lots lost the dark hour. Before, the 30 minutes either side of publication came an hour after the handshake. From then on publication <em>was</em> the handshake, so the same window now held the trade itself.</p>
+        <p>Story one says these blocks still carry their news, now all of it inside the window; story two says the news stopped coming. <strong>Around publication, how big was their lasting move after the change, compared with before?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="more" aria-pressed="false">Bigger: the news now arrives at once</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">About the same: same trades, same news</button>
+          <button class="btn" type="button" data-bet="less" aria-pressed="false">Much smaller: the news stopped coming</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="bet-chart"></div>
+        <p class="legend"><span><i class="hs gold"><svg viewBox="0 0 16 10" aria-hidden="true"><rect x=".5" y=".5" width="15" height="9"/><path d="M-1 10 L9 0 M5 10 L15 0 M11 10 L21 0"/></svg></i>before 19 Feb 2018: with the hour</span><span><i class="sq exp-line"></i>from 19 Feb 2018: published at once</span></p>
+      </div>
+      <div class="t">
+        <p id="bet-verdict" aria-live="polite"></p>
+        <div class="actions" id="bet-next" hidden>
+          <button class="btn primary" type="button" data-next>Did the whole market change?&nbsp;→</button>
+        </div>
+        <p class="note" id="bet-note" hidden>Table 4, panels A and B (p. 2059–2061), in percent; 1 bp = 0.01%. Blocks: 903 buy-like and 865 sell-like before, 698 and 693 after. From 19 February 2018 these blocks had to be reported as soon as they were done (p. 2054, 2055–2056), so the window of equation (2) also spans the trade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Was it just the market changing?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What the hour was worth · 3 of 5</p>
+    <h2>Large blocks kept their hour, and most of their news</h2>
+    <div class="two">
+      <div>
+        <p>Other things moved during the year too: the EU’s MiFID II rules, in force since January 2018, were bedding in, and the mix of traders may have shifted. Blocks above <span class="num">3,328</span> lots lived through all of it and kept their hour. Had their lasting move collapsed as well, the rule change would not be the explanation.</p>
+        <p>It did not: theirs stayed roughly where it was, while that of the smaller blocks vanished (buy-like) or halved (sell-like). Take the larger blocks’ change away from the smaller blocks’ and what is left is the part the rule change can claim.</p>
+        <p>A wider window, from 90 minutes before publication to 30 after, also takes in the handshake; there the gap grows.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>So what was the hour worth?&nbsp;→</button>
+          <a class="door" href="05-doubts.html#s1">Which blocks made the sample, and how alike are the two groups?&nbsp;→</a>
+        </div>
+        <p class="note">Tables 4 and 5, panels A and B (p. 2060–2062), in bp, with t statistics as printed; changes and net change computed from them. Panel C reports the changes of the 500–3,328-lot blocks as significant at the 1% level in both tables. The net change is arithmetic on the printed means and carries no test. MiFID II: footnote 3.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span class="pair"><span>Blocks</span><span class="seg" id="cmp-dir"></span></span><span class="pair"><span>Window</span><span class="seg" id="cmp-win"></span></span><span class="pair"><span>Control’s change</span><span class="seg" id="cmp-net"></span></span></div>
+        <div class="fig" id="cmp-chart"></div>
+        <p class="legend"><span><i class="ln exp"></i>500–3,328 lots: lost the hour</span><span><i class="ln ctl"></i>above 3,328 lots: kept it</span><span id="cmp-cf-key"><i class="dt exp-ring"></i>had they moved like the control</span></p>
+        <p class="readout" id="cmp-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="So what was the hour worth?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What the hour was worth · 4 of 5</p>
+    <h2>The hour slows the news, and may bring it in</h2>
+    <div class="pairs">
+      <div class="card mute-card">
+        <p class="tagline">What the hour costs</p>
+        <p>For an hour after a delayed block is done, the market trades without knowing of it. When the block is finally published the price can move again, as Frino (2021) found: news the market could have had sooner. Seen this way, a delay makes prices less efficient by exactly its own length.</p>
+      </div>
+      <div class="card key-card">
+        <p class="tagline">What the hour may buy</p>
+        <p>When the hour went, the lasting move of blocks of <span class="num">500</span> to <span class="num">3,328</span> lots vanished for buy-like blocks and halved for sell-like ones, while larger blocks that kept the hour changed little. The authors’ reading: traders with private information were “squeezed out” of the upstairs market, the private market for blocks. Without the hour they turn to costlier ways of hiding, to blocks large enough to keep it, or they stay away. The paper does not observe which.</p>
+      </div>
+    </div>
+    <p>Behind this sits an old argument by Grossman and Stiglitz (1980): if prices gave away every piece of information at once, nobody would pay to find it out, and prices would end up knowing less. The paper finds its results consistent with that view. A little darkness may be part of the price of informative prices.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>What to take away&nbsp;→</button>
+      <a class="door" href="04-secrecy.html#s1" data-return="next">Why does information have to pay for itself? A toy&nbsp;→</a>
+    </div>
+    <p class="note">p. 2054, 2058, 2061–2062. “Squeezed out” is the paper’s phrase; the three destinations are named on p. 2054 and 2061.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · What the hour was worth · 5 of 5</p>
+    <h2>What to take away</h2>
+    <p class="closer">Better informed, possibly, is the paper’s answer: the hour holds news back, but without it much of that news may never reach prices through blocks. Once blocks of <span class="num">500</span> to <span class="num">3,328</span> lots lost the hour, their lasting move around publication fell from about <span class="num">5 bp</span> to nothing measurable for buy-like blocks and halved for sell-like ones; blocks that kept it changed little.</p>
+    <ol class="takeaways">
+      <li>Around the handshake the jump was the same size under both rules; only at publication did the rule change show.</li>
+      <li>Blocks that lost the hour carried much less lasting news. The paper reads this as informed traders leaving, an inference from prices, not from watching traders.</li>
+      <li>A delay cuts both ways: it holds news back for an hour, and may bring in the informed trading that makes prices informative. That rests on one contract, one exchange, one year, and a control group of 64 to 79 much larger blocks per cell.</li>
+    </ol>
+    <p class="prompt">Open questions: where did the informed traders go? And when the threshold was lowered to <span class="num">2,048</span> lots in September 2020, did the news come back to blocks of that size?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-go="3">Play with the comparison again&nbsp;→</button>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Side paths you may have skipped: <a href="03-block.html#s1">inside a block trade</a> · <a href="04-secrecy.html#s1">why secrecy can pay</a> · <a href="05-doubts.html#s1">the sample and its limits</a> Sources: abstract, Tables 1 and 3–5, footnote 18, p. 2061–2062.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/off-market-reporting-delays/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the event study around the handshake (Table 3, Figure 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, plus = E.plus, fmt = E.fmt;
+  var STEPS = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+  var D = {
+    p: { b: [0.047, 0.049, 0.048, 0.022, 0.050, 0.141, -0.048, 0.043, 0.047, 0.047, 0.043],
+         bt: [16.90, 14.77, 15.72, 16.87, 15.07, 36.64, -13.79, 13.00, 14.52, 14.26, 15.44],
+         a: [-0.003, 0.015, 0.004, 0.010, -0.001, 0.170, -0.103, 0.000, 0.002, 0.001, 0.001],
+         at: [0.42, 1.66, 0.21, 1.83, -0.74, 12.92, -13.80, 0.14, 0.04, 1.07, 1.65] },
+    d: { b: [0.002, 0.011, 0.005, -0.002, 0.026, -0.144, 0.153, 0.010, 0.014, 0.018, 0.016],
+         bt: [1.04, 2.32, 0.84, -0.48, 5.59, -24.54, 24.17, 2.44, 1.31, 5.09, 4.71],
+         a: [-0.004, 0.002, -0.009, -0.007, -0.002, -0.146, 0.138, -0.010, -0.001, 0.003, -0.006],
+         at: [-1.97, 0.95, -1.61, -3.91, -0.33, -29.01, 31.20, -2.73, -1.54, 2.41, -2.28] }
+  };
+  var YMIN = -0.2, YMAX = 0.2;
+  var box = document.getElementById('ex-chart'), slider = document.getElementById('ex-step'), read = document.getElementById('ex-read');
+  var dir = 'p', shown = null, raf = null, geo = null;
+  function stars(t) { t = Math.abs(t); return t >= 2.576 ? '***' : t >= 1.96 ? '**' : t >= 1.645 ? '*' : ''; }
+  function target() { return D[dir].b.concat(D[dir].a); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 238, 280)), L = 46, R = 12, TOP = 32, B = 40;
+    function X(i) { return L + (W - L - R) * i / 10; }
+    function Y(v) { return TOP + (H - TOP - B) * (YMAX - v) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Mean excess return around the execution of blocks, steps minus 5 to plus 5, before and after the rule change. Buy-like blocks: plus 0.141 and plus 0.170 percent at the block, then minus 0.048 and minus 0.103 at the next step. Sell-like blocks: minus 0.144 and minus 0.146 at the block, then plus 0.153 and plus 0.138.' }, box);
+    [-0.2, -0.1, 0, 0.1, 0.2].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%', { 'text-anchor': 'end' });
+    });
+    STEPS.forEach(function (s, i) { T(root, X(i), H - B + 17, (s > 0 ? '+' : s < 0 ? '−' : '') + Math.abs(s), { 'text-anchor': 'middle', 'class': s === 0 ? 'strong' : '' }); });
+    T(root, (L + W - R) / 2, H - 5, W < 520 ? 'Steps around the block (0)' : 'Steps around the handshake (0 = the block itself)', { 'text-anchor': 'middle' });
+    T(root, L - 40, TOP - 16, W < 520 ? 'Mean excess return, %' : 'Mean excess return, % of the price', { 'class': 'label' });
+    E.alignRange(slider, W, X(0), X(10));
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, B: B, dyn: S('g', {}, root) };
+    render(shown || target());
+  }
+  function render(v) {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, c = +slider.value + 5;
+    g.innerHTML = '';
+    S('line', { x1: X(c), x2: X(c), y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    function series(off, cls, dot) {
+      var pts = [];
+      for (var i = 0; i <= 10; i++) pts.push(X(i).toFixed(1) + ',' + Y(v[off + i]).toFixed(1));
+      S('polyline', { points: pts.join(' '), 'class': cls }, g);
+      for (var j = 0; j <= 10; j++) S('circle', { cx: X(j), cy: Y(v[off + j]), r: j === c ? 5.5 : 3.5, 'class': dot }, g);
+    }
+    series(11, 'after-line', 'hollow-muted');
+    series(0, 'before-line', 'text-fill');
+  }
+  function readout() {
+    var i = +slider.value + 5, s = STEPS[i], d = D[dir];
+    var name = s === 0 ? 'Step 0, the block itself' : 'Step ' + (s > 0 ? '+' : '−') + Math.abs(s);
+    function one(m, t) { var st = stars(t); return '<span class="nw">' + plus(m, 3) + '%</span> <span class="nw">(t ' + fmt(t) + (st ? ', ' + st : ', not significant') + ')</span>'; }
+    read.innerHTML = '<strong>' + name + ' (' + (dir === 'p' ? 'buy-like' : 'sell-like') + ' blocks):</strong> before the change ' + one(d.b[i], d.bt[i]) + '; after it ' + one(d.a[i], d.at[i]) + '.';
+    slider.setAttribute('aria-valuetext', name);
+  }
+  function update() {
+    var to = target();
+    readout();
+    if (!shown || E.still || !geo) { shown = to; render(shown); return; }
+    var from = shown.slice(), t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 420), e = 1 - Math.pow(1 - p, 3);
+      shown = from.map(function (f, k) { return f + (to[k] - f) * e; });
+      render(shown);
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  E.seg(document.getElementById('ex-dir'), [['p', 'Buy-like'], ['d', 'Sell-like']], 'p', function (k) { dir = k; update(); }, 'Blocks');
+  slider.setAttribute('aria-label', 'Step around the handshake, from minus 5 to plus 5');
+  slider.addEventListener('input', function () { readout(); render(shown || target()); });
+  readout();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 2: the bet, answered by Table 4 (experimental blocks, 500-3,328 lots) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* bp, computed from Table 4 (percent x 100): [before, after] */
+  var V = { p: [5.32, 0.14], d: [-4.7, -2.4] }, LAB = { p: ['+5.3 bp', '+0.1 bp'], d: ['−4.7 bp', '−2.4 bp'] };
+  var YMAX = 7;
+  var betBox = document.getElementById('bet'), box = document.getElementById('bet-chart'), verdict = document.getElementById('bet-verdict');
+  var nextBox = document.getElementById('bet-next'), note = document.getElementById('bet-note');
+  var st = { bet: null, k: 0 }, geo = null, raf = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.42, 240, 264)), L = 40, R = 8, TOP = 30, B = 12;
+    function Y(v) { return TOP + (H - TOP - B) * (YMAX - v) / (2 * YMAX); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Lasting price move around publication for blocks of 500 to 3,328 lots. Buy-like: plus 5.3 basis points before the change, plus 0.1 after, not different from zero. Sell-like: minus 4.7 before, minus 2.4 after.' }, box);
+    [-6, -3, 0, 3, 6].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v), { 'text-anchor': 'end' });
+    });
+    T(root, L - 34, 12, W < 520 ? '500–3,328 lots: lasting move, bp' : 'Blocks of 500–3,328 lots: lasting move around publication, bp', { 'class': 'label' });
+    var gw = (W - L - R) / 2, bw = Math.min(58, gw * 0.26);
+    var cx = { p: L + gw * 0.5, d: L + gw * 1.5 };
+    T(root, cx.p, TOP - 6 + 4, 'Buy-like blocks', { 'text-anchor': 'middle', 'class': 'strong' });
+    T(root, cx.d, Y(-YMAX) + 2, 'Sell-like blocks', { 'text-anchor': 'middle', 'class': 'strong' });
+    geo = { Y: Y, W: W, H: H, L: L, R: R, bw: bw, cx: cx, hour: E.hatch(root), dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, bw = geo.bw;
+    g.innerHTML = '';
+    ['p', 'd'].forEach(function (k) {
+      var up = k === 'p';
+      [0, 1].forEach(function (j) {
+        var x = geo.cx[k] + (j === 0 ? -bw - 6 : 6), v = V[k][j] * st.k, y0 = Y(0), y1 = Y(v);
+        var top = Math.min(y0, y1), h = Math.max(1, Math.abs(y1 - y0));
+        T(g, x + bw / 2, up ? y0 + 15 : y0 - 7, j === 0 ? 'before' : 'after', { 'text-anchor': 'middle' });
+        if (st.k === 0) { S('rect', { x: x, y: y0 - 0.5, width: bw, height: 1, 'class': 'exp-edge' }, g); return; }
+        if (j === 0) {
+          S('rect', { x: x, y: top, width: bw, height: h, 'class': 'exp-fill' }, g);
+          S('rect', { x: x, y: top, width: bw, height: h, fill: geo.hour }, g);
+          S('rect', { x: x, y: top, width: bw, height: h, 'class': 'exp-edge' }, g);
+        } else S('rect', { x: x + 1, y: top, width: bw - 2, height: h, 'class': 'exp-out' }, g);
+        if (st.k >= 1) T(g, x + bw / 2, up ? y1 - 7 : y1 + 16, LAB[k][j], { 'text-anchor': 'middle', 'class': 'strong halo' });
+      });
+    });
+    if (st.k === 0) T(g, (geo.L + geo.W - geo.R) / 2, Y(3.6), 'Place your bet to draw the paper’s numbers', { 'text-anchor': 'middle', 'class': 'placeholder' });
+  }
+  var LEAD = {
+    more: 'The opposite. ',
+    same: 'Not so. ',
+    less: 'Yes, much smaller. '
+  };
+  function n(x) { return '<span class="num">' + x + '</span>'; }
+  var TAIL = 'Buy-like blocks fell from ' + n('0.0532%') + ' (about ' + n('5 bp') + ') to ' + n('0.0014%') + ', which cannot be told apart from zero (' + n('t = 0.20') + ', far below 2); sell-like blocks halved, from ' + n('−0.047%') + ' to ' + n('−0.024%') + ', still significant (' + n('t = −3.28') + '). Without the hour, these blocks carried much less lasting news around publication: what story two predicts, and what the paper reads as consistent with informed traders leaving.';
+  function finish() {
+    st.k = 1; draw();
+    verdict.innerHTML = LEAD[st.bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+  }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet', bet);
+    if (!animate || E.still || !geo) { finish(); return; }
+    if (raf) cancelAnimationFrame(raf);
+    if (box.getBoundingClientRect().bottom > window.innerHeight) box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 700);
+      st.k = 1 - Math.pow(1 - p, 3); draw();
+      if (p < 1) raf = requestAnimationFrame(step); else { raf = null; finish(); }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-bet]'); if (!b) return;
+    place(b.getAttribute('data-bet'), true);
+  });
+  E.fit(box, build, { min: 300, max: 640 });
+  var prior = E.load('bet');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+})();
+
+/* ---------- slide 3: experimental against control, before and after (Tables 4 and 5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* bp, computed from panels A and B (percent x 100): e = 500-3,328 lots, c = above 3,328; [before, after], t statistics as printed */
+  var R = {
+    t4: { p: { e: [5.32, 0.14], et: [13.55, 0.20], c: [6.6, 5.08], ct: [6.43, 2.95] },
+          d: { e: [-4.7, -2.4], et: [-9.20, -3.28], c: [-9.4, -9.1], ct: [-4.77, -4.92] } },
+    t5: { p: { e: [7.47, 0.2], et: [13.40, 0.20], c: [10.7, 12.9], ct: [7.86, 5.46] },
+          d: { e: [-8.7, -2.7], et: [-12.73, -2.67], c: [-12.5, -12.5], ct: [-4.91, -5.28] } }
+  };
+  function b1(x) { return (x > 0.049 ? '+' : x < -0.049 ? '−' : '') + Math.abs(x).toFixed(1); }
+  var box = document.getElementById('cmp-chart'), read = document.getElementById('cmp-read'), cfKey = document.getElementById('cmp-cf-key');
+  var cur = { d: 'p', w: 't4', net: false }, shown = null, raf = null, geo = null, W0 = 0;
+  /* drawn values: experimental before, after; control before, after; experimental had it changed like the control */
+  function target() { var r = R[cur.w][cur.d]; return [r.e[0], r.e[1], r.c[0], r.c[1], r.e[0] + (r.c[1] - r.c[0])]; }
+  function build(W) {
+    W0 = W;
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.4, 230, 246)), TOP = 26, B = 40, sign = cur.d === 'p' ? 1 : -1;
+    var xPre = W < 420 ? 74 : 96, xPost = W - (W < 420 ? 74 : 96);
+    function Y(v) { return TOP + (H - TOP - B) * (sign > 0 ? (14 - v) / 14 : -v / 14); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    [0, 5, 10].forEach(function (a) {
+      var v = sign * a;
+      S('line', { x1: 0, x2: W, y1: Y(v), y2: Y(v), 'class': a === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, 0, Y(v) - 4, (v > 0 ? '+' : v < 0 ? '−' : '') + a + ' bp');
+    });
+    S('line', { x1: xPre, x2: xPre, y1: TOP, y2: H - B, 'class': 'axis' }, root);
+    S('line', { x1: xPost, x2: xPost, y1: TOP, y2: H - B, 'class': 'axis' }, root);
+    T(root, xPre, H - B + 17, 'before', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, xPost, H - B + 17, 'after', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, xPre, H - B + 32, 'to 19 Feb 2018', { 'text-anchor': 'middle' });
+    T(root, xPost, H - B + 32, 'from 19 Feb 2018', { 'text-anchor': 'middle' });
+    T(root, W, 12, cur.d === 'p' ? 'Buy-like blocks' : 'Sell-like blocks', { 'text-anchor': 'end', 'class': 'strong' });
+    geo = { Y: Y, xPre: xPre, xPost: xPost, root: root, dyn: S('g', {}, root) };
+    label();
+    render(shown || target());
+  }
+  function label() {
+    cfKey.style.visibility = cur.net ? 'visible' : 'hidden';
+    if (!geo) return;
+    var v = target();
+    function b(x) { return (x < 0 ? 'minus ' : '') + Math.abs(x).toFixed(1); }
+    geo.root.setAttribute('aria-label', (cur.d === 'p' ? 'Buy-like' : 'Sell-like') + ' blocks, lasting price move in basis points, ' +
+      (cur.w === 't4' ? '30 minutes either side of publication' : 'from 90 minutes before publication to 30 after') +
+      ', before and after 19 February 2018. Blocks of 500 to 3,328 lots: ' + b(v[0]) + ' to ' + b(v[1]) + '. Blocks above 3,328 lots: ' + b(v[2]) + ' to ' + b(v[3]) + '.' +
+      (cur.net ? ' Had the smaller blocks changed like the larger ones, they would have ended at ' + b(v[4]) + '; the difference is ' + b(v[1] - v[4]) + '.' : ''));
+  }
+  function render(v) {
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, xa = geo.xPre, xb = geo.xPost;
+    g.innerHTML = '';
+    S('line', { x1: xa, y1: Y(v[2]), x2: xb, y2: Y(v[3]), 'class': 'ctl' }, g);
+    if (cur.net) S('line', { x1: xa, y1: Y(v[0]), x2: xb, y2: Y(v[4]), 'class': 'exp-dash' }, g);
+    S('line', { x1: xa, y1: Y(v[0]), x2: xb, y2: Y(v[1]), 'class': 'exp' }, g);
+    [[xa, v[2], 'ctl-fill'], [xb, v[3], 'ctl-fill'], [xa, v[0], 'exp-fill'], [xb, v[1], 'exp-fill']].forEach(function (p) {
+      S('circle', { cx: p[0], cy: Y(p[1]), r: 5, 'class': p[2] }, g);
+    });
+    var rightV = [v[1], v[3]];
+    if (cur.net) {
+      S('circle', { cx: xb, cy: Y(v[4]), r: 5, 'class': 'exp-ring' }, g);
+      var bx = xb - 12, ya = Y(v[4]), yb = Y(v[1]);
+      if (Math.abs(yb - ya) > 4) {
+        S('path', { d: 'M' + (bx + 4) + ',' + ya.toFixed(1) + ' H' + bx + ' V' + yb.toFixed(1) + ' H' + (bx + 4), 'class': 'exp-bracket' }, g);
+        T(g, bx - 6, (ya + yb) / 2 + 4, 'net ' + b1(v[1] - v[4]) + ' bp', { 'text-anchor': 'end', 'class': 'strong halo' });
+      }
+      rightV.push(v[4]);
+    }
+    var left = E.spread([Y(v[0]) + 4, Y(v[2]) + 4], 15), right = E.spread(rightV.map(function (x) { return Y(x) + 4; }), 15);
+    T(g, xa - 10, left[0], b1(v[0]), { 'text-anchor': 'end', 'class': 'label' });
+    T(g, xa - 10, left[1], b1(v[2]), { 'text-anchor': 'end', 'class': 'label' });
+    rightV.forEach(function (x, i) { T(g, xb + 10, right[i], b1(x), { 'class': i === 2 ? '' : 'label' }); });
+  }
+  function readout() {
+    var r = R[cur.w][cur.d], de = r.e[1] - r.e[0], dc = r.c[1] - r.c[0];
+    function change(d) { return 'change <span class="nw">' + b1(d) + ' bp</span>'; }
+    function pair(m, t) { return '<span class="nw">' + b1(m[0]) + ' → ' + b1(m[1]) + ' bp</span> <span class="nw">(t ' + E.fmt(t[0]) + ' → ' + E.fmt(t[1]) + ')</span>'; }
+    var third = cur.net
+      ? '<strong>Net of the control:</strong> <span class="nw">' + b1(de) + ' − (' + b1(dc) + ')</span> = <strong class="nw">' + b1(de - dc) + ' bp</strong>. Had the smaller blocks changed like the larger ones they would have ended near <span class="nw">' + b1(r.e[0] + dc) + ' bp</span>; they ended at <span class="nw">' + b1(r.e[1]) + ' bp</span>.'
+      : 'Each change also holds whatever moved the whole market; subtract the control’s to take that out.';
+    read.innerHTML = '<span class="line"><strong>Lost the hour (500–3,328 lots):</strong> ' + pair(r.e, r.et) + '; ' + change(de) + '.</span>' +
+      '<span class="line"><strong>Kept it (above 3,328):</strong> ' + pair(r.c, r.ct) + '; ' + change(dc) + '.</span>' +
+      '<span class="line">' + third + '</span>';
+  }
+  function update(rebuild) {
+    var to = target();
+    readout(); label();
+    if (rebuild || !shown || E.still || !geo) { shown = to; if (rebuild && W0) build(W0); else render(shown); return; }
+    var from = shown.slice(), t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 420), e = 1 - Math.pow(1 - p, 3);
+      shown = from.map(function (f, i) { return f + (to[i] - f) * e; });
+      render(shown);
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  E.seg(document.getElementById('cmp-dir'), [['p', 'Buy-like'], ['d', 'Sell-like']], 'p', function (k) { if (raf) cancelAnimationFrame(raf); raf = null; cur.d = k; update(true); }, 'Blocks');
+  E.seg(document.getElementById('cmp-win'), [['t4', '±30 min (Table 4)'], ['t5', '−90 to +30 min (Table 5)']], 't4', function (k) { cur.w = k; update(false); }, 'Window');
+  E.seg(document.getElementById('cmp-net'), [['keep', 'Ignore'], ['net', 'Subtract']], 'keep', function (k) { cur.net = k === 'net'; update(false); }, 'Control’s change');
+  readout(); label();
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+</script>
+</body>
+</html>

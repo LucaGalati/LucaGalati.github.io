@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The tremor · Financial Contagion in Cryptocurrency Exchanges</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Galati, Webb and Webb, Financial Contagion in Cryptocurrency Exchanges: FTT on nine venues, what ties their prices, a bet on the collapse week, the test of FTX’s eight ties, and the tie minute by minute.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-tremor.html">
+<lg-sitebar><noscript><a href="../../publication/ftt-collapse-contagion/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="When an exchange’s own coin collapses, does the damage stay at home?">
+  <div class="inner two text-first">
+    <div>
+      <p class="kicker">An explorable explanation · Galati, Webb&nbsp;&amp;&nbsp;Webb</p>
+      <h1>When an exchange’s own coin collapses, does the damage stay at home?</h1>
+      <p>FTX, a crypto exchange based in the Bahamas, had issued a coin of its own, FTT, which also traded on other exchanges. At 05:59 UTC on 6 November 2022 came the first public report that FTX might be insolvent. Within a week it had stopped trading, and it went bankrupt; for about four days, the letter says, customers could still trade on it but withdraw almost nothing.</p>
+      <p>On FTX, a typical minute moved FTT’s price by about <span class="num">0.10%</span> in the week before the report and by about <span class="num">2.37%</span> in the week after, more than twenty times as much.</p>
+      <p><strong>Did the collapse spread to the other exchanges where FTT traded? And inside FTX, where money could hardly leave, where did it go?</strong></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Start with how exchanges are tied&nbsp;→</button></div>
+    </div>
+    <div class="stage">
+      <p class="stage-title">FTT, minute by minute, on nine venues: eight exchanges and one average</p>
+      <div class="fig" id="seismo"></div>
+      <p class="note">Traced from the letter’s Figure 1 (approximate): one-minute log returns of FTT against Tether, a coin pegged to the US dollar, 31 October to 12 November 2022, each line scaled to its own largest move. CryptoCompare is an average of prices across exchanges (p. 3). Typical move: the standard deviation of one-minute returns on FTX, 0.1039% and 2.3686% (Table 3); ratio computed. Bahamas, bankruptcy and the four days: p. 1; the report: p. 3, footnote 5; last day of trading, 12 November: footnote 4.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How are prices on different exchanges tied?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The tremor · 2 of 5</p>
+    <h2>One coin, many price tags, tied together</h2>
+    <div class="two">
+    <div>
+      <p>Each exchange has its own price for FTT, set by its own buyers and sellers. When two prices drift apart, traders buy where the coin is cheap and sell where it is dear, which pulls them back together. So news that moves FTT on one exchange tends to move it on the others.</p>
+      <p>How closely two exchanges move is measured by a <strong>correlation</strong>: <span class="num">0</span> when their minute-by-minute moves are unrelated, <span class="num">1</span> when they move in lockstep, below <span class="num">0</span> when they lean in opposite directions.</p>
+      <p>Minute by minute, much of each exchange’s movement is its own noise; what two exchanges share is the news. The more of it they share, the higher the correlation. In the collapse week, what would you expect the share to do?</p>
+      <p><strong>Contagion</strong>, in this letter, means these ties tightening when a shock hits.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Place a bet on the collapse week&nbsp;→</button></div>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Two exchanges, sixty invented minutes <span class="tag">toy</span></p>
+      <div class="fig" id="mix-chart"></div>
+      <label class="ctl" for="mix">How much of each minute’s news the two exchanges share</label>
+      <input type="range" id="mix" min="-20" max="100" step="1" value="43">
+      <div class="ctl"><span class="pair"><span>The paper’s week-before ties</span><span class="seg" id="mix-marks"></span></span></div>
+      <p class="readout" id="mix-read" aria-live="polite"></p>
+      <p class="note">Toy: invented minutes, built so that the correlation in the readout is exact. The four marks are correlations of FTT’s one-minute returns in the week before the report (Table 1, panel A). Liquid is a venue the authors think may have had little trading (Appendix).</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Did the ties tighten, loosen, or hold?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The tremor · 3 of 5</p>
+    <h2>Place a bet: tighter, looser, or the same?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The web shows the nine venues and the 36 ties between them in the week before the report, 31 October to 6 November. The thicker the line, the more closely FTT moved on those two venues.</p>
+        <p><strong>In the collapse week, 6 to 12 November, did FTT on the nine venues move more in step, less, or about the same?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="less" aria-pressed="false">Less in step</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">About the same</button>
+          <button class="btn" type="button" data-bet="more" aria-pressed="false">More in step</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig web" id="web"></div>
+        <p class="legend"><span><i class="ln before"></i>week before</span><span><i class="ln after"></i>collapse week</span><span><i class="ln dash"></i>below zero</span><span><i class="ring"></i>an average across exchanges</span></p>
+        <div class="ctl"><span class="pair"><span>Show</span><span class="seg" id="web-week"></span></span><span>Tap a venue to see its ties</span></div>
+        <p class="readout" id="web-read" aria-live="polite">The collapse week draws once you have placed your bet.</p>
+      </div>
+      <div class="t">
+        <p id="web-verdict" aria-live="polite"></p>
+        <div class="actions" id="web-next" hidden>
+          <button class="btn primary" type="button" data-next>Was it more than chance?&nbsp;→</button>
+        </div>
+        <p class="note" id="web-note" hidden>Weekly averages of the minute-by-minute correlation of FTT’s returns between each pair of venues, from the letter’s model (Table 1, panels A and B); line width proportional to the correlation. Average over the 36 pairs computed from Table 1. CryptoCompare is an average across exchanges; AAXE is known only by its data code (footnote 3).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Was the tightening more than chance?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The tremor · 4 of 5</p>
+    <h2>Every tie to FTX tightened, by more than chance would explain</h2>
+    <div class="two">
+    <div>
+      <p>The letter’s test takes FTX’s eight ties one at a time and sets the tie’s average in the week before against its average in the collapse week. It divides the gap by how uncertain the two averages are; the result is the <strong>t&#8209;statistic</strong>. An average over many minutes is pinned down tightly: its uncertainty shrinks with the square root of the number of minutes.</p>
+      <p>The authors chose a strict bar on purpose: with so many minutes, a lenient one would flag almost any gap. The letter’s t&#8209;statistics run from <span class="num">−19</span> to <span class="num">−47</span>, and Table 2 marks all eight as significant. They read this as contagion across every exchange in the sample.</p>
+      <p class="door-row"><a class="door" href="03-test.html#s1">What does a t of −44 mean? Inside the test&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Watch one tie, minute by minute&nbsp;→</button></div>
+      <p class="note">Table 2: weekly means of the tie and the t&#8209;statistics, all eight marked *** (negative because the collapse-week mean is the larger). The strict bar and the reason for it: Section 2. Contagion across all exchanges in the sample: Section 5 (p. 5).</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">FTX’s tie to each venue, weekly average, and the t&#8209;statistic the letter reports</p>
+      <div class="fig" id="dumbbell"></div>
+      <p class="legend"><span><i class="dt before"></i>31 Oct – 6 Nov</span><span><i class="dt after"></i>6 – 12 Nov</span></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What did the tie do, minute by minute?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The tremor · 5 of 5</p>
+    <h2>The tie jumped, sank back, and jumped again</h2>
+    <div class="two">
+    <div>
+      <p>Behind each weekly average is a path. Pick a venue: the line is its tie to FTX, minute by minute, traced from the letter’s Figure 2.</p>
+      <p>About ten hours after the report the ties jumped to between <span class="num">0.7</span> and <span class="num">0.9</span>, sank back, and jumped again over the following days. In the collapse week the tie’s swings were four to ten times wider than in the week before.</p>
+      <p class="door-row"><a class="door" href="03-test.html#s2">Why does the line jump, then slowly sink?&nbsp;→</a></p>
+      <p class="door-row"><a class="door" href="04-care.html#s1">What does a tighter tie show, and what not?&nbsp;→</a></p>
+      <div class="actions"><a class="btn primary" href="02-locked.html#s1">Now look inside FTX&nbsp;→</a></div>
+      <p class="note">Traced from Figure 2 (approximate; first peaks 0.71 to 0.91 near 15:40 on 6 November). Dashed: Table 2’s averages; swings: standard deviations computed from Table 2’s variances. Shaded: the four days of frozen withdrawals (p. 1), placed before the last day of trading (footnote 4; approximate).</p>
+    </div>
+    <div class="stage">
+      <div class="ctl"><span class="pair"><span>FTX and</span><span class="seg" id="tie-venue"></span></span></div>
+      <div class="fig" id="tie-chart"></div>
+      <p class="legend"><span><i class="ln before"></i>before the report</span><span><i class="ln after"></i>after</span><span><i class="ln mean"></i>weekly average</span><span><i class="sq surface"></i>withdrawals frozen (approximate)</span></p>
+      <label class="ctl" for="tie-time">Move through the twelve days</label>
+      <input type="range" id="tie-time" min="9" max="291" step="0.5" value="160">
+      <p class="readout" id="tie-read" aria-live="polite"></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftt-collapse-contagion/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script src="traces.js"></script>
+<script>
+/* venues: key in traces.js, display name, short name */
+var VENUES = [
+  ['FTX', 'FTX', 'FTX'], ['BINANCE', 'Binance', 'Binance'], ['BITFINEX', 'Bitfinex', 'Bitfinex'], ['HITBTC', 'HiTBTC', 'HiTBTC'],
+  ['KUCOIN', 'Kucoin', 'Kucoin'], ['LIQUID', 'Liquid', 'Liquid'], ['POLONIEX', 'Poloniex', 'Poloniex'], ['AAXE', 'AAXE', 'AAXE'],
+  ['CRYPTOCOMPARE', 'CryptoCompare (average)', 'CryptoComp.']
+];
+
+/* ---------- slide 1: nine seismograph traces (Figure 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('seismo'), T0 = 9, T1 = 291;
+  var traces = VENUES.map(function (v) {
+    var tr = E.trace('fig1', v[0]), m = 0;
+    if (tr) for (var i = 0; i < tr.n; i++) m = Math.max(m, Math.abs(tr.lo(i)), Math.abs(tr.hi(i)));
+    return { v: v, tr: tr, max: m };
+  });
+  E.fit(box, function (W, vh) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = narrow ? 76 : 150, R = 4, rowH = E.clamp(Math.round((vh - 300) / 11), 24, 42), TOP = 18, H = TOP + 9 * rowH + 26;
+    function X(t) { return L + (W - L - R) * (t - T0) / (T1 - T0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Minute returns of FTT on nine venues, 31 October to 12 November 2022, traced from the paper’s Figure 1. All nine are nearly flat until the first insolvency report at 05:59 on 6 November; after it every venue swings hard, most violently from 8 November.' }, box);
+    for (var d = 1; d <= 12; d++) {
+      if (narrow && d % 2 === 0) continue;
+      var x = X(24 * d);
+      S('line', { x1: x, x2: x, y1: TOP, y2: H - 22, 'class': 'grid' }, root);
+      T(root, x, H - 6, d === 1 ? '1 Nov' : String(d), { 'text-anchor': 'middle' });
+    }
+    traces.forEach(function (o, k) {
+      var mid = TOP + k * rowH + rowH / 2, half = rowH / 2 - 1.5;
+      T(root, 0, mid + 4, narrow ? o.v[2] : o.v[1], { 'class': k === 0 ? 'strong' : 'label' });
+      if (!o.tr) return;
+      E.envelope(root, o.tr, X, function (v) { return mid - half * v / o.max; }, { from: T0, to: T1, minPx: 1 });
+    });
+    var xc = X(E.CUT);
+    S('line', { x1: xc, x2: xc, y1: 4, y2: H - 22, 'class': 'cutline' }, root);
+    T(root, xc - 5, 11, narrow ? '05:59, 6 Nov' : 'first report, 05:59 UTC, 6 Nov', { 'text-anchor': 'end', 'class': 'label halo' });
+  }, { min: 300, max: 760, useHeight: true });
+})();
+
+/* ---------- slide 2: two invented exchanges and a correlation you set (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 60, seed = 20221106;
+  function rnd() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+  function normal() { return Math.sqrt(-2 * Math.log(1 - rnd())) * Math.cos(2 * Math.PI * rnd()); }
+  function vec(f) { var a = []; for (var i = 0; i < N; i++) a.push(f(i)); return a; }
+  function dot(a, b) { var s = 0; for (var i = 0; i < N; i++) s += a[i] * b[i]; return s; }
+  function center(a) { var m = a.reduce(function (s, x) { return s + x; }, 0) / N; return a.map(function (x) { return x - m; }); }
+  function minus(a, b, k) { return a.map(function (x, i) { return x - k * b[i]; }); }
+  function unit(a) { var n = Math.sqrt(dot(a, a)); return a.map(function (x) { return x / n; }); }
+  /* common news with a few large minutes, and two private streams; made orthogonal so the correlation is exact */
+  var c = center(vec(function (i) { return normal() * (i === 14 || i === 31 || i === 47 ? 3.2 : 1); }));
+  var e1 = center(vec(normal)), e2 = center(vec(normal));
+  c = unit(c); e1 = unit(minus(e1, c, dot(e1, c)));
+  e2 = minus(e2, c, dot(e2, c)); e2 = unit(minus(e2, e1, dot(e2, e1)));
+  var MARKS = [['-4', 'FTX–Liquid −0.04', -0.04], ['9', 'FTX–Bitfinex 0.09', 0.09], ['43', 'FTX–Binance 0.43', 0.43], ['50', 'CryptoCompare–Binance 0.50', 0.50]];
+  var box = document.getElementById('mix-chart'), slider = document.getElementById('mix'), read = document.getElementById('mix-read');
+  var geo = null;
+  var setMark = E.seg(document.getElementById('mix-marks'), MARKS.map(function (m) { return [m[0], m[1]]; }), '43', function (k) { slider.value = k; draw(); }, 'The paper’s week-before ties');
+  function series() {
+    var r = +slider.value / 100, a = Math.sqrt(Math.abs(r)), b = Math.sqrt(1 - Math.abs(r)), s = r < 0 ? -1 : 1;
+    return [c.map(function (x, i) { return a * x + b * e1[i]; }), c.map(function (x, i) { return s * a * x + b * e2[i]; }), r];
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 196, L = 84;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two invented exchanges, sixty minutes each, drawn as ticks up and down from a baseline; the more news they share, the more their ticks line up.' }, box);
+    var rows = [['Exchange A', 50, 'trace-a'], ['Exchange B', 140, 'trace-b']];
+    rows.forEach(function (r) {
+      S('line', { x1: L, x2: W, y1: r[1], y2: r[1], 'class': 'axis' }, root);
+      T(root, 0, r[1] + 4, r[0], { 'class': 'label' });
+    });
+    T(root, L, H - 4, 'minute 1');
+    T(root, W, H - 4, 'minute 60', { 'text-anchor': 'end' });
+    geo = { L: L, W: W, rows: rows, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var sr = series(), r = sr[2];
+    slider.setAttribute('aria-valuetext', 'correlation ' + E.fmt(r));
+    var hit = MARKS.filter(function (m) { return +m[0] === Math.round(r * 100); })[0];
+    setMark(hit ? hit[0] : null);
+    var what = r >= 0.9 ? 'almost lockstep' : r >= 0.5 ? 'strongly tied' : r >= 0.25 ? 'clearly tied, with plenty of minutes going their own way' : r > 0.05 ? 'loosely tied' : r >= -0.05 ? 'unrelated' : 'leaning opposite ways';
+    read.innerHTML = '<strong>Correlation ' + E.fmt(r) + ':</strong> ' + what + '.' + (hit ? ' That is ' + hit[1].replace(/ [−\d.]+$/, '') + ' in the week before the report (Table 1).' : '');
+    if (!geo) return;
+    var g = geo.dyn, step = (geo.W - geo.L) / N;
+    g.innerHTML = '';
+    [0, 1].forEach(function (k) {
+      var y0 = geo.rows[k][1];
+      sr[k].forEach(function (v, i) {
+        var x = geo.L + step * (i + 0.5), h = E.clamp(v * 95, -38, 38);
+        S('line', { x1: x, x2: x, y1: y0, y2: y0 - h, 'class': geo.rows[k][2] }, g);
+      });
+    });
+  }
+  slider.setAttribute('aria-label', 'Share of news in common, as a correlation from −0.20 to 1');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 280, max: 620 });
+})();
+
+/* ---------- slide 3: the web of 36 ties, and a bet (Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, fmt = E.fmt;
+  /* order around the circle, FTX at the top; Table 1 lower triangles in the paper's order */
+  var ORDER = ['FTX', 'BINANCE', 'CRYPTOCOMPARE', 'AAXE', 'KUCOIN', 'HITBTC', 'POLONIEX', 'BITFINEX', 'LIQUID'];
+  var NAME = { FTX: 'FTX', BINANCE: 'Binance', CRYPTOCOMPARE: 'CryptoCompare', AAXE: 'AAXE', KUCOIN: 'Kucoin', HITBTC: 'HiTBTC', POLONIEX: 'Poloniex', BITFINEX: 'Bitfinex', LIQUID: 'Liquid' };
+  var P = ['CRYPTOCOMPARE', 'FTX', 'BINANCE', 'BITFINEX', 'HITBTC', 'KUCOIN', 'LIQUID', 'POLONIEX', 'AAXE'];
+  var A = [[], [0.2929], [0.5043, 0.4282], [0.1444, 0.0931, 0.1521], [0.2452, 0.1577, 0.2628, 0.1152], [0.2726, 0.1722, 0.3203, 0.0871, 0.1826],
+    [-0.0315, -0.0350, 0.0130, -0.0318, 0.0046, 0.0087], [0.1191, 0.1138, 0.1612, 0.0253, 0.1351, 0.1194, 0.0050], [0.3923, 0.2336, 0.4186, 0.0759, 0.2024, 0.2150, -0.0013, 0.1392]];
+  var B = [[], [0.3926], [0.6553, 0.4807], [0.2000, 0.1699, 0.2225], [0.3776, 0.2806, 0.3912, 0.1845], [0.4241, 0.2810, 0.4537, 0.1575, 0.3269],
+    [0.0406, 0.0221, 0.0492, 0.0236, 0.0451, 0.0551], [0.1845, 0.1643, 0.2079, 0.0820, 0.1932, 0.1871, 0.0308], [0.5461, 0.3277, 0.5767, 0.1254, 0.3131, 0.3709, 0.0251, 0.1994]];
+  var PAIRS = [];
+  for (var i = 1; i < 9; i++) for (var j = 0; j < i; j++) PAIRS.push({ a: P[i], b: P[j], pre: A[i][j], post: B[i][j] });
+  var box = document.getElementById('web'), betBox = document.getElementById('bet'), read = document.getElementById('web-read');
+  var verdict = document.getElementById('web-verdict'), nextBox = document.getElementById('web-next'), note = document.getElementById('web-note');
+  var st = { bet: null, week: 'pre', focus: null, k: 0 }, geo = null, raf = null;
+  var setWeek = E.seg(document.getElementById('web-week'), [['pre', 'Week before'], ['post', 'Collapse week']], 'pre', function (k) {
+    if (!st.bet) { setWeek(st.week); return; }
+    st.week = k; morph(k === 'post' ? 1 : 0);
+  }, 'Which week');
+  /* the collapse week stays out of reach until the bet is placed */
+  var postBtn = document.querySelectorAll('#web-week button')[1];
+  postBtn.setAttribute('aria-disabled', 'true'); postBtn.title = 'Place your bet first';
+  /* gold on paper is pale, so collapse-week ties keep a visible minimum width */
+  function width(r) { var lo = st.bet && st.week === 'post' ? 1.8 : 0.8; return r <= 0 ? Math.max(1, lo) : Math.max(lo, r * 11); }
+  var root = null;
+  function build(W0, vh) {
+    var W = Math.round(Math.min(W0, 520, Math.max(300, vh * 0.62)));
+    box.innerHTML = '';
+    var narrow = W < 420, H = Math.round(W * 0.86), cx = W / 2, cy = H / 2 + 2, R = Math.min(W / 2 - (narrow ? 80 : 96), H / 2 - 26);
+    /* a group, not an image: the venues inside are buttons */
+    root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group' }, box);
+    root.style.maxWidth = W + 'px'; root.style.margin = '0 auto';
+    var pos = {};
+    ORDER.forEach(function (k, n) { var a = -Math.PI / 2 + n * 2 * Math.PI / 9; pos[k] = [cx + R * Math.cos(a), cy + R * Math.sin(a), Math.cos(a), Math.sin(a)]; });
+    var ties = S('g', {}, root);
+    PAIRS.forEach(function (p) {
+      p.el = S('line', { x1: pos[p.a][0], y1: pos[p.a][1], x2: pos[p.b][0], y2: pos[p.b][1], 'class': 'tie before' }, ties);
+    });
+    ORDER.forEach(function (k) {
+      var p = pos[k];
+      var g = S('g', { 'class': 'venue', tabindex: '0', role: 'button', 'aria-label': NAME[k] + ': show its ties' }, root);
+      S('circle', { cx: p[0], cy: p[1], r: 7, 'class': 'node' + (k === 'CRYPTOCOMPARE' ? ' index' : '') }, g);
+      var lx = p[0] + p[2] * 14, ly = p[1] + p[3] * 14 + 4, anchor = Math.abs(p[2]) < 0.3 ? 'middle' : p[2] > 0 ? 'start' : 'end';
+      if (Math.abs(p[2]) < 0.3) ly = p[1] + (p[3] < 0 ? -13 : 22);
+      T(g, lx, ly, narrow && k === 'CRYPTOCOMPARE' ? 'CryptoComp.' : NAME[k], { 'text-anchor': anchor, 'class': k === 'FTX' ? 'strong' : 'label' });
+      g.addEventListener('click', function () { toggle(k); });
+      g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(k); } });
+      p.g = g;
+    });
+    geo = { pos: pos };
+    paint();
+  }
+  function paint() {
+    var k = st.k;
+    PAIRS.forEach(function (p) {
+      if (!p.el) return;
+      var r = p.pre + (p.post - p.pre) * k;
+      p.el.setAttribute('stroke-width', width(r).toFixed(2));
+      var cls = 'tie ' + (st.week === 'post' && st.bet ? 'after' : 'before') + (r < 0 ? ' neg' : '');
+      if (st.focus && p.a !== st.focus && p.b !== st.focus) cls += ' dim';
+      p.el.setAttribute('class', cls);
+    });
+    if (geo) ORDER.forEach(function (v) { var c = geo.pos[v].g.querySelector('circle'); c.setAttribute('class', 'node' + (v === 'CRYPTOCOMPARE' ? ' index' : '') + (v === st.focus ? ' on' : '')); });
+    if (root) root.setAttribute('aria-label', 'Nine venues on a circle and the 36 ties between them, line width proportional to the correlation of FTT returns. Week before the report: average 0.16, tightest CryptoCompare and Binance at 0.50.' +
+      (st.bet ? ' Collapse week: every tie tighter, average 0.24, tightest 0.66; Liquid stays near zero.' : '') + ' Each venue is a button that shows its ties.');
+    readout();
+  }
+  function morph(to) {
+    if (raf) cancelAnimationFrame(raf);
+    var from = st.k, t0 = null;
+    if (E.still) { st.k = to; paint(); return; }
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 700), e = 1 - Math.pow(1 - p, 3);
+      st.k = from + (to - from) * e; paint();
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  function toggle(k) { st.focus = st.focus === k ? null : k; paint(); }
+  function readout() {
+    var post = st.week === 'post' && st.bet;
+    if (!st.focus) {
+      read.innerHTML = st.bet ? (post ? '<strong>Collapse week:</strong> average tie over the 36 pairs 0.24, up from 0.16. Tightest: CryptoCompare and Binance, 0.66.' :
+        '<strong>Week before:</strong> average tie over the 36 pairs 0.16. Tightest: CryptoCompare and Binance, 0.50.') + ' Tap a venue to see its ties.' :
+        'The collapse week draws once you have placed your bet.';
+      return;
+    }
+    var mine = PAIRS.filter(function (p) { return p.a === st.focus || p.b === st.focus; });
+    var key = post ? 'post' : 'pre';
+    mine.sort(function (x, y) { return y[key] - x[key]; });
+    function other(p) { return NAME[p.a === st.focus ? p.b : p.a]; }
+    var ups = mine.filter(function (p) { return p.post > p.pre; }).length;
+    var avg = function (f) { return mine.reduce(function (s, p) { return s + p[f]; }, 0) / mine.length; };
+    read.innerHTML = '<strong>' + NAME[st.focus] + ', ' + (post ? 'collapse week' : 'week before') + ':</strong> tightest with ' + other(mine[0]) + ' (' + fmt(mine[0][key]) + '), loosest with ' +
+      other(mine[7]) + ' (' + fmt(mine[7][key]) + ').' + (st.bet ? ' ' + (ups === 8 ? 'All eight' : ups + ' of eight') + ' of its ties rose; its average went from ' + fmt(avg('pre')) + ' to ' + fmt(avg('post')) + '.' : '');
+  }
+  var LEAD = {
+    less: 'The other way round. ',
+    same: 'Not the same: clearly tighter. ',
+    more: 'You called it. '
+  };
+  var TAIL = 'All 36 ties tightened. Averaged over the pairs, the correlation rose from <span class="num">0.16</span> to <span class="num">0.24</span>. Even Liquid, a venue the authors think may have had little trading, moved from no tie to a faint one (at most <span class="num">0.06</span>). The authors read this as contagion: the shock did not stay on FTX.';
+  function place(bet, animate) {
+    st.bet = bet; st.week = 'post';
+    postBtn.removeAttribute('aria-disabled'); postBtn.removeAttribute('title');
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-web', bet);
+    setWeek('post');
+    verdict.innerHTML = LEAD[bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    if (animate) morph(1); else { st.k = 1; paint(); }
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  setWeek(null);
+  var prior = E.load('bet-web');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 560, useHeight: true });
+})();
+
+/* ---------- slide 4: FTX's eight ties and the t-statistics the letter reports (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, fmt = E.fmt;
+  /* name, mean before, mean after, t-statistic as printed (Table 2) */
+  var ROWS = [['Binance', 0.4282, 0.4807, -19.05], ['CryptoCompare', 0.2929, 0.3926, -44.11], ['AAXE', 0.2336, 0.3277, -40.66],
+    ['Kucoin', 0.1722, 0.2811, -42.83], ['HiTBTC', 0.1577, 0.2806, -47.27], ['Poloniex', 0.1138, 0.1643, -25.32],
+    ['Bitfinex', 0.0931, 0.1699, -41.34], ['Liquid', -0.0350, 0.0221, -42.74]];
+  var box = document.getElementById('dumbbell'), LO = -0.1, HI = 0.55;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 460, L = narrow ? 92 : 110, R = 60, rowH = 28, TOP = 22, H = TOP + ROWS.length * rowH + 22;
+    function X(v) { return L + (W - L - R) * (v - LO) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Weekly average correlation of FTT returns between FTX and eight venues, week before and collapse week, with the t-statistics the letter reports: Binance 0.43 to 0.48, t −19.05; CryptoCompare 0.29 to 0.39, t −44.11; AAXE 0.23 to 0.33, t −40.66; Kucoin 0.17 to 0.28, t −42.83; HiTBTC 0.16 to 0.28, t −47.27; Poloniex 0.11 to 0.16, t −25.32; Bitfinex 0.09 to 0.17, t −41.34; Liquid −0.04 to 0.02, t −42.74.' }, box);
+    [0, 0.2, 0.4].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP - 4, y2: H - 18, 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, X(v), H - 4, v.toFixed(1), { 'text-anchor': 'middle' });
+    });
+    T(root, W, TOP - 9, 't, Table 2', { 'text-anchor': 'end', 'class': 'label' });
+    T(root, L, TOP - 9, 'correlation with FTX', { 'class': 'label' });
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH + rowH / 2, a = X(r[1]), b = X(r[2]);
+      T(root, 0, y + 4, r[0], { 'class': 'label' });
+      S('line', { x1: a, x2: b, y1: y, y2: y, 'class': 'axis zero' }, root);
+      S('circle', { cx: a, cy: y, r: 5.5, 'class': 'before-fill' }, root);
+      S('circle', { cx: b, cy: y, r: 5.5, 'class': 'after-fill' }, root);
+      if (!narrow) T(root, b + 10, y + 4, fmt(r[2]), { 'class': 'strong' });
+      T(root, W, y + 4, fmt(r[3]), { 'text-anchor': 'end', 'class': 'strong' });
+    });
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 5: one tie, minute by minute (Figure 2, Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, fmt = E.fmt;
+  var V = [['BINANCE', 'Binance', 0.4282, 0.4807, 0.0016, 0.0629], ['CRYPTOCOMPARE', 'CryptoCompare', 0.2929, 0.3926, 0.0020, 0.0414], ['AAXE', 'AAXE', 0.2336, 0.3277, 0.0019, 0.0435],
+    ['KUCOIN', 'Kucoin', 0.1722, 0.2811, 0.0027, 0.0525], ['HITBTC', 'HiTBTC', 0.1577, 0.2806, 0.0026, 0.0525], ['POLONIEX', 'Poloniex', 0.1138, 0.1643, 0.0017, 0.0321],
+    ['BITFINEX', 'Bitfinex', 0.0931, 0.1699, 0.0003, 0.0290], ['LIQUID', 'Liquid', -0.0350, 0.0221, 0.0003, 0.0149]];
+  var T0 = 9, T1 = 291, FROZEN = 8 * 24, YMIN = -0.2, YMAX = 1.0;
+  var box = document.getElementById('tie-chart'), slider = document.getElementById('tie-time'), read = document.getElementById('tie-read');
+  var cur = 0, geo = null;
+  E.seg(document.getElementById('tie-venue'), V.map(function (v, i) { return [String(i), v[1]]; }), '0', function (k) { cur = +k; draw(); marker(); }, 'Venue paired with FTX');
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 230, 286)), L = 34, R = 8, TOP = 16, B = 26;
+    function X(t) { return L + (W - L - R) * (t - T0) / (T1 - T0); }
+    function Y(v) { return TOP + (H - TOP - B) * (YMAX - v) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    S('rect', { x: X(FROZEN), y: TOP, width: X(T1) - X(FROZEN), height: H - TOP - B, 'class': 'band-frozen' }, root);
+    [-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1.0].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': Math.abs(v) < 1e-9 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, v < 0 ? '−' + Math.abs(v).toFixed(1) : v.toFixed(1), { 'text-anchor': 'end' });
+    });
+    for (var d = 1; d <= 12; d++) {
+      if (W < 520 && d % 2 === 0) continue;
+      T(root, X(24 * d), H - 6, d === 1 ? '1 Nov' : String(d), { 'text-anchor': 'middle' });
+    }
+    var xc = X(E.CUT);
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, B: B, L: L, R: R, root: root, curve: S('g', {}, root), dyn: S('g', {}, root) };
+    S('line', { x1: xc, x2: xc, y1: TOP - 4, y2: H - B, 'class': 'cutline' }, root);
+    T(root, xc - 5, TOP + 8, '05:59, 6 Nov', { 'text-anchor': 'end', 'class': 'label halo' });
+    draw(); marker();
+  }
+  function draw() {
+    if (!geo) return;
+    var v = V[cur], tr = E.trace('fig2', v[0]), g = geo.curve, X = geo.X, Y = geo.Y;
+    g.innerHTML = '';
+    if (tr) E.envelope(g, tr, X, Y, { from: T0, to: T1, minPx: 1.6 });
+    S('line', { x1: X(T0), x2: X(E.CUT), y1: Y(v[2]), y2: Y(v[2]), 'class': 'mean' }, g);
+    S('line', { x1: X(E.CUT), x2: X(T1), y1: Y(v[3]), y2: Y(v[3]), 'class': 'mean' }, g);
+    geo.root.setAttribute('aria-label', 'Correlation of FTT returns between FTX and ' + v[1] + ', 31 October to 12 November 2022, traced from the paper’s Figure 2: steady near its average of ' + fmt(v[2]) +
+      ' until 6 November, then jumps and decays repeatedly, averaging ' + fmt(v[3]) + ' in the collapse week.');
+  }
+  function marker() {
+    var v = V[cur], t = +slider.value, tr = E.trace('fig2', v[0]);
+    var val = tr ? tr.at(t) : 0, ratio = Math.sqrt(v[5] / v[4]);
+    slider.setAttribute('aria-valuetext', E.when(t) + ' UTC');
+    read.innerHTML = '<strong>' + E.when(t) + ' UTC:</strong> tie between FTX and ' + v[1] + ' ≈ ' + fmt(val) + '. Weekly averages ' + fmt(v[2]) + ' before, ' + fmt(v[3]) +
+      ' in the collapse week, when its swings were ' + ratio.toFixed(1) + ' times wider.';
+    if (!geo) return;
+    var g = geo.dyn, x = geo.X(t);
+    g.innerHTML = '';
+    S('line', { x1: x, x2: x, y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    S('circle', { cx: x, cy: geo.Y(val), r: 4.5, 'class': 'text-fill' }, g);
+  }
+  slider.setAttribute('aria-label', 'Time, from 31 October to 12 November 2022');
+  slider.addEventListener('input', marker);
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+</script>
+</body>
+</html>

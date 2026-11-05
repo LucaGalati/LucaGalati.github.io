@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why size moves prices · The Information Content of Delayed Block Trades</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and De Blasis, The information content of delayed block trades in cryptocurrency markets: a toy order book shows why a large order moves the price, and why part of the move may stay.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-size.html">
+<lg-sitebar><noscript><a href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why does a big order move the price at all?">
+  <div class="inner">
+    <p class="kicker">Side path · Why size moves prices · 1 of 1</p>
+    <h2>A big order eats its way up the book</h2>
+    <div class="two">
+      <div>
+        <p>An order book is a queue of offers. Sellers post how much they will sell and at what price; the cheapest offer is first in line. A small buy takes the first offer. A large one takes the first, then the next, then the next, each a little dearer.</p>
+        <p>So the bigger the order, the further its price from the midpoint. Part of that is the cost of hurrying, and it fades as new sellers arrive. If others decide the buyer knew something, part of it stays. Price impact has been split this way since Kraus and Stoll (1972) and Scholes (1972), and the paper does the same.</p>
+        <p>A block facility offers another route: find someone to take the whole size at one price, away from the queue.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-upstairs.html#s2" data-primary-when="01-upstairs.html">← Return to the main path</a>
+        </div>
+        <p class="note">A toy order book: every price and quantity here is invented for illustration. The split into temporary and permanent impact: page 5 of the paper.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">A toy order book <span class="tag">illustrative numbers</span></p>
+        <div class="fig" id="ladder"></div>
+        <p class="legend"><span><i class="sq book"></i>offers taken by your buy</span><span><i class="sq" style="border:1.5px solid var(--muted)"></i>offers to sell</span><span>▸ average price paid</span></p>
+        <label class="ctl" for="qty">Buy at once: <strong id="qty-out">6</strong> BTC</label>
+        <input type="range" id="qty" min="1" max="15" step="1" value="6">
+        <p class="readout r3" id="ladder-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/delayed-block-trades-crypto/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- a toy order book: a buy walks up the offers ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var ASKS = [[1000.10, 2], [1000.25, 2], [1000.45, 3], [1000.70, 3], [1001.00, 5]];
+  var BIDS = [[999.90, 2], [999.75, 2], [999.55, 3], [999.30, 3], [999.00, 5]];
+  var MID = 1000, LO = 998.85, HI = 1001.15, MAXQ = 5;
+  var box = document.getElementById('ladder'), slider = document.getElementById('qty'), out = document.getElementById('qty-out'), read = document.getElementById('ladder-read');
+  var geo = null;
+  function money(p) { return p.toFixed(2).replace(/^1000/, '1,000').replace(/^1001/, '1,001'); }
+  function fill(q) {
+    var left = q, cost = 0, last = MID, take = [];
+    ASKS.forEach(function (a) { var t = Math.min(left, a[1]); take.push(t); if (t > 0) { cost += t * a[0]; last = a[0]; left -= t; } });
+    return { take: take, avg: cost / q, last: last };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 300, L = 70, TOP = 10, B = 10, bw = Math.min(46, (W - L - 120) / MAXQ);
+    function Y(p) { return TOP + (H - TOP - B) * (HI - p) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A toy order book around a 1,000.00 midpoint: offers to sell of 2, 2, 3, 3 and 5 bitcoin at 1,000.10, 1,000.25, 1,000.45, 1,000.70 and 1,001.00, and bids below the midpoint. A buy of the chosen size takes the cheapest offers first.' }, box);
+    S('line', { x1: L - 4, x2: L - 4, y1: Y(HI), y2: Y(LO), 'class': 'axis' }, root);
+    S('line', { x1: L - 4, x2: W - 4, y1: Y(MID), y2: Y(MID), 'class': 'ghost' }, root);
+    T(root, W - 4, Y(MID) - 5, 'midpoint 1,000.00', { 'text-anchor': 'end', 'class': 'label halo' });
+    BIDS.forEach(function (b) {
+      S('rect', { x: L, y: Y(b[0]) - 6, width: b[1] * bw, height: 12, 'class': 'band-muted' }, root);
+      T(root, L - 10, Y(b[0]) + 4, money(b[0]), { 'text-anchor': 'end' });
+    });
+    T(root, L + 5 * bw + 10, Y(999.45) + 4, 'bids: offers to buy', {});
+    ASKS.forEach(function (a) { T(root, L - 10, Y(a[0]) + 4, money(a[0]), { 'text-anchor': 'end', 'class': 'label' }); });
+    geo = { Y: Y, L: L, bw: bw, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var q = +slider.value, r = fill(q);
+    out.textContent = q;
+    slider.setAttribute('aria-valuetext', q + ' bitcoin');
+    var avgPct = (r.avg / MID - 1) * 100, lastPct = (r.last / MID - 1) * 100;
+    read.innerHTML = '<strong>Buying ' + q + ' BTC at once</strong> takes every offer up to ' + money(r.last) + '. Average price ' + money(r.avg) + ', ' + avgPct.toFixed(3) + '% above the midpoint; the last bitcoin cost ' + lastPct.toFixed(3) + '% above it.';
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, L = geo.L, bw = geo.bw;
+    g.innerHTML = '';
+    ASKS.forEach(function (a, i) {
+      var y = Y(a[0]) - 6;
+      S('rect', { x: L + 0.75, y: y + 0.75, width: a[1] * bw - 1.5, height: 10.5, 'class': 'hollow-muted' }, g);
+      if (r.take[i] > 0) S('rect', { x: L, y: y, width: r.take[i] * bw, height: 12, 'class': 'book-fill' }, g);
+      T(g, L + a[1] * bw + 8, Y(a[0]) + 4, a[1] + ' BTC' + (r.take[i] > 0 ? (r.take[i] === a[1] ? ', all taken' : ', ' + r.take[i] + ' taken') : ''), { 'class': r.take[i] > 0 ? 'label' : '' });
+    });
+    /* the average price paid, as a pointer on the price axis */
+    var ya = Y(r.avg);
+    S('path', { d: 'M' + (L - 9) + ',' + (ya - 5) + ' L' + (L - 1) + ',' + ya + ' L' + (L - 9) + ',' + (ya + 5) + ' Z', 'class': 'text-fill' }, g);
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drawing the map · Information Flow in the FTX Bankruptcy</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati, Grassi and Rizzini, Information Flow in the FTX Bankruptcy: how a table of 18,915 correlations becomes a map of 579 links, built from triangles, one coin at a time.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  #tm-chart { max-width: 25rem; margin-left: auto; margin-right: auto; }
+  .fig .face-hi { fill: var(--gold); fill-opacity: .18; }
+  .fig .pair-all { stroke: var(--muted); stroke-opacity: .45; stroke-width: 1; }
+</style>
+</head>
+<body data-deck="04-map.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-information-flow/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Which 579 links does the map keep?">
+  <div class="inner">
+    <p class="kicker">Side path · Drawing the map · 1 of 1</p>
+    <h2>Keep the strongest links, in triangles</h2>
+    <div class="two">
+      <div>
+        <p>The authors filter the 18,915 pairs among 195 coins with a <strong>triangulated maximally filtered graph</strong>: keep the strongest links, as long as the map can be drawn flat with no two links crossing.</p>
+        <p>The rule is short. Start with the four coins most tied to all the others, joined in triangles. Then, again and again, find the coin and triangle with the strongest ties between them and put the coin inside, splitting the triangle into three. Slide to watch it on ten invented coins.</p>
+        <p>Every new coin brings exactly three links, so no coin ever has fewer than three, the floor FTT would hit. On FTX that leaves 579 of 18,915 pairs, about 3%; on Binance, 966 of 52,326.</p>
+        <div class="actions">
+          <a class="btn return-link" href="01-nine-days.html#s3">← Return to the main path</a>
+          <a class="btn primary" href="02-centre.html#s1">Go on: what makes a coin central?&nbsp;→</a>
+        </div>
+        <p class="note">Invented coins and correlations, for illustration. The filter: Sections 2.1 and 3.2 of the paper, after Massara, Di Matteo and Aste (2017); a filtered map of n coins has 3(n − 2) links. Counts computed: 195 × 194 ÷ 2 = 18,915 and 3 × 193 = 579; 324 × 323 ÷ 2 = 52,326 and 3 × 322 = 966.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Ten coins <span class="tag">toy</span></p>
+        <div class="ctl"><span>Show</span><div class="seg" id="tm-show"></div></div>
+        <div class="fig" id="tm-chart"></div>
+        <label class="ctl" for="tm-k">Coins placed</label>
+        <input type="range" id="tm-k" min="4" max="10" step="1" value="4">
+        <p class="readout" id="tm-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-information-flow/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- the filter, step by step, on ten invented coins ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* invented correlations: a market factor M and two groups of five with a group factor G (illustrative) */
+  var M = [.8, .74, .68, .6, .5, .76, .64, .56, .46, .36], G = [.3, .36, .42, .46, .5, .38, .44, .5, .55, .6], n = 10;
+  var C = [];
+  for (var i = 0; i < n; i++) { C.push([]); for (var j = 0; j < n; j++) C[i].push(i === j ? 0 : Math.round((M[i] * M[j] + ((i < 5) === (j < 5) ? G[i] * G[j] : 0)) * 100) / 100); }
+  /* the triangulated filter: four strongest coins, then repeatedly the best coin-triangle pair */
+  function tmfg() {
+    var str = C.map(function (r) { return r.reduce(function (a, b) { return a + b; }, 0); });
+    var ord = C.map(function (r, k) { return k; }).sort(function (a, b) { return str[b] - str[a]; });
+    var I = ord.slice(0, 4), faces = [[I[0], I[1], I[2]], [I[0], I[1], I[3]], [I[0], I[2], I[3]], [I[1], I[2], I[3]]];
+    var edges = [], steps = [], left = ord.slice(4);
+    for (var a = 0; a < 4; a++) for (var b = a + 1; b < 4; b++) edges.push([I[a], I[b]]);
+    while (left.length) {
+      var best = null;
+      left.forEach(function (v) { faces.forEach(function (f, fi) { var g = C[v][f[0]] + C[v][f[1]] + C[v][f[2]]; if (!best || g > best.g + 1e-12) best = { v: v, fi: fi, g: g }; }); });
+      var f = faces[best.fi];
+      faces.splice(best.fi, 1, [best.v, f[0], f[1]], [best.v, f[1], f[2]], [best.v, f[0], f[2]]);
+      edges.push([best.v, f[0]], [best.v, f[1]], [best.v, f[2]]);
+      steps.push({ v: best.v, f: f.slice(), g: best.g });
+      left.splice(left.indexOf(best.v), 1);
+    }
+    return { init: I, edges: edges, steps: steps, faces: faces };
+  }
+  var R = tmfg();
+  /* a flat drawing: pick an outer triangle, then place each coin inside its triangle, giving more room to triangles that will hold more coins */
+  function layout(outer) {
+    var adj = C.map(function () { return {}; });
+    R.edges.forEach(function (e) { adj[e[0]][e[1]] = 1; adj[e[1]][e[0]] = 1; });
+    var used = {}; outer.forEach(function (v) { used[v] = 1; });
+    function tree(f) {
+      var v = -1;
+      for (var x = 0; x < n; x++) if (!used[x] && adj[x][f[0]] && adj[x][f[1]] && adj[x][f[2]]) { v = x; break; }
+      if (v < 0) return null;
+      used[v] = 1;
+      var kids = [tree([v, f[1], f[2]]), tree([v, f[0], f[2]]), tree([v, f[0], f[1]])];
+      return { v: v, f: f, kids: kids, size: 1 + kids.reduce(function (s, k) { return s + (k ? k.size : 0); }, 0) };
+    }
+    var root = tree(outer);
+    if (Object.keys(used).length < n) return null;
+    var P = {}, CORN = [[0.5, 0.03], [0.03, 0.97], [0.97, 0.97]];
+    outer.forEach(function (v, k) { P[v] = CORN[k]; });
+    (function put(t) {
+      if (!t) return;
+      var w = t.kids.map(function (k) { return 1 + (k ? k.size : 0) * 1.6; }), s = w[0] + w[1] + w[2];
+      P[t.v] = [0, 1].map(function (d) { return (w[0] * P[t.f[0]][d] + w[1] * P[t.f[1]][d] + w[2] * P[t.f[2]][d]) / s; });
+      t.kids.forEach(put);
+    })(root);
+    return P;
+  }
+  var POS = null, bestD = -1;
+  /* prefer an outer triangle made of the first four coins, so the first step already looks like a triangle with a coin inside */
+  var firstFour = R.faces.filter(function (f) { return f.every(function (v) { return R.init.indexOf(v) >= 0; }); });
+  (firstFour.length ? firstFour : R.faces).forEach(function (f) {
+    var P = layout(f); if (!P) return;
+    var md = 9; for (var a = 0; a < n; a++) for (var b = a + 1; b < n; b++) md = Math.min(md, Math.hypot(P[a][0] - P[b][0], P[a][1] - P[b][1]));
+    if (md > bestD) { bestD = md; POS = P; }
+  });
+  var ORDER = R.init.concat(R.steps.map(function (s) { return s.v; }));
+  function lab(v) { return String(v + 1); }
+  var box = document.getElementById('tm-chart'), slider = document.getElementById('tm-k'), read = document.getElementById('tm-read');
+  var mode = 'map', W0 = 0;
+  E.seg(document.getElementById('tm-show'), [['map', 'the filtered map'], ['all', 'every pair as well']], mode, function (k) { mode = k; render(); }, 'Show');
+  function render() {
+    var k = +slider.value, placed = ORDER.slice(0, k), step = k > 4 ? R.steps[k - 5] : null;
+    var nLinks = 3 * (k - 2), nPairs = k * (k - 1) / 2;
+    slider.setAttribute('aria-valuetext', k + ' coins placed');
+    if (!step) read.innerHTML = '<strong>Four coins, ' + R.init.map(lab).join(', ') + ',</strong> the ones most tied to all the others, joined in four triangles: 6 links of 6 possible pairs. Slide to add the rest.';
+    else read.innerHTML = '<strong>Coin ' + lab(step.v) + ' joins the triangle ' + step.f.map(lab).join('–') + '</strong>, the one it is most tied to: ' + step.f.map(function (u) { return C[step.v][u].toFixed(2); }).join(' + ') + ' = ' + step.g.toFixed(2) + '. Links so far: 3 × (' + k + ' − 2) = ' + nLinks + ' of ' + nPairs + ' pairs.';
+    if (!W0) return;
+    box.innerHTML = '';
+    var W = W0, H = Math.round(W * 0.8), pad = 16;
+    function X(v) { return pad + (W - 2 * pad) * POS[v][0]; }
+    function Y(v) { return pad + (H - 2 * pad) * POS[v][1]; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A filtered map of ' + k + ' invented coins with ' + nLinks + ' links, all triangles, no crossings' + (step ? '; coin ' + lab(step.v) + ' was just added inside the triangle ' + step.f.map(lab).join('–') : '') + (mode === 'all' ? '; every one of the ' + nPairs + ' pairs drawn faintly behind' : '') + '.' }, box);
+    if (step) S('polygon', { points: step.f.map(function (u) { return X(u).toFixed(1) + ',' + Y(u).toFixed(1); }).join(' '), 'class': 'face-hi' }, root);
+    if (mode === 'all') for (var a = 0; a < k; a++) for (var b = a + 1; b < k; b++) S('line', { x1: X(placed[a]), y1: Y(placed[a]), x2: X(placed[b]), y2: Y(placed[b]), 'class': 'pair-all' }, root);
+    var shownEdges = R.edges.slice(0, nLinks);
+    shownEdges.forEach(function (e, q) {
+      var hi = step && q >= nLinks - 3;
+      S('line', { x1: X(e[0]), y1: Y(e[0]), x2: X(e[1]), y2: Y(e[1]), 'class': 'edge' + (hi ? ' hi' : ''), 'stroke-width': (hi ? 3 : 1 + 2 * C[e[0]][e[1]]).toFixed(1) }, root);
+    });
+    placed.forEach(function (v) {
+      var hi = step && v === step.v;
+      S('circle', { cx: X(v), cy: Y(v), r: 12, 'class': 'node' + (hi ? ' hi' : '') }, root);
+      T(root, X(v), Y(v) + 4, lab(v), { 'text-anchor': 'middle', 'class': 'node-label' + (hi ? ' on-gold' : ''), 'font-size': '12px' });
+    });
+  }
+  slider.setAttribute('aria-label', 'Number of coins placed on the map, 4 to 10');
+  slider.addEventListener('input', render);
+  render();
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 280, max: 400 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside a block trade · Reporting Delays and the Information Content of Off-Market Trades</title>
+<meta name="description" content="Side path of an explorable explanation of Frino, Galati and Gerace, Reporting Delays and the Information Content of Off-Market Trades: why large trades are arranged away from the order book, the rules for FTSE 100 futures blocks on ICE, and how a block is classed as buy-like or sell-like.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-block.html">
+<lg-sitebar><noscript><a href="../../publication/off-market-reporting-delays/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What is a block trade, exactly?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside a block trade · 1 of 2</p>
+    <h2>Upstairs, away from the screen</h2>
+    <div class="two">
+      <div>
+        <p>In the order book, the “downstairs” market, a buy order takes the cheapest offers first, then the next cheapest, and so on. That is fine for 20 lots. For <span class="num">1,000</span> it climbs the book and pays a little more at every level it empties. Try it.</p>
+        <p>A block avoids the climb. Two parties agree one price for the whole size in private, upstairs, and one of them submits the deal to the exchange. On ICE a FTSE 100 futures block needed at least <span class="num">500</span> lots, and a broker could not add up different clients’ orders to get there. The price need not match the screen; it only has to be fair for a trade of that size.</p>
+        <p>Unless deferral is requested and allowed, the exchange publishes the block at once. Blocks may only be done in trading hours, 1 a.m. to 9 p.m. London time, never overnight.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>How do they tell a buy from a sell?&nbsp;→</button>
+          <a class="btn return-link" href="01-hour.html#s2" data-primary-when="01-hour.html">← Return to the main path</a>
+        </div>
+        <p class="note">Toy order book and toy block price, invented for illustration. Rules: Appendix A (p. 2064–2065), footnotes 17 and 19; blocks spare large orders the price impact of the central market (p. 2064).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Buying on screen <span class="tag">toy order book</span></p>
+        <div class="fig" id="book"></div>
+        <label class="ctl" for="book-n">Size of your buy order, in lots</label>
+        <input type="range" id="book-n" min="20" max="1500" step="20" value="1000">
+        <p class="readout" id="book-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How do they tell a buy from a sell?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside a block trade · 2 of 2</p>
+    <h2>Buy or sell, read from the price</h2>
+    <div class="two">
+      <div>
+        <p>For trades on screen the data say which side started the trade. For blocks they do not; the exchange keeps that to itself. So the authors infer it from the price. They compare each block’s price with that of an earlier on-screen trade; for a delayed block, the trade at the handshake, an hour before the block was reported. Above it, the block counts as <strong>premium</strong>, buy-like; below it, <strong>discount</strong>, sell-like; at the same price it is a zero-tick and is dropped. Nine blocks were.</p>
+        <p>Why keep them apart? Trades started by buyers tend to carry good news and trades started by sellers bad news, so the two kinds are studied separately, each with its own sign.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-hour.html#s5">← Return to the main path</a>
+          <button class="btn" type="button" data-prev>← What a block is</button>
+        </div>
+        <p class="note">Section 2.1 and footnotes 6–8 (p. 2055). The toy block is a delayed one, so its comparison price is the screen price at the handshake, an hour before its report. Toy prices.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Classify a block <span class="tag">toy prices</span></p>
+        <div class="fig" id="tick"></div>
+        <label class="ctl" for="tick-p">Price agreed for the block</label>
+        <input type="range" id="tick-p" min="-5" max="5" step="1" value="3">
+        <p class="readout" id="tick-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/off-market-reporting-delays/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: a toy order book, climbed by a large buy ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var SIZE = [120, 180, 150, 220, 200, 260, 240, 300], BEST = 100, TICK = 0.01;   /* toy */
+  var box = document.getElementById('book'), slider = document.getElementById('book-n'), read = document.getElementById('book-read');
+  var geo = null;
+  function fill(n) {
+    var left = n, out = [];
+    SIZE.forEach(function (s) { var take = Math.max(0, Math.min(s, left)); out.push(take); left -= take; });
+    return out;
+  }
+  var MINBLOCK = 500, BLOCKP = BEST + TICK;   /* the paper's minimum; toy block price */
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 24, TOP = 22, yC = TOP + SIZE.length * rowH + 14, H = yC + 74, xL = 80, xMax = W - xL - 74;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A toy order book: offers at eight price levels from 100.00 to 100.07, 120 to 300 lots each. A buy order takes them from the cheapest up; the readout gives the levels used and the average price.' }, box);
+    T(root, 0, 12, 'Price', { 'class': 'label' });
+    T(root, xL, 12, 'Lots offered at that price', { 'class': 'label' });
+    S('line', { x1: 0, x2: W, y1: yC - 6, y2: yC - 6, 'class': 'axis' }, root);
+    T(root, 0, yC + 12, 'Average paid, bp above the best offer', { 'class': 'label' });
+    T(root, 0, yC + 34, 'On screen'); T(root, 0, yC + 58, 'As a block');
+    geo = { W: W, rowH: rowH, TOP: TOP, xL: xL, xMax: xMax, yC: yC, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var n = +slider.value, f = fill(n), cost = 0, levels = 0, last = 0;
+    f.forEach(function (q, i) { cost += q * i * TICK; if (q > 0) { levels++; last = i; } });
+    var avg = BEST + cost / n, bp = (avg - BEST) / BEST * 1e4, lastBp = last * TICK / BEST * 1e4;
+    slider.setAttribute('aria-valuetext', th(n) + ' lots');
+    var blockBp = (BLOCKP - BEST) / BEST * 1e4;
+    read.innerHTML = '<strong>Buying ' + th(n) + ' lots on screen</strong> takes ' + (levels === 1 ? 'only the best offer' : 'offers at ' + levels + ' price levels') + ': on average about <strong class="nw">' + bp.toFixed(1) + ' bp</strong> above the best offer' +
+      (levels > 1 ? ', the last lots <span class="nw">' + lastBp.toFixed(0) + ' bp</span> above it. ' : '. ') +
+      (n >= MINBLOCK ? 'As a block, all ' + th(n) + ' go at one agreed price, toy <span class="nw">' + blockBp.toFixed(1) + ' bp</span> above.' : 'Too small for a block, which needs at least 500 lots.');
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    SIZE.forEach(function (s, i) {
+      var y = geo.TOP + (SIZE.length - 1 - i) * geo.rowH, w = geo.xMax * s / 300, wq = geo.xMax * f[i] / 300;
+      T(g, 0, y + 15, (BEST + i * TICK).toFixed(2), { 'class': f[i] > 0 ? 'strong' : '' });
+      S('rect', { x: geo.xL, y: y + 4, width: w, height: 16, 'class': 'surface' }, g);
+      if (f[i] > 0) S('rect', { x: geo.xL, y: y + 4, width: Math.max(1, wq), height: 16, 'class': 'text-fill' }, g);
+      T(g, geo.xL + w + 6, y + 16, f[i] > 0 ? th(f[i]) + ' of ' + s : String(s), { 'class': f[i] > 0 ? 'label' : '' });
+    });
+    /* the comparison: average paid on screen against one block price, scale 0 to 5 bp */
+    function bw(v) { return geo.xMax * Math.min(v, 5) / 5; }
+    var yS = geo.yC + 22, yB = geo.yC + 46;
+    S('rect', { x: geo.xL, y: yS, width: Math.max(1, bw(bp)), height: 16, 'class': 'text-fill' }, g);
+    T(g, geo.xL + bw(bp) + 6, yS + 12, bp.toFixed(1) + ' bp', { 'class': 'strong' });
+    if (n >= MINBLOCK) {
+      S('rect', { x: geo.xL, y: yB, width: bw(blockBp), height: 16, 'class': 'link-fill' }, g);
+      T(g, geo.xL + bw(blockBp) + 6, yB + 12, blockBp.toFixed(1) + ' bp, toy', { 'class': 'strong' });
+    } else T(g, geo.xL, yB + 12, 'under 500 lots: not allowed');
+  }
+  slider.setAttribute('aria-label', 'Size of the buy order in lots');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 560 });
+})();
+
+/* ---------- slide 2: the tick rule on toy prices ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('tick'), slider = document.getElementById('tick-p'), read = document.getElementById('tick-read');
+  var REF = 100, geo = null;   /* toy screen price, an hour before the report */
+  function build(W) {
+    box.innerHTML = '';
+    var H = 188, TOP = 18, B = 40, L = 50, R = 14;
+    function Y(c) { return TOP + (H - TOP - B) * (6 - c) / 12; }   /* c in cents from 100.00 */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A toy screen price of 100.00 an hour before the report, and the block price chosen with the slider; above it the block is premium, below it discount, equal a zero-tick.' }, box);
+    [-5, 0, 5].forEach(function (c) { T(root, L - 8, Y(c) + 4, (REF + c / 100).toFixed(2), { 'text-anchor': 'end' }); });
+    var xa = L + (W - L - R) * 0.18, xb = L + (W - L - R) * 0.78;
+    S('line', { x1: L, x2: W - R, y1: Y(0), y2: Y(0), 'class': 'ghost' }, root);
+    S('circle', { cx: xa, cy: Y(0), r: 5, 'class': 'hollow' }, root);
+    T(root, xa, H - B + 16, 'screen trade', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, xa, H - B + 31, 'an hour before', { 'text-anchor': 'middle' });
+    T(root, xb, H - B + 16, 'the block', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, xb, H - B + 31, 'at its report', { 'text-anchor': 'middle' });
+    geo = { Y: Y, xa: xa, xb: xb, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var c = +slider.value, p = (REF + c / 100).toFixed(2);
+    slider.setAttribute('aria-valuetext', p);
+    var kind = c > 0 ? 'premium' : c < 0 ? 'discount' : 'zero';
+    var head = '<strong>Block at ' + p + ', screen trade at 100.00 an hour before the report:</strong> ';
+    read.innerHTML = head + (kind === 'premium' ? 'the block is ' + c + ' bp higher, a premium. It counts as buy-like.'
+      : kind === 'discount' ? 'the block is ' + (-c) + ' bp lower, a discount. It counts as sell-like.'
+      : 'the same price, a zero-tick. The paper drops such blocks; there were nine.');
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y; g.innerHTML = '';
+    if (c !== 0) {
+      var bx = geo.xb + 18;
+      S('path', { d: 'M' + (bx - 5) + ',' + Y(0) + ' H' + bx + ' V' + Y(c) + ' H' + (bx - 5), 'class': 'bracket' }, g);
+      T(g, bx + 7, (Y(0) + Y(c)) / 2 + 4, (c > 0 ? 'premium' : 'discount'), { 'class': 'strong' });
+    } else T(g, geo.xb + 14, Y(0) - 10, 'zero-tick', { 'class': 'strong halo' });
+    S('line', { x1: geo.xa, x2: geo.xb, y1: Y(0), y2: Y(c), 'class': 'grid' }, g);
+    S('circle', { cx: geo.xb, cy: Y(c), r: 6, 'class': 'text-fill' }, g);
+  }
+  slider.setAttribute('aria-label', 'Toy price agreed for the block, from 99.95 to 100.05');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 520 });
+})();
+</script>
+</body>
+</html>

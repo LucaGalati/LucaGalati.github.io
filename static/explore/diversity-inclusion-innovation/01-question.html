@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does it pay? · Diversity, Inclusion, and Firm Performance</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Monaco, Galati, Dal Maso and Mattei, Diversity, Inclusion, and Firm Performance: why the research disagrees, how the paper scores diversity and inclusion, and a bet on whether a higher score goes with higher firm value.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-question.html">
+<lg-sitebar><noscript><a href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="Why can’t the studies agree?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Monaco et al. 2026</p>
+    <h1>Does diversity pay? The research cannot agree.</h1>
+    <p>Large firms spent three decades building diversity and inclusion (D&amp;I) programmes. Lately many are taking them apart: close to 30% of the S&amp;P&nbsp;100 have formally scaled back their commitments.</p>
+    <p>If D&amp;I paid, would they? The research gives no clear answer. A few of the studies this paper cites:</p>
+    <div class="camps" role="list" aria-label="Examples of earlier findings cited by the paper, grouped by direction">
+      <div class="camp" role="listitem"><h3>Found a gain</h3><ul><li>Women on the board, higher firm value <span>Campbell &amp; Mínguez-Vera 2008</span></li><li>Staff-rated D&amp;I, higher later profits and value <span>Edmans et al. 2023</span></li></ul></div>
+      <div class="camp" role="listitem"><h3>Found a cost</h3><ul><li>Norway’s board quota, lower short-term profits <span>Matsa &amp; Miller 2013</span></li><li>Culturally diverse boards, lower value and profits <span>Frijns et al. 2016</span></li></ul></div>
+      <div class="camp" role="listitem"><h3>Found both</h3><ul><li>Women directors in France, higher profits but lower market value <span>Bennouri et al. 2018</span></li></ul></div>
+      <div class="camp" role="listitem"><h3>Found nothing</h3><ul><li>A demographically diverse workforce, no clear link <span>Frijns et al. 2025</span></li></ul></div>
+    </div>
+    <p>This paper suspects they watched only the straight road from D&amp;I to performance. Perhaps much of its value takes a detour, through what a firm invents.</p>
+    <div class="actions"><button class="btn primary" type="button" data-next>First: how do you measure D&amp;I?&nbsp;→</button></div>
+    <p class="note">S&amp;P 100: p. 1 and footnote 1 (Bloomberg, 14 February 2025). Examples, not a count; they measure different things in different places. Findings as the paper summarises them, p. 1 and 4.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How do you score diversity and inclusion?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · Does it pay? · 2 of 3</p>
+      <h2>Two ingredients, one score</h2>
+      <p><strong>Diversity</strong> is the share of women among a firm’s executives: the chief executive, the finance chief and the other officers who decide where money and research go.</p>
+      <p><strong>Inclusion</strong> counts how many of five workplace practices the firm reports, divided by five.</p>
+      <p>The <strong>D&amp;I score</strong> is the average of the two, between 0 and 1. Build a firm and see where it lands against the paper’s <span class="nw">47,212 firm-years</span> (a firm-year is one firm observed in one year).</p>
+      <p class="prompt">Try reaching 0.25 without a single practice.</p>
+      <p class="door-row"><a class="door" href="04-measure.html#s1">Why count executives and not the board? Why these five practices?&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Does a higher score go with a more valuable firm?&nbsp;→</button></div>
+      <p class="note">Section 4.1 and Appendix A: diversity is Refinitiv’s percentage of female executives; inclusion is the sum of five Refinitiv indicators divided by five. Sample averages from Table 3: diversity 0.134, inclusion 0.347, D&amp;I 0.240 (range 0 to 0.813). In the sample the two ingredients barely move together: correlation 0.135 (Table 4). The ten-seat team is illustrative; the paper uses each firm’s actual share.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Build a firm <span class="tag">illustrative ten-person team</span></p>
+      <div class="builder">
+        <div>
+          <div class="fig" id="seats"></div>
+          <label class="ctl" for="di-women">Women among the ten executives</label>
+          <input type="range" id="di-women" min="0" max="10" step="1" value="1">
+        </div>
+        <div class="practices" id="practices" role="group" aria-label="Inclusion practices the firm reports"></div>
+      </div>
+      <div class="fig" id="di-strip"></div>
+      <p class="legend"><span><i class="dt near"></i>your firm</span><span><i class="ln far"></i>sample average</span></p>
+      <p class="readout" id="di-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Does a higher score go with higher value?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Does it pay? · 3 of 3</p>
+    <h2>Place a bet: does a higher score go with a more valuable firm?</h2>
+    <div class="bet-grid t-right">
+      <div class="q">
+        <p>Measure a firm’s value with <strong>Tobin’s Q</strong>: the market value of its shares plus its debts, divided by the book value of its assets (sample average 1.78). Measure its profitability with <strong>return on assets</strong> (ROA): earnings as a share of assets (average 5.8%).</p>
+        <p>Take two firms alike in size, debt, growth, R&amp;D, cash flow and board, once differences between years, sectors and countries are set aside, but whose D&amp;I scores differ by one standard deviation, 0.14. <strong>Two years later, how does the higher-scoring firm’s value compare?</strong></p>
+        <p class="def"><strong>One standard deviation</strong> is a typical gap between two firms in the sample. For the D&amp;I score it is 0.14, about the distance from the average score, 0.24, to 0.38.</p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="lower" aria-pressed="false">Lower</button>
+          <button class="btn" type="button" data-bet="none" aria-pressed="false">No different</button>
+          <button class="btn" type="button" data-bet="higher" aria-pressed="false">Higher</button>
+        </div>
+        <p class="note">Appendix A for the definitions. Table 3: Tobin’s Q mean 1.782; ROA mean 0.058; D&amp;I mean 0.240, standard deviation 0.138.</p>
+        <p class="note" id="pay-note" hidden>Table 5, columns 1 and 3: D&amp;I coefficients 0.875 (Tobin’s Q) and 0.027 (ROA), both at the 1% level, times 0.138, computed; the paper gives the magnitudes on p. 8. Intervals: coefficient ± 1.96 × coefficient ÷ t-statistic (6.86 and 4.18), computed. With sector-by-year and country-by-year effects (columns 2 and 4): 0.891 and 0.026.</p>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="pay-chart"></div>
+        <p class="legend"><span><i class="dt ink"></i>the paper’s estimate</span><span><i class="ln"></i>95% interval</span><span><i class="sq band"></i>your bet</span></p>
+        <p class="def wide" id="pay-gloss" hidden><strong>Clearing the 1% bar.</strong> If there were no link at all, a gap this large would turn up by chance in fewer than one sample in a hundred. At the 5% or 10% level the evidence is weaker; ‘not significant’ means the estimate cannot be told apart from zero. Here both 95% intervals stay clear of zero.</p>
+      </div>
+      <div class="t">
+        <p id="pay-verdict" aria-live="polite"></p>
+        <div class="actions" id="pay-next" hidden>
+          <a class="btn primary" href="02-detour.html#s1">If it pays, by which road?&nbsp;→</a>
+          <a class="door" href="05-trust.html#s2">Alike in what? What the comparison holds fixed&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: build a D&I score (Section 4.1, Appendix A, Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var PRACTICES = ['Diversity target', 'Diversity and equal-opportunity policy', 'Employee resource group', 'Day-care services', 'Board diversity policy'];
+  var AVG = { d: 0.134, i: 0.347, di: 0.240 };
+  var START = { k: 1, p: [true, true, false, false, false] };
+  var st = E.load('builder');
+  if (!st || typeof st.k !== 'number' || !Array.isArray(st.p) || st.p.length !== 5) st = { k: START.k, p: START.p.slice() };
+  var seatBox = document.getElementById('seats'), strip = document.getElementById('di-strip'), slider = document.getElementById('di-women');
+  var read = document.getElementById('di-read'), list = document.getElementById('practices');
+  var btns = PRACTICES.map(function (name, j) {
+    var b = E.el('button', null, name); b.type = 'button';
+    b.addEventListener('click', function () { st.p[j] = !st.p[j]; update(); });
+    list.appendChild(b); return b;
+  });
+  function vals() {
+    var n = st.p.filter(Boolean).length, d = st.k / 10, i = n / 5;
+    return { n: n, d: d, i: i, di: (d + i) / 2 };
+  }
+  function drawSeats() {
+    var W =Math.round(E.clamp(seatBox.clientWidth || 260, 200, 300)), H = Math.round(W * 0.6);
+    seatBox.innerHTML = '';
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'An illustrative executive table with ten seats, ' + st.k + ' of them women.' }, seatBox);
+    root.style.maxWidth = W + 'px';
+    E.seats(root, W / 2, H / 2, W / 2 - 34, H / 2 - 30, 10, st.k, function (j) { st.k = (st.k === j + 1) ? j : j + 1; update(); });
+    T(root, W / 2, H / 2 - 2, st.k + ' of 10', { 'text-anchor': 'middle', 'class': 'strong' });
+    T(root, W / 2, H / 2 + 14, st.k === 1 ? 'is a woman' : 'are women', { 'text-anchor': 'middle' });
+  }
+  var geo = null;
+  function build(W) {
+    strip.innerHTML = '';
+    var rowH = 40, TOP = 4, H = TOP + 3 * rowH + 22, L = 8, R = 10;
+    function X(v) { return L + (W - L - R) * v; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Your firm’s diversity, inclusion and D&I score on a 0 to 1 scale, against the sample averages of 0.134, 0.347 and 0.240.' }, strip);
+    [0, 0.25, 0.5, 0.75, 1].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP + 16, y2: H - 18, 'class': 'grid' }, root);
+      T(root, X(v), H - 4, v === 0 ? '0' : v === 1 ? '1' : String(v), { 'text-anchor': v === 0 ? 'start' : v === 1 ? 'end' : 'middle' });
+    });
+    geo = { X: X, rowH: rowH, TOP: TOP, W: W, dyn: S('g', {}, root) };
+    drawStrip();
+  }
+  function drawStrip() {
+    if (!geo) return;
+    var v = vals(), g = geo.dyn, X = geo.X;
+    g.innerHTML = '';
+    [['Diversity', v.d, AVG.d], ['Inclusion', v.i, AVG.i], ['D&I score', v.di, AVG.di]].forEach(function (r, j) {
+      var y = geo.TOP + j * geo.rowH;
+      var t = T(g, 0, y + 11, '', { 'class': 'label' });
+      var a = S('tspan', { 'class': j === 2 ? 'strong' : 'label' }, t); a.textContent = r[0] + ': ';
+      var b = S('tspan', {}, t); b.textContent = 'yours ' + r[1].toFixed(2) + ' · average ' + r[2].toFixed(2);
+      S('line', { x1: X(0), x2: X(1), y1: y + 26, y2: y + 26, 'class': 'axis zero' }, g);
+      S('line', { x1: X(r[2]), x2: X(r[2]), y1: y + 18, y2: y + 34, 'class': 'far', 'stroke-width': 3 }, g);
+      S('circle', { cx: X(r[1]), cy: y + 26, r: 6.5, 'class': 'near-fill', stroke: 'var(--paper)', 'stroke-width': 1.5 }, g);
+    });
+  }
+  function update() {
+    var v = vals();
+    slider.value = st.k;
+    slider.setAttribute('aria-valuetext', st.k + ' of 10 executives are women');
+    btns.forEach(function (b, j) { b.setAttribute('aria-pressed', st.p[j] ? 'true' : 'false'); });
+    drawSeats(); drawStrip();
+    var s = '<strong>Your firm:</strong> diversity ' + v.d.toFixed(2) + ' (' + st.k + ' of 10 executives), inclusion ' + v.i.toFixed(2) + ' (' + v.n + ' of 5 practices). ' +
+      'D&amp;I = (' + v.d.toFixed(2) + ' + ' + v.i.toFixed(2) + ') ÷ 2 = <strong>' + v.di.toFixed(2) + '</strong>';
+    var same = Math.abs(v.di - 0.25) < 1e-9 && !(st.k === START.k && v.n === 2);
+    if (same) s += ', the same score as the firm you started with, built differently. One number, two very different firms: the paper will take the score apart.';
+    else if (Math.abs(v.di - AVG.di) <= 0.02) s += ', about the sample average of 0.24.';
+    else s += v.di > AVG.di ? ', above the sample average of 0.24.' : ', below the sample average of 0.24.';
+    read.innerHTML = s;
+    E.save('builder', st);
+  }
+  slider.setAttribute('aria-label', 'Women among the ten executives');
+  slider.addEventListener('input', function () { st.k = +slider.value; update(); });
+  E.fit(strip, build, { min: 260, max: 640 });
+  window.addEventListener('resize', function () { drawSeats(); });
+  E.onShow(2, drawSeats);
+  update();
+})();
+
+/* ---------- slide 3: a bet on the sign, then Table 5 on one ruler ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* per one standard deviation of D&I, as % of the sample mean: [estimate, low, high], computed from Table 5 and Table 3 */
+  var ROWS = [
+    ['Tobin’s Q', 6.78, 4.84, 8.71, '≈ +7%', '+0.12 on an average of 1.78'],
+    ['Return on assets', 6.42, 3.41, 9.44, '≈ +6.5%', '+0.37 pp on an average of 5.8%']
+  ];
+  var LO = -10, HI = 10;
+  var box = document.getElementById('pay-chart'), betBox = document.getElementById('bet');
+  var verdict = document.getElementById('pay-verdict'), nextBox = document.getElementById('pay-next'), note = document.getElementById('pay-note'), gloss = document.getElementById('pay-gloss');
+  var st = { bet: null }, geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var L = 8, R = 12, TOP = 30, rowH = 70, H = TOP + 2 * rowH + 34;
+    function X(v) { return L + (W - L - R) * (v - LO) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Difference two years later for a firm one standard deviation higher on D&I, as a percentage of the sample average: Tobin’s Q about +7% (95% interval about 5 to 9%), return on assets about +6.5% (about 3 to 9%). Both lie in the higher half, clear of zero.' }, box);
+    geo = { X: X, W: W, H: H, TOP: TOP, rowH: rowH, L: L, R: R, bet: S('g', {}, root) };
+    T(root, X(-5), 14, 'lower', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, X(5), 14, 'higher', { 'text-anchor': 'middle', 'class': 'label' });
+    [-10, -5, 0, 5, 10].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP - 8, y2: H - 30, 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, X(v), H - 16, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '%', { 'text-anchor': v === -10 ? 'start' : v === 10 ? 'end' : 'middle' });
+    });
+    T(root, (L + W - R) / 2, H - 1, W < 480 ? 'Difference, % of sample average' : 'Difference two years later, % of the sample average', { 'text-anchor': 'middle' });
+    T(root, X(0) + 5, H - 36, 'no difference', { 'class': 'halo' });
+    geo.dyn = S('g', {}, root);
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, b = geo.bet;
+    g.innerHTML = ''; b.innerHTML = '';
+    if (st.bet === 'lower') S('rect', { x: X(LO), y: geo.TOP - 8, width: X(0) - X(LO), height: geo.H - 30 - geo.TOP + 8, 'class': 'band' }, b);
+    if (st.bet === 'higher') S('rect', { x: X(0), y: geo.TOP - 8, width: X(HI) - X(0), height: geo.H - 30 - geo.TOP + 8, 'class': 'band' }, b);
+    if (st.bet === 'none') S('rect', { x: X(0) - 3, y: geo.TOP - 8, width: 6, height: geo.H - 30 - geo.TOP + 8, 'class': 'band' }, b);
+    if (!st.bet) { T(g, geo.W / 2, geo.TOP + geo.rowH - 4, 'Place your bet to draw the estimates', { 'text-anchor': 'middle', 'class': 'placeholder halo' }); return; }
+    ROWS.forEach(function (r, i) {
+      var y = geo.TOP + i * geo.rowH + 10;
+      var t = T(g, X(LO) + 4, y, '', { 'class': 'halo' });
+      var a = S('tspan', { 'class': 'strong' }, t); a.textContent = r[0];
+      if (geo.W >= 480) { var b2 = S('tspan', {}, t); b2.textContent = '  ·  ' + r[5]; }
+      S('line', { x1: X(r[2]), x2: X(r[3]), y1: y + 22, y2: y + 22, stroke: 'var(--text)', 'stroke-width': 2 }, g);
+      [r[2], r[3]].forEach(function (v) { S('line', { x1: X(v), x2: X(v), y1: y + 16, y2: y + 28, stroke: 'var(--text)', 'stroke-width': 2 }, g); });
+      S('circle', { cx: X(r[1]), cy: y + 22, r: 6, 'class': 'text-fill' }, g);
+      T(g, X(r[1]), y + 44, r[4], { 'text-anchor': 'middle', 'class': 'strong halo' });
+    });
+  }
+  var LEAD = {
+    lower: 'Some studies did find a cost, but not this one. ',
+    none: 'Not here. ',
+    higher: 'You picked the sign this paper finds. '
+  };
+  var TAIL = 'A firm one standard deviation higher on D&I had a Tobin’s Q about 0.12 higher two years later, roughly 7% of the average, and a return on assets about 0.37 percentage points higher, about 6.5% of its average. Both clear the 1% bar. The comparison is between otherwise similar firms: it shows an association, not that D&I caused the difference.';
+  function place(bet) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-pay', bet);
+    draw();
+    verdict.textContent = LEAD[bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false; gloss.hidden = false;
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet')); });
+  var prior = E.load('bet-pay');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior);
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+</script>
+</body>
+</html>

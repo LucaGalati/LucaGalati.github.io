@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stretch the window · To Fix or not to Fix, the Fix</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Benenchia, Galati and Lepone, To Fix or not to Fix, the Fix: two bets on what a ten- or twenty-minute window does to the 4 pm fix, the trade-off between matching the fix and its robustness for six currency pairs, and nine years of tests.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .legend .sq.alt { background: var(--alt); }
+  .bet-grid .d .door-row { margin: .4rem 0 .6rem; }
+</style>
+</head>
+<body data-deck="02-stretch.html">
+<lg-sitebar><noscript><a href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="Would a longer window track the market better?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Stretch the window · 1 of 4</p>
+    <h2 id="h-bet1">Place your bet</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Start with representativeness: the gap between the fix and the day’s average traded price. A longer window takes in more of the afternoon, so it should look more like the whole day.</p>
+        <p><strong>Stretch the window from five minutes to twenty. Does the fix track the day’s market better?</strong></p>
+        <div class="actions bet" id="bet1" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="better" aria-pressed="false">Clearly better</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">About the same</button>
+          <button class="btn" type="button" data-bet="worse" aria-pressed="false">Clearly worse</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <p class="stage-title">Typical daily gap between the fix and the day’s average price, pips</p>
+        <div class="fig" id="re-chart"></div>
+        <p class="legend"><span><i class="dt hollow" style="border:2px solid var(--base);width:14px;height:14px"></i>5 minutes</span><span><i class="dt alt"></i>20 minutes</span><span><i class="sq alt"></i>change at 20 minutes</span></p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="v1" aria-live="polite"></p>
+        <div class="actions" id="next1" hidden>
+          <button class="btn primary" type="button" data-next>And for the banks trading at the fix?&nbsp;→</button>
+        </div>
+      </div>
+      <div class="d" id="more1" hidden>
+        <p>Two summaries of the same daily gaps are at work here: how big they typically are, which the chart shows, and where they sit on average, which the paper’s tests compare. Those tests find no shift large enough to rule out chance for four of the six pairs; for EUR/USD and GBP/USD the average gap moves by about a tenth of a pip at twenty minutes on normal days.</p>
+        <p class="door-row"><a class="door" href="05-gaps.html#s1">Average gap or typical gap?&nbsp;→</a></p>
+        <p class="note">Typical gap: standard deviation of the daily gap, Table 2 (with averages this near zero, practically a root mean square); changes and percentages computed from Table 2. Tests, Table 4: at twenty minutes on normal days EUR/USD +0.12 pips (t = 4.54, 1% level), GBP/USD +0.11 (t = 3.17, 5%); on all days only EUR/USD (t = 3.86, 1%). The day’s average: p.&nbsp;7.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Would a longer fix be easier to match?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Stretch the window · 2 of 4</p>
+    <h2 id="h-bet2">Place your second bet</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>A bank that promised a client the fix trades through the window and ends up with roughly the window’s average price. The gap between that average and the fix is attainability.</p>
+        <p><strong>At twenty minutes, what happens to the typical size of that gap?</strong></p>
+        <div class="actions bet" id="bet2" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="shrinks" aria-pressed="false">It shrinks</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">About the same</button>
+          <button class="btn" type="button" data-bet="grows" aria-pressed="false">It grows</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <p class="stage-title">Typical daily gap between the fix and the window’s average price, pips</p>
+        <div class="fig" id="a-chart"></div>
+        <p class="legend"><span><i class="dt hollow" style="border:2px solid var(--base);width:12px;height:12px"></i>5 minutes</span><span><i class="dt" style="background:var(--muted);width:6px;height:6px"></i>10</span><span><i class="dt alt"></i>20 minutes</span></p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="v2" aria-live="polite"></p>
+        <div class="actions" id="next2" hidden>
+          <button class="btn primary" type="button" data-next>So what does a longer window buy?&nbsp;→</button>
+        </div>
+      </div>
+      <div class="d" id="more2" hidden>
+        <p>The authors draw the same lesson: traders find it harder to replicate a fix computed over a longer window. Their tests on the average gap find significant differences in 9 of the 12 comparisons on normal days, with signs that vary from one pair to another.</p>
+        <p class="note">Typical gap: standard deviation of the daily gap, Table 2; changes computed from Table 2. Five minutes smallest on normal days: Fig. 2 and p.&nbsp;12; harder to replicate: Section 4.2. Tests on the average gap: Table 5, significance as printed; signs: p.&nbsp;8.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What would a longer window buy?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Stretch the window · 3 of 4</p>
+    <h2>A trade-off between matching and robustness</h2>
+    <div class="two">
+      <div>
+        <p>The third yardstick, robustness, is the gap between the fix and the same fix computed without its outlier checks. It grows with the window too.</p>
+        <p>The authors read a wider gap to the unchecked fix as greater robustness. Read that way, a longer window could buy a little robustness and costs attainability, the trade-off an earlier study for the UK regulator also found.</p>
+        <p>Changing the window would also mean re-assessing the surveillance algorithms that look for manipulation. Weighing both, the authors conclude that five minutes “remains broadly effective”.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Has it always been so?&nbsp;→</button></div>
+        <p class="note">Typical gaps: standard deviations of the daily gap, Table 2; changes computed from Table 2. The authors’ reading of the robustness gap: p.&nbsp;9 and p.&nbsp;13; the trade-off, with longer windows that could slightly enhance robustness: p.&nbsp;13 and Section 4.2, after Evans et al. (2018); the cost of change: Section 5; “remains broadly effective”: abstract.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span class="lab">Window</span><div class="seg" id="t-w"></div></div>
+        <div class="ctl"><span class="lab">Follow</span><div class="seg" id="t-p"></div></div>
+        <p class="stage-title">Pick a window: where each pair lands, typical gaps in pips</p>
+        <div class="fig" id="t-chart"></div>
+        <p class="legend"><span><i class="dt base"></i>5 minutes</span><span><i class="dt alt"></i>10 or 20 minutes</span><span><i class="ln toy"></i>a pair’s path, 5 → 10 → 20</span></p>
+        <p class="readout h3l" id="t-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Has five minutes held up since 2015?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Stretch the window · 4 of 4</p>
+    <h2>Year by year, the differences fade into chance</h2>
+    <div class="two">
+      <div>
+        <p>Pool the six pairs and run the same tests one year at a time. Each mark is a t-statistic: how far the average daily gap shifts when the window grows, measured against its own noise. The further from zero, the harder it is to put the shift down to chance; filled marks are the ones the paper marks significant, more solidly for the stricter levels.</p>
+        <p>On all days, the shifts significant at 5% or 1% all fall between 2015 and 2018; later years carry at most a 10% mark. At month-end the marked shifts fall mostly in 2017 and 2018. In the authors’ reading the five-minute window holds up in most years, the exceptions being 2016 on normal days and 2017 at month-end.</p>
+        <div class="actions"><a class="btn primary" href="03-month-end.html#s1">But one day a month is different&nbsp;→</a></div>
+        <p class="note">Tables 7–9, six pairs pooled; t-statistics and significance levels as printed. This year-by-year analysis is labelled exploratory, outside the registered plan (Section 3.3). Normal days track all days closely (p.&nbsp;11) and are left out. Authors’ reading: p.&nbsp;11 and Section 4.3.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span class="pair"><span>Days</span><span class="seg" id="y-day"></span></span><span class="pair"><span>Compare</span><span class="seg" id="y-cmp"></span></span></div>
+        <p class="stage-title">t-statistic of the shift in the average daily gap, six pairs pooled</p>
+        <div class="fig" id="y-chart"></div>
+        <p class="legend"><span><i class="dt" id="y-k1"></i>significant at 1%</span><span><i class="dt" id="y-k2"></i>5%</span><span><i class="dt" id="y-k3"></i>10%</span><span><i class="dt hollow"></i>not significant</span></p>
+        <p class="readout h3l" id="y-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/fix-4pm-effectiveness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* Table 2: standard deviation of the daily gap, in pips, at 5, 10 and 20 minutes; panels A to F */
+var PAIRS = ['AUD/USD', 'USD/CAD', 'EUR/USD', 'GBP/USD', 'JPY/USD', 'NZD/USD'];
+var SD = {
+  re: [[19.1279, 19.0741, 19.0207], [19.1226, 19.0060, 18.8298], [20.6642, 20.5393, 20.3364], [27.1643, 27.0355, 26.8180], [27.4604, 27.3401, 27.1744], [17.7290, 17.6778, 17.6643]],
+  at: [[0.4587, 0.5804, 0.8339], [0.7039, 0.8698, 1.2854], [0.5497, 0.7346, 1.0122], [0.8349, 1.0907, 1.6280], [0.5605, 0.6864, 1.0900], [0.5957, 0.6885, 0.9543]],
+  ro: [[0.3886, 0.5762, 0.8450], [0.6119, 0.8958, 1.3029], [0.4534, 0.7359, 1.0681], [0.7164, 1.1316, 1.6388], [0.4698, 0.7079, 1.0741], [0.4313, 0.5910, 0.8171]]
+};
+function short(p) { return p.replace('/USD', '').replace('USD/', ''); }
+/* a bet: buttons with data-bet, saved per key; done(bet, animate) runs once a bet is placed */
+function betBox(id, key, valid, done) {
+  var box = document.getElementById(id);
+  function place(b, animate) {
+    [].forEach.call(box.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    Explore.save(key, b);
+    done(b, animate);
+  }
+  box.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = Explore.load(key);
+  if (valid.indexOf(prior) >= 0) place(prior, false);
+}
+
+/* ---------- slide 1: bet on representativeness, then the six pairs (Table 2, Table 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('re-chart'), verdict = document.getElementById('v1'), next = document.getElementById('next1'), more = document.getElementById('more1'), head = document.getElementById('h-bet1');
+  var shown = false, geo = null;
+  var LEAD = { better: 'Hardly. ', same: 'You called it. ', worse: 'Not worse either. ' };
+  var P1 = 'Whatever the window, the fix sits a typical 18 to 27 pips from the day’s average price, and twenty minutes narrows that by at most 1.6% (EUR/USD, 20.66 to 20.34). The gap is that wide, the authors note, because the day’s average can sit far from the price at 4 pm.';
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = narrow ? 40 : 74, P = narrow ? 104 : 150, G = narrow ? 16 : 28, rowH = 34, TOP = 22, H = TOP + PAIRS.length * rowH + 26, MAX = 30;
+    var x1 = W - P - G, c1 = W - 4, c0 = W - P + 40;
+    function X(v) { return L + (x1 - L) * v / MAX; }
+    function XC(d) { return c1 + (c1 - c0) * d / 0.4; } /* the change panel runs from −0.4 pips (c0) to 0 (c1) */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Typical daily gap between the fix and the day’s average price, in pips, at 5 and 20 minutes, and the change at 20 minutes. ' + PAIRS.map(function (p, i) { return p + ' ' + SD.re[i][0].toFixed(2) + ' to ' + SD.re[i][2].toFixed(2) + ', a change of ' + E.fmt(SD.re[i][2] - SD.re[i][0], 2); }).join('; ') + '.' }, box);
+    [0, 10, 20, 30].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 22, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 6, v + (v === 30 ? ' pips' : ''), { 'text-anchor': 'middle' });
+    });
+    T(root, c1, 12, narrow ? '20 − 5 min' : 'change at 20 min', { 'text-anchor': 'end', 'class': 'label' });
+    S('line', { x1: c0, x2: c0, y1: TOP, y2: H - 22, 'class': 'grid' }, root);
+    S('line', { x1: c1, x2: c1, y1: TOP, y2: H - 22, 'class': 'axis zero' }, root);
+    T(root, c0, H - 6, '−0.4', { 'text-anchor': 'middle' });
+    T(root, c1, H - 6, '0', { 'text-anchor': 'end' });
+    PAIRS.forEach(function (p, i) { T(root, 0, TOP + i * rowH + rowH / 2 + 4, narrow ? short(p) : p, { 'class': 'label' }); });
+    geo = { X: X, XC: XC, c1: c1, rowH: rowH, TOP: TOP, dyn: S('g', {}, root) };
+    draw(false);
+  }
+  function draw(animate) {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    if (!shown) { T(g, X(15), geo.TOP + 3 * geo.rowH + 4, 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    SD.re.forEach(function (v, i) {
+      var y = geo.TOP + i * geo.rowH + geo.rowH / 2, d = v[2] - v[0];
+      var row = S('g', animate && !E.still ? { 'class': 'rise', style: 'animation-delay:' + (0.12 * i) + 's' } : {}, g);
+      S('circle', { cx: X(v[0]), cy: y, r: 9, 'class': 'base-hollow' }, row);
+      S('circle', { cx: X(v[2]), cy: y, r: 4.5, 'class': 'alt-fill' }, row);
+      S('rect', { x: geo.XC(d), y: y - 5, width: geo.c1 - geo.XC(d), height: 10, 'class': 'alt-fill' }, row);
+      T(row, geo.XC(d) - 5, y + 4, E.fmt(d, 2), { 'text-anchor': 'end', 'class': 'label' });
+    });
+  }
+  betBox('bet1', 'bet1', ['better', 'same', 'worse'], function (b, animate) {
+    shown = true; draw(animate);
+    head.textContent = 'About the same, whatever the window';
+    verdict.textContent = LEAD[b] + P1;
+    next.hidden = false; more.hidden = false;
+  });
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+
+/* ---------- slide 2: bet on attainability, then the six pairs (Table 2; Fig. 2; Table 5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('a-chart'), verdict = document.getElementById('v2'), next = document.getElementById('next2'), more = document.getElementById('more2'), head = document.getElementById('h-bet2');
+  var shown = false, geo = null;
+  var LEAD = { shrinks: 'The opposite. ', same: 'It moves more than that. ', grows: 'Right. ' };
+  var P1 = 'In every pair the typical gap grows with the window, by 60 to 95% at twenty minutes: for GBP/USD from 0.83 to 1.63 pips. On normal days five minutes gives the smallest gap in nearly every pair and year (Fig. 2).';
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = narrow ? 40 : 74, R = narrow ? 86 : 104, rowH = 34, TOP = 6, H = TOP + PAIRS.length * rowH + 28, MAX = 2;
+    function X(v) { return L + (W - L - R) * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Typical daily gap between the fix and the window’s average price, in pips, at 5, 10 and 20 minutes. ' + PAIRS.map(function (p, i) { return p + ' ' + SD.at[i].map(function (v) { return v.toFixed(2); }).join(', '); }).join('; ') + '.' }, box);
+    [0, 0.5, 1, 1.5, 2].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 22, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 6, String(v) + (v === 2 ? ' pips' : ''), { 'text-anchor': v === 2 ? 'end' : 'middle' });
+    });
+    PAIRS.forEach(function (p, i) { T(root, 0, TOP + i * rowH + rowH / 2 + 4, narrow ? short(p) : p, { 'class': 'label' }); });
+    geo = { X: X, W: W, R: R, rowH: rowH, TOP: TOP, dyn: S('g', {}, root) };
+    draw(false);
+  }
+  function draw(animate) {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    if (!shown) { T(g, X(1), geo.TOP + 3 * geo.rowH + 4, 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    SD.at.forEach(function (v, i) {
+      var y = geo.TOP + i * geo.rowH + geo.rowH / 2;
+      var row = S('g', animate && !E.still ? { 'class': 'rise', style: 'animation-delay:' + (0.12 * i) + 's' } : {}, g);
+      S('line', { x1: X(v[0]), x2: X(v[2]), y1: y, y2: y, 'class': 'toy' }, row);
+      S('circle', { cx: X(v[1]), cy: y, r: 2.5, 'class': 'muted-fill' }, row);
+      S('circle', { cx: X(v[0]), cy: y, r: 6, 'class': 'base-hollow' }, row);
+      S('circle', { cx: X(v[2]), cy: y, r: 5, 'class': 'alt-fill' }, row);
+      T(row, geo.W - geo.R + 10, y + 4, v[0].toFixed(2) + ' → ' + v[2].toFixed(2), { 'class': 'label' });
+    });
+  }
+  betBox('bet2', 'bet2', ['shrinks', 'same', 'grows'], function (b, animate) {
+    shown = true; draw(animate);
+    head.textContent = 'Harder to match';
+    verdict.textContent = LEAD[b] + P1;
+    next.hidden = false; more.hidden = false;
+  });
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+
+/* ---------- slide 3: the trade-off, every pair in one plane (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('t-chart'), read = document.getElementById('t-read');
+  var WI = { '5': 0, '10': 1, '20': 2 }, NAME = { '5': 'Five', '10': 'Ten', '20': 'Twenty' };
+  var cur = { w: '5', p: 3 }, geo = null, pos = null, raf = null, MAXX = 1.8, MAXY = 1.8;
+  function target() { var j = WI[cur.w]; return PAIRS.map(function (p, i) { return [SD.at[i][j], SD.ro[i][j]]; }); }
+  function range(k, j) {
+    var v = SD[k].map(function (r) { return Math.round((r[j] / r[0] - 1) * 100); });
+    return '+' + Math.min.apply(null, v) + ' to +' + Math.max.apply(null, v) + '%';
+  }
+  function readout() {
+    var j = WI[cur.w], i = cur.p, p = PAIRS[i];
+    if (j === 0) {
+      read.innerHTML = '<strong>Five minutes, today’s rule:</strong> every pair sits low and to the left, with the smallest gap on both yardsticks. ' +
+        p + ': matching gap ' + SD.at[i][0].toFixed(2) + ' pips, unchecked-fix gap ' + SD.ro[i][0].toFixed(2) + '. Pick a longer window.';
+      return;
+    }
+    read.innerHTML = '<strong>' + NAME[cur.w] + ' minutes against five:</strong> every pair moves up and to the right, matching gap ' + range('at', j) + ', unchecked-fix gap ' + range('ro', j) + '. ' +
+      p + ': ' + SD.at[i][0].toFixed(2) + ' → ' + SD.at[i][j].toFixed(2) + ' and ' + SD.ro[i][0].toFixed(2) + ' → ' + SD.ro[i][j].toFixed(2) + ' pips.';
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = 34, R = 12, TOP = 38, B = 44, H = narrow ? 300 : 330;
+    function X(v) { return L + (W - L - R) * v / MAXX; }
+    function Y(v) { return H - B - (H - B - TOP) * v / MAXY; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    [0, 0.5, 1, 1.5].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: Y(0), 'class': v ? 'grid' : 'axis' }, root);
+      S('line', { x1: X(0), x2: X(MAXX), y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), Y(0) + 16, String(v), { 'text-anchor': v ? 'middle' : 'start' });
+      if (v) T(root, X(0) - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    });
+    T(root, 0, 12, 'Gap to the unchecked fix', { 'class': 'label' });
+    T(root, 0, 27, '↑ more robust');
+    T(root, X(MAXX), Y(0) + 34, narrow ? 'Matching gap  → harder to match' : 'Matching gap, pips   → harder to match', { 'text-anchor': 'end', 'class': 'label' });
+    var paths = S('g', {}, root);
+    geo = { root: root, X: X, Y: Y, paths: paths, dyn: S('g', {}, root) };
+    drawPaths();
+    if (!pos) pos = target();
+    render(pos);
+  }
+  function drawPaths() {
+    var g = geo.paths, X = geo.X, Y = geo.Y; g.innerHTML = '';
+    PAIRS.forEach(function (p, i) {
+      if (i === cur.p) return;
+      S('polyline', { points: [0, 1, 2].map(function (j) { return X(SD.at[i][j]).toFixed(1) + ',' + Y(SD.ro[i][j]).toFixed(1); }).join(' '), 'class': 'toy' }, g);
+      S('circle', { cx: X(SD.at[i][0]), cy: Y(SD.ro[i][0]), r: 3.5, 'class': 'base-hollow' }, g);
+      [1, 2].forEach(function (j) { S('circle', { cx: X(SD.at[i][j]), cy: Y(SD.ro[i][j]), r: 2.2, 'class': 'muted-fill' }, g); });
+    });
+    /* the followed pair on top, its knots named */
+    var k = cur.p;
+    S('polyline', { points: [0, 1, 2].map(function (j) { return X(SD.at[k][j]).toFixed(1) + ',' + Y(SD.ro[k][j]).toFixed(1); }).join(' '), 'class': 'path-on' }, g);
+    S('circle', { cx: X(SD.at[k][0]), cy: Y(SD.ro[k][0]), r: 3.5, 'class': 'base-hollow' }, g);
+    [1, 2].forEach(function (j) { S('circle', { cx: X(SD.at[k][j]), cy: Y(SD.ro[k][j]), r: 2.4, 'class': 'text-fill' }, g); });
+    ['5 min', '10', '20'].forEach(function (lab, j) { T(g, X(SD.at[k][j]) + 8, Y(SD.ro[k][j]) + 15, lab, { 'class': 'halo' }); });
+    geo.root.setAttribute('aria-label', 'Each pair as a point: the typical gap to the window’s average price across, the typical gap to the fix without outlier checks up, both in pips, at the chosen window. ' +
+      PAIRS.map(function (p, i) { return p + ' ' + [0, 1, 2].map(function (j) { return (j ? [10, 20][j - 1] : 5) + ' minutes ' + SD.at[i][j].toFixed(2) + ' and ' + SD.ro[i][j].toFixed(2); }).join(', '); }).join('; ') + '.');
+  }
+  function render(v) {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, cls = cur.w === '5' ? 'base-fill' : 'alt-fill'; g.innerHTML = '';
+    v.forEach(function (pt, i) { if (i !== cur.p) S('circle', { cx: X(pt[0]), cy: Y(pt[1]), r: 5, 'class': cls }, g); });
+    var q = v[cur.p];
+    S('circle', { cx: X(q[0]), cy: Y(q[1]), r: 9.5, 'class': 'hl-bracket' }, g);
+    S('circle', { cx: X(q[0]), cy: Y(q[1]), r: 6, 'class': cls }, g);
+    T(g, X(q[0]) - 13, Y(q[1]) - 9, PAIRS[cur.p], { 'class': 'strong halo', 'text-anchor': 'end' });
+  }
+  function update() {
+    readout();
+    var to = target();
+    if (!pos || E.still || !geo) { pos = to; render(pos); return; }
+    var from = pos.map(function (p) { return p.slice(); }), t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / 480), e = 1 - Math.pow(1 - k, 3);
+      pos = from.map(function (f, i) { return [f[0] + (to[i][0] - f[0]) * e, f[1] + (to[i][1] - f[1]) * e]; });
+      render(pos);
+      raf = k < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  E.seg(document.getElementById('t-w'), [['5', '5 min'], ['10', '10 min'], ['20', '20 min']], '5', function (k) { cur.w = k; update(); }, 'Window length');
+  E.seg(document.getElementById('t-p'), PAIRS.map(function (p, i) { return [String(i), short(p)]; }), '3', function (k) { cur.p = +k; if (geo) drawPaths(); readout(); render(pos || target()); }, 'Pair to follow');
+  readout();
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+
+/* ---------- slide 4: year by year, all pairs pooled, as t-statistics (Tables 7, 8, 9) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var YEARS = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+  /* [10-5 mean, t, 20-5 mean, t] per year; all trading days (a) and end-of-month days (m) */
+  var D = {
+    re: { a: [[0.05973, 2.5549, 0.09117, 1.9904], [0.04567, 1.6330, 0.13749, 2.3745], [-0.00029, -0.0159, 0.00440, 0.1192], [0.00275, 0.1541, 0.005677, 1.5640], [0.01300, 0.7787, 0.01909, 0.3389], [-0.01288, -0.5849, -0.01151, -0.2592], [-0.00436, -0.3013, -0.00695, -0.2716], [-0.03275, -1.9337, -0.05846, -1.6958], [-0.00684, -0.4813, -0.01668, -0.6858]],
+          m: [[-0.01515, -0.1051, -0.02273, -0.0733], [-0.40104, -1.2874, -0.86910, -1.5010], [-0.38437, -3.1445, -0.84965, -3.8412], [-0.10590, -0.9676, -0.26711, -1.3111], [0.01389, 0.1623, -0.10243, -0.6160], [0.00868, 0.0499, -0.03646, -0.1161], [0.04687, 0.3635, 0.01389, 0.0584], [-0.05035, -0.3070, 0.01042, 0.0384], [0.00174, 0.0233, -0.05208, -0.3915]] },
+    at: { a: [[-0.00177, -0.09186, 0.00703, 0.2214], [-0.04257, -2.2192, -0.08025, -2.3943], [0.02188, 1.6413, 0.01664, 0.5444], [-0.03139, -2.0172, -0.07657, -2.7182], [0.01487, 1.0909, 0.00462, 0.2107], [0.01197, 0.6557, -0.03602, -1.0532], [0.01432, 1.2293, 0.00505, 0.2580], [-0.01328, -0.8563, -0.04825, -1.5984], [-0.00521, -0.4094, 0.00916, 0.4312]],
+          m: [[0.01550, 0.3480, 0.16919, 0.7521], [-0.20120, -1.2031, -0.48322, -1.4646], [0.16633, 2.0236, 0.29592, 1.9548], [-0.15964, -2.0924, -0.29999, -1.8559], [0.02564, 0.2586, 0.03479, 0.3149], [0.08592, 0.7542, 0.20486, 0.9568], [-0.15735, -1.6792, -0.36745, -1.6147], [-0.09917, -1.0109, -0.04109, -0.3605], [0.01036, 0.2118, -0.00885, -0.0908]] },
+    ro: { a: [[-0.00830, -0.3934, 0.01870, 0.5640], [-0.06216, -2.9588, -0.10187, -3.0124], [0.03396, 2.2118, 0.02432, 0.8060], [-0.03665, -1.9892, -0.06761, -2.6755], [0.02223, 1.6048, 0.01434, 0.6533], [0.00837, 0.4207, -0.03360, -0.9659], [0.00954, 0.4466, -0.00937, -0.4050], [-0.00626, -0.3880, -0.04603, -1.5907], [-0.01388, -1.0076, -0.00473, -0.2284]],
+          m: [[0.11366, 0.7897, 0.22151, 0.8496], [-0.02194, -0.1402, -0.22882, -0.7377], [0.41266, 3.7585, 0.64490, 3.2384], [-0.10939, -0.9685, -0.13430, -0.7165], [0.10769, 0.8391, 0.10969, 0.8391], [0.21274, 1.4698, 0.35314, 1.3359], [-0.19219, -1.5561, -0.41939, -1.6211], [-0.12939, -0.9685, -0.07534, -0.5098], [0.02498, 0.4123, 0.01077, 0.0953]] }
+  };
+  /* the significance stars as printed, per year [10-5, 20-5]: 0 none, 1 = *, 2 = **, 3 = *** */
+  var STARS = {
+    re: { a: [[2, 1], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [1, 0], [0, 0]], m: [[0, 0], [0, 0], [3, 3], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]] },
+    at: { a: [[0, 0], [1, 2], [0, 0], [1, 2], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], m: [[0, 0], [0, 0], [2, 1], [2, 1], [0, 0], [0, 0], [1, 0], [0, 0], [0, 0]] },
+    ro: { a: [[0, 0], [2, 2], [1, 0], [1, 2], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], m: [[0, 0], [0, 0], [3, 3], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]] }
+  };
+  var NAMES = { re: 'Representativeness', at: 'Attainability', ro: 'Robustness' }, LIM = 4;
+  var LEVEL = ['not significant', 'significant at 10%', 'significant at 5%', 'significant at 1%'], OP = [0, 0.4, 0.7, 1];
+  var box = document.getElementById('y-chart'), read = document.getElementById('y-read');
+  var cur = { d: 'a', c: 2 }, geo = null;
+  function words() { return [cur.d === 'a' ? 'All days' : 'Month-end days', cur.c === 0 ? '10 against 5 minutes' : '20 against 5 minutes']; }
+  function level(k, i) { return STARS[k][cur.d][i][cur.c / 2]; }
+  function summary() {
+    var hits = 0, strong = 0, firstY = null, lastY = null, big = 0, total = 0;
+    ['re', 'at', 'ro'].forEach(function (k) {
+      D[k][cur.d].forEach(function (row, i) {
+        var m = row[cur.c], lv = level(k, i);
+        total++;
+        if (lv) { hits++; if (lv > 1) strong++; firstY = firstY === null ? YEARS[i] : Math.min(firstY, YEARS[i]); lastY = Math.max(lastY || 0, YEARS[i]); }
+        if (Math.abs(m) > Math.abs(big)) big = m;
+      });
+    });
+    var w = words();
+    read.innerHTML = '<strong>' + w[0] + ', ' + w[1] + ':</strong> ' + hits + ' of ' + total + ' shifts marked significant' +
+      (hits ? ' (' + strong + ' at 5% or 1%), ' + (firstY === lastY ? 'all in ' + firstY : 'between ' + firstY + ' and ' + lastY) : '') + '; the largest shift is ' + Math.abs(big).toFixed(2) + ' pips. Point at a mark for its numbers.';
+  }
+  function detail(k, i) {
+    var row = D[k][cur.d][i], m = row[cur.c], t = row[cur.c + 1], w = words();
+    read.innerHTML = '<strong>' + NAMES[k] + ', ' + YEARS[i] + ', ' + w[1] + ', ' + w[0].toLowerCase() + ':</strong> the average daily gap shifts by ' + E.plus(m, 3) + ' pips (t = ' + E.fmt(t, 2) + '), ' + LEVEL[level(k, i)] + '.';
+  }
+  /* normal days blue, month-end ink; the legend swatches follow */
+  function keys() {
+    var ink = cur.d === 'a' ? 'var(--base)' : 'var(--text)';
+    [1, 2, 3].forEach(function (s) { var k = document.getElementById('y-k' + s); k.style.background = 'color-mix(in srgb, ' + ink + ' ' + Math.round(OP[4 - s] * 100) + '%, var(--paper))'; k.style.border = '1px solid ' + ink; });
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = narrow ? 30 : 128, R = 6, rowH = narrow ? 92 : 78, TOP = 4, H = TOP + 3 * rowH + 24, half = 30;
+    function X(i) { return L + 16 + (W - L - R - 32) * i / 8; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group', 'aria-label': 'Year-by-year tests, six pairs pooled' }, box);
+    geo = { root: root, X: X, rows: {}, half: half, dyn: null };
+    ['re', 'at', 'ro'].forEach(function (k, i) {
+      var y = TOP + i * rowH + (narrow ? 18 : 0) + rowH / 2 - (narrow ? 8 : 0);
+      if (narrow) T(root, 0, TOP + i * rowH + 13, NAMES[k], { 'class': 'label' });
+      else T(root, 0, y + 4, NAMES[k], { 'class': 'label' });
+      S('line', { x1: L, x2: W - R, y1: y, y2: y, 'class': 'axis' }, root);
+      S('line', { x1: L, x2: L, y1: y - half, y2: y + half, 'class': 'axis' }, root);
+      if (i === 0) { T(root, L - 4, y - half + 4, 't +4', { 'text-anchor': 'end' }); T(root, L - 4, y + half + 4, '−4', { 'text-anchor': 'end' }); }
+      geo.rows[k] = y;
+    });
+    YEARS.forEach(function (yr, i) { if (!narrow || i % 2 === 0) T(root, X(i), H - 6, String(yr), { 'text-anchor': 'middle' }); });
+    geo.dyn = S('g', {}, root);
+    draw();
+  }
+  function draw() {
+    summary(); keys();
+    if (!geo) return;
+    var w = words();
+    geo.root.setAttribute('aria-label', 't-statistics of the shift in the average daily gap, ' + w[0].toLowerCase() + ', ' + w[1] + ', by year, six pairs pooled; filled marks are significant as printed in the paper.');
+    var g = geo.dyn; g.innerHTML = '';
+    var fill = cur.d === 'a' ? 'base-fill' : 'text-fill', stem = cur.d === 'a' ? 'base' : 'ink', edge = cur.d === 'a' ? 'var(--base)' : 'var(--text)';
+    ['re', 'at', 'ro'].forEach(function (k) {
+      var y0 = geo.rows[k];
+      D[k][cur.d].forEach(function (row, i) {
+        var t = row[cur.c + 1], lv = level(k, i), x = geo.X(i), y = y0 - geo.half * E.clamp(t, -LIM, LIM) / LIM;
+        var a = E.hit(S('g', {}, g), NAMES[k] + ', ' + YEARS[i] + ': shift ' + E.plus(row[cur.c], 3) + ' pips, t = ' + E.fmt(t, 2) + ', ' + LEVEL[lv], function () { detail(k, i); });
+        S('line', { x1: x, x2: x, y1: y0, y2: y, 'class': lv ? stem : 'toy', 'stroke-width': 2 }, a);
+        S('circle', { cx: x, cy: y, r: 10, 'class': 'focus-ring' }, a);
+        if (lv) S('circle', { cx: x, cy: y, r: 5.5, style: 'fill:var(--paper)' }, a); /* keeps the stem from showing through a light mark */
+        S('circle', { cx: x, cy: y, r: lv ? 5.5 : 4.5, 'class': lv ? fill : 'hollow-muted', 'fill-opacity': lv ? OP[lv] : null, style: lv ? 'stroke:' + edge + ';stroke-width:1' : null }, a);
+      });
+    });
+  }
+  E.seg(document.getElementById('y-day'), [['a', 'All days'], ['m', 'Month-end']], 'a', function (k) { cur.d = k; draw(); }, 'Trading days');
+  E.seg(document.getElementById('y-cmp'), [['0', '10 vs 5 min'], ['2', '20 vs 5 min']], '2', function (k) { cur.c = +k; draw(); }, 'Comparison');
+  draw();
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+</script>
+</body>
+</html>

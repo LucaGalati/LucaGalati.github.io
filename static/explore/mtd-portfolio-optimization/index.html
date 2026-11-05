@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization</title>
+<meta name="description" content="An explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: a network of who leads whom among stocks, a rule for picking a portfolio from it, and twenty years of tests in three markets.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .hub-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; align-items: center; }
+  @media (min-width: 900px) { .hub-head { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } }
+  .emblem { max-width: 22rem; justify-self: center; width: 100%; margin: 0; }
+  .emblem .cap { font-family: var(--sans); font-size: .72rem; color: var(--muted); margin: .3rem 0 0; text-align: center; max-width: none; }
+  @media (max-width: 899px) { .emblem { max-width: 17rem; } }
+  @media (max-width: 640px) { .hub h1 { font-size: 2rem; } }
+</style>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <div class="hub-head">
+    <div>
+      <p class="kicker">An explorable explanation</p>
+      <h1>A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization</h1>
+      <p class="byline">Riccardo De Blasis, Luca Galati and Filippo Petroni · Quantitative Finance, 2026 (published online 23 June 2026)</p>
+      <p class="lede">Correlation tells you which stocks move together, never which one moves first. This explorable follows a paper that maps who leads whom among the stocks of three big indices, turns the map into a rule for choosing a portfolio, and tests the rule over twenty years. Three decks on the main path, four side paths, two bets and several things to play with: about twenty-five minutes.</p>
+      <div class="actions">
+        <a class="btn primary" id="begin" href="01-leaders.html#s1">Begin&nbsp;→</a>
+        <a class="btn" id="restart" href="01-leaders.html#s1" hidden>Start from the beginning</a>
+        <a class="btn" href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a>
+      </div>
+    </div>
+    <figure class="emblem">
+      <div class="fig" id="emblem"></div>
+      <figcaption class="cap">Ten stocks, the paper’s worked example. Arrows: who leads whom, thicker when stronger.</figcaption>
+    </figure>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the emblem: the ten-stock network of Section 2.6, with E, its strongest leader, in gold */
+(function () {
+  var E = Explore, box = document.getElementById('emblem');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = Math.round(W * 0.74);
+    var root = E.svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The paper’s ten-stock example network: twenty-eight weighted arrows of influence between stocks A to J; stock E, the strongest leader, is highlighted.' }, box);
+    E.net.draw(root, E.net.W0, { x: 0, y: 0, w: W, h: H }, { R: 11, size: 'out',
+      nodeClass: function (i) { return i === 4 ? 'hi' : ''; },
+      edgeClass: function (i) { return i === 4 ? 'lead' : ''; } });
+  }, { min: 240, max: 360 });
+})();
+</script>
+</body>
+</html>

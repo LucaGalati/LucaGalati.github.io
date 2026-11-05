@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The last day of the month · To Fix or not to Fix, the Fix</title>
+<meta name="description" content="Deck 3 of an explorable explanation of Benenchia, Galati and Lepone, To Fix or not to Fix, the Fix: how month-end days differ, what in the half hour before the window lines up with the fix, and what to take away.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .legend .sw { width: 14px; height: 10px; border: 1px solid var(--border); border-radius: 2px; }
+  .defs.tight li { padding: .2em 0 .2em .7em; margin-bottom: .25rem; font-size: .94rem; line-height: 1.4; }
+  .defs.tight li b { display: inline; margin-right: .5em; }
+  @media (min-width: 820px) { .two.take { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+</style>
+</head>
+<body data-deck="03-month-end.html">
+<lg-sitebar><noscript><a href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Is month-end different?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The last day of the month · 1 of 3</p>
+    <h2>Month-end blurs the picture</h2>
+    <div class="two">
+      <div>
+        <p>On the last trading day of each month funds rebalance, and earlier work found trading spikes around the fix on those days. The authors note it is when the largest share of volume goes through the platforms. That is about one trading day in twenty: 214 per pair in the sample.</p>
+        <p>Switch between normal and month-end days. Each dot is one test of whether the average daily gap shifts when the window grows; filled where the paper marks the shift significant, more solidly for the stricter levels.</p>
+        <p>On normal days nearly every matching and unchecked-fix test is significant, but only two of the twelve representativeness tests are; on month-end days fewer than half as many tests are significant.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What moves the fix at month-end?&nbsp;→</button></div>
+        <p class="note">Tables 4–6, significance stars as printed. Month-end share of observations, 4.67%: Table 1. Trading spikes at month-end: Melvin and Prins (2015), cited p.&nbsp;2; volume, p.&nbsp;13. In the authors’ figures the month-end lines of the three windows cross, with no clear ranking (Figs. 2 and 3, p.&nbsp;13).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Days</span><div class="seg" id="sb-day"></div></div>
+        <div class="fig" id="sb-chart"></div>
+        <p class="legend"><span><i class="dt" id="sb-k1"></i>significant at 1%</span><span><i class="dt" id="sb-k2"></i>5%</span><span><i class="dt" id="sb-k3"></i>10%</span><span><i class="dt hollow"></i>not significant</span></p>
+        <p class="readout h3l" id="sb-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What lines up with the fix at month-end?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The last day of the month · 2 of 3</p>
+    <h2>At month-end, the half hour before counts</h2>
+    <div class="two">
+      <div>
+        <p>The regression the authors committed to in advance slices the half hour before the window into five-minute slots. For each it asks: do trading costs there line up with the level of that day’s fix, and differently at month-end?</p>
+        <ul class="defs tight">
+          <li><b>Bid–ask spread</b>the gap between the best price to buy and the best price to sell</li>
+          <li><b>Effective spread</b>what traders paid against the midpoint between those two prices</li>
+          <li><b>Price impact</b>how far that midpoint moved in the 20 seconds after a trade</li>
+        </ul>
+        <p>The authors set the signs aside. That conditions before the window line up with the fix at month-end is, for them, a sign it “may be sub-optimal” on those days, though not by itself a sign that the method is failing.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What it adds up to&nbsp;→</button></div>
+        <p class="note">Table 3, equation (1): all pairs pooled, currency-year fixed effects, White standard errors; each slot spans 2.5 minutes either side of its time (footnote 7); R² 6.0–13.5%. Signs set aside, and not by itself a sign of the method failing: Section 4.1; “sub-optimal”: Section 5.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Show</span><div class="seg" id="rg-mode"></div></div>
+        <div class="fig" id="rg-chart"></div>
+        <p class="legend"><span><i class="sw" id="rg-k1"></i>1% level</span><span><i class="sw" id="rg-k2"></i>5%</span><span><i class="sw" id="rg-k3"></i>10%</span><span><i class="sw"></i>not significant</span></p>
+        <p class="readout h3l" id="rg-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The last day of the month · 3 of 3</p>
+    <h2>What to take away</h2>
+    <div class="two take">
+      <div>
+        <p class="closer">Nine years, six pairs: a longer window would have changed little, and not all of it for the better.</p>
+        <ol class="takeaways">
+          <li>A longer window dilutes any one burst of trading, but it averages over more of the afternoon; the paper weighs that with three yardsticks.</li>
+          <li>Ten or twenty minutes barely change how well the fix reflects the day’s market, with small exceptions for EUR/USD and GBP/USD.</li>
+          <li>In the authors’ reading they make the fix harder to match and slightly more robust. With the cost of change, five minutes “remains broadly effective”.</li>
+          <li>Month-end is different: far fewer window differences are significant, and trading costs before the window line up with the fix. The authors call it possibly “sub-optimal” then, without reading this as the method failing.</li>
+        </ol>
+      </div>
+      <div>
+        <p class="caveat">The longer fixes are rebuilt from trading under the five-minute rule, so how traders would react to a longer window is not observed. Several of the differences change sign from one pair to another.</p>
+        <p class="door-row"><a class="door" href="05-gaps.html#s2">What the design can and cannot tell&nbsp;→</a></p>
+        <p class="prompt">Among the authors’ ideas for future work: change the average itself, a trimmed or winsorized mean or the Hodges–Lehmann estimator, rather than the window.</p>
+        <div class="actions">
+          <a class="btn primary" href="06-recipe.html#s1">Try a different average&nbsp;→</a>
+          <a class="btn" href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a>
+          <button class="btn" type="button" data-map>Map of this explorable</button>
+        </div>
+        <p class="note">Side paths you may have skipped: <a href="05-gaps.html#s1">average gap or typical gap</a> · <a href="04-behind.html#s1">how the fix was rebuilt</a> · <a href="04-behind.html#s2">what “pre-registered” means</a>. Sources: Sections 4.1, 4.2, 4.3 and 5, the abstract; footnotes 5 and 10 and p.&nbsp;8 for the caveat; future work, Section 3.4 (p.&nbsp;14 and 18).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/fix-4pm-effectiveness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the scoreboard of tests, normal against month-end days (Tables 4, 5, 6) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var PAIRS = ['AUD/USD', 'USD/CAD', 'EUR/USD', 'GBP/USD', 'JPY/USD', 'NZD/USD'];
+  /* per pair: [10-5 mean, t, 20-5 mean, t]; n = normal days, m = end-of-month days */
+  var D = {
+    re: { n: [[0.0109, 0.4379, 0.0119, 0.4799], [0.0188, 0.7644, 0.0063, 0.2575], [0.0358, 1.3432, 0.1205, 4.5419], [0.0368, 1.0448, 0.1113, 3.1692], [-0.0211, -0.5945, -0.0347, -0.9828], [-0.0047, -0.2030, -0.0077, -0.3315]],
+          m: [[-0.0829, -0.1790, -0.1682, -0.3660], [0.1320, 0.2373, 0.1928, 0.3490], [-0.2000, -0.3520, -0.3675, -0.6600], [-0.5082, -0.8032, -1.1297, -1.7938], [0.1540, 0.2030, 0.3383, 0.4473], [-0.0900, -0.2073, -0.2944, -0.6848]] },
+    at: { n: [[0.0199, 30.6585, -0.0021, -2.4341], [-0.0010, -1.0014, 0.0362, 27.5227], [-0.0230, -28.1793, -0.0888, -86.8953], [-0.0124, -10.2087, -0.1000, -61.9874], [0.0003, 0.3800, 0.0298, 27.1373], [0.0032, 3.8200, 0.0006, 0.5446]],
+          m: [[-0.0385, -1.7069, -0.0234, -1.0331], [0.0777, 2.6407, 0.0610, 1.6433], [-0.1192, -4.7155, -0.1164, -3.5631], [-0.1399, -3.5507, -0.2365, -4.3370], [0.0023, 0.0902, -0.0421, -1.3463], [0.0280, 1.5688, 0.0197, 1.0452]] },
+    ro: { n: [[0.0093, 15.3270, -0.0183, -22.1211], [0.0102, 10.7341, 0.0357, 28.2520], [-0.0506, -67.9047, -0.1066, -112.6255], [-0.0346, -29.5423, -0.0764, -49.8590], [0.0114, 15.1882, 0.0235, 22.6756], [0.0026, 3.8605, -0.0146, -17.1869]],
+          m: [[0.0118, 0.5366, 0.0219, 0.8351], [0.0398, 1.2059, 0.0295, 0.6695], [-0.0307, -1.1625, 0.0359, 0.9454], [0.1473, 3.5069, 0.1553, 2.4669], [-0.0118, -0.4687, -0.0682, -1.9956], [0.1190, 7.8867, 0.1377, 7.8079]] }
+  };
+  /* the significance stars as printed, per pair [10-5, 20-5]: 0 none, 1 = *, 2 = **, 3 = *** */
+  var STARS = {
+    re: { n: [[0, 0], [0, 0], [0, 3], [0, 2], [0, 0], [0, 0]], m: [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]] },
+    at: { n: [[3, 1], [0, 3], [3, 3], [3, 3], [0, 3], [3, 0]], m: [[1, 0], [2, 0], [3, 3], [3, 3], [0, 0], [0, 0]] },
+    ro: { n: [[3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3]], m: [[0, 0], [0, 0], [0, 0], [3, 1], [0, 1], [3, 3]] }
+  };
+  var KEYS = ['re', 'at', 'ro'], NAMES = { re: 'Representativeness', at: 'Attainability', ro: 'Robustness' }, SHORT = { re: 'Repr.', at: 'Attain.', ro: 'Robust.' };
+  var LEVEL = ['not significant', 'significant at 10%', 'significant at 5%', 'significant at 1%'], OP = [0, 0.4, 0.7, 1];
+  var box = document.getElementById('sb-chart'), read = document.getElementById('sb-read');
+  var day = 'n', geo = null;
+  function counts() { return KEYS.map(function (k) { var c = 0; STARS[k][day].forEach(function (s) { if (s[0]) c++; if (s[1]) c++; }); return c; }); }
+  function summary() {
+    var c = counts();
+    read.innerHTML = '<strong>' + (day === 'n' ? 'Normal days' : 'Month-end days') + ':</strong> shifts marked significant, out of 12 tests each: representativeness ' + c[0] + ', attainability ' + c[1] + ', robustness ' + c[2] + '. Point at a dot for its numbers.';
+  }
+  function detail(k, i, j) {
+    var r = D[k][day][i], m = r[j * 2], t = r[j * 2 + 1];
+    read.innerHTML = '<strong>' + PAIRS[i] + ', ' + NAMES[k].toLowerCase() + ', ' + (j ? '20' : '10') + ' against 5 minutes, ' + (day === 'n' ? 'normal days' : 'month-end days') + ':</strong> the average daily gap shifts by ' + E.plus(m, 4) + ' pips (t = ' + E.fmt(t, 2) + '), ' + LEVEL[STARS[k][day][i][j]] + '.';
+  }
+  /* normal days blue, month-end ink; the legend swatches follow */
+  function keys() {
+    var ink = day === 'n' ? 'var(--base)' : 'var(--text)';
+    [1, 2, 3].forEach(function (s) { var k = document.getElementById('sb-k' + s); k.style.background = 'color-mix(in srgb, ' + ink + ' ' + Math.round(OP[4 - s] * 100) + '%, var(--paper))'; k.style.border = '1px solid ' + ink; });
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 500, L = narrow ? 44 : 74, TOP = 44, rowH = 34, H = TOP + PAIRS.length * rowH + 6;
+    var gw = (W - L) / 3;
+    function X(g, j) { return L + g * gw + gw * (j ? 0.68 : 0.32); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group', 'aria-label': 'Scoreboard of t-tests: six pairs, three yardsticks, two window comparisons' }, box);
+    KEYS.forEach(function (k, g) {
+      T(root, L + g * gw + gw / 2, 14, narrow ? SHORT[k] : NAMES[k], { 'text-anchor': 'middle', 'class': 'label' });
+      T(root, X(g, 0), 32, narrow ? '10' : '10 vs 5', { 'text-anchor': 'middle' });
+      T(root, X(g, 1), 32, narrow ? '20' : '20 vs 5', { 'text-anchor': 'middle' });
+      if (g) S('line', { x1: L + g * gw, x2: L + g * gw, y1: 4, y2: H - 2, 'class': 'grid' }, root);
+    });
+    PAIRS.forEach(function (p, i) {
+      var y = TOP + i * rowH + rowH / 2;
+      T(root, 0, y + 4, narrow ? p.replace('/USD', '').replace('USD/', '') : p, { 'class': 'label' });
+      S('line', { x1: L, x2: W, y1: y, y2: y, 'class': 'grid' }, root);
+    });
+    geo = { root: root, X: X, TOP: TOP, rowH: rowH, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    summary(); keys();
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    /* normal days blue, month-end days ink, shaded by the printed level; "not significant" is a muted ring whatever the days */
+    var fill = day === 'n' ? 'base-fill' : 'text-fill', edge = day === 'n' ? 'var(--base)' : 'var(--text)', lab = [];
+    KEYS.forEach(function (k, gi) {
+      D[k][day].forEach(function (r, i) {
+        [0, 1].forEach(function (j) {
+          var t = r[j * 2 + 1], lv = STARS[k][day][i][j], cx = geo.X(gi, j), cy = geo.TOP + i * geo.rowH + geo.rowH / 2;
+          var a = E.hit(S('g', {}, g), PAIRS[i] + ', ' + NAMES[k] + ', ' + (j ? '20' : '10') + ' against 5 minutes: t = ' + E.fmt(t, 2) + ', ' + LEVEL[lv], function () { detail(k, i, j); });
+          S('circle', { cx: cx, cy: cy, r: 12, 'class': 'focus-ring' }, a);
+          if (lv) S('circle', { cx: cx, cy: cy, r: 7, style: 'fill:var(--paper)' }, a); /* keeps the grid line from showing through a light dot */
+          S('circle', { cx: cx, cy: cy, r: 7, 'class': lv ? fill : 'hollow-muted', 'fill-opacity': lv ? OP[lv] : null, style: lv ? 'stroke:' + edge + ';stroke-width:1' : null }, a);
+          if (lv) lab.push(PAIRS[i] + ' ' + NAMES[k] + ' ' + (j ? '20' : '10') + ' vs 5, ' + LEVEL[lv]);
+        });
+      });
+    });
+    var c = counts();
+    geo.root.setAttribute('aria-label', 'Scoreboard of t-tests, ' + (day === 'n' ? 'normal' : 'month-end') + ' days: shifts marked significant in the paper out of 12 tests each, representativeness ' + c[0] + ', attainability ' + c[1] + ', robustness ' + c[2] + '. Significant: ' + (lab.join('; ') || 'none') + '.');
+  }
+  E.seg(document.getElementById('sb-day'), [['n', 'Normal days'], ['m', 'Month-end days']], 'n', function (k) { day = k; draw(); }, 'Trading days');
+  summary();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: the half hour before the window (Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var SLOTS = ['15:30', '15:35', '15:40', '15:45', '15:50', '15:55', '16:00'];
+  var SPAN = ['15:27:30–15:32:30', '15:32:30–15:37:30', '15:37:30–15:42:30', '15:42:30–15:47:30', '15:47:30–15:52:30', '15:52:30–15:57:30', '15:57:30–16:02:30, the window'];
+  /* columns t30 ... t0, each [coefficient, standard error, stars] */
+  var B = {
+    any: { bas: [[0.0414, 0.031, 0], [0.0393, 0.031, 0], [0.0519, 0.040, 0], [0.0508, 0.039, 0], [0.0549, 0.039, 0], [0.0600, 0.042, 0], [0.1056, 0.058, 1]],
+           es:  [[-0.0004, 0.001, 0], [-0.0017, 0.001, 2], [-0.0010, 0.001, 0], [-0.0006, 0.000, 1], [-0.0030, 0.001, 3], [-0.0017, 0.001, 2], [-0.0022, 0.000, 3]],
+           pi:  [[-0.0021, 0.004, 0], [-0.0115, 0.010, 0], [-0.0265, 0.021, 0], [-0.0572, 0.037, 0], [-0.2682, 0.097, 3], [-0.1752, 0.075, 2], [-0.5092, 0.168, 3]] },
+    me:  { bas: [[0.0088, 0.003, 3], [0.0208, 0.012, 1], [0.0147, 0.007, 2], [0.0142, 0.008, 1], [0.0105, 0.008, 0], [0.0201, 0.007, 3], [0.0068, 0.005, 0]],
+           es:  [[-0.0023, 0.007, 0], [-0.0103, 0.004, 3], [-0.0076, 0.001, 3], [-0.0044, 0.002, 3], [0.0121, 0.007, 1], [0.0023, 0.006, 0], [-0.0072, 0.002, 3]],
+           pi:  [[0.0017, 0.025, 0], [-0.6533, 0.218, 3], [-0.2124, 0.107, 2], [-0.2608, 0.197, 0], [0.2378, 0.179, 0], [-0.2627, 0.143, 1], [0.7033, 0.265, 3]] }
+  };
+  var ROWS = [['bas', 'Bid–ask spread'], ['es', 'Effective spread'], ['pi', 'Price impact']];
+  var LEVEL = ['not significant', 'significant at 10%', 'significant at 5%', 'significant at 1%'];
+  var OP = [0, 0.4, 0.7, 1];
+  var TXT = {
+    any: '<strong>Normal days:</strong> the bid–ask spread lines up with the fix only inside the window itself, and only at the 10% level. The effective spread and price impact clear the 5% bar mostly in the slots nearest the window, from 15:50 on, with the effective spread also at 15:35.',
+    me: '<strong>Extra at month-end:</strong> the bid–ask spread in three of the six slots before the window clears the 5% bar (15:30, 15:40 and 15:55), two more only at 10%.'
+  };
+  var box = document.getElementById('rg-chart'), read = document.getElementById('rg-read');
+  var mode = 'any', geo = null;
+  /* normal days blue, the month-end extra in ink */
+  function ink() { return mode === 'any' ? 'var(--base)' : 'var(--text)'; }
+  function keys() {
+    [1, 2, 3].forEach(function (s) { var k = document.getElementById('rg-k' + s); k.style.background = 'color-mix(in srgb, ' + ink() + ' ' + Math.round(OP[4 - s] * 100) + '%, var(--paper))'; k.style.borderColor = ink(); });
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = narrow ? 0 : 124, TOP = narrow ? 36 : 38, rowH = narrow ? 62 : 48, H = TOP + 3 * rowH + 4, cw = (W - L) / 7;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group', 'aria-label': 'Table 3: significance of three trading costs in seven five-minute slots up to the window' }, box);
+    function X(c) { return L + c * cw; }
+    S('rect', { x: X(6) + 1, y: 19, width: cw - 2, height: H - 21, 'class': 'win-base' }, root);
+    SLOTS.forEach(function (s, c) { if (!narrow || c % 2 === 0 || c === 6) T(root, X(c) + cw / 2, 13, s, { 'text-anchor': 'middle', 'class': c === 6 ? 'label' : '' }); });
+    T(root, X(6) + cw / 2, 31, 'window', { 'text-anchor': 'middle' });
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH;
+      if (narrow) T(root, 0, y + 12, r[1], { 'class': 'label' });
+      else T(root, 0, y + rowH / 2 + 4, r[1], { 'class': 'label' });
+    });
+    geo = { root: root, X: X, cw: cw, TOP: TOP, rowH: rowH, narrow: narrow, dyn: S('g', {}, root) };
+    draw();
+  }
+  function detail(r, c) {
+    var v = B[mode][r[0]][c];
+    read.innerHTML = '<strong>' + r[1] + ', ' + SPAN[c] + (mode === 'any' ? ', normal days' : ', extra at month-end') + ':</strong> coefficient ' + E.fmt(v[0], 4) + ' (standard error ' + v[1].toFixed(3) + '), ' + LEVEL[v[2]] + '.';
+  }
+  function draw() {
+    read.innerHTML = TXT[mode]; keys();
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    var color = mode === 'any' ? 'base-fill' : 'text-fill', lab = [];
+    ROWS.forEach(function (r, i) {
+      B[mode][r[0]].forEach(function (v, c) {
+        var x = geo.X(c) + 3, y = geo.TOP + i * geo.rowH + (geo.narrow ? 18 : 6), w = geo.cw - 6, h = geo.rowH - (geo.narrow ? 24 : 12);
+        var a = E.hit(S('g', {}, g), r[1] + ', ' + SPAN[c] + ': ' + LEVEL[v[2]], function () { detail(r, c); });
+        S('rect', { x: x, y: y, width: w, height: h, rx: 2, 'class': 'cell' }, a);
+        if (v[2]) S('rect', { x: x + 0.5, y: y + 0.5, width: w - 1, height: h - 1, rx: 2, 'class': color, 'fill-opacity': OP[v[2]], style: 'stroke:' + ink() + ';stroke-width:1' }, a);
+        S('rect', { x: x - 2, y: y - 2, width: w + 4, height: h + 4, rx: 3, 'class': 'focus-ring' }, a);
+        if (v[2]) lab.push(r[1] + ' at ' + SLOTS[c] + ', ' + LEVEL[v[2]]);
+      });
+    });
+    geo.root.setAttribute('aria-label', 'Table 3, ' + (mode === 'any' ? 'normal days' : 'extra at month-end') + ', seven five-minute slots from 15:30 to the window at 16:00. ' + lab.join('; ') + '. All other cells not significant.');
+  }
+  E.seg(document.getElementById('rg-mode'), [['any', 'Normal days'], ['me', 'Extra at month-end']], 'any', function (k) { mode = k; draw(); }, 'Show');
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

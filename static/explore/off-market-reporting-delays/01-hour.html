@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The dark hour · Reporting Delays and the Information Content of Off-Market Trades</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Frino, Galati and Gerace, Reporting Delays and the Information Content of Off-Market Trades: what a block trade is, the hour its publication could be held back, two stories about that hour, and the rule change of 19 February 2018.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-hour.html">
+<lg-sitebar><noscript><a href="../../publication/off-market-reporting-delays/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="Can hiding a trade make prices smarter?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Frino, Galati &amp; Gerace</p>
+    <h1>Can hiding a trade for an hour make prices smarter?</h1>
+    <div class="fig motif" id="hook-motif"></div>
+    <p>A FTSE 100 futures contract is, in effect, a bet on where the index of the largest UK companies will stand on a future date; one contract is called a <strong>lot</strong>. Most lots trade in the exchange’s public order book, where everyone sees each price as it is struck. The largest trades often go another way: two parties agree size and price in private and report the deal afterwards. These are <strong>block trades</strong>.</p>
+    <p>On ICE Futures Europe the parties to a block could ask for its publication to be held back for up to an hour: the dark hour drawn above. On 19 February 2018 the exchange took that hour away from the smaller blocks. More transparency, you might think. The authors suspect the hour was what drew traders who know something to blocks at all. So did the market end up better informed, or worse?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Follow one block trade&nbsp;→</button>
+      <a class="door" href="03-block.html#s1" data-return="next">Why not just buy <span class="nw">1,000</span> lots on screen? Try it&nbsp;→</a>
+    </div>
+    <p class="note">p. 2053–2054 and Appendix A (p. 2064–2065).</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="When does the market find out?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The dark hour · 2 of 5</p>
+    <h2>A block trade has two moments</h2>
+    <div class="two">
+      <div>
+        <p>Take one block, agreed at 10:00. If one of its parties asks for the delay and the trade qualifies, the exchange holds the report back and publishes it at 11:00. Move the clock and watch who knows what.</p>
+        <p>A delayed block therefore has two moments: the <strong>handshake</strong>, when the price is agreed and the trade is done, and <strong>publication</strong>, when everyone else is told. The hour between them is the dark hour. The paper looks at prices around both moments.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What does the hour do?&nbsp;→</button></div>
+        <p class="note">The clock is illustrative. The rules are the paper’s: a block is published at once unless a party asks for deferral and the trade qualifies; deferral lasts up to an hour, and the paper treats a delayed block as done one hour before it was published (p. 2054, 2056–2057, Appendix A).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Publication</span><div class="seg" id="pub-mode"></div></div>
+        <div class="fig" id="life"></div>
+        <label class="ctl" for="clock">Move the clock</label>
+        <input type="range" id="clock" min="0" max="120" step="5" value="55">
+        <p class="readout" id="now-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does the hour do?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The dark hour · 3 of 5</p>
+    <h2>Two stories about the dark hour</h2>
+    <p class="lead">Everyone agrees the hour delays the news. The two stories differ on who trades blocks because of it, and so on what should happen once it is gone.</p>
+    <div class="pairs">
+      <div class="card mute-card">
+        <p class="tagline">Story one</p>
+        <h3>The hour only delays the news</h3>
+        <ul class="chain">
+          <li>Someone who knows something trades a block.</li>
+          <li>The market learns of it an hour later than it could have.</li>
+          <li class="then">Take the hour away: the same traders keep trading blocks, and the market learns at once.</li>
+          <li class="pred">Prediction: blocks of that size still move prices for good.</li>
+        </ul>
+      </div>
+      <div class="card key-card">
+        <p class="tagline">Story two · the paper’s hypothesis</p>
+        <h3>The hour brings informed traders in</h3>
+        <ul class="chain">
+          <li>Someone who knows something uses a block because the hour gives them time to act on it before the market sees the trade.</li>
+          <li>So blocks carry news.</li>
+          <li class="then">Take the hour away: they hide in costlier ways, or stop trading.</li>
+          <li class="pred">Prediction: blocks of that size stop moving prices for good.</li>
+        </ul>
+      </div>
+    </div>
+    <p>An earlier study by Frino (2021) found an extra price move when delayed blocks were finally published, and read the hour as a cost to the market. That reading assumes story one. A change in the rules can tell the two apart.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>The rule change that tells them apart&nbsp;→</button>
+      <a class="door" href="04-secrecy.html#s1" data-return="next">Why would a trader need secrecy? A toy&nbsp;→</a>
+    </div>
+    <p class="note">Story two is the hypothesis the paper states on p. 2054; story one is the reading of Frino (2021) it is set against, on the same page. Both are paraphrased.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What changed in February 2018?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The dark hour · 4 of 5</p>
+    <h2>On 19 February 2018, the line moved</h2>
+    <div class="two">
+      <div>
+        <p>Before that day, any FTSE 100 futures block of <span class="num">500</span> lots or more could ask for the hour. From that day, only blocks above <span class="num">3,328</span> lots could; smaller ones had to be published at once. The hour itself stayed an hour.</p>
+        <p>So blocks of <span class="num">500</span> to <span class="num">3,328</span> lots lost their delay overnight, on the same contract and the same exchange, while larger blocks kept theirs. The smaller ones are the paper’s <strong>experimental group</strong>, the larger ones its <strong>control group</strong>. Anything else that changed in the market should show up in both; the effect of losing the hour, only in the first.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>How do you see news in a price?&nbsp;→</button></div>
+        <p class="note">Thresholds and date: p. 2054 (ICE circular 18/026), p. 2056 and Appendix A. Counts: buy-like plus sell-like blocks, computed from Table 1; 21 August 2017 to 17 August 2018, after the paper’s filters.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Date</span><div class="seg" id="rule-date"></div></div>
+        <div class="fig" id="rule"></div>
+        <p class="legend"><span><i class="hs"><svg viewBox="0 0 16 10" aria-hidden="true"><rect x=".5" y=".5" width="15" height="9"/><path d="M-1 10 L9 0 M5 10 L15 0 M11 10 L21 0"/></svg></i>may be published up to an hour late</span><span><i class="sq exp"></i>experimental</span><span><i class="sq ctl"></i>control</span></p>
+        <label class="ctl" for="size">Size of the block, in lots</label>
+        <input type="range" id="size" min="0" max="1000" step="1" value="436">
+        <p class="readout" id="rule-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How do you measure news in a price?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The dark hour · 5 of 5</p>
+    <h2>News is the part of a price move that stays</h2>
+    <div class="two">
+      <div>
+        <p>Prices jump around any large trade, and much of the jump fades within minutes. What a block teaches the market is the part that stays. So the paper compares the price 30 minutes after a block’s publication with the price 30 minutes before: the block’s <strong>permanent effect</strong>. It is small, so it is counted in <strong>basis points</strong> (bp), hundredths of a percent.</p>
+        <p>Blocks are split into buy-like and sell-like; for a sell-like block, a lasting move is a fall.</p>
+        <div class="actions">
+          <a class="btn primary" href="02-evidence.html#s1">What happened when the hour went&nbsp;→</a>
+          <a class="door" href="03-block.html#s2">How do they tell a buy from a sell?&nbsp;→</a>
+        </div>
+        <p class="note">Toy price paths, invented for illustration. The window is the paper’s equation (2), p. 2056; the split into buy-like and sell-like, p. 2055.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Toy block</span><div class="seg" id="news-kind"></div></div>
+        <div class="fig" id="news"></div>
+        <p class="legend"><span><i class="ln"></i>toy price</span><span><i class="sq normal"></i>the window, ±30 min</span><span><i class="hs"><svg viewBox="0 0 16 10" aria-hidden="true"><rect x=".5" y=".5" width="15" height="9"/><path d="M-1 10 L9 0 M5 10 L15 0 M11 10 L21 0"/></svg></i>the dark hour</span></p>
+        <p class="readout" id="news-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/off-market-reporting-delays/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: who knows what, minute by minute (illustrative clock, the paper's rule) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('life'), clock = document.getElementById('clock'), read = document.getElementById('now-read');
+  var mode = 'held', hourW = 60, raf = null, geo = null;   /* hourW: minutes of dark hour currently drawn */
+  var DEAL = 30;                                            /* the handshake, in minutes after 09:30 */
+  function hm(m) { var t = 570 + m, h = Math.floor(t / 60), mm = t % 60; return (h < 10 ? '0' : '') + h + ':' + (mm < 10 ? '0' : '') + mm; }
+  function pub() { return mode === 'held' ? DEAL + 60 : DEAL; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 196, x0 = 10, x1 = W - 14, yP = 60, yM = 128, yA = 162;
+    function X(m) { return x0 + (x1 - x0) * m / 120; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Illustrative timeline from 09:30 to 11:30. Two parties agree a block at 10:00. If publication is held, everyone else learns of it at 11:00, after the dark hour; if not, at 10:00.' }, box);
+    T(root, x0, yP - 20, 'The two parties', { 'class': 'label' });
+    T(root, x0, yM - 20, 'Everyone else', { 'class': 'label' });
+    S('line', { x1: x0, x2: x1, y1: yA, y2: yA, 'class': 'axis' }, root);
+    for (var m = 0; m <= 120; m += 30) {
+      S('line', { x1: X(m), x2: X(m), y1: yA, y2: yA + 5, 'class': 'axis' }, root);
+      T(root, X(m), yA + 19, hm(m), { 'text-anchor': m === 0 ? 'start' : m === 120 ? 'end' : 'middle' });
+    }
+    E.alignRange(clock, W, x0, x1);
+    geo = { X: X, W: W, yP: yP, yM: yM, yA: yA, fill: E.hatch(root), dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var now = +clock.value, p = DEAL + hourW;
+    clock.setAttribute('aria-valuetext', hm(now));
+    var known = pub();
+    if (now < DEAL) read.innerHTML = '<strong>' + hm(now) + '.</strong> Nothing has happened yet. In ' + (DEAL - now) + ' minutes two parties will agree a block.';
+    else if (now < known) read.innerHTML = '<strong>' + hm(now) + '.</strong> The two parties have known of the block for ' + (now - DEAL) + ' minutes; the exchange holds the report. Everyone else will find out at ' + hm(known) + ', in ' + (known - now) + ' minutes.';
+    else if (mode === 'held') read.innerHTML = '<strong>' + hm(now) + '.</strong> Published at 11:00: everyone else has known for ' + (now - known) + ' minutes, the two parties for ' + (now - DEAL) + '.';
+    else read.innerHTML = '<strong>' + hm(now) + '.</strong> Published at 10:00, the moment it was agreed: everyone has known for ' + (now - DEAL) + ' minutes. No dark hour.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, yP = geo.yP, yM = geo.yM;
+    g.innerHTML = '';
+    var x = X(now), right = x > geo.W * 0.78;
+    S('line', { x1: x, x2: x, y1: 14, y2: geo.yA, 'class': 'cursor' }, g);
+    S('line', { x1: X(0), x2: X(DEAL), y1: yP, y2: yP, 'class': 'lane-off' }, g);
+    S('line', { x1: X(DEAL), x2: X(120), y1: yP, y2: yP, 'class': 'lane-on' }, g);
+    S('line', { x1: X(0), x2: X(p), y1: yM, y2: yM, 'class': 'lane-off' }, g);
+    S('line', { x1: X(p), x2: X(120), y1: yM, y2: yM, 'class': 'lane-on' }, g);
+    if (hourW > 0.5) {
+      S('rect', { x: X(DEAL), y: yM - 9, width: X(p) - X(DEAL), height: 18, 'class': 'hour-bg' }, g);
+      S('rect', { x: X(DEAL), y: yM - 9, width: X(p) - X(DEAL), height: 18, fill: geo.fill }, g);
+      S('rect', { x: X(DEAL), y: yM - 9, width: X(p) - X(DEAL), height: 18, 'class': 'hour-edge' }, g);
+      if (hourW > 40) T(g, (X(DEAL) + X(p)) / 2, yM - 16, 'the dark hour', { 'text-anchor': 'middle', 'class': 'label halo' });
+    }
+    S('line', { x1: X(DEAL), x2: X(DEAL), y1: yP, y2: yM, 'class': 'grid' }, g);
+    S('circle', { cx: X(DEAL), cy: yP, r: 5.5, 'class': 'text-fill' }, g);
+    T(g, X(DEAL), yP + 21, 'agreed', { 'text-anchor': 'middle' });
+    S('circle', { cx: X(p), cy: yM, r: 5.5, 'class': 'hollow' }, g);
+    T(g, X(p), yM + 22, 'published', { 'text-anchor': 'middle', 'class': 'halo' });
+    T(g, x + (right ? -6 : 6), 14, hm(now), { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+  }
+  function animateTo(target) {
+    if (raf) cancelAnimationFrame(raf);
+    if (E.still || !geo) { hourW = target; draw(); return; }
+    var from = hourW, t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / 450), e = 1 - Math.pow(1 - k, 3);
+      hourW = from + (target - from) * e; draw();
+      raf = k < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  E.seg(document.getElementById('pub-mode'), [['held', 'Held for an hour'], ['now', 'At once']], 'held', function (k) { mode = k; animateTo(k === 'held' ? 60 : 0); }, 'Publication');
+  clock.setAttribute('aria-label', 'Time of day, illustrative, from 09:30 to 11:30');
+  clock.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 4: the rule machine (thresholds p. 2054-2056, counts Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var box = document.getElementById('rule'), slider = document.getElementById('size'), read = document.getElementById('rule-read');
+  var LO = 200, HI = 8000, BLOCK = 500, LIS = 3328;
+  /* blocks per group and period, buy-like + sell-like, computed from Table 1 */
+  var N = { exp: { before: [898, 858], after: [715, 703] }, ctl: { before: [76, 78], after: [74, 64] } };
+  var date = 'before', geo = null;
+  function lots() {
+    var v = LO * Math.pow(HI / LO, (+slider.value) / 1000);
+    return v < 1000 ? Math.round(v / 10) * 10 : Math.round(v / 50) * 50;
+  }
+  function delayed(sz, d) { return sz >= BLOCK && (d === 'before' || sz > LIS); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 208, x0 = 10, x1 = W - 14, TOP = 16, yB = 74, yF = 130, yA = 164;
+    function X(v) { return x0 + (x1 - x0) * Math.log(v / LO) / Math.log(HI / LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Which blocks may be published an hour late, by size on a log scale from 200 to 8,000 lots. Before 19 February 2018: every block of 500 lots or more. From that day: only blocks above 3,328 lots. Blocks of 500 to 3,328 lots form the experimental group, larger ones the control group; trades under 500 lots are not blocks.' }, box);
+    S('rect', { x: X(BLOCK), y: TOP, width: X(LIS) - X(BLOCK), height: yA - TOP, 'class': 'exp-tint' }, root);
+    S('rect', { x: X(LIS), y: TOP, width: X(HI) - X(LIS), height: yA - TOP, 'class': 'ctl-tint' }, root);
+    T(root, (X(LO) + X(BLOCK)) / 2, TOP + 14, 'not a block', { 'text-anchor': 'middle' });
+    T(root, (X(BLOCK) + X(LIS)) / 2, TOP + 14, 'experimental', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, (X(LIS) + X(HI)) / 2, TOP + 14, 'control', { 'text-anchor': 'middle', 'class': 'label' });
+    var fill = E.hatch(root);
+    [[yB, BLOCK], [yF, LIS]].forEach(function (r) {
+      S('line', { x1: X(LO), x2: X(HI), y1: r[0], y2: r[0], 'class': 'lane' }, root);
+      S('rect', { x: X(r[1]), y: r[0] - 8, width: X(HI) - X(r[1]), height: 16, 'class': 'hour-bg' }, root);
+      S('rect', { x: X(r[1]), y: r[0] - 8, width: X(HI) - X(r[1]), height: 16, fill: fill }, root);
+      S('rect', { x: X(r[1]), y: r[0] - 8, width: X(HI) - X(r[1]), height: 16, 'class': 'hour-edge' }, root);
+    });
+    var lb = T(root, x0, yB - 16, 'Before 19 Feb 2018', {}), lf = T(root, x0, yF - 16, 'From 19 Feb 2018', {});
+    S('line', { x1: x0, x2: x1, y1: yA, y2: yA, 'class': 'axis' }, root);
+    [[200, '200'], [500, '500'], [1000, '1,000'], [3328, '3,328'], [8000, '8,000']].forEach(function (t, i) {
+      S('line', { x1: X(t[0]), x2: X(t[0]), y1: yA, y2: yA + 5, 'class': 'axis' }, root);
+      T(root, X(t[0]), yA + 18, t[1], { 'text-anchor': i === 0 ? 'start' : i === 4 ? 'end' : 'middle' });
+    });
+    T(root, (x0 + x1) / 2, H - 4, 'Size of the block, lots (log scale)', { 'text-anchor': 'middle', 'class': 'label' });
+    E.alignRange(slider, W, x0, x1);
+    geo = { X: X, W: W, TOP: TOP, yB: yB, yF: yF, yA: yA, lb: lb, lf: lf, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var sz = lots(), on = delayed(sz, date), grp = sz < BLOCK ? null : sz <= LIS ? 'exp' : 'ctl';
+    slider.setAttribute('aria-valuetext', th(sz) + ' lots');
+    var when = date === 'before' ? 'before 19 February 2018' : 'from 19 February 2018';
+    var head = '<strong>A ' + th(sz) + '-lot ' + (grp ? 'block' : 'trade') + ', ' + when + ':</strong> ';
+    if (!grp) read.innerHTML = head + 'below the 500-lot minimum for a block, so it goes through the order book and is public at once, before and after the change.';
+    else {
+      var n = N[grp][date], tot = n[0] + n[1];
+      read.innerHTML = head + (on ? 'it may be published up to an hour late. ' : 'it must be published at once. ') +
+        (grp === 'exp' ? 'Experimental group: delayed before the change, at once after it. ' : 'Control group: the hour in both periods. ') +
+        'The paper has ' + th(tot) + ' blocks of this kind in the half-year ' + (date === 'before' ? 'before the change.' : 'after it.');
+    }
+    if (!geo) return;
+    geo.lb.setAttribute('class', date === 'before' ? 'strong' : '');
+    geo.lf.setAttribute('class', date === 'after' ? 'strong' : '');
+    var g = geo.dyn, x = geo.X(sz);
+    g.innerHTML = '';
+    S('line', { x1: x, x2: x, y1: geo.TOP + 22, y2: geo.yA, 'class': 'cursor' }, g);
+    [['before', geo.yB], ['after', geo.yF]].forEach(function (r) {
+      S('circle', { cx: x, cy: r[1], r: r[0] === date ? 6.5 : 4.5, 'class': delayed(sz, r[0]) ? 'text-fill' : 'hollow' }, g);
+    });
+    var y = date === 'before' ? geo.yB : geo.yF, right = x > geo.W * 0.7;
+    T(g, x + (right ? -11 : 11), y - 14, th(sz) + ' lots', { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+  }
+  E.seg(document.getElementById('rule-date'), [['before', 'Before 19 Feb 2018'], ['after', 'From 19 Feb 2018']], 'before', function (k) { date = k; draw(); }, 'Date');
+  slider.setAttribute('aria-label', 'Size of the block in lots, on a logarithmic scale from 200 to 8,000');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 5: the permanent effect, measured on toy price paths (window of equation (2)) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('news'), read = document.getElementById('news-read');
+  var kind = 'news', geo = null;
+  var WIN = [-30, 30], TMIN = -100, TMAX = 40, TEND = 30, YMIN = -2, YMAX = 10;   /* the path stops at the window's end, leaving room for the bracket */
+  /* toy paths in bp from the starting price; the wiggle is zero at multiples of 7.5 minutes, so the window ends sit on the trend */
+  function price(t, k) {
+    var w = 0.3 * Math.sin(t * Math.PI / 15) + 0.15 * Math.sin(t * Math.PI / 7.5), v = 0;
+    if (k === 'news') { if (t >= -60) v = 4 + 5 * Math.exp(-(t + 60) / 6); if (t >= 0) v = 7 + 1.5 * Math.exp(-t / 5); }
+    else { if (t >= -60) v = 8 * Math.exp(-(t + 60) / 5); if (t >= 0) v += 2.5 * Math.exp(-t / 3); }
+    return v + (t > -98 ? w : 0);
+  }
+  function bpText(d) { return (d > 0 ? '+' : d < 0 ? '−' : '') + Math.abs(d).toFixed(1) + ' bp'; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 236, 286)), L = 30, R = 64, TOP = 20, B = 52;
+    function X(t) { return L + (W - L - R) * (t - TMIN) / (TMAX - TMIN); }
+    function Y(v) { return TOP + (H - TOP - B) * (YMAX - v) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy price path around a block: the handshake 60 minutes before publication, publication at 0, and the window from 30 minutes before to 30 minutes after publication shaded; the readout gives the price change across the window.' }, box);
+    geo = { X: X, Y: Y, W: W, H: H, L: L, R: R, TOP: TOP, B: B, fill: E.hatch(root), win: S('g', {}, root) };
+    [0, 4, 8].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    });
+    var yA = H - B;
+    S('rect', { x: X(-60), y: yA - 7, width: X(0) - X(-60), height: 7, 'class': 'hour-bg' }, root);
+    S('rect', { x: X(-60), y: yA - 7, width: X(0) - X(-60), height: 7, fill: geo.fill }, root);
+    [-90, -60, -30, 0, 30].forEach(function (t) {
+      S('line', { x1: X(t), x2: X(t), y1: yA, y2: yA + 5, 'class': 'axis' }, root);
+      T(root, X(t), yA + 18, (t > 0 ? '+' : t < 0 ? '−' : '') + Math.abs(t), { 'text-anchor': 'middle' });
+    });
+    T(root, (L + W - R) / 2, H - 6, 'Minutes from publication', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, L, TOP - 8, W < 520 ? 'Toy price, bp from the start' : 'Toy price, in bp from where it started', { 'class': 'label' });
+    [[-60, 'handshake'], [0, 'publication']].forEach(function (m) {
+      S('line', { x1: X(m[0]), x2: X(m[0]), y1: TOP + 4, y2: yA, 'class': 'grid' }, root);
+      T(root, X(m[0]) + 4, TOP + 14, m[1], {});
+    });
+    geo.dyn = S('g', {}, root);
+    draw();
+  }
+  function draw() {
+    var e = price(WIN[1], kind) - price(WIN[0], kind), d = Math.abs(e) < 0.05 ? 0 : e;
+    var name = kind === 'news' ? 'Toy block that carried news' : 'Toy block that carried none';
+    var tail = kind === 'news'
+      ? 'The jump at the handshake has mostly faded before the window opens; what stays after publication is the news.'
+      : 'Both bumps faded: the trade moved the price for a few minutes and taught it nothing.';
+    read.innerHTML = '<strong>' + name + ', 30 minutes either side of publication:</strong> the price ends <strong class="nw">' + bpText(d) + '</strong> from where the window began. ' + tail;
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, gw = geo.win;
+    g.innerHTML = ''; gw.innerHTML = '';
+    S('rect', { x: X(WIN[0]), y: geo.TOP, width: X(WIN[1]) - X(WIN[0]), height: geo.H - geo.B - geo.TOP - 8, 'class': 'band-normal' }, gw);
+    var pts = [];
+    for (var t = TMIN; t <= TEND; t += 0.5) pts.push(X(t).toFixed(1) + ',' + Y(price(t, kind)).toFixed(1));
+    S('polyline', { points: pts.join(' '), 'class': 'price' }, g);
+    var y0 = Y(price(WIN[0], kind)), y1 = Y(price(WIN[1], kind)), bx = X(WIN[1]) + 14;
+    S('line', { x1: X(WIN[0]), x2: d === 0 ? X(WIN[1]) : bx, y1: y0, y2: y0, 'class': 'ghost' }, g);
+    S('circle', { cx: X(WIN[0]), cy: y0, r: 4.5, 'class': 'hollow' }, g);
+    S('circle', { cx: X(WIN[1]), cy: y1, r: 4.5, 'class': 'text-fill' }, g);
+    if (d === 0) T(g, X(WIN[1]), y0 - 12, bpText(0), { 'text-anchor': 'middle', 'class': 'strong halo' });
+    else {
+      S('path', { d: 'M' + (bx - 5) + ',' + y0.toFixed(1) + ' H' + bx + ' V' + y1.toFixed(1) + ' H' + (bx - 5), 'class': 'bracket' }, g);
+      T(g, bx + 6, (y0 + y1) / 2 + 4, bpText(d), { 'class': 'strong' });
+    }
+  }
+  E.seg(document.getElementById('news-kind'), [['news', 'Carried news'], ['none', 'Carried none']], 'news', function (k) { kind = k; draw(); }, 'Toy block');
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 1: the dark hour under the question (the hub's motif) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('hook-motif');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 64, x0 = 8, x1 = W - 8, y = 30;
+    var a = x0 + (x1 - x0) * 0.2, b = x0 + (x1 - x0) * 0.8;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A timeline: a block trade is agreed, then an hour passes before it is published.' }, box);
+    S('line', { x1: x0, x2: x1, y1: y, y2: y, 'class': 'axis' }, root);
+    S('rect', { x: a, y: y - 9, width: b - a, height: 18, 'class': 'hour-bg' }, root);
+    S('rect', { x: a, y: y - 9, width: b - a, height: 18, fill: E.hatch(root) }, root);
+    S('circle', { cx: a, cy: y, r: 5, 'class': 'text-fill' }, root);
+    S('circle', { cx: b, cy: y, r: 5, 'class': 'hollow' }, root);
+    T(root, a, y + 26, 'agreed', { 'text-anchor': 'middle' });
+    T(root, b, y + 26, 'published', { 'text-anchor': 'middle' });
+    T(root, (a + b) / 2, y - 15, 'the dark hour', { 'text-anchor': 'middle', 'class': 'label' });
+  }, { min: 280, max: 544 });
+})();
+</script>
+</body>
+</html>

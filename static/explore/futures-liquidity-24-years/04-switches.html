@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading the regression · Liquidity of Futures Markets Over the Last Quarter of a Century</title>
+<meta name="description" content="Side path of an explorable explanation of Frino, Galati and Webb, Liquidity of Futures Markets Over the Last Quarter of a Century: how to read the paper's simple regression on five year switches, from significance and R² to the blocks of years it compares.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-switches.html">
+<lg-sitebar><noscript><a href="../../publication/futures-liquidity-24-years/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How do you read a simple regression?">
+  <div class="inner">
+    <p class="kicker">Side path · Reading the regression</p>
+    <h2>Reading a simple regression</h2>
+    <p class="lead">The authors call Table 1 “a simple OLS regression”, run “to provide an indication” of how technology compares with the crises. Six things that help in reading it.</p>
+    <ul class="facts grid2">
+      <li><b>Significant is not big</b>With 8,661,139 one-minute observations even a small difference can pass the 0.001 test, which says a difference is unlikely to be chance, not that it is large. The authors draw the same line: in their abstract, technology’s influence is “statistically significant but almost imperceptible”.</li>
+      <li><b>Blocks of years</b>Each switch is on or off for whole years, so the five split 1996–2021 into six blocks, and the regression’s line runs through each block’s average. Each coefficient is a step between two blocks: screens, for instance, compare the minutes of 2000–06 and 2010 with those of 1996–99.</li>
+      <li><b>Four percent</b>Together the switches account for 3.9% of the variation in one-minute spreads (R² of 0.039; residual standard error 34.77). They track the average from block to block, while single minutes scatter widely around it.</li>
+      <li><b>One contract, one market</b>SPI futures in Sydney, the authors’ case study. The contract’s underlying index changed in May 2000, and the paper drops “the delivery contract in 2016” after noting anomalies in the data.</li>
+      <li><b>Two spreads</b>The spread in Table 1 is the gap between ask and bid (Appendix A, eq. 4). The paper also computes a percentage spread, the gap divided by the midpoint, which allows for the level of the index (Figure 6).</li>
+      <li><b>What comes next</b>The authors suggest other contracts and markets, longer periods, tests of what high-frequency and algorithmic trading do to liquidity in crises, and of how support from the authorities affects it.</li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-storms.html#s3">← Return to the main path</a>
+    </div>
+    <p class="note">Table 1 (p. 61) and p. 60–61; abstract (p. 52); case study (p. 54); blocks of years: equation (1), with the switches read as on from 2000, 2011 and 2013 for “the years following” 1999, 2010 and 2012, and the data starting in 1996 (Appendix A); underlying index, delivery contract and both spreads: Appendix A (p. 64–65) and Figure 6 (p. 60); future research (p. 62).</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/futures-liquidity-24-years/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+</body>
+</html>

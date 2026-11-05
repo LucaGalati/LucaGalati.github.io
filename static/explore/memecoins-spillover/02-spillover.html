@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The spillover · From Zero to Hero: Memecoins’ Spillover Effects</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Galati and Perdichizzi, From Zero to Hero: what moving together means, how each coin’s co-movement with Bitcoin changed after the $TRUMP launch, which coins gained and lost, and the authors’ readings of why.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-spillover.html">
+<lg-sitebar><noscript><a href="../../publication/memecoins-spillover/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What does moving together look like?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · The spillover · 1 of 5</p>
+      <h2>What “moving together” looks like</h2>
+      <p>Watch two coins minute by minute. Some news hits both at once: a headline about crypto in general, a large trader selling everything. Other news hits only one of them. The larger the share of news they have in common, the more their minutes rise and fall together.</p>
+      <p>The paper’s model estimates that togetherness for each pair of coins, every minute. When it rises after a shock, a jolt to one coin travels to the other: a <strong>volatility spillover</strong>. When it spreads through a whole market, the authors speak of <strong>contagion</strong>.</p>
+      <p>Why it matters: when coins move in step, holding several of them spreads risk less than it seems. Financial stability, risk management and diversification are the stakes the paper names (page 2).</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Did the coins move closer to Bitcoin?&nbsp;→</button></div>
+      <p class="note">Invented coins and news, for illustration. The toy measures togetherness as the correlation of the two coins’ minute moves; the paper’s model estimates a conditional covariance for each pair (Section 2.2).</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Two invented coins <span class="tag">toy</span></p>
+      <div class="fig" id="tog-chart"></div>
+      <p class="legend"><span><i class="ln"></i>coin A</span><span><i class="ln dash"></i>coin B</span><span><i class="dt"></i>one minute: A’s move against B’s</span></p>
+      <label class="ctl" for="tog-w">Share of each minute’s news the two coins have in common</label>
+      <input type="range" id="tog-w" min="0" max="100" step="5" value="20">
+      <p class="readout h2l" id="tog-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did the coins move closer to Bitcoin?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · The spillover · 2 of 5</p>
+      <h2>Nine coins in orbit around Bitcoin</h2>
+      <p>Bitcoin sits in the middle. Each coin’s distance from it shows how closely the two moved together over a week, as the paper’s model measures it: the nearer, the tighter.</p>
+      <p>Each change is also tested against chance. At the paper’s <strong>0.1% significance level</strong>, chance alone would produce a change that large fewer than 1 time in 1,000: three stars (***). The looser 1% level earns two (**).</p>
+      <p class="prompt">Before you switch: will the nine coins move in towards Bitcoin, or out?</p>
+      <p class="door-row doors"><a class="door" href="03-model.html#s1" data-return="2">How does the model measure this, minute by minute?&nbsp;→</a> <a class="door" href="03-model.html#s2" data-return="2">What does a t-statistic measure?&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Who gained, who lost?&nbsp;→</button></div>
+      <p class="note">Table 1: mean BEKK dynamic conditional covariance with Bitcoin, 11–18 against 18–25 January, and the t-statistic of the change (*** 0.1%, ** 1%; the level is set in Section 2.2). Table 1 reports only pairs with Bitcoin; the angles carry no data.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Each coin’s mean co-movement with Bitcoin (Table 1): the nearer the centre, the higher</p>
+      <div class="ctl"><span>Show</span><span class="seg" id="orb-mode"></span></div>
+      <div class="fig" id="orb-chart"></div>
+      <p class="legend"><span><i class="ring-dt"></i>week before</span><span><i class="dt near"></i>week after</span><span><i class="dt weak"></i>change clears only the 1% level</span></p>
+      <p class="readout h4l" id="orb-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Which coins fell furthest after the launch?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The spillover · 3 of 5</p>
+    <h2>Place a bet: which coins fell furthest after the launch?</h2>
+    <div class="bet-grid vr">
+      <div class="q">
+        <p>The third story is in prices. From every minute’s return the authors subtract the coin’s normal drift, its average minute return over 1 to 10 January, and add up what is left: the <strong>cumulative abnormal return</strong>. In the week before the launch most coins gained, likely, the paper suggests, on speculative anticipation of the new presidency: a fear of missing out.</p>
+        <p><strong>After the launch, which kind of coin fell furthest?</strong></p>
+        <div class="actions bet" id="kbet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="anchors" aria-pressed="false">The anchors: Bitcoin and Ethereum</button>
+          <button class="btn" type="button" data-bet="infra" aria-pressed="false">The infrastructure coins: Solana and&nbsp;Chainlink</button>
+          <button class="btn" type="button" data-bet="platforms" aria-pressed="false">The other platforms: Avalanche and&nbsp;Polkadot</button>
+          <button class="btn" type="button" data-bet="memes" aria-pressed="false">The other memecoins: Dogecoin and Shiba&nbsp;Inu</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <p class="stage-title">After the launch, in the paper’s three groups</p>
+        <div class="fig" id="bins"></div>
+        <p class="note">Method: Section 2.1. Groups and numbers: page 4, with Figures 2 and 3. For the period after the launch the paper gives numbers only for the ends of the range: Solana about +20%, Dogecoin and Shiba Inu about −20%; the other coins sit in the group the text puts them in, without a number.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="k-verdict" aria-live="polite"></p>
+        <div class="actions" id="k-next" hidden>
+          <button class="btn primary" type="button" data-next>Why would coins react so differently?&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why would coins react so differently?">
+  <div class="inner two text-first">
+    <div>
+      <p class="kicker">Deck 2 · The spillover · 4 of 5</p>
+      <h2>Same news, different links</h2>
+      <p>Why would one launch lift Solana and sink Dogecoin? In the authors’ reading, each coin was tied to the new one in its own way: by shared technology, by association, as a safe anchor, or as a rival for the same speculative money.</p>
+      <p>The table puts each coin’s week, in the three measures you have met, under the reading the paper gives it.</p>
+      <p class="caveat">These are the authors’ explanations, with their own hedges (“likely”, “possibly”): the letter measures how each coin moved and proposes these channels as the reasons.</p>
+      <p class="door-row"><a class="door" href="04-limits.html#s1" data-return="next">What can one event on one exchange show?&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+      <p class="note">Swing: typical minute move in the week after ÷ the week before (computed from Table A.1). With Bitcoin: change in mean co-movement and its stars (Table 1). Abnormal return after the launch, and the readings: pages 2 to 4; numbers only where the paper gives them.</p>
+    </div>
+    <div class="stage">
+      <table class="score links">
+        <caption>Each coin’s week after the launch, grouped by the authors’ reading</caption>
+        <thead><tr><th scope="col">Coin</th><th scope="col">Swing</th><th scope="col">With Bitcoin</th><th scope="col">Abnormal return</th></tr></thead>
+        <tbody>
+          <tr class="grp"><th colspan="4" scope="rowgroup">The chain $TRUMP was minted on: the likely reason it outperformed every other coin</th></tr>
+          <tr><td>Solana</td><td class="n">×2.57</td><td class="n">+0.056***</td><td>gained most, ≈&nbsp;+20%</td></tr>
+        </tbody>
+        <tbody>
+          <tr class="grp"><th colspan="4" scope="rowgroup">Possibly, the authors suggest, its ties to Oracle, the US software company</th></tr>
+          <tr><td>Chainlink</td><td class="n">×1.77</td><td class="n">+0.092***</td><td>gained</td></tr>
+        </tbody>
+        <tbody>
+          <tr class="grp"><th colspan="4" scope="rowgroup">Anchors of the wider market, fairly sheltered from the speculative cascade</th></tr>
+          <tr><td>Bitcoin</td><td class="n">×1.75</td><td class="n">reference</td><td>stabilized</td></tr>
+          <tr><td>Ethereum</td><td class="n">×1.64</td><td class="n">+0.066***</td><td>stabilized</td></tr>
+        </tbody>
+        <tbody>
+          <tr class="grp"><th colspan="4" scope="rowgroup">Established coins too, though both moved away from Bitcoin: for the authors, a sign the spillover was uneven</th></tr>
+          <tr><td>XRP</td><td class="n">×1.12</td><td class="n">−0.092***</td><td>stabilized</td></tr>
+          <tr><td>Litecoin</td><td class="n">×1.25</td><td class="n">−0.036***</td><td>stabilized</td></tr>
+        </tbody>
+        <tbody>
+          <tr class="grp"><th colspan="4" scope="rowgroup">Rivals for the same money: “asset substitution” towards the new token</th></tr>
+          <tr><td>Dogecoin</td><td class="n">×1.84</td><td class="n">+0.029***</td><td>lost, ≈&nbsp;−20%</td></tr>
+          <tr><td>Shiba Inu</td><td class="n">×1.47</td><td class="n">−0.005**</td><td>lost, ≈&nbsp;−20%</td></tr>
+        </tbody>
+        <tbody>
+          <tr class="grp"><th colspan="4" scope="rowgroup">Sound technology, but confidence gathered around Solana and Chainlink instead</th></tr>
+          <tr><td>Avalanche</td><td class="n">×1.39</td><td class="n">+0.031***</td><td>lost value</td></tr>
+          <tr><td>Polkadot</td><td class="n">×1.35</td><td class="n">+0.005**</td><td>lost value</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The spillover · 5 of 5</p>
+    <h2>What to take away</h2>
+    <p class="closer">One coin’s launch moved the whole market, but not in one direction.</p>
+    <ol class="takeaways">
+      <li>In the week after the launch every coin swung harder, and most moved more closely with Bitcoin: in the authors’ reading, a volatility spillover and contagion across the market.</li>
+      <li>The response was uneven. Solana, the new coin’s own chain, and Chainlink gained and drew closer to Bitcoin; Dogecoin’s and Shiba Inu’s abnormal returns were about −20% after the launch, likely as speculative money moved to the new token; XRP and Litecoin drifted away from Bitcoin.</li>
+      <li>In the authors’ reading, politics moved this market: a divided public saw the president’s coin as an opportunity or as a political risk, and sentiment and policy narratives, not technology alone, shaped the response.</li>
+    </ol>
+    <p class="caveat">One event, ten coins on one exchange, a week either side, and no untouched coin to compare against; the reasons given for each coin’s path are the authors’ reading of the pattern.</p>
+    <p>Still open: would the next political token do the same?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-go="2">←&nbsp;Back to the orbit</button>
+      <a class="btn" href="../../publication/memecoins-spillover/">Read the paper</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Takeaways paraphrase pages 1 to 4 (the divided public: page 2); numbers from Tables 1 and A.1 and page 4. Side paths you may have skipped: <a href="03-model.html#s1">how the model keeps score</a> · <a href="04-limits.html#s1">what the data can see</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/memecoins-spillover/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: two invented coins sharing part of their news (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 60, sh = E.normals(101, N), ua = E.normals(202, N), ub = E.normals(303, N);
+  var box = document.getElementById('tog-chart'), slider = document.getElementById('tog-w'), read = document.getElementById('tog-read');
+  function series(w) {
+    var a = [], b = [], s1 = Math.sqrt(w), s0 = Math.sqrt(1 - w);
+    for (var i = 0; i < N; i++) { a.push(s1 * sh[i] + s0 * ua[i]); b.push(s1 * sh[i] + s0 * ub[i]); }
+    return [a, b];
+  }
+  function cum(x) { var y = 0, out = [0]; x.forEach(function (v) { y += v; out.push(y); }); return out; }
+  function corr(a, b) {
+    var ma = 0, mb = 0, i; for (i = 0; i < N; i++) { ma += a[i] / N; mb += b[i] / N; }
+    var sab = 0, saa = 0, sbb = 0; for (i = 0; i < N; i++) { sab += (a[i] - ma) * (b[i] - mb); saa += (a[i] - ma) * (a[i] - ma); sbb += (b[i] - mb) * (b[i] - mb); }
+    return sab / Math.sqrt(saa * sbb);
+  }
+  /* fixed price scale over every slider position, so the frame never moves */
+  var LO = Infinity, HI = -Infinity;
+  for (var k = 0; k <= 20; k++) series(k / 20).forEach(function (x) { cum(x).forEach(function (v) { LO = Math.min(LO, v); HI = Math.max(HI, v); }); });
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var wide = W >= 520, side = wide ? 176 : Math.min(190, W - 40);
+    var pW = wide ? W - side - 26 : W, pH = wide ? 196 : 140, H = wide ? 220 : pH + 30 + side + 20;
+    var sx = wide ? W - side : (W - side) / 2 + 10, sy = wide ? 10 : pH + 30;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Toy: the price paths of two invented coins over sixty minutes, and a scatter of their minute moves, one against the other. The more news they share, the closer the paths and the tighter the scatter along the diagonal.' }, box);
+    S('line', { x1: 0, x2: pW, y1: pH - 18, y2: pH - 18, 'class': 'axis' }, root);
+    T(root, 0, pH - 2, 'minute 0');
+    T(root, pW, pH - 2, 'minute 60', { 'text-anchor': 'end' });
+    var c = side / 2;
+    S('rect', { x: sx, y: sy, width: side, height: side, 'class': 'surface' }, root);
+    S('line', { x1: sx, x2: sx + side, y1: sy + c, y2: sy + c, 'class': 'grid' }, root);
+    S('line', { x1: sx + c, x2: sx + c, y1: sy, y2: sy + side, 'class': 'grid' }, root);
+    T(root, sx + side, sy + side + 15, 'A’s minute move →', { 'text-anchor': 'end' });
+    var yl = T(root, 0, 0, 'B’s minute move →', {});
+    yl.setAttribute('transform', 'translate(' + (sx - 6) + ',' + (sy + side) + ') rotate(-90)');
+    geo = { W: W, pW: pW, pH: pH, sx: sx, sy: sy, side: side, root: root, dyn: S('g', {}, root) }; /* last, so lines and dots sit on top */
+    draw();
+  }
+  function draw() {
+    var w = +slider.value / 100, ab = series(w), r = corr(ab[0], ab[1]);
+    slider.setAttribute('aria-valuetext', Math.round(w * 100) + ' percent of news in common');
+    var rr = Math.max(0, r).toFixed(2);
+    read.innerHTML = w === 0 ? '<strong>No news in common:</strong> the two coins wander independently; their minutes move together at about ' + rr + ', on a scale from 0, unrelated, to 1, in lockstep.'
+      : w === 1 ? '<strong>All news in common:</strong> the two coins move in lockstep, at ' + rr + ' on a scale from 0, unrelated, to 1, in lockstep.'
+      : '<strong>' + Math.round(w * 100) + '% of news in common:</strong> the two coins’ minutes move together at about ' + rr + ', on a scale from 0, unrelated, to 1, in lockstep.';
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    var pW = geo.pW, top = 6, bot = geo.pH - 26;
+    function X(i) { return 2 + (pW - 40) * i / N; }
+    function Y(v) { return top + (bot - top) * (HI - v) / (HI - LO); }
+    var pa = cum(ab[0]), pb = cum(ab[1]);
+    S('polyline', { points: pb.map(function (v, i) { return X(i).toFixed(1) + ',' + Y(v).toFixed(1); }).join(' '), 'class': 'ink2' }, g);
+    S('polyline', { points: pa.map(function (v, i) { return X(i).toFixed(1) + ',' + Y(v).toFixed(1); }).join(' '), 'class': 'ink' }, g);
+    var ly = E.spread([Y(pa[N]) + 4, Y(pb[N]) + 4], 14);
+    T(g, X(N) + 6, ly[0], 'A', { 'class': 'strong' });
+    T(g, X(N) + 6, ly[1], 'B', { 'class': 'label' });
+    var c = geo.side / 2, k = c / 3.4;
+    for (var i = 0; i < N; i++) {
+      S('circle', { cx: geo.sx + c + E.clamp(ab[0][i], -3.3, 3.3) * k, cy: geo.sy + c - E.clamp(ab[1][i], -3.3, 3.3) * k, r: 3, 'class': 'text-fill', 'fill-opacity': 0.65 }, g);
+    }
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 290, max: 600 });
+})();
+
+/* ---------- slide 2: the orbit around Bitcoin (Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [ticker, name, mean before, mean after, t, clears 0.1%, angle in degrees clockwise from the top] */
+  /* angles leave a gap at the top for the ring labels */
+  var C = [['ETH', 'Ethereum', 0.7150, 0.7809, 43.06, true, 40], ['LINK', 'Chainlink', 0.5619, 0.6535, 49.64, true, 75],
+    ['SOL', 'Solana', 0.5887, 0.6448, 32.44, true, 110], ['AVAX', 'Avalanche', 0.5694, 0.6000, 16.25, true, 145],
+    ['DOT', 'Polkadot', 0.6210, 0.6263, 2.94, false, 180], ['SHIB', 'Shiba Inu', 0.6468, 0.6417, -2.72, false, 215],
+    ['DOGE', 'Dogecoin', 0.6735, 0.7028, 17.95, true, 250], ['LTC', 'Litecoin', 0.5936, 0.5577, -15.31, true, 285],
+    ['XRP', 'XRP', 0.5604, 0.4684, -40.92, true, 320]];
+  var box = document.getElementById('orb-chart'), read = document.getElementById('orb-read');
+  var saved = E.load('orbit') || {};
+  var st = { mode: ['before', 'after', 'both'].indexOf(saved.mode) >= 0 ? saved.mode : 'before', pick: saved.pick || null, p: null };
+  if (st.p === null) st.p = st.mode === 'before' ? 0 : 1;
+  var geo = null, anim = null;
+  function rad(v) { return geo.rB + (geo.R - geo.rB) * (0.86 - v) / 0.44; }
+  function f3(x) { return (Math.round(x * 1000 + 1e-7) / 1000).toFixed(3); } /* half up: 0.6735 prints 0.674 */
+  /* the coins are built once per size and only moved and restyled afterwards, so a focused coin keeps its focus */
+  function build(W, vh) {
+    var act = document.activeElement, had = act && box.contains(act) && act.getAttribute ? act.getAttribute('data-tk') : null;
+    box.innerHTML = '';
+    var Sz = Math.round(E.clamp(Math.min(W, vh - 360), 290, 470)), c = Sz / 2, r = Sz >= 420 ? 21 : 19;
+    var root = S('svg', { viewBox: '0 0 ' + Sz + ' ' + Sz, role: 'group',
+      'aria-label': 'Orbit: each coin’s mean co-movement with Bitcoin, week before and week after the launch (Table 1): Ethereum 0.715 to 0.781; Chainlink 0.562 to 0.654; Solana 0.589 to 0.645; Avalanche 0.569 to 0.600; Polkadot 0.621 to 0.626; Shiba Inu 0.647 to 0.642; Dogecoin 0.674 to 0.703; Litecoin 0.594 to 0.558; XRP 0.560 to 0.468. Nearer the centre means moving more closely with Bitcoin. Each coin is a button that shows its numbers.' }, box);
+    root.style.maxWidth = Sz + 'px'; root.style.margin = '0 auto';
+    geo = { c: c, r: r, R: c - r - 3, rB: 44, nodes: [], ghosts: [], lines: [] };
+    var deco = S('g', { 'aria-hidden': 'true' }, root), back = S('g', { 'aria-hidden': 'true' }, root), front = S('g', {}, root);
+    [0.8, 0.7, 0.6, 0.5].forEach(function (v) {
+      S('circle', { cx: c, cy: c, r: rad(v), 'class': 'ring' }, deco);
+      T(deco, c, c - rad(v) + 4, v.toFixed(1), { 'text-anchor': 'middle', 'class': 'halo' });
+    });
+    E.coin(deco, c, c, 23, 'BTC', 'btc');
+    C.forEach(function (d) {
+      geo.ghosts.push(E.coin(back, 0, 0, r, '', 'ghost'));
+      geo.lines.push(S('line', { 'class': 'thin' }, back));
+      var node = E.coin(front, 0, 0, r, d[0], 'hit'); /* front last, so the coins sit on top of rings and hairlines */
+      node.setAttribute('data-tk', d[0]); node.setAttribute('role', 'button'); node.setAttribute('tabindex', '0');
+      node.setAttribute('aria-label', d[1] + ': ' + f3(d[2]) + ' in the week before, ' + f3(d[3]) + ' in the week after');
+      node.addEventListener('click', function () { pick(d[0]); });
+      node.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(d[0]); } });
+      geo.nodes.push(node);
+    });
+    draw();
+    if (had) geo.nodes.forEach(function (n) { if (n.getAttribute('data-tk') === had) n.focus(); });
+  }
+  function pos(k, v) { var a = C[k][6] * Math.PI / 180, rr = rad(v); return [geo.c + rr * Math.sin(a), geo.c - rr * Math.cos(a)]; }
+  function at(p) { return 'translate(' + p[0].toFixed(1) + ',' + p[1].toFixed(1) + ')'; }
+  function draw() {
+    if (!geo) return;
+    var both = st.mode === 'both' && st.p > 0;
+    C.forEach(function (d, k) {
+      var p = pos(k, d[2] + (d[3] - d[2]) * st.p), p0 = pos(k, d[2]), gh = geo.ghosts[k], ln = geo.lines[k], node = geo.nodes[k];
+      gh.setAttribute('display', both ? 'inline' : 'none'); ln.setAttribute('display', both ? 'inline' : 'none');
+      gh.setAttribute('transform', at(p0));
+      ln.setAttribute('x1', p0[0]); ln.setAttribute('y1', p0[1]); ln.setAttribute('x2', p[0]); ln.setAttribute('y2', p[1]);
+      node.setAttribute('transform', at(p));
+      node.setAttribute('class', 'coin hit ' + (st.p >= 0.5 ? 'after' + (d[5] ? '' : ' weak') : 'before') + (st.pick === d[0] ? ' pick' : ''));
+      node.setAttribute('aria-pressed', st.pick === d[0] ? 'true' : 'false');
+    });
+  }
+  var SUM = {
+    before: '<strong>Week before the launch, 11–18 January.</strong> Ethereum moved most closely with Bitcoin, at 0.715; XRP least, at 0.560. Now switch to the week after: in, or out?',
+    after: '<strong>Week after, 18–25 January.</strong> Six of the nine drew in, led by Chainlink (+0.092), Ethereum (+0.066) and Solana (+0.056). Three moved out, XRP most (−0.092), then Litecoin (−0.036). Polkadot (+0.005) and Shiba Inu (−0.005) barely moved. Tap a coin for its numbers.',
+    both: '<strong>Both weeks.</strong> Each hairline runs from the week before (dashed ring) to the week after (gold). Seven of the nine changes clear the 0.1% level; Polkadot and Shiba Inu (faded) clear only the 1% level. The paper reads the rise as stronger co-movement and a more integrated market: a spillover, but not an even one.'
+  };
+  function readout() {
+    var d = null; C.forEach(function (x) { if (x[0] === st.pick) d = x; });
+    if (!d) { read.innerHTML = SUM[st.mode]; return; }
+    read.innerHTML = '<strong>' + d[1] + ' with Bitcoin:</strong> ' + f3(d[2]) + ' in the week before, ' + f3(d[3]) + ' in the week after <span class="nw">(' + E.plus(d[3] - d[2], 3) + ')</span>. ' +
+      '<span class="nw">t = ' + E.fmt(d[4]) + '</span>: ' + (d[5] ? 'clears the 0.1% level (***).' : 'clears the 1% level (**), one of the two exceptions the paper names to its 0.1% results.') + ' Tap it again to go back to the overview.';
+  }
+  function pick(t) { st.pick = st.pick === t ? null : t; E.save('orbit', { mode: st.mode, pick: st.pick }); draw(); readout(); }
+  function setMode(m) {
+    st.mode = m; E.save('orbit', { mode: st.mode, pick: st.pick });
+    var to = m === 'before' ? 0 : 1;
+    if (anim && anim.raf) cancelAnimationFrame(anim.raf);
+    anim = E.tween([st.p], [to], 650, function (v) { st.p = v[0]; draw(); });
+    readout();
+  }
+  E.seg(document.getElementById('orb-mode'), [['before', 'Week before'], ['after', 'Week after'], ['both', 'Both']], st.mode, setMode, 'Show');
+  readout();
+  E.fit(box, build, { min: 290, max: 600, useHeight: true });
+})();
+
+/* ---------- slide 3: a bet on which kind of coin lost most, then the paper's three groups (page 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [ticker, bin (0 gained, 1 stabilized, 2 lost value), slot in the bin, tag] */
+  var COINS = [['SOL', 0, 0, '≈ +20%'], ['LINK', 0, 1, ''], ['BTC', 1, 0, ''], ['ETH', 1, 1, ''], ['XRP', 1, 2, ''], ['LTC', 1, 3, ''],
+    ['DOGE', 2, 0, '≈ −20%'], ['SHIB', 2, 1, '≈ −20%'], ['AVAX', 2, 2, ''], ['DOT', 2, 3, '']];
+  var BINS = ['Gained', 'Stabilized', 'Lost value'];
+  var box = document.getElementById('bins'), betBox = document.getElementById('kbet');
+  var verdict = document.getElementById('k-verdict'), nextBox = document.getElementById('k-next');
+  var st = { bet: null, p: 0 }, geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var r = W < 420 ? 19 : 21, rowH = 2 * r + 34, top = 36, H = top + 2 * rowH;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label() }, box);
+    geo = { W: W, r: r, rowH: rowH, top: top, H: H, root: root, frame: S('g', {}, root), dyn: S('g', {}, root) };
+    draw();
+  }
+  function label() { /* the text alternative names the groups only once the bet is placed */
+    return st.p >= 1 ? 'The ten coins sorted into the paper’s three groups for the period after the launch: gained, Solana (about +20%) and Chainlink; stabilized, Bitcoin, Ethereum, XRP and Litecoin; lost value, Dogecoin (about −20%), Shiba Inu (about −20%), Avalanche and Polkadot.'
+      : 'The ten coins, waiting to be sorted into the paper’s three groups once you place a bet.';
+  }
+  function grid(k) { /* the neutral starting grid: two rows of five */
+    var w = geo.W / 5; return [w / 2 + (k % 5) * w, geo.top + geo.r + 4 + Math.floor(k / 5) * geo.rowH];
+  }
+  function binPos(c) {
+    var w = geo.W / 3, cx = w / 2 + c[1] * w, dx = geo.r + 6;
+    return [cx + (c[2] % 2 ? dx : -dx), geo.top + geo.r + 4 + Math.floor(c[2] / 2) * geo.rowH];
+  }
+  function draw() {
+    if (!geo) return;
+    var f = geo.frame, g = geo.dyn, p = st.p; f.innerHTML = ''; g.innerHTML = '';
+    if (p > 0) {
+      BINS.forEach(function (b, k) {
+        var w = geo.W / 3;
+        T(f, w / 2 + k * w, 14, b, { 'text-anchor': 'middle', 'class': 'strong', opacity: p });
+        if (k) S('line', { x1: k * w, x2: k * w, y1: 0, y2: geo.H, 'class': 'axis', opacity: p }, f);
+      });
+    } else T(f, geo.W / 2, 14, 'Place your bet to sort the coins', { 'text-anchor': 'middle', 'class': 'placeholder' });
+    S('line', { x1: 0, x2: geo.W, y1: 24, y2: 24, 'class': 'axis' }, f);
+    COINS.forEach(function (c, k) {
+      var a = grid(k), b = binPos(c), x = a[0] + (b[0] - a[0]) * p, y = a[1] + (b[1] - a[1]) * p;
+      E.coin(g, x, y, geo.r, c[0], p < 1 ? 'dim' : '');
+      if (p >= 1 && c[3]) T(g, x, y + geo.r + 15, c[3], { 'text-anchor': 'middle', 'class': 'strong' });
+    });
+  }
+  var RANGE = 'after the launch, the paper puts the spread of abnormal returns at about +20% for Solana down to about −20% for Dogecoin and Shiba Inu (page 4).';
+  var LEAD = {
+    memes: 'You called it: ' + RANGE,
+    platforms: 'Close. Avalanche and Polkadot lost value too, but the steepest falls the paper reports are the memecoins’: ' + RANGE,
+    anchors: 'Not the anchors: Bitcoin and Ethereum stabilized after modest gains the week before. The steepest falls were the memecoins’: ' + RANGE,
+    infra: 'The opposite: Solana and Chainlink did best. The steepest falls were the memecoins’: ' + RANGE
+  };
+  var TAIL = ' The authors call it “asset substitution”: speculative money likely left the old memecoins for the new one. Avalanche and Polkadot lost value too, as, in the authors’ reading, confidence gathered around Solana and Chainlink.';
+  function finish() { st.p = 1; draw(); if (geo) geo.root.setAttribute('aria-label', label()); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-kind', bet);
+    if (!animate || st.p >= 1) { finish(); return; }
+    E.tween([0], [1], 900, function (v) { st.p = v[0]; draw(); }, finish);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-kind');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 290, max: 600 });
+})();
+</script>
+</body>
+</html>

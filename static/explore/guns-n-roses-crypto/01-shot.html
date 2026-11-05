@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The shot · Guns ’N Roses</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Galati and Russo, Guns ’N Roses (Finance Research Letters, 2026): the evening of 13 July 2024, ten tokens watched minute by minute, a bet on which way they moved, and what one direction across ten designs suggests.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .ladder-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: .6rem 3rem; align-items: start; }
+  @media (min-width: 820px) { .ladder-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+  .ladder-grid .stage-title { margin-top: 1.4rem; }
+  @media (max-width: 819px) { .ladder-grid .stage-title { margin-top: .4rem; } }
+  .bet .btn { min-width: 9.5rem; }
+</style>
+</head>
+<body data-deck="01-shot.html">
+<lg-sitebar><noscript><a href="../../publication/guns-n-roses-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="Fear or hope?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The shot · 1 of 5</p>
+    <h1>A shot on a Saturday evening. Which way would crypto jump?</h1>
+    <p>At 22:11 UTC on 13 July 2024, a shot was fired at Donald Trump at a campaign rally in Pennsylvania. He survived. It was a Saturday: stock exchanges were shut for the weekend, but crypto markets never close.</p>
+    <p>All year, Trump’s campaign had courted crypto, setting itself against rivals who wanted closer oversight. So the news carried two messages at once. One was fear: sudden doubt about who would lead and which policies would follow. The other, once he was known to have survived, was hope: a pro-crypto agenda that now looked more durable.</p>
+    <p>Which message would the market hear? The authors ask two things: which way ten very different tokens moved, and whether they moved more tightly together.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Meet the ten tokens&nbsp;→</button>
+    </div>
+    <p class="note">An explorable explanation of Galati and Russo (2026). Time of the event: Section 3.1 and the caption of Fig. 1. The two messages are the paper’s two channels (p. 2); its three questions, p. 2. Crypto trades around the clock (footnote 4); 13 July 2024 was a Saturday.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What did the authors watch?">
+  <div class="inner two mid">
+    <div>
+      <p class="kicker">Deck 1 · The shot · 2 of 5</p>
+      <h2>Ten tokens, each measured against its own normal</h2>
+      <p>The authors follow ten of the largest tokens minute by minute, from a week before the shot to a week after.</p>
+      <p>Each token is measured against its own normal: its average minute return from 1 June to 5 July, since crypto has no closing price and no market index to compare with. Whatever a token does beyond that normal is its <strong>abnormal return</strong>. Added up minute after minute, these give its <strong>cumulative abnormal return</strong> (CAR): a line that climbs while the token runs ahead of its usual pace.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>Place a bet&nbsp;→</button>
+        <a class="door" href="03-measure.html#s1" data-return="next">What counts as abnormal? Move the normal yourself&nbsp;→</a>
+      </div>
+      <p class="note">Mid-prices from the Gemini exchange via LSEG Tick History (Section 3.1): the largest tokens available there, USD Coin left out because a stablecoin is built not to move (footnote 2). 20,160 minutes is 14 days × 1,440, with 10,080 on each side of the shot (Table A.1), so the sample runs from 22:11 UTC on 6 July to 22:11 UTC on 20 July (computed). Benchmark: Section 4.2 and footnote 4; the benchmark bar is not to scale. The two labels are the paper’s (abstract; “narrative-intensive” on p. 6); the glosses are ours.</p>
+    </div>
+    <div>
+      <ul class="tokens" aria-label="The ten tokens">
+        <li><b>AVAX</b><span>Avalanche</span><span class="kind">protocol-oriented</span></li>
+        <li><b>BTC</b><span>Bitcoin</span></li>
+        <li><b>DOGE</b><span>Dogecoin</span><span class="kind">narrative-driven</span></li>
+        <li><b>DOT</b><span>Polkadot</span><span class="kind">protocol-oriented</span></li>
+        <li><b>ETH</b><span>Ethereum</span></li>
+        <li><b>LINK</b><span>Chainlink</span></li>
+        <li><b>LTC</b><span>Litecoin</span></li>
+        <li><b>SHIB</b><span>Shiba Inu</span><span class="kind">narrative-driven</span></li>
+        <li><b>SOL</b><span>Solana</span></li>
+        <li><b>XRP</b><span>XRP (Ripple)</span><span class="kind">narrative-driven</span></li>
+      </ul>
+      <p class="gloss"><i>Narrative-driven</i>: priced mostly on stories and attention. <i>Protocol-oriented</i>: valued more for the network it runs.</p>
+      <div class="fig" id="window"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Which way did crypto move?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The shot · 3 of 5</p>
+    <h2>Place a bet, then watch the rose open</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The authors’ title promises roses: if the market heard hope, the gains should bloom. Take each token’s CAR line and work out its average height over the week before the shot, then over the week after. The paper’s measure is the difference, after minus before.</p>
+        <p><strong>Averaged over the ten tokens, how big was that difference?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="m15" aria-pressed="false">About −15 points: fear won</button>
+          <button class="btn" type="button" data-bet="0" aria-pressed="false">About 0: shrugged off</button>
+          <button class="btn" type="button" data-bet="5" aria-pressed="false">About +5 points</button>
+          <button class="btn" type="button" data-bet="15" aria-pressed="false">About +15 points</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="rose"></div>
+        <p class="note" id="rose-note" hidden>Table 2: each token’s average CAR in the week after minus the week before, in percentage points (15.167 in the paper’s “All” row); “twice the average” is 30.6 against 15.2, computed from Table 2. Petal area is proportional to the gain, as in Florence Nightingale’s rose diagrams; rings at 10, 20 and 30 points. The paper’s Welch test rejects equal averages for every token.</p>
+      </div>
+      <div class="t">
+        <p id="verdict" aria-live="polite"></p>
+        <div class="actions" id="bet-next" hidden>
+          <button class="btn primary" type="button" data-next>Look at each token&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Did every token move the same way?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The shot · 4 of 5</p>
+    <h2>All ten moved the same way, by very different amounts</h2>
+    <p class="lead">Each dot is one token’s gain: its average CAR in the week after the shot minus its average in the week before. XRP gained twice the average and had news of its own: is the +15 its doing?</p>
+    <div class="ladder-grid">
+      <div class="stage">
+        <div class="fig" id="ladder"></div>
+        <p class="legend"><span><i class="dt near"></i>gain, week after minus week before</span><span><i class="dt out"></i>left out of the average</span></p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Average gain of the tokens you keep</p>
+        <div class="tally" aria-live="polite">
+          <p class="tally-num"><span id="avg-big">+15.2</span><span class="unit">points</span></p>
+          <p class="tally-sub" id="avg-sub"></p>
+        </div>
+        <p class="readout h3l" id="avg-read" aria-live="polite"></p>
+        <div class="actions"><button class="btn" type="button" id="keep-all" disabled>Keep all ten</button></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Why would ten tokens move as one?&nbsp;→</button>
+      <a class="door" href="03-measure.html#s2">After minus before: what exactly does it compare?&nbsp;→</a>
+    </div>
+    <p class="note">Table 2, column Post − Pre (week after, 13–20 July, minus week before, 6–13 July), significant for every token by the paper’s Welch test. The “All” row is the plain average of the ten, so averages over fewer tokens and “twice the average” are computed from Table 2, not the paper’s rerun without XRP (footnote 5). Avalanche and Polkadot: pp. 5–6.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why would ten tokens move as one?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The shot · 5 of 5</p>
+    <h2>Ten designs, one direction</h2>
+    <p class="lead">The ten tokens differ in what they are for, how they are built and who holds them. Had each been repriced only on its own news, some would have gained and some lost. All ten gained.</p>
+    <div class="fig" id="three"></div>
+    <div class="two">
+      <p>The paper reads this as an information cascade (Tse and Hackard, 2006): when traders copy what the market does instead of weighing news about each token, abnormal returns pile up the same way everywhere. The pattern is <strong>consistent with</strong> such herding; prices alone cannot show the herd itself.</p>
+      <p>The paper reads the sizes too. The largest gains went to narrative-driven tokens such as Dogecoin, Shiba Inu and XRP, the most muted, though still significant, to protocol-oriented Polkadot and Avalanche: in its reading, the intensity of speculative buying within the cascade, rather than hedging or safe-haven flows.</p>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="02-spillover.html#s1">Did the tokens move more tightly together?&nbsp;→</a>
+      <a class="door" href="04-limits.html#s1">XRP had news of its own. Does that spoil it?&nbsp;→</a>
+    </div>
+    <p class="note">Left and middle panels are illustrative patterns, not data. Right: Table 2, after minus before, arrow length proportional to the gain. The reading: Section 2 and pp. 5–6.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/guns-n-roses-crypto/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: the benchmark window and the fortnight split at the shot ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('window');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 150, x0 = 0, x1 = W, yB = 26, yS = 92, bh = 16, small = W < 460;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Timeline. From 1 June to 5 July 2024, the window that sets each token’s normal. Then the sample: 20,160 minutes, one week either side of the shot on 13 July at 22:11 UTC.' }, box);
+    T(root, 0, yB - 8, '1 June – 5 July: each token’s normal', { 'class': 'label' });
+    S('rect', { x: x0, y: yB, width: x1 - x0, height: bh, 'class': 'surface' }, root);
+    T(root, 8, yB + 12, small ? 'average minute return' : 'its average minute return over these 35 days');
+    /* the fortnight: 7 days either side of 22:11 UTC on 13 July */
+    function X(d) { return x0 + (x1 - x0) * d / 14; }
+    var mid = X(7);
+    S('rect', { x: X(0), y: yS, width: mid - X(0), height: bh, 'class': 'far-fill', 'fill-opacity': 0.85 }, root);
+    S('rect', { x: mid, y: yS, width: X(14) - mid, height: bh, 'class': 'near-fill' }, root);
+    T(root, 0, yS - 8, small ? 'Week before' : 'Week before the shot', { 'class': 'label' });
+    T(root, W, yS - 8, small ? 'Week after' : 'Week after the shot', { 'class': 'label', 'text-anchor': 'end' });
+    S('line', { x1: mid, x2: mid, y1: yS - 30, y2: yS + bh + 6, 'class': 'event' }, root);
+    T(root, mid, yS - 34, '13 Jul, 22:11 UTC', { 'text-anchor': 'middle', 'class': 'strong halo' });
+    /* midnights of 7, 9, ... 19 July: the sample starts at 22:11 on 6 July, 1 h 49 min before the first */
+    var first = (60 + 49) / 1440;
+    for (var k = 0; k < 7; k++) {
+      var d = first + 2 * k, x = X(d);
+      S('line', { x1: x, x2: x, y1: yS + bh, y2: yS + bh + 5, 'class': 'axis' }, root);
+      T(root, x, yS + bh + 18, small && k ? String(7 + 2 * k) : (7 + 2 * k) + ' Jul', { 'text-anchor': 'middle' });
+    }
+    T(root, W / 2, H - 4, '20,160 minutes, one week either side of the shot', { 'text-anchor': 'middle' });
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: the bet, then the rose blooms (Table 2) ---------- */
+(function () {
+  var E = Explore;
+  var betBox = document.getElementById('bet'), verdict = document.getElementById('verdict');
+  var nextBox = document.getElementById('bet-next'), note = document.getElementById('rose-note');
+  var r = E.rose(document.getElementById('rose'), { max: 430, budText: 'Place your bet to open it' });
+  var LEAD = {
+    'm15': 'Fear did not win. The ten tokens’ CAR lines sat 15.2 percentage points higher, on average, in the week after the shot than in the week before. ',
+    '0': 'Far from a shrug. The ten tokens’ CAR lines sat 15.2 percentage points higher, on average, in the week after the shot than in the week before. ',
+    '5': 'Bigger than that. The ten tokens’ CAR lines sat 15.2 percentage points higher, on average, in the week after the shot than in the week before. ',
+    '15': 'You read it right. The ten tokens’ CAR lines sat 15.2 percentage points higher, on average, in the week after the shot than in the week before. '
+  };
+  var TAIL = 'Not one token went the other way. The smallest gains, Polkadot’s +4.0 and Avalanche’s +4.7, are still gains; the largest, XRP’s +30.6, is twice the average.';
+  /* the bet is the deck's only gate: until it is placed, the next arrow and the → key stay on this slide */
+  var placed = false;
+  E.hold = function (i) { return i === 3 && !placed; };
+  function place(bet, animate) {
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet', bet);
+    placed = true; E.refresh();
+    verdict.textContent = LEAD[bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    r.bloom(animate);
+  }
+  var roseBox = document.getElementById('rose');
+  betBox.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-bet]'); if (!b) return;
+    place(b.getAttribute('data-bet'), true);
+    /* on a phone the rose sits below the buttons: bring it into view as it opens */
+    if (roseBox.getBoundingClientRect().bottom > window.innerHeight) roseBox.scrollIntoView({ block: 'nearest', behavior: E.still ? 'auto' : 'smooth' });
+  });
+  var prior = E.load('bet');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.refresh();
+})();
+
+/* ---------- slide 4: the gains of Table 2 (post − pre); the reader leaves tokens out and watches the average ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, T2 = E.T2, NAMES = E.NAMES, ORDER = E.ORDER;
+  var SORTED = ORDER.slice().sort(function (a, b) { return T2[b][2] - T2[a][2]; });
+  /* what each token adds to the story: the paper's own descriptions, in our words */
+  var NOTE = {
+    XRP: 'it began climbing before the shot, which the paper links to news of its own. The paper’s rerun without XRP is “qualitatively unchanged” (footnote 5).',
+    DOGE: 'one of the narrative-driven tokens the paper singles out for the largest gains.',
+    SHIB: 'another narrative-driven token, near the top of the ten.',
+    ETH: 'close to the average of the ten.', LINK: 'close to the average of the ten.',
+    BTC: 'close to the average of the ten.', LTC: 'close to the average of the ten.',
+    SOL: 'below the average of the ten, though still a clear gain.',
+    AVAX: 'a protocol-oriented token whose muted response, the paper suggests, may reflect a design less sensitive to political signals; still significant by its test.',
+    DOT: 'the smallest gain: comparatively muted, in the paper’s words, though its test still finds the change significant.'
+  };
+  var INTRO = 'Click any token to leave it out of the average; click it again to bring it back. The tally recomputes the average gain of the tokens you keep, from Table 2.';
+  var out = {}, last = null, refused = false, shown = null, raf = null, geo = null;
+  var lad = document.getElementById('ladder'), big = document.getElementById('avg-big'), sub = document.getElementById('avg-sub');
+  var read = document.getElementById('avg-read'), reset = document.getElementById('keep-all');
+  var XMIN = 0, XMAX = 36;
+  function kept() { return ORDER.filter(function (k) { return !out[k]; }); }
+  /* Table 2's "All" row is the plain average of the ten, so the average of any subset is computed the same way */
+  function average() {
+    var ks = kept();
+    if (ks.length === ORDER.length) return T2.ALL.slice();
+    var s = [0, 0, 0];
+    ks.forEach(function (k) { for (var j = 0; j < 3; j++) s[j] += T2[k][j]; });
+    return s.map(function (v) { return v / ks.length; });
+  }
+  function rowLabel(k) {
+    return 'Leave ' + NAMES[k] + ' out of the average. ' + NAMES[k] + ': a gain of ' + T2[k][2].toFixed(1) + ' points.';
+  }
+  function drawLadder(W) {
+    lad.innerHTML = '';
+    var rowH = 23, TOP = 22, L = 50, R = 46, gapAll = 12;
+    var H = TOP + (SORTED.length + 1) * rowH + gapAll + 26;
+    function X(v) { return L + (W - L - R) * (v - XMIN) / (XMAX - XMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group',
+      'aria-label': 'Gain of each token, its average CAR in the week after the shot minus the week before, sorted by gain (Table 2). Each token is a button that leaves it out of the average or brings it back; the last row is the average gain of the tokens kept.' }, lad);
+    var t0 = T(root, 0, 12, '', {});
+    S('tspan', { 'class': 'label' }, t0).textContent = 'Gain, after minus before, points';
+    S('tspan', { 'class': 'strong' }, t0).textContent = W < 420 ? '' : '  ·  click a token to leave it out';
+    if (W < 420) T(root, W, 12, 'click to leave out', { 'text-anchor': 'end', 'class': 'strong' });
+    [0, 10, 20, 30].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP - 4, y2: H - 22, 'class': v ? 'grid' : 'axis zero' }, root);
+      T(root, X(v), H - 6, String(v), { 'text-anchor': 'middle' });
+    });
+    var rows = {};
+    SORTED.forEach(function (k, i) {
+      var y = TOP + i * rowH, cy = y + rowH / 2, d = T2[k];
+      var g = S('g', { role: 'button', tabindex: '0', 'aria-label': rowLabel(k) }, root);
+      S('rect', { x: 0, y: y + 1, width: W, height: rowH - 2, rx: 3, 'class': 'row-hit' }, g);
+      T(g, 6, cy + 4, k, { 'class': 'label' });
+      S('line', { x1: X(0), x2: X(d[2]), y1: cy, y2: cy, 'class': 'stem' }, g);
+      S('circle', { cx: X(d[2]), cy: cy, r: 5, 'class': 'near-fill' }, g);
+      T(g, X(d[2]) + 9, cy + 4, '+' + d[2].toFixed(1), { 'class': 'strong halo' });
+      g.addEventListener('click', function () { toggle(k); });
+      g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(k); } });
+      rows[k] = g;
+    });
+    /* the last row: the average of the tokens kept, recomputed as the reader leaves tokens out */
+    var yA = TOP + SORTED.length * rowH + gapAll, cyA = yA + rowH / 2;
+    S('line', { x1: 0, x2: W, y1: yA - gapAll / 2, y2: yA - gapAll / 2, 'class': 'axis' }, root);
+    geo = { X: X, rows: rows,
+      lab: T(root, 6, cyA + 4, '', { 'class': 'strong' }),
+      stem: S('line', { x1: X(0), y1: cyA, y2: cyA, 'class': 'stem' }, root),
+      c1: S('circle', { cy: cyA, r: 5, 'class': 'near-fill' }, root),
+      gl: T(root, 0, cyA + 4, '', { 'class': 'strong halo' }) };
+    mark();
+    drawAverage(shown || average());
+  }
+  function drawAverage(v) {
+    if (!geo) return;
+    var X = geo.X, n = kept().length;
+    geo.lab.textContent = n === ORDER.length ? 'All ten' : n + ' kept';
+    geo.stem.setAttribute('x2', X(v[2])); geo.c1.setAttribute('cx', X(v[2]));
+    geo.gl.setAttribute('x', X(v[2]) + 9); geo.gl.textContent = '+' + v[2].toFixed(1);
+  }
+  function mark() {
+    if (!geo) return;
+    for (var k in geo.rows) {
+      geo.rows[k].setAttribute('class', out[k] ? 'out' : '');
+      geo.rows[k].setAttribute('aria-pressed', out[k] ? 'true' : 'false');
+    }
+  }
+  function words() {
+    var ks = kept(), v = average(), n = ks.length;
+    var min = ks.reduce(function (m, k) { return T2[k][2] < T2[m][2] ? k : m; }, ks[0]);
+    big.textContent = '+' + v[2].toFixed(1);
+    sub.textContent = (n === ORDER.length ? 'All ten tokens' : n + ' of the ten') + '. Smallest gain kept: ' + NAMES[min] + ', +' + T2[min][2].toFixed(1) + '.';
+    if (refused) read.innerHTML = 'Keep at least one token: an average of none is not a number.';
+    else if (!last) read.innerHTML = INTRO;
+    else if (n === ORDER.length) read.innerHTML = '<strong>All ten are back:</strong> +15.2, as in Table 2. Every token you left out had gained, so no choice of tokens could turn the average negative.';
+    else read.innerHTML = '<strong>' + NAMES[last] + (out[last] ? ' left out' : ' back in') + ', +' + T2[last][2].toFixed(1) + ':</strong> ' + NOTE[last];
+    reset.disabled = n === ORDER.length;
+  }
+  function toggle(k) {
+    refused = false;
+    if (!out[k] && kept().length === 1) { refused = true; words(); return; }
+    out[k] = !out[k]; last = k;
+    update();
+  }
+  function update() {
+    var to = average();
+    mark(); words();
+    if (!shown || E.still || !geo) { shown = to; drawAverage(shown); return; }
+    var from = shown.slice(), t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 380), e = 1 - Math.pow(1 - p, 3);
+      shown = from.map(function (f, i) { return f + (to[i] - f) * e; });
+      drawAverage(shown);
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  reset.addEventListener('click', function () { out = {}; refused = false; update(); });
+  words();
+  shown = average();
+  E.fit(lad, drawLadder, { min: 300, max: 600 });
+})();
+
+/* ---------- slide 5: three patterns, two illustrative and Table 2's ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, T2 = E.T2;
+  var box = document.getElementById('three');
+  var PANELS = [
+    { title: 'Each on its own news', tag: ' · illustrative', vals: [6, -5, 3, -8, 4, -3, 7, -2, 5, -6], cls: 'arrow-toy' },
+    { title: 'One signal, all in step', tag: ' · illustrative', vals: [12, 12, 12, 12, 12, 12, 12, 12, 12, 12], cls: 'arrow-toy' },
+    { title: 'What Table 2 shows', tag: ' · gain in points', data: true, vals: E.ORDER.map(function (k) { return T2[k][2]; }), cls: 'arrow-up' }
+  ];
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var cols = W >= 600 ? 3 : 1, gap = 28, pw = (W - gap * (cols - 1)) / cols, head = 34;
+    var up = cols === 3 ? 74 : 54, down = cols === 3 ? 26 : 20, ph = head + up + down + 18, H = cols === 3 ? ph : 3 * ph + 2 * 14;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Three patterns of ten arrows. Illustrative: each token on its own news, arrows up and down. Illustrative: one signal moving all in step, ten equal arrows up. Data from Table 2: ten arrows all pointing up, of different lengths, from Polkadot +4.0 to XRP +30.6 points.' }, box);
+    PANELS.forEach(function (p, j) {
+      var ox = cols === 3 ? j * (pw + gap) : 0, oy = cols === 3 ? 0 : j * (ph + 14), base = oy + head + up;
+      var t = T(root, ox, oy + 12, '', {});
+      var a = S('tspan', { 'class': 'label' }, t); a.textContent = p.title;
+      var b = S('tspan', {}, t); b.textContent = p.tag;
+      S('line', { x1: ox, x2: ox + pw, y1: base, y2: base, 'class': 'axis zero' }, root);
+      var step = pw / 10;
+      p.vals.forEach(function (v, i) {
+        var x = ox + step * (i + 0.5), tip = base - v * (up - 6) / 31, dir = v >= 0 ? 1 : -1;
+        S('line', { x1: x, x2: x, y1: base, y2: tip + dir * 3, 'class': p.cls }, root);
+        S('path', { d: 'M' + (x - 4) + ',' + (tip + dir * 5) + ' L' + x + ',' + (tip - dir * 1) + ' L' + (x + 4) + ',' + (tip + dir * 5) + ' Z', 'class': p.data ? 'near-fill' : 'muted-fill' }, root);
+        if (p.data && step >= 30) T(root, x, base + 16, E.ORDER[i], { 'text-anchor': 'middle' });
+        /* the shortest and the longest arrow carry their numbers, so the panel has a scale */
+        if (p.data && (E.ORDER[i] === 'DOT' || E.ORDER[i] === 'XRP')) T(root, x, tip - 6, '+' + v.toFixed(1), { 'text-anchor': 'middle', 'class': 'strong halo' });
+      });
+      if (p.data && step < 30) T(root, ox, base + 16, 'AVAX to XRP, alphabetical');
+    });
+  }, { min: 300, max: 1000 });
+})();
+</script>
+</body>
+</html>

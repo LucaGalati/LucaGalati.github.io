@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the model keeps score · From Zero to Hero: Memecoins’ Spillover Effects</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and Perdichizzi, From Zero to Hero: how the BEKK model updates its estimate of co-movement every minute, and what a t-statistic weighs when it tests a change.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-model.html">
+<lg-sitebar><noscript><a href="../../publication/memecoins-spillover/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How does the model track co-movement minute by minute?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · How the model keeps score · 1 of 2</p>
+      <h2>The model’s memory</h2>
+      <p>The model behind Table 1, a scalar BEKK, revises its estimate of how two coins move together every minute. Each new estimate blends three things:</p>
+      <p class="eq"><span class="nw">estimate<sub>now</sub> =</span> <span class="nw">(1 − <b>a</b> − <b>b</b>) × long-run average</span> + <span class="nw"><b>a</b> × (surprise<sub>A</sub> × surprise<sub>B</sub>)</span> + <span class="nw"><b>b</b> × estimate<sub>a minute ago</sub></span></p>
+      <p>A coin’s <strong>surprise</strong> is simply its minute’s move, since the model expects zero on average; two moves in the same direction make a positive product. <b>a</b> sets how hard the estimate reacts to a fresh joint surprise, <b>b</b> how long it remembers. While a + b stays below 1, every jolt fades back towards the long-run average. “Scalar” means one a and one b serve every pair of coins. Table 1 averages a line like this one over each week.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>What does a t-statistic measure?&nbsp;→</button>
+        <a class="btn return-link" href="02-spillover.html#s2" data-primary-when="02-spillover.html">← Return to the main path</a>
+      </div>
+      <p class="note">Equation (1) and the zero-mean assumption, Section 2.2. Invented minutes: the long-run average of 0.5, the size of the surprises and the starting a = 0.10 and b = 0.85 are illustrative; the paper does not report its estimates of a and b.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Estimated co-movement of two coins, minute by minute <span class="tag">toy</span></p>
+      <div class="ctl"><span class="pair"><span>Click or tap the chart to drop a surprise</span><span class="seg" id="bk-kind"></span></span></div>
+      <div class="fig" id="bk-chart"></div>
+      <p class="legend"><span><i class="ln"></i>the model’s estimate</span><span><i class="ln ghost"></i>long-run average</span><span><i class="tick-ink"></i>a surprise you dropped</span></p>
+      <div class="ctl">
+        <button class="btn" type="button" id="bk-add">Drop one</button>
+        <button class="btn" type="button" id="bk-clear">Clear</button>
+      </div>
+      <label class="ctl" for="bk-a">a, reaction to a new surprise</label>
+      <input type="range" id="bk-a" min="0.02" max="0.25" step="0.01" value="0.1">
+      <label class="ctl" for="bk-b">b, memory of the last estimate</label>
+      <input type="range" id="bk-b" min="0" max="0.97" step="0.01" value="0.85">
+      <p class="readout h3l" id="bk-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does a t-statistic measure?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · How the model keeps score · 2 of 2</p>
+      <h2>What a t-statistic weighs</h2>
+      <p>Every change in Table 1 comes with a t-statistic. It sets the gap between two averages against how uncertain those averages are: the gap divided by its standard error. The standard error grows with the spread of the observations and shrinks as more of them are averaged, so the same gap earns a larger t from more data.</p>
+      <p>The further t lies from zero, the harder the gap is to put down to chance: beyond 2.58 it clears the 1% level (**), beyond 3.29 the 0.1% level (***). The authors chose the strict 0.1% level to keep false alarms rare in high-frequency data (Section 2.2).</p>
+      <p>Try it on three invented gaps: slide the number of observations and watch each one cross the cut-offs.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="02-spillover.html#s2">← Return to the main path</a>
+      </div>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Three invented gaps, the same spread <span class="tag">toy</span></p>
+      <div class="fig" id="t-chart"></div>
+      <p class="legend"><span><i class="sq ink"></i>clears the 0.1% level</span><span><i class="sq mut"></i>clears the 1% level only</span><span><i class="sq hollow"></i>clears neither</span><span><i class="ln ghost faint"></i>1% cut-off</span></p>
+      <label class="ctl" for="t-n">Observations in each of the two samples</label>
+      <input type="range" id="t-n" min="0" max="1000" step="1" value="333">
+      <p class="readout h3l" id="t-read" aria-live="polite"></p>
+      <p class="note">Toy numbers: each gap compares two invented samples whose observations have a standard deviation of 1; t = gap ÷ √((variance₁ + variance₂) ÷ N). Cut-offs are the standard two-sided values of the normal curve, 2.58 for 1% and 3.29 for 0.1%; the stars follow the note to Table 1. The axis is stretched near zero so short bars stay visible.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/memecoins-spillover/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: equation (1) for one pair, with invented minutes (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 120, HBAR = 0.5, SIG = 0.045, Z = E.normals(77, N), SIZE = { up: 6, down: -5 }, SLOTS = [30, 70, 100, 50, 85, 15, 110, 40];
+  var box = document.getElementById('bk-chart'), sa = document.getElementById('bk-a'), sb = document.getElementById('bk-b'), read = document.getElementById('bk-read');
+  var saved = E.load('bekk') || {};
+  var st = { kind: saved.kind === 'down' ? 'down' : 'up', shocks: Array.isArray(saved.shocks) ? saved.shocks.filter(function (s) { return s && s[0] >= 1 && s[0] < N; }).slice(0, 8) : [[30, 'up']] };
+  if (typeof saved.a === 'number') sa.value = saved.a;
+  if (typeof saved.b === 'number') sb.value = saved.b;
+  var YLO = -1, YHI = 2, geo = null;
+  function path(a, b) {
+    var h = [HBAR], map = {};
+    st.shocks.forEach(function (s) { map[s[0]] = s[1]; });
+    /* on a calm minute the joint surprise is about what the model expected, plus a small invented wobble */
+    for (var t = 1; t <= N; t++) {
+      var prod = map[t] ? SIZE[map[t]] : h[t - 1];
+      h.push((1 - a - b) * HBAR + a * prod + b * h[t - 1] + (map[t] ? 0 : SIG * Z[t - 1]));
+    }
+    return h;
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 214, L = 34, R = 10, TOP = 10, B = 34;
+    function X(t) { return L + (W - L - R) * t / N; }
+    function Y(v) { return TOP + (H - TOP - B) * (YHI - E.clamp(v, YLO, YHI)) / (YHI - YLO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'class': 'clickable',
+      'aria-label': 'Toy: the model’s estimate of co-movement over 120 invented minutes, its long-run average, and the joint surprises you dropped. A surprise in step lifts the estimate, a surprise in opposite directions pushes it down, and both fade back towards the average.' }, box);
+    [-1, 0, 1, 2].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v < 0 ? '−' : '') + Math.abs(v), { 'text-anchor': 'end' });
+    });
+    S('line', { x1: L, x2: W - R, y1: Y(HBAR), y2: Y(HBAR), 'class': 'ghost' }, root);
+    [0, 30, 60, 90, 120].forEach(function (t) {
+      S('line', { x1: X(t), x2: X(t), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      T(root, X(t), H - B + 18, String(t), { 'text-anchor': t === 0 ? 'start' : t === 120 ? 'end' : 'middle' });
+    });
+    T(root, (L + W - R) / 2, H - 2, 'minute', { 'text-anchor': 'middle' });
+    S('rect', { x: L, y: TOP, width: W - L - R, height: H - TOP - B, fill: 'transparent' }, root);
+    geo = { X: X, Y: Y, L: L, R: R, W: W, H: H, B: B, TOP: TOP, dyn: S('g', {}, root) };
+    root.addEventListener('click', function (e) {
+      var rect = root.getBoundingClientRect(), x = (e.clientX - rect.left) * W / rect.width;
+      var t = Math.round((x - L) / (W - L - R) * N);
+      if (t >= 1 && t < N) add(t);
+    });
+    draw();
+  }
+  function add(t) {
+    st.shocks = st.shocks.filter(function (s) { return s[0] !== t; });
+    st.shocks.push([t, st.kind]);
+    if (st.shocks.length > 8) st.shocks.shift();
+    draw();
+  }
+  function draw() {
+    var a = +sa.value, b = +sb.value, h = path(a, b), keep = a + b;
+    E.save('bekk', { a: a, b: b, kind: st.kind, shocks: st.shocks });
+    sa.setAttribute('aria-valuetext', a.toFixed(2)); sb.setAttribute('aria-valuetext', b.toFixed(2));
+    var jump = Math.abs(a * (SIZE[st.kind] - HBAR)), half = keep > 0 ? Math.log(0.5) / Math.log(keep) : 0;
+    var halfTxt = half < 1 ? 'it is gone within a minute' : 'half of it is gone after about ' + Math.round(half) + ' minute' + (Math.round(half) === 1 ? '' : 's');
+    read.innerHTML = '<strong>a = ' + a.toFixed(2) + ', b = ' + b.toFixed(2) + ', so a + b = ' + keep.toFixed(2) + '.</strong> A surprise ' + (st.kind === 'up' ? 'in step lifts' : 'in opposite directions pushes down') +
+      ' the estimate by about ' + jump.toFixed(2) + '; each minute ' + Math.round((1 - keep) * 100) + '% of what is left fades, so ' + halfTxt + '.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y; g.innerHTML = '';
+    st.shocks.forEach(function (s) {
+      S('line', { x1: X(s[0]), x2: X(s[0]), y1: geo.H - geo.B - 10, y2: geo.H - geo.B, 'class': 'tick' }, g);
+      T(g, X(s[0]), geo.H - geo.B - 13, s[1] === 'up' ? '+' : '−', { 'text-anchor': 'middle', 'class': 'strong' });
+    });
+    S('polyline', { points: h.map(function (v, t) { return X(t).toFixed(1) + ',' + Y(v).toFixed(1); }).join(' '), 'class': 'ink' }, g);
+  }
+  var setKind = E.seg(document.getElementById('bk-kind'), [['up', 'in step'], ['down', 'opposite']], st.kind, function (k) { st.kind = k; draw(); }, 'Kind of surprise');
+  document.getElementById('bk-add').addEventListener('click', function () {
+    var used = st.shocks.map(function (s) { return s[0]; }), t = SLOTS.filter(function (x) { return used.indexOf(x) < 0; })[0] || SLOTS[0];
+    add(t);
+  });
+  document.getElementById('bk-clear').addEventListener('click', function () { st.shocks = []; draw(); });
+  sa.addEventListener('input', function () { if (+sa.value + +sb.value > 0.99) sb.value = (0.99 - sa.value).toFixed(2); draw(); });
+  sb.addEventListener('input', function () { if (+sa.value + +sb.value > 0.99) sa.value = Math.max(0.02, 0.99 - sb.value).toFixed(2); if (+sa.value + +sb.value > 0.99) sb.value = (0.99 - sa.value).toFixed(2); draw(); });
+  setKind(st.kind);
+  draw();
+  E.fit(box, build, { min: 290, max: 640 });
+})();
+
+/* ---------- slide 2: three invented gaps and their t-statistics as observations pile up (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [label, gap between two invented averages]; every invented observation has a standard deviation of 1 */
+  var ROWS = [['large gap', 0.5], ['medium gap', 0.2], ['small gap', 0.05]];
+  var NMIN = 10, NMAX = 10000, C01 = 3.29, C1 = 2.576, TMAX = 40;
+  var box = document.getElementById('t-chart'), slider = document.getElementById('t-n'), read = document.getElementById('t-read');
+  var geo = null;
+  function nObs() { return Math.round(NMIN * Math.pow(NMAX / NMIN, +slider.value / 1000)); }
+  function tOf(gap, n) { return gap / Math.sqrt(2 / n); }
+  function f(t) { return Math.log(1 + Math.min(t, TMAX)) / Math.log(1 + TMAX); }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 420, rowH = 34, TOP = 22, B = 40, H = TOP + ROWS.length * rowH + B, x0 = 88, x1 = W - 44;
+    function X(t) { return x0 + (x1 - x0) * f(t); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy: the t-statistics of three invented gaps, 0.5, 0.2 and 0.05, between samples with a standard deviation of 1, against the 1% and 0.1% cut-offs. More observations lengthen every bar.' }, box);
+    (narrow ? [0, C01, 10, 40] : [0, 1, C01, 10, 20, 40]).forEach(function (t) {
+      var thr = t === C01;
+      S('line', { x1: X(t), x2: X(t), y1: TOP - 4, y2: H - B, 'class': t === 0 ? 'axis zero' : thr ? 'ghost' : 'grid' }, root);
+      T(root, X(t), H - B + 16, thr ? '3.3' : String(t), { 'text-anchor': 'middle', 'class': thr ? 'label' : '' });
+    });
+    S('line', { x1: X(C1), x2: X(C1), y1: TOP - 4, y2: H - B, 'class': 'ghost faint' }, root);
+    T(root, X(C01) + 4, TOP - 10, narrow ? '0.1%' : '0.1% significance', { 'class': 'label' });
+    T(root, (x0 + x1) / 2, H - 4, 't-statistic (log-stretched scale)', { 'text-anchor': 'middle' });
+    ROWS.forEach(function (r, i) {
+      T(root, 0, TOP + i * rowH + 13, r[0], { 'class': 'strong' });
+      T(root, 0, TOP + i * rowH + 28, 'gap ' + r[1]);
+    });
+    geo = { X: X, TOP: TOP, rowH: rowH, x0: x0, dyn: S('g', {}, root) };
+    draw();
+  }
+  function verdictOf(t) { return t >= C01 ? 'clears 0.1% (***)' : t >= C1 ? 'clears 1% (**) only' : 'clears neither'; }
+  function draw() {
+    var n = nObs();
+    slider.setAttribute('aria-valuetext', E.thousands(n) + ' observations in each sample');
+    read.innerHTML = '<strong>' + E.thousands(n) + ' observations in each sample.</strong> ' + ROWS.map(function (r) {
+      var t = tOf(r[1], n);
+      return r[0].charAt(0).toUpperCase() + r[0].slice(1) + ', <span class="nw">t = ' + t.toFixed(t < 10 ? 2 : 1) + '</span>: ' + verdictOf(t);
+    }).join('. ') + '.';
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    ROWS.forEach(function (r, i) {
+      var t = tOf(r[1], n), y = geo.TOP + i * geo.rowH + 8, xa = geo.X(t);
+      var cls = t >= C01 ? 'text-fill' : t >= C1 ? 'muted-fill' : 'hollow-far';
+      S('rect', { x: geo.x0, y: y, width: Math.max(1, xa - geo.x0), height: 14, 'class': cls }, g);
+      T(g, xa + 5, y + 12, t.toFixed(t < 10 ? 2 : 1), { 'class': 'label' });
+    });
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

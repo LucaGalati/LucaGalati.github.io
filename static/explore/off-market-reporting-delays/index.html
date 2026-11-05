@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: Reporting Delays and the Information Content of Off-Market Trades</title>
+<meta name="description" content="An explorable explanation of Frino, Galati and Gerace, Reporting Delays and the Information Content of Off-Market Trades: what happened to the news carried by large FTSE 100 futures trades when ICE stopped letting the smaller ones be published an hour late.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/off-market-reporting-delays/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <p class="kicker">An explorable explanation</p>
+  <h1>Reporting Delays and the Information Content of <span class="nw">Off-Market</span> Trades</h1>
+  <p class="byline">Alex Frino, Luca Galati and Dionigi Gerace · Journal of Futures Markets, 2022</p>
+  <div class="fig motif" id="motif"></div>
+  <p class="lede">Large futures trades are often agreed in private and reported to the exchange afterwards. Until February 2018, the parties to any such block in FTSE 100 index futures on ICE Futures Europe could ask for it to be published up to an hour late, and for that hour the rest of the market was in the dark. This explorable follows what happened when the hour was taken away from the smaller of these trades, and asks whether hiding a trade for a while can make prices better informed. Two decks on the main path, three side paths, one bet and a few things to play with, about fifteen minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-hour.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-hour.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/off-market-reporting-delays/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the motif: a block's handshake, the dark hour, and its publication */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('motif');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 64, x0 = 8, x1 = W - 8, y = 30;
+    var a = x0 + (x1 - x0) * 0.2, b = x0 + (x1 - x0) * 0.8;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A timeline: a block trade is agreed, then an hour passes before it is published.' }, box);
+    S('line', { x1: x0, x2: x1, y1: y, y2: y, 'class': 'axis' }, root);
+    S('rect', { x: a, y: y - 9, width: b - a, height: 18, 'class': 'hour-bg' }, root);
+    S('rect', { x: a, y: y - 9, width: b - a, height: 18, fill: E.hatch(root) }, root);
+    S('circle', { cx: a, cy: y, r: 5, 'class': 'text-fill' }, root);
+    S('circle', { cx: b, cy: y, r: 5, 'class': 'hollow' }, root);
+    T(root, a, y + 26, 'agreed', { 'text-anchor': 'middle' });
+    T(root, b, y + 26, 'published', { 'text-anchor': 'middle' });
+    T(root, (a + b) / 2, y - 15, 'the dark hour', { 'text-anchor': 'middle', 'class': 'label' });
+  }, { min: 280, max: 544 });
+})();
+</script>
+</body>
+</html>

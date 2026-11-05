@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why digits obey · Proportional Appropriation and Financial Statement Quality</title>
+<meta name="description" content="Side path of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2024): why first digits follow Benford's law, and why a bad year changes the count of losses but not the digits.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .ctl output { color: var(--text); font-weight: 500; }
+  .ends { display: flex; justify-content: space-between; max-width: 30rem; font-family: var(--sans); font-size: .74rem; color: var(--muted); margin-top: -.3rem; }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-why-digits.html">
+<lg-sitebar><noscript><a href="../../publication/proportional-appropriation-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why would digits follow a law?">
+  <div class="inner">
+    <p class="kicker">Side path · Why digits obey · <span class="nw">1 of 2</span></p>
+    <h2>A ruler that stretches</h2>
+    <p class="lead">Let an amount grow by a steady percentage. To get from 1 to 2 it has to double; to get from 9 to 10 it needs only an 11% rise. So it spends far longer with a leading 1 than with a leading 9, and the same happens between 10 and 20, 100 and 200, and at every size above.</p>
+    <div class="fig" id="ruler"></div>
+    <p>On a ruler where each step means multiplying rather than adding, the space each first digit owns is exactly its share under Benford’s law. Numbers that range over many sizes and are assembled from other numbers, like the net incomes of thousands of companies, spread evenly along that ruler, so their first digits come out in these shares.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Can a bad year bend the digits?&nbsp;→</button>
+      <a class="btn return-link" href="02-digits.html#s2" data-primary-when="02-digits.html">← Return to the main path</a>
+    </div>
+    <p class="note">Shares from the paper’s equation (1), computed. Why mixtures of many kinds of numbers end up on this ruler: Hill (1995), cited on p. 352. The 11% is 10 ÷ 9, computed.</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Can a bad year bend the digits?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Why digits obey · <span class="nw">2 of 2</span></p>
+      <h2>A bad year moves the count, not the digits</h2>
+      <p>Here are 2,320 invented companies. Each one’s result is its turnover times its margin, and the year sets the average margin. Slide from a bad year to a good one.</p>
+      <p>Watch two things as you go: the share of companies in the red, and the spread of their first digits.</p>
+      <p>The paper leans on a theorem for what you see: multiply a quantity that follows the law by an independent random factor, a business cycle for instance, and under mild conditions the product follows the law too. That is why it prefers digits to counts. A count of losses answers to the economy as readily as to the books; by this theorem, the spread of first digits does not.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="02-digits.html#s2">← Return to the main path</a>
+        <button class="btn" type="button" data-prev>← A ruler that stretches</button>
+      </div>
+      <p class="note">Toy, invented: turnovers spread evenly over four orders of magnitude (€1,000 to €10 million, on a log scale), margins drawn around the year’s average with a spread of 10 points. χ² as in the paper’s equation (2), p-value computed with 8 degrees of freedom. The theorem: note 5 (Berger and Hill, 2015, Theorem 6.3). Loss counts and the economy: p. 354.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="cyc-loss"></div>
+      <div class="fig" id="cyc-chart"></div>
+      <p class="legend"><span><i class="sq far"></i>first digits this year</span><span><i class="bench"></i>Benford’s law</span></p>
+      <label class="ctl" for="cyc-year">The year, by average margin: <output id="cyc-year-v"></output></label>
+      <input type="range" id="cyc-year" min="0" max="14" step="1" value="4">
+      <div class="ends" aria-hidden="true"><span>a bad year</span><span>a good year</span></div>
+      <p class="readout" id="cyc-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/proportional-appropriation-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: an adding ruler against a multiplying ruler (equation 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('ruler');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 520, H = 168, L = 0, R = 2;
+    function Xlin(v) { return L + (W - L - R) * (v - 1) / 9; }
+    function Xlog(v) { return L + (W - L - R) * Math.log(v) / Math.LN10; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two rulers from 1 to 10. On the adding ruler each first digit owns the same space, 11.1%. On the multiplying ruler the digit 1 owns 30.1% of the length and the digit 9 owns 4.6%.' }, box);
+    function ruler(y, X, title, cls) {
+      T(root, 0, y - 8, title, { 'class': 'label' });
+      for (var d = 1; d <= 9; d++) {
+        var x0 = X(d), x1 = X(d + 1);
+        S('rect', { x: x0 + 1, y: y, width: Math.max(0, x1 - x0 - 2), height: 26, 'class': cls }, root);
+        if (x1 - x0 > 13) T(root, (x0 + x1) / 2, y + 17, String(d), { 'text-anchor': 'middle', 'class': cls === 'surface' ? 'label' : 'on-blue' });
+      }
+    }
+    ruler(22, Xlin, narrow ? 'Adding: each digit gets 11.1%' : 'An adding ruler, 1 to 10: each first digit gets the same space, 11.1%', 'surface');
+    ruler(92, Xlog, narrow ? 'Multiplying: Benford’s shares' : 'A multiplying ruler, 1 to 10: each first digit gets its Benford share', 'far-fill');
+    [1, 2, 9].forEach(function (d) {
+      var x0 = Xlog(d), x1 = Xlog(d + 1), b = E.BENFORD[d - 1];
+      S('path', { d: 'M' + (x0 + 1) + ',124 V129 H' + (x1 - 1) + ' V124', 'class': 'bracket' }, root);
+      T(root, (x0 + x1) / 2, 145, (b * 100).toFixed(1) + '%', { 'text-anchor': d === 9 ? 'end' : 'middle', 'class': 'strong' });
+    });
+    T(root, (Xlog(1) + Xlog(2)) / 2, 162, narrow ? '1 to 2: ×2' : 'from 1 to 2 means doubling', { 'text-anchor': 'middle' });
+    T(root, W - R, 162, narrow ? '9 to 10: +11%' : 'from 9 to 10, an 11% rise', { 'text-anchor': 'end' });
+  }, { min: 290, max: 900 });
+})();
+
+/* ---------- slide 2: a business cycle moves the loss count, not the digits (toy, seed 97; note 5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 2320, rand = E.rng(97), items = [];
+  for (var i = 0; i < N; i++) {
+    var X = Math.pow(10, 3 + 4 * rand()), u1 = rand(), u2 = rand();
+    items.push({ X: X, z: Math.sqrt(-2 * Math.log(1 - u1)) * Math.cos(2 * Math.PI * u2) });
+  }
+  var lossBox = document.getElementById('cyc-loss'), box = document.getElementById('cyc-chart'), slider = document.getElementById('cyc-year');
+  var read = document.getElementById('cyc-read'), out = document.getElementById('cyc-year-v');
+  var f = null, gl = null;
+  function state() {
+    var mu = +slider.value / 100, c = [0, 0, 0, 0, 0, 0, 0, 0, 0], loss = 0;
+    items.forEach(function (it) { var v = it.X * (mu + 0.1 * it.z); if (v < 0) loss++; c[E.firstDigit(v) - 1]++; });
+    return { c: c, loss: loss / N, x: E.chi2(c) };
+  }
+  function buildLoss(W) {
+    lossBox.innerHTML = '';
+    var root = S('svg', { viewBox: '0 0 ' + W + ' 54', role: 'img', 'aria-label': 'Share of the invented companies reporting a loss this year.' }, lossBox);
+    gl = { W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function build(W) {
+    box.innerHTML = '';
+    f = digitFrame(W);
+    draw();
+  }
+  function digitFrame(W) {
+    var H = 210, L = 40, R = 10, TOP = 10, B = 34, YMAX = 0.35;
+    function X(d) { return L + (W - L - R) * (d - 0.5) / 9; }
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v / YMAX); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'First-digit shares of the invented results this year, which stay close to Benford’s law in every year.' }, box);
+    for (var v = 0; v <= YMAX + 1e-9; v += 0.1) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, Math.round(v * 100) + '%', { 'text-anchor': 'end' });
+    }
+    for (var d = 1; d <= 9; d++) T(root, X(d), H - B + 16, String(d), { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, (L + W - R) / 2, H - 2, 'First digit of each result', { 'text-anchor': 'middle' });
+    return { X: X, Y: Y, bw: Math.min(34, (W - L - R) / 9 * 0.62), dyn: S('g', {}, root) };
+  }
+  function draw() {
+    var st = state(), p = E.chi2p(st.x), pct = Math.round(st.loss * 100);
+    out.textContent = slider.value + '%';
+    slider.setAttribute('aria-valuetext', 'average margin ' + slider.value + ' percent');
+    read.innerHTML = 'Average margin ' + slider.value + '%: <strong>' + pct + '% of the companies report a loss.</strong> Their first digits: ' + (p >= 0.10 ? 'in line with the law' : 'off the law') + ' <span class="nw">(χ² test, p = ' + E.pText(p) + ')</span>.';
+    if (gl) {
+      var g = gl.dyn, W = gl.W, w = W * st.loss;
+      g.innerHTML = '';
+      T(g, 0, 12, 'Companies reporting a loss this year', { 'class': 'label' });
+      S('rect', { x: 0, y: 20, width: W, height: 18, 'class': 'surface' }, g);
+      S('rect', { x: 0, y: 20, width: w, height: 18, 'class': 'far-fill' }, g);
+      T(g, Math.min(w + 6, W - 4), 52, pct + '%', { 'text-anchor': w + 40 > W ? 'end' : 'start', 'class': 'strong' });
+    }
+    if (f) {
+      var d2 = f.dyn; d2.innerHTML = '';
+      st.c.forEach(function (c, j) {
+        var v = c / N;
+        S('rect', { x: f.X(j + 1) - f.bw / 2, y: f.Y(v), width: f.bw, height: f.Y(0) - f.Y(v), 'class': 'far-fill' }, d2);
+      });
+      S('polyline', { points: E.BENFORD.map(function (b, j) { return f.X(j + 1).toFixed(1) + ',' + f.Y(b).toFixed(1); }).join(' '), 'class': 'bench' }, d2);
+      E.BENFORD.forEach(function (b, j) { S('circle', { cx: f.X(j + 1), cy: f.Y(b), r: 3, 'class': 'bench-dot' }, d2); });
+    }
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(lossBox, buildLoss, { min: 290, max: 600 });
+  E.fit(box, build, { min: 290, max: 600 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The machines · Liquidity of Futures Markets Over the Last Quarter of a Century</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Frino, Galati and Webb, Liquidity of Futures Markets Over the Last Quarter of a Century: what trading costs, a bet on what screens did to the spread of Australian share index futures, and the small gains of faster machines.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  #book { max-width: 30rem; }
+</style>
+</head>
+<body data-deck="01-machines.html">
+<lg-sitebar><noscript><a href="../../publication/futures-liquidity-24-years/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Machines or storms?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Frino, Galati &amp; Webb</p>
+    <h1>What changed the cost of trading more: the machines, or the storms?</h1>
+    <div class="two">
+      <div>
+        <p>The SPI is a futures contract on the Australian share index: a deal made at today’s price and settled on the index’s value at a later date. In 1996 it still traded by people in coloured jackets, shouting and signalling across the floor of the Sydney Futures Exchange; by 2021, between computers, some parked right beside the exchange’s own. Meanwhile the money traded in it grew more than ninefold, from A$134 billion in 1998 to A$1,251 billion in 2021.</p>
+        <p>Every new machine promised cheaper trading. The same years brought two storms: the Global Financial Crisis and Covid-19.</p>
+        <p><strong>Which did more to what it costs to trade: three revolutions in technology, or two crises?</strong></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>First: what does trading cost?&nbsp;→</button></div>
+        <p class="note">Turnover: p. 52–53 (ninefold computed from the two). The rails mark the years the paper counts each change as on (equation 1, p. 60–61); its data run from 8 January 1996 to 31 December 2021 (Appendix A).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">The five changes the paper puts side by side</p>
+        <div class="fig" id="hook-rails"></div>
+        <p class="legend"><span><i class="sq tech"></i>technology: on from its arrival</span><span><i class="sq crisis"></i>crisis: on while it lasts</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does trading cost?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The machines · 2 of 4</p>
+    <h2>Liquidity is the price of now</h2>
+    <div class="two">
+      <div>
+        <p>Trade the SPI and you meet an order book. At the front of the queue sit the best price anyone will pay right now, the <strong>bid</strong>, and the best price anyone will sell at right now, the <strong>ask</strong>. To trade at once, you cross the gap.</p>
+        <p>The paper sums the book up in two numbers. The <strong>spread</strong> is the gap between the best ask and the best bid, in index points, the units the index itself is quoted in. The <strong>depth</strong> is how many contracts wait at those best prices. An order that fits inside the depth pays half the spread above the midpoint, the price halfway between bid and ask; a bigger one climbs to worse prices.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Now bet on what the screens did&nbsp;→</button></div>
+        <p class="note">Toy order books: prices and sizes are illustrative, not from the paper. Each index point is worth A$25 per contract (footnote 3). Spread as in Appendix A, eq. (4); depth from the quote sizes at the best bid and ask, after Lee, Mucklow and Ready (1993), as Appendix A describes it. Both are measured every minute.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">An SPI order book <span class="tag">toy numbers</span></p>
+        <div class="ctl"><span>The book on</span><div class="seg" id="book-day"></div></div>
+        <div class="fig" id="book"></div>
+        <p class="legend"><span><i class="sq hollow"></i>asks: offers to sell</span><span><i class="sq base"></i>bids: offers to buy</span><span><i class="sq crisis"></i>what your order buys</span></p>
+        <label class="ctl" for="book-n">Buy this many contracts at once</label>
+        <input type="range" id="book-n" min="1" max="50" step="1" value="10">
+        <p class="readout" id="book-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What did the screens do to the spread?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The machines · 3 of 4</p>
+    <h2>Place your bet: what did the screens do to the spread?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>On the trading floor, the SPI’s spread averaged about <span class="num">1.4</span> index points. In 1999 the Sydney Futures Exchange closed the floor and moved the contract onto screens.</p>
+        <p><strong>Once trading moved to screens, what happened to the spread?</strong></p>
+        <div class="actions bet" id="scr-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="half" aria-pressed="false">Halved, to about 0.7</button>
+          <button class="btn" type="button" data-bet="fell" aria-pressed="false">Fell to about 1.2</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">Stayed about 1.4</button>
+          <button class="btn" type="button" data-bet="rose" aria-pressed="false">Rose</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="scr-chart"></div>
+        <p class="legend"><span><i class="sq base"></i>on the floor</span><span><i class="sq tech"></i>on screens</span><span><i class="ln ghost"></i>your bet</span></p>
+        <p class="note" id="scr-note" hidden>Aitken, Frino, Hill and Jarnecic (2004), as reported on p. 54: about 1.4 points on the floor, down by about 0.202 points, or 15%. A round trip buys at the ask and sells at the bid, so it pays the spread once; in A$ at A$25 a point (footnote 3), computed.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="scr-verdict" aria-live="polite"></p>
+        <div class="actions" id="scr-next" hidden>
+          <button class="btn primary" type="button" data-next>And the faster machines?&nbsp;→</button>
+          <a class="door" href="03-race.html#s1" data-return="next">How do you race a floor against a screen fairly? The Bund experiment&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="And the faster machines?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The machines · 4 of 4</p>
+    <h2>Each machine shaved a little</h2>
+    <div class="two">
+      <div>
+        <p>Screens let software trade. From the late 1990s to about 2007 the average SPI trade halved in size while the number of trades climbed steeply, which the authors read as a sign of algorithms slicing big orders into small ones. High-frequency trading, computers sending and cancelling orders in fractions of a second, the paper dates to 2010 and cites no before-and-after measure for it. In February 2012 the exchange let traders put their computers beside its own; message traffic rose and the spread narrowed by about 2.5%.</p>
+        <p>On one ruler the pattern is plain: each measured change shaved a little off the price of now. The authors call such gains “small but highly significant”. But the same quarter century held two storms.</p>
+        <div class="actions">
+          <a class="btn primary" href="02-storms.html#s1">Now the storms&nbsp;→</a>
+          <a class="door" href="03-race.html#s2">Can machines make storms too? The flash crashes&nbsp;→</a>
+        </div>
+        <p class="note">Trade size and number of trades: Section 2.2, Figure 1 (“hinted at”, p. 55). High-frequency trading in 2010: p. 60–61. Bund: Frino, McInish and Toner (1998), DTB against LIFFE, October–November 1997, p. 53–54. SPI screens: Aitken et al. (2004), p. 54. Co-location: Frino, Mollica and Webb (2014), p. 55. Quote: p. 56. The Bund study compares two venues side by side; the SPI studies, before with after.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="tech-chart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/futures-liquidity-24-years/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the switchboard, no sizes yet ---------- */
+(function () {
+  var E = Explore, box = document.getElementById('hook-rails');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = E.gutter(W), X = E.yearScale(L, W - 6), rowH = 24, H = 5 * rowH + 26;
+    var root = E.svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The five changes over 1996 to 2021: screen trading on from 2000, high-frequency trading from 2011, co-location from 2013, each staying on to 2021; the Global Financial Crisis in 2007 to 2009 and Covid-19 in 2020 and 2021.' }, box);
+    E.rails(root, X, 0, { labelX: L - 8, narrow: narrow, rowH: rowH });
+    E.yearAxis(root, X, 5 * rowH + 2, narrow);
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: a toy order book, calm and stormy ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  /* [price, contracts]; illustrative, not from the paper */
+  var BOOK = {
+    calm:  { asks: [[5001, 40], [5002, 60], [5003, 80], [5004, 100], [5005, 120]], bids: [[5000, 40], [4999, 60], [4998, 80], [4997, 100], [4996, 120]], name: 'the calm day' },
+    storm: { asks: [[5003, 6], [5004, 8], [5005, 10], [5006, 12], [5007, 14]], bids: [[4998, 6], [4997, 8], [4996, 10], [4995, 12], [4994, 14]], name: 'the stormy day' }
+  };
+  var PMIN = 4994, PMAX = 5007, SMAX = 120, MID = 5000.5, PER_POINT = 25;
+  var box = document.getElementById('book'), slider = document.getElementById('book-n'), read = document.getElementById('book-read');
+  var day = 'calm', geo = null;
+  function fills(book, n) {
+    var out = [], left = n;
+    book.asks.forEach(function (a) { if (left > 0) { var q = Math.min(left, a[1]); out.push([a[0], q]); left -= q; } });
+    return out;
+  }
+  function cost(book, n) { var pts = 0; fills(book, n).forEach(function (f) { pts += (f[0] - MID) * f[1]; }); return pts; }
+  function pts(x) { return (Math.round(x * 100) / 100).toString(); }
+  /* A$ with cents when there are any (half points make A$12.50), so the shown amounts give the shown ratio */
+  function money(pts) { var c = Math.round(pts * PER_POINT * 100); return 'A$' + th(Math.floor(c / 100)) + (c % 100 ? '.' + String(100 + c % 100).slice(1) : ''); }
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 17, TOP = 18, H = TOP + (PMAX - PMIN + 1) * rowH + 4, xP = 40, x0 = 48, xMax = W - 112;
+    function Y(p) { return TOP + (PMAX - p) * rowH; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A toy order book for SPI futures. Calm day: best bid 5,000 and best ask 5,001, a one-point spread, 40 contracts at each best price and more behind. Stormy day: best bid 4,998 and best ask 5,003, a five-point spread, 6 contracts at each best price. The part of the asks your order buys is highlighted.' }, box);
+    T(root, xP, 11, 'Price', { 'class': 'label', 'text-anchor': 'end' });
+    T(root, x0, 11, 'Contracts waiting at each price', { 'class': 'label' });
+    for (var p = PMIN; p <= PMAX; p++) T(root, xP, Y(p) + 12.5, th(p), { 'text-anchor': 'end' });
+    geo = { Y: Y, rowH: rowH, x0: x0, xMax: xMax, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var n = +slider.value, b = BOOK[day], other = BOOK[day === 'calm' ? 'storm' : 'calm'];
+    var f = fills(b, n), c = cost(b, n), co = cost(other, n);
+    slider.setAttribute('aria-valuetext', n + (n === 1 ? ' contract' : ' contracts'));
+    var where = f.map(function (x) { return x[1] + ' at ' + th(x[0]); }).join(', ');
+    var ratio = day === 'calm' ? co / c : c / co;
+    read.innerHTML = '<strong>Buy ' + n + (n === 1 ? ' contract' : ' contracts') + ' on ' + b.name + ':</strong> ' + where + '. On average ' + pts(c / n) +
+      ' points above the midpoint: <strong>' + money(c) + '</strong> for trading now. ' +
+      (day === 'calm' ? 'On the stormy day the same order costs ' + money(co) + ', ' + ratio.toFixed(1) + ' times as much.'
+                      : 'That is ' + ratio.toFixed(1) + ' times the calm day’s ' + money(co) + '.');
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, rowH = geo.rowH, x0 = geo.x0;
+    g.innerHTML = '';
+    function w(q) { return (geo.xMax - x0) * q / SMAX; }
+    var got = {}; f.forEach(function (x) { got[x[0]] = x[1]; });
+    b.asks.forEach(function (a) {
+      var y = Y(a[0]) + 3;
+      S('rect', { x: x0, y: y, width: w(a[1]), height: rowH - 6, 'class': 'hollow' }, g);
+      if (got[a[0]]) S('rect', { x: x0, y: y, width: w(got[a[0]]), height: rowH - 6, 'class': 'crisis-fill' }, g);
+      T(g, x0 + w(a[1]) + 5, Y(a[0]) + 12.5, String(a[1]), { 'class': 'label' });
+    });
+    b.bids.forEach(function (a) {
+      S('rect', { x: x0, y: Y(a[0]) + 3, width: w(a[1]), height: rowH - 6, 'class': 'base-fill' }, g);
+      T(g, x0 + w(a[1]) + 5, Y(a[0]) + 12.5, String(a[1]));
+    });
+    var ask = b.asks[0][0], bid = b.bids[0][0], yA = Y(ask) + rowH / 2, yB = Y(bid) + rowH / 2, yM = Y(MID) + rowH / 2;
+    S('line', { x1: x0, x2: geo.xMax + 30, y1: yM, y2: yM, 'class': 'ghost' }, g);
+    var bx = geo.W - 70;
+    S('path', { d: 'M' + (bx - 5) + ',' + yA + ' H' + bx + ' V' + yB + ' H' + (bx - 5), 'class': 'bracket' }, g);
+    var sp = ask - bid;
+    T(g, bx + 7, yM - 2, 'spread', { 'class': 'label' });
+    T(g, bx + 7, yM + 12, sp + (sp === 1 ? ' point' : ' points'), { 'class': 'strong' });
+  }
+  E.seg(document.getElementById('book-day'), [['calm', 'A calm day'], ['storm', 'A stormy day']], 'calm', function (k) { day = k; draw(); }, 'The book on');
+  slider.addEventListener('input', draw);
+  slider.setAttribute('aria-label', 'Contracts to buy at once');
+  draw();
+  E.fit(box, build, { min: 290, max: 480 });
+})();
+
+/* ---------- slide 3: the bet on floor against screens (p. 54) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var FLOOR = 1.4, SCREEN = 1.4 - 0.202, MAXV = 1.6;
+  var GUESS = { half: 0.7, fell: 1.2, same: 1.4, rose: 1.56 };
+  var LEAD = {
+    half: 'Less than that. ',
+    fell: 'That is it. ',
+    same: 'It moved more than that, though not by much. ',
+    rose: 'The other way. '
+  };
+  var TAIL = 'On screens the spread narrowed by about 0.2 of a point, to about 1.2: about 15%. On one contract bought and sold again, that is about A$5, A$35 on the floor against about A$30 on screens. Small for one trade; across the SPI’s volume, the paper puts the saving at tens of millions of dollars a year.';
+  var box = document.getElementById('scr-chart'), betBox = document.getElementById('scr-bet');
+  var verdict = document.getElementById('scr-verdict'), nextBox = document.getElementById('scr-next'), note = document.getElementById('scr-note');
+  var st = { bet: null, grow: 0 }, geo = null, raf = null;
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 58, TOP = 4, H = TOP + 2 * rowH + 30, xMax = W - 12;
+    function X(v) { return xMax * v / MAXV; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The SPI’s average spread: about 1.4 index points on the trading floor; on screens, after the bet, about 1.2 points, roughly 15% less.' }, box);
+    [0, 0.4, 0.8, 1.2, 1.6].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 22, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 8, v === 1.6 ? (W < 560 ? '1.6 pts' : '1.6 index points') : v ? v.toFixed(1) : '0', { 'text-anchor': v === 1.6 ? 'end' : v ? 'middle' : 'start' });
+    });
+    geo = { X: X, rowH: rowH, TOP: TOP, W: W, H: H, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, y0 = geo.TOP, rowH = geo.rowH, right = X(MAXV);
+    var lab = geo.W < 440 ? ['1.4 · A$35', '≈ 1.2 · ≈ A$30'] : ['1.4 points · A$35 a round trip', 'about 1.2 points · about A$30'];
+    g.innerHTML = '';
+    T(g, 0, y0 + 14, 'On the floor', { 'class': 'label' });
+    T(g, right, y0 + 14, lab[0], { 'text-anchor': 'end', 'class': 'strong' });
+    S('rect', { x: 0, y: y0 + 21, width: X(FLOOR), height: 16, 'class': 'base-fill' }, g);
+    var y1 = y0 + rowH;
+    T(g, 0, y1 + 14, 'On screens', { 'class': 'label' });
+    if (!st.bet) { T(g, 4, y1 + 34, 'Place your bet to draw it', { 'class': 'placeholder' }); return; }
+    S('rect', { x: 0, y: y1 + 21, width: Math.max(1, X(SCREEN * st.grow)), height: 16, 'class': 'tech-fill' }, g);
+    var gx = X(GUESS[st.bet]);
+    S('line', { x1: gx, x2: gx, y1: y1 + 17, y2: y1 + 41, 'class': 'ghost' }, g);
+    if (st.grow >= 1) T(g, right, y1 + 14, lab[1], { 'text-anchor': 'end', 'class': 'strong' });
+  }
+  function finish() { st.grow = 1; draw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-screens', bet);
+    if (raf) cancelAnimationFrame(raf);
+    if (!animate || E.still) { finish(); return; }
+    var t0 = null; st.grow = 0;
+    (function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 700);
+      st.grow = 1 - Math.pow(1 - p, 3); draw();
+      if (p < 1) raf = requestAnimationFrame(step); else { raf = null; finish(); }
+    })(performance.now());
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-screens');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 290, max: 640 });
+})();
+
+/* ---------- slide 4: the measured technology effects on one ruler (p. 53–55) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('tech-chart');
+  /* [label, short label, low, high, value label] in % narrower */
+  var ROWS = [
+    ['Bund futures: screen against floor, 1997', 'Bund: screen vs floor, 1997', 5, 10, '5–10%'],
+    ['SPI: floor to screens, 1999', 'SPI: floor to screens', 15, 15, 'about 15%'],
+    ['SPI: high-frequency trading, 2010', 'SPI: high-frequency, 2010', null, null, 'no number cited'],
+    ['SPI: co-location, 2012', 'SPI: co-location, 2012', 2.5, 2.5, 'about 2.5%']
+  ], MAX = 20;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 52, TOP = 22, H = TOP + ROWS.length * rowH + 24, xMax = W - 84;
+    function X(v) { return xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'How much narrower the spread became with each technology change: Bund futures on screen against floor in 1997, 5 to 10 percent; SPI futures after moving from floor to screens in 1999, about 15 percent; high-frequency trading in 2010, no number cited; SPI futures after co-location in 2012, about 2.5 percent.' }, box);
+    T(root, 0, 12, W < 480 ? 'Spread narrower by, %' : 'How much narrower the spread became, %', { 'class': 'label' });
+    [0, 5, 10, 15, 20].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 20, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 5, v + '%', { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH + 6;
+      T(root, 0, y + 13, W < 480 ? r[1] : r[0], { 'class': 'label' });
+      if (r[2] === null) { T(root, 0, y + 32, r[4], { 'class': 'placeholder' }); return; }
+      S('rect', { x: 0, y: y + 20, width: X(r[2]), height: 15, 'class': 'tech-fill' }, root);
+      if (r[3] > r[2]) S('rect', { x: X(r[2]), y: y + 20, width: X(r[3]) - X(r[2]), height: 15, 'class': 'tech-fill', 'fill-opacity': 0.4 }, root);
+      T(root, X(r[3]) + 6, y + 32, r[4], { 'class': 'strong' });
+    });
+  }, { min: 290, max: 600 });
+})();
+</script>
+</body>
+</html>

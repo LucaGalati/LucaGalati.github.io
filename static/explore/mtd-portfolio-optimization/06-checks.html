@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two more checks · A Network-Based MTD Approach to Portfolio Optimization</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: a second assortativity measure, and the portfolios on the data they were fitted to.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="06-checks.html">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Does a second measure agree?">
+  <div class="inner">
+    <p class="kicker">Side path · Two more checks · 1 of 2</p>
+    <h2>A second way to score stocks agrees, mostly</h2>
+    <div class="two">
+      <div>
+        <p>There is more than one way to give each stock an assortativity score. The paper reruns everything with a second one (Sabek and Pigorsch, 2023), which scores each arrow by its own contribution to the correlation and adds up a stock’s arrows.</p>
+        <p>Switch the grid between the two measures and the two yardsticks. With the second measure the wins against the classic recipe go from seven of twelve to five, a performance the paper calls good but “comparatively less consistent”. In–Out stays the most reliable rule, five wins in six across the two measures; Out–Out never wins.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>On the data they were fitted to&nbsp;→</button>
+          <a class="btn return-link" href="03-results.html#s4">← Return to the main path</a>
+        </div>
+        <p class="note">Appendix 1, equations (A1) and (A2), and the authors’ reading of Table A5 (page 14); Sharpe ratios from Tables 4–6 and A2–A4; tallies as in Table A5. Each measure has its own correlation-network benchmark, so that row differs between the two; the classic recipe is the same. A tie (Out–In, Dow, second measure: 0.805 against 0.805) counts as no win, as in Table A5.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Measure</span><span class="seg" id="sec-m"></span></div>
+        <div class="ctl"><span>Against</span><span class="seg" id="sec-b"></span></div>
+        <div class="fig" id="sec-chart"></div>
+        <p class="legend"><span><i class="dt hi"></i>network rule won</span><span><i class="dt hollow-hi"></i>it did not</span></p>
+        <p class="readout" id="sec-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How do they look on the data they were fitted to?">
+  <div class="inner">
+    <p class="kicker">Side path · Two more checks · 2 of 2</p>
+    <h2>In sample, the classic recipe sits at or near the top</h2>
+    <div class="two">
+      <div>
+        <p>Appendix 2 measures the same portfolios on the very windows they were fitted to. Every Sharpe ratio there lies between 2.44 and 3.54, two and a half to four and a half times the figures for the 30 days that followed: a portfolio tends to look good on the past it was chosen from.</p>
+        <p>In every market the classic recipe is first or second there, as one would expect: it is built to strike the best balance of return and risk on exactly that window, so any tilt has to give something up there. Over the next 30 days, which the model never saw, In–Out goes from last to ahead of the classic recipe in all three markets.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="03-results.html#s2">← Return to the main path</a>
+          <a class="btn" href="07-limits.html#s1">What the test leaves out&nbsp;→</a>
+        </div>
+        <p class="note">In sample: Tables A6, A7 and A8, main measure. Out of sample: Tables 4, 5 and 6. Ratios and ranks computed from these tables; equal values share a rank.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Market</span><span class="seg" id="ins-mkt"></span></div>
+        <div class="fig" id="ins-chart"></div>
+        <p class="legend"><span><i class="ln base"></i>classic recipe</span><span><i class="ln hi"></i>In–Out</span><span><i class="ln muted"></i>the other four</span></p>
+        <p class="readout" id="ins-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/mtd-portfolio-optimization/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* Sharpe ratios out of sample. main: Tables 4–6 (extended Piraveenan); second: Tables A2–A4 (Sabek and Pigorsch).
+   order: classic recipe, correlation network, In–In, In–Out, Out–In, Out–Out */
+var SH = {
+  main:   { dj: [0.805, 0.820, 1.059, 0.872, 0.907, 0.774], sx: [0.687, 0.676, 0.759, 0.692, 0.686, 0.664], ft: [0.912, 0.925, 0.894, 0.976, 0.913, 0.895] },
+  second: { dj: [0.805, 0.806, 0.802, 0.825, 0.805, 0.762], sx: [0.687, 0.682, 0.694, 0.679, 0.683, 0.661], ft: [0.912, 0.910, 0.920, 0.942, 0.922, 0.882] }
+};
+/* in sample, main measure: Tables A6–A8 */
+var IN = { dj: [3.541, 3.544, 3.353, 3.254, 3.528, 3.512], sx: [2.807, 2.805, 2.694, 2.572, 2.796, 2.798], ft: [2.534, 2.534, 2.463, 2.441, 2.530, 2.532] };
+var MKN = { dj: 'Dow Jones 30', sx: 'Euro Stoxx 50', ft: 'FTSE 100' };
+var NAMES = ['Classic recipe', 'Correlation network', 'In–In', 'In–Out', 'Out–In', 'Out–Out'];
+
+/* ---------- slide 1: the twelve contests under either measure, against either yardstick ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, MK = ['dj', 'sx', 'ft'];
+  var meas = 'second', against = 0, box = document.getElementById('sec-chart'), read = document.getElementById('sec-read');
+  function build(W) {
+    box.innerHTML = '';
+    var lw = W < 440 ? 58 : 74, cw = (W - lw) / 3, ch = 44, top = 44, H = top + 4 * ch + 4, wins = 0;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Twelve contests, ' + (meas === 'main' ? 'main' : 'second') + ' measure, against the ' + (against ? 'correlation network' : 'classic recipe') + '.' }, box);
+    MK.forEach(function (m, c) {
+      var x = lw + cw * c, ref = SH[meas][m][against];
+      T(root, x + cw / 2, top - 22, W < 440 ? ['Dow', 'Euro Stoxx', 'FTSE'][c] : MKN[m], { 'text-anchor': 'middle', 'class': 'label' });
+      T(root, x + cw / 2, top - 8, (against ? 'corr. ' : 'classic ') + ref.toFixed(3), { 'text-anchor': 'middle' });
+    });
+    for (var i = 0; i < 4; i++) {
+      T(root, 0, top + i * ch + ch / 2 + 4, NAMES[i + 2], { 'class': 'label' });
+      MK.forEach(function (m, c) {
+        var x = lw + cw * c, y = top + i * ch, v = SH[meas][m][i + 2], ref = SH[meas][m][against], won = v > ref;
+        if (won) wins++;
+        S('rect', { x: x + 2, y: y + 2, width: cw - 4, height: ch - 4, 'class': won ? 'win' : 'surface-fill' }, root);
+        S('circle', { cx: x + 14, cy: y + ch / 2, r: 6, 'class': won ? 'hi-fill' : 'hollow-hi' }, root);
+        T(root, x + 26, y + ch / 2 - 2, v.toFixed(3), { 'class': 'strong' });
+        T(root, x + 26, y + ch / 2 + 13, v === ref ? 'tie' : (won ? '+' : '−') + Math.abs(v - ref).toFixed(3));
+      });
+    }
+    read.innerHTML = '<strong>' + (meas === 'main' ? 'Main measure' : 'Second measure') + ' against the ' + (against ? 'correlation network' : 'classic recipe') + ': ' + wins + ' wins of 12.</strong> ' +
+      (meas === 'second' && !against ? 'In–Out wins on the Dow (0.825) and the FTSE 100 (0.942) but loses on the Euro Stoxx 50, 0.679 against 0.687.' :
+       meas === 'main' && !against ? 'In–Out wins in all three markets; Out–Out in none.' :
+       'Out–Out loses everywhere; In–Out wins ' + MK.filter(function (m) { return SH[meas][m][3] > SH[meas][m][1]; }).length + ' of 3.');
+  }
+  var redraw = E.fit(box, build, { min: 290, max: 620 });
+  E.seg(document.getElementById('sec-m'), [['main', 'Main (extended Piraveenan)'], ['second', 'Second (Sabek–Pigorsch)']], meas, function (k) { meas = k; redraw(); }, 'Measure');
+  E.seg(document.getElementById('sec-b'), [['0', 'Classic recipe'], ['1', 'Correlation network']], '0', function (k) { against = +k; redraw(); }, 'Against');
+})();
+
+/* ---------- slide 2: ranks in sample and out of sample (Tables A6–A8 and 4–6) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var mk = 'dj', box = document.getElementById('ins-chart'), read = document.getElementById('ins-read');
+  function ranks(v) { return v.map(function (x) { return 1 + v.filter(function (y) { return y > x; }).length; }); }
+  function order(v) { return v.map(function (x, i) { return i; }).sort(function (a, b) { return v[b] - v[a] || a - b; }); }
+  function build(W) {
+    box.innerHTML = '';
+    var a = IN[mk], b = SH.main[mk], ra = ranks(a), rb = ranks(b), oa = order(a), ob = order(b);
+    var narrow = W < 460, lw = narrow ? 96 : 150, rw = narrow ? 96 : 150, rowH = 30, TOP = 30, H = TOP + 6 * rowH + 4;
+    var xa = lw, xb = W - rw;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': MKN[mk] + ': rank of the six portfolios by Sharpe ratio in sample and out of sample. Classic recipe ' + ra[0] + ' then ' + rb[0] + '; In–Out ' + ra[3] + ' then ' + rb[3] + '.' }, box);
+    T(root, xa, 12, 'in sample', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, xb, 12, 'out of sample', { 'text-anchor': 'middle', 'class': 'label' });
+    function Y(pos) { return TOP + pos * rowH + rowH / 2; }
+    var posA = [], posB = [];
+    oa.forEach(function (i, p) { posA[i] = p; }); ob.forEach(function (i, p) { posB[i] = p; });
+    [1, 2, 4, 5, 0, 3].forEach(function (i) {   /* muted lines first, the two highlighted last */
+      var cls = i === 0 ? 'base-line' : i === 3 ? 'hi-line' : 'muted-line', strong = i === 0 || i === 3;
+      S('line', { x1: xa + 8, y1: Y(posA[i]), x2: xb - 8, y2: Y(posB[i]), 'class': cls, 'stroke-width': strong ? 2.5 : 1 }, root);
+      S('circle', { cx: xa, cy: Y(posA[i]), r: strong ? 5 : 3.5, 'class': i === 0 ? 'base-fill' : i === 3 ? 'hi-fill' : 'muted-fill' }, root);
+      S('circle', { cx: xb, cy: Y(posB[i]), r: strong ? 5 : 3.5, 'class': i === 0 ? 'base-fill' : i === 3 ? 'hi-fill' : 'muted-fill' }, root);
+      var nm = narrow ? NAMES[i].replace('Correlation network', 'Corr.').replace('Classic recipe', 'Classic') : NAMES[i];
+      T(root, xa - 10, Y(posA[i]) + 4, nm + ' ' + a[i].toFixed(3), { 'text-anchor': 'end', 'class': strong ? 'strong' : '' });
+      T(root, xb + 10, Y(posB[i]) + 4, b[i].toFixed(3) + ' ' + nm, { 'class': strong ? 'strong' : '' });
+    });
+    var ord = function (n) { return n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'); };
+    read.innerHTML = '<strong>' + MKN[mk] + '.</strong> In sample: classic recipe ' + a[0].toFixed(3) + ' (' + ord(ra[0]) + '), In–Out ' + a[3].toFixed(3) + ' (' + ord(ra[3]) + '). Out of sample: classic recipe ' + b[0].toFixed(3) + ' (' + ord(rb[0]) + '), In–Out ' + b[3].toFixed(3) + ' (' + ord(rb[3]) + '). The classic recipe’s in-sample figure is ' + (a[0] / b[0]).toFixed(1) + ' times its out-of-sample one.';
+  }
+  var redraw = E.fit(box, build, { min: 290, max: 620 });
+  E.seg(document.getElementById('ins-mkt'), [['dj', 'Dow Jones 30'], ['sx', 'Euro Stoxx 50'], ['ft', 'FTSE 100']], mk, function (k) { mk = k; redraw(); }, 'Market');
+})();
+</script>
+</body>
+</html>

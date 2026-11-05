@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two years of trades · The Information Content of Delayed Block Trades</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and De Blasis, The information content of delayed block trades in cryptocurrency markets: where the bitcoin trades come from, how blocks are identified and signed, and the twenty-trade window around each one.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-data.html">
+<lg-sitebar><noscript><a href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How do they know which trades were blocks?">
+  <div class="inner">
+    <p class="kicker">Side path · Two years of trades · 1 of 2</p>
+    <h2>The exchange’s own flag says which trades were blocks</h2>
+    <div class="two">
+      <div>
+        <p>Studies of stock markets usually have to guess what a block is: any trade above 10,000 shares, say, or the largest 1%. Here there is no guessing. The trades come from Gemini’s data interface, retrieved with CDD Media &amp; Analytics, and each carries a flag saying whether it was a block.</p>
+        <ul class="facts">
+          <li><b>Data</b>bitcoin against the dollar on Gemini, 6 December 2018 to 5 December 2020</li>
+          <li><b>Each trade</b>price, size, dollar amount, the side that started it, time to a hundredth of a second, block flag</li>
+          <li><b>Kept</b>trades of 5 BTC or more, on the book or upstairs; auction trades dropped</li>
+        </ul>
+        <p>The change shows in the block sizes: before it, most blocks were exactly 10 BTC; after it, 5 BTC blocks were the most common, with 10 close behind.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-upstairs.html#s4">← Return to the main path</a>
+          <button class="btn" type="button" data-next>Which way did a block go?&nbsp;→</button>
+        </div>
+        <p class="note">Sections 3.1 and 4.1, footnotes 12 and 13, Fig. 3 (block sizes, described in words). The grid rounds 8.07% to 8 in 100.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">18,084 trades of 5 BTC or more, as 100 squares</p>
+        <div class="fig narrow" id="units"></div>
+        <p class="legend" style="justify-content:center"><span><i class="sq blk"></i>block: 8.07%</span><span><i class="sq" style="border:1.5px solid var(--book)"></i>book trade</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Which way did a block go, and when?">
+  <div class="inner">
+    <p class="kicker">Side path · Two years of trades · 2 of 2</p>
+    <h2>Which way did a block go, and when did it really happen?</h2>
+    <div class="two">
+      <div>
+        <p><strong>Which way.</strong> A book trade is labelled with the side that started it. A block is not, so the paper uses the tick rule: a block priced above the book trade at the same moment counts as a buy, one priced below it as a sell.</p>
+        <p><strong>When.</strong> The data stamp a block when it is printed. To look at the moment it was executed, the authors move that stamp back by the delay. Around each block they then take the twenty trades before execution and the twenty after the print: on average more than half an hour of trading. Twenty follows the classic studies of block trades; windows of 5 to 35 trades give similar answers.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-footprints.html#s1">← Return to the main path</a>
+          <button class="btn" type="button" data-prev>← Where the trades come from</button>
+        </div>
+        <p class="note">Section 3.2, Fig. 2, footnotes 14, 17 and 18; the footprints at execution: Table 4, both years, and page 11. For the study of executions alone (Table 1), a block within ten trades of another block is dropped.</p>
+      </div>
+      <div>
+        <div class="fig" id="window"></div>
+        <p><strong>Unseen, yet moving.</strong> Measured from its execution, a block’s lasting footprint comes close to a book trade’s, 0.116% against 0.139% for buys, although only the auction knows of it. The paper reads this as the mark the block would have left had it been printed at once.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/delayed-block-trades-crypto/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: 8.07% blocks, as 100 squares ---------- */
+(function () {
+  var E = Explore, S = E.svg;
+  var box = document.getElementById('units');
+  E.fit(box, function (W0) {
+    var W = Math.min(W0, 260);
+    box.innerHTML = '';
+    var c = (W - 4) / 10, s = c - 6;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + W, role: 'img', 'aria-label': 'One hundred squares, eight of them gold: about 8 in every 100 large trades were blocks.' }, box);
+    root.style.maxWidth = W + 'px'; root.style.margin = '0 auto';
+    for (var i = 0; i < 100; i++) {
+      var x = 2 + (i % 10) * c + 3, y = 2 + Math.floor(i / 10) * c + 3, blk = i < 8;
+      S('rect', { x: x, y: y, width: s, height: s, 'class': blk ? 'blk-fill' : 'book-hollow', 'stroke-width': blk ? null : 1 }, root);
+    }
+  }, { min: 240, max: 260 });
+})();
+
+/* ---------- slide 2: the window around a block (Fig. 2's time axis) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('window');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 500, H = narrow ? 250 : 220, L = 8, R = 8, y = 96;
+    /* minutes on a schematic scale: about 10 before, 1 auction, 10 delay, about 10 after */
+    var M = [0, 10, 11, 21, 31];
+    function X(m) { return L + (W - L - R) * m / 31; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The window around a block, after the paper’s Fig. 2: about ten minutes and twenty trades before execution, a one-minute auction, a ten-minute delay to the print, and about ten minutes and twenty trades after the print; more than thirty minutes in all.' }, box);
+    S('line', { x1: X(0), x2: X(31), y1: y, y2: y, 'class': 'tape' }, root);
+    for (var t = 0.4; t < 10; t += 0.5) S('line', { x1: X(t), x2: X(t), y1: y - 5, y2: y, 'class': 'tick' }, root);
+    for (var u = 21.4; u < 31; u += 0.5) S('line', { x1: X(u), x2: X(u), y1: y - 5, y2: y, 'class': 'tick' }, root);
+    S('rect', { x: X(10), y: y - 8, width: X(11) - X(10), height: 16, 'class': 'surface' }, root);
+    S('rect', { x: X(11) - 6, y: y - 6, width: 12, height: 12, 'class': 'blk-hollow' }, root);
+    S('path', { d: 'M' + X(11) + ',' + (y - 9) + ' C' + X(11) + ',' + (y - 58) + ' ' + X(21) + ',' + (y - 58) + ' ' + X(21) + ',' + (y - 9), 'class': 'arc' }, root);
+    T(root, X(16), y - 50, '10 min, unseen', { 'text-anchor': 'middle', 'class': 'strong' });
+    S('rect', { x: X(21) - 6, y: y - 6, width: 12, height: 12, 'class': 'blk-fill' }, root);
+    S('circle', { cx: X(0), cy: y, r: 4, 'class': 'hollow' }, root);
+    S('circle', { cx: X(31), cy: y, r: 4, 'class': 'hollow' }, root);
+    T(root, X(0), y - 16, narrow ? 'P−20' : 'price 20 trades before', { 'class': 'label' });
+    T(root, X(31), y - 16, narrow ? 'P+20' : 'price 20 trades after', { 'text-anchor': 'end', 'class': 'label' });
+    T(root, X(11), y + 24, 'executed', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, X(21), y + 24, 'printed', { 'text-anchor': 'middle', 'class': 'label' });
+    /* the segments, bracketed below */
+    var yb = y + 44, seg = [[0, 10, '≈ 10 min, 20 trades'], [21, 31, '≈ 10 min, 20 trades']];
+    seg.forEach(function (s) {
+      S('path', { d: 'M' + (X(s[0]) + 2) + ',' + yb + ' V' + (yb + 5) + ' H' + (X(s[1]) - 2) + ' V' + yb, 'class': 'bracket' }, root);
+      T(root, (X(s[0]) + X(s[1])) / 2, yb + 20, s[2], { 'text-anchor': 'middle' });
+    });
+    T(root, X(10.5), yb + (narrow ? 40 : 20), '1-min auction', { 'text-anchor': 'middle' });
+    var yt = yb + (narrow ? 66 : 50);
+    S('path', { d: 'M' + X(0) + ',' + yt + ' V' + (yt + 6) + ' H' + X(31) + ' V' + yt, 'class': 'bracket' }, root);
+    T(root, X(15.5), yt + 22, 'more than 30 minutes per block, on average', { 'text-anchor': 'middle', 'class': 'label' });
+  }, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

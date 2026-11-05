@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Follow the wallet · Trading Stranded Assets on FTX</title>
+<meta name="description" content="Side path of an explorable explanation of Galati, Webb and Webb, Trading Stranded Assets on FTX: money in and out of one FTX-owned Ethereum wallet during the freeze, and the last night before trading stopped.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-wallet.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-stranded-assets/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Did any money leave?">
+  <div class="inner">
+    <p class="kicker">Side path · Follow the wallet · 1 of 2</p>
+    <h2>Follow one FTX wallet</h2>
+    <div class="two">
+      <div>
+        <p>On a public blockchain every transfer is visible, even when its owners are not. The authors followed one Ethereum wallet owned by FTX: <span class="num">14,826</span> transactions between 8 and 12 November.</p>
+        <p>Step through the days. On 9 November every one of the 776 transactions brought money in, just what a halt on withdrawals would look like. On the 10th about $12 million went out, possibly to the Bahamian customers FTX said it was paying. On the last day more than half a billion dollars left.</p>
+        <p>Average sizes are the paper’s clue to who was moving money: small traders cannot assemble a large transaction, so large averages point to institutions. A hint, not proof.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What happened on the last night?&nbsp;→</button>
+          <a class="btn return-link" href="01-stranded.html#s4" data-primary-when="01-stranded.html">← Return to the main path</a>
+        </div>
+        <p class="note">Table 3 and Section 5.3 (pp. 13–14); data from Etherscan (Section 4, p. 6). The wallet also moves tokens beyond the six coins studied (footnote 17).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Day</span><span class="seg" id="wal-day"></span></div>
+        <div class="fig" id="wal-chart"></div>
+        <p class="legend"><span><i class="sq ftx"></i>money out</span><span><i class="sq ftx-hollow"></i>money in</span></p>
+        <p class="readout" id="wal-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What happened on the last night?">
+  <div class="inner">
+    <p class="kicker">Side path · Follow the wallet · 2 of 2</p>
+    <h2>The last night</h2>
+    <div class="two">
+      <div>
+        <p>In the early hours of 12 November, between 02:23 and 02:43, <span class="num">$218.2 million</span> left one FTX-owned Ethereum wallet that the authors tracked, nearly all of it to a single address that Etherscan marks with a warning. At 03:28 UTC trading on FTX stopped.</p>
+        <p>The rest of that day’s outflow, about $300 million, went after the bankruptcy filing and the halt; some attribute it to a hack. Where the money went lies beyond the paper’s scope; the authors leave the trail, and the Bahamian withdrawals, for further study.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-stranded.html#s2">← Return to the main path</a>
+        </div>
+        <p class="note">Section 5.3 (p. 14) and Section 6 (pp. 14–15): $218,224,057.10 moved, $218,212,384.10 of it to one wallet. The remaining $311 million is computed from Table 3 (outflows of $529.6 million on 12 November); the text speaks of around $300 million (p. 15). The times 2:23 to 2:43 are as printed on p. 14, drawn on the same clock as the 03:28 UTC halt, which the paper says they preceded.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="night-chart"></div>
+        <p class="legend"><span><i class="sq ftx"></i>out before trading stopped</span><span><i class="sq hollow-muted"></i>out after the halt</span><span><svg class="sw" viewBox="0 0 16 10" aria-hidden="true"><path d="M0 4L4 0M0 9L9 0M4 10L14 0M9 10L16 3M14 10L16 8"/><rect x=".5" y=".5" width="15" height="9"/></svg>stranded window: trading open, withdrawals frozen</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-stranded-assets/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: money in and out of one FTX wallet (Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  /* [day, out: n, $; in: n, $; all: n, $, average] */
+  var D = [
+    ['8 Nov', 9031, 365310207.90, 2639, 306101644.37, 11670, 671411852.27, 57533.15],
+    ['9 Nov', 0, 0, 776, 2753539.48, 776, 2753539.48, 3548.38],
+    ['10 Nov', 277, 11878423.71, 385, 14417059.41, 662, 26295483.12, 39721.27],
+    ['11 Nov', 167, 31361295.49, 238, 1141086.04, 405, 32502381.53, 80252.79],
+    ['12 Nov', 1284, 529645421.18, 29, 28.86, 1313, 529645450.04, 403385.72]
+  ];
+  var MAX = 550e6;
+  var box = document.getElementById('wal-chart'), read = document.getElementById('wal-read');
+  var cur = 1, geo = null;
+  function m(v) { return v >= 1e7 ? '$' + (v / 1e6).toFixed(1) + 'm' : v >= 1e6 ? '$' + (v / 1e6).toFixed(2) + 'm' : '$' + th(v); }
+  function build(W) {
+    box.innerHTML = '';
+    var lab = 52, rowH = 44, H = D.length * rowH + 24, xMax = W - lab - 64;
+    function X(v) { return lab + xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Money out of and into one FTX Ethereum wallet per day, Table 3: 8 November 365.3 million out, 306.1 million in; 9 November nothing out, 2.75 million in; 10 November 11.9 million out, 14.4 million in; 11 November 31.4 million out, 1.1 million in; 12 November 529.6 million out, 29 dollars in.' }, box);
+    [0, 100e6, 200e6, 300e6, 400e6, 500e6].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: 0, y2: H - 20, 'class': v ? 'grid' : 'axis' }, root);
+      if (W >= 480 || v % 200e6 === 0) T(root, X(v), H - 5, v ? '$' + (v / 1e6) + 'm' : '0', { 'text-anchor': 'middle' });
+    });
+    geo = { X: X, rowH: rowH, W: W, lab: lab, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var d = D[cur];
+    read.innerHTML = '<strong>' + d[0] + ':</strong> ' + th(d[5]) + ' transactions worth ' + m(d[6]) + ', average ' + m(d[7]) + '. Out: ' + th(d[1]) + ' worth ' + m(d[2]) + '. In: ' + th(d[3]) + ' worth ' + m(d[4]) + '.' +
+      (cur === 1 ? ' Not one transaction out.' : cur === 4 ? ' Nearly all of it out.' : '');
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X;
+    g.innerHTML = '';
+    D.forEach(function (r, i) {
+      var y = i * geo.rowH + 6, sel = i === cur;
+      if (sel) S('rect', { x: 0, y: y - 4, width: geo.W, height: geo.rowH - 4, 'class': 'surface', 'fill-opacity': 0.6 }, g);
+      T(g, 0, y + 20, r[0], { 'class': sel ? 'strong' : 'label' });
+      S('rect', { x: X(0), y: y + 2, width: Math.max(1, X(r[2]) - X(0)), height: 14, 'class': 'ftx-fill' }, g);
+      S('rect', { x: X(0), y: y + 19, width: Math.max(1, X(r[4]) - X(0)), height: 14, 'class': 'ftx-hollow' }, g);
+      T(g, X(r[2]) + 6, y + 13, m(r[2]), { 'class': sel ? 'strong' : '' });
+      T(g, X(r[4]) + 6, y + 30, m(r[4]), { 'class': sel ? 'strong' : '' });
+    });
+  }
+  E.seg(document.getElementById('wal-day'), D.map(function (r, i) { return [String(i), r[0]]; }), '1', function (k) { cur = +k; draw(); }, 'Day');
+  draw();
+  E.fit(box, build, { min: 300, max: 600 });
+})();
+
+/* ---------- slide 2: the last night (p. 14, Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('night-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var L = 4, R = 8, H = 230, h0 = 2, h1 = 4, y = 70;
+    function X(h) { return L + (W - L - R) * (h - h0) / (h1 - h0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': '12 November 2022, UTC: 218.2 million dollars left the wallet between 02:23 and 02:43; trading on FTX stopped at 03:28; about 311 million more left after the halt.' }, box);
+    var fillUrl = E.hatch(root, 'hatch-line');
+    S('line', { x1: X(h0), x2: X(h1), y1: y + 24, y2: y + 24, 'class': 'axis' }, root);
+    for (var q = 0; q <= 8; q++) {
+      var hh = h0 + q / 4;
+      S('line', { x1: X(hh), x2: X(hh), y1: y + 24, y2: y + 28, 'class': 'axis' }, root);
+      if (q % 2 === 0 || W >= 520) T(root, X(hh), y + 42, '0' + Math.floor(hh) + ':' + (q % 4 === 0 ? '00' : String(15 * (q % 4))), { 'text-anchor': 'middle' });
+    }
+    T(root, W - R, y + 58, 'UTC, 12 November 2022', { 'text-anchor': 'end' });
+    var a = 2 + 23 / 60, b = 2 + 43 / 60, c = 3 + 28 / 60;
+    S('rect', { x: X(h0), y: y + 24, width: X(c) - X(h0), height: 6, fill: fillUrl }, root);
+    S('rect', { x: X(a), y: y, width: X(b) - X(a), height: 24, 'class': 'ftx-fill' }, root);
+    T(root, X(a), y - 22, '$218.2m out', { 'class': 'strong' });
+    T(root, X(a), y - 7, '02:23–02:43', {});
+    S('line', { x1: X(c), x2: X(c), y1: y - 30, y2: y + 24, 'class': 'cursor' }, root);
+    T(root, X(c) + 6, y - 22, 'trading', { 'class': 'label' });
+    T(root, X(c) + 6, y - 7, 'stops, 03:28', { 'class': 'label' });
+    /* the day's outflow as one bar: before and after the halt */
+    var by = 160, total = 529.6, before = 218.2, bx0 = L, bw = W - L - R;
+    function BX(v) { return bx0 + bw * v / 560; }
+    T(root, 0, by - 10, 'All of 12 November’s outflow, $529.6m', { 'class': 'label' });
+    S('rect', { x: BX(0), y: by, width: BX(before) - BX(0), height: 22, 'class': 'ftx-fill' }, root);
+    S('rect', { x: BX(before), y: by, width: BX(total) - BX(before), height: 22, 'class': 'hollow-muted' }, root);
+    T(root, BX(0), by + 40, '$218.2m before', { 'class': 'strong' });
+    T(root, BX(total), by + 40, '≈ $311m after the halt', { 'text-anchor': 'end', 'class': 'strong' });
+  }, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

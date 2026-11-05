@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Honest numbers · Local Elections and the Quality of Financial Statements</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2023): why the profits of town-owned companies matter before a local election, Benford’s law of first digits, and the two tests the paper uses as a detector.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  #det-chart { cursor: ns-resize; }
+  .digit-seg button { padding: .4em .2em; min-width: 2.1em; }
+  .fig .bet-line { stroke: var(--near); stroke-width: 2; }
+</style>
+</head>
+<body data-deck="01-digits.html">
+<lg-sitebar><noscript><a href="../../publication/local-elections-benford-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="Can you spot touched-up accounts without opening them?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation</p>
+    <h1>Can you spot touched-up accounts without opening them?</h1>
+    <p>Italian towns own companies that run their buses, deliver their water, gas and electricity and collect their rubbish. Every spring those companies publish their accounts. In towns that vote that year, the election follows within weeks.</p>
+    <div class="fig" id="cal"></div>
+    <p>A healthy profit reads like proof of a well-run town. The mayor does not write the accounts, but can appoint or dismiss the company’s director, and the town is usually its biggest customer. So do accounts published just before a local election look different from the rest? Nobody outside can audit thousands of them. But honest numbers share a strange regularity that anyone can check.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Meet the regularity&nbsp;→</button>
+      <a class="door" href="03-setting.html#s1" data-return="next">Who owns these companies, and when do their towns vote?&nbsp;→</a>
+    </div>
+    <p class="note">Calendar: Section 2 of the paper (p. 2), election day set each year by decree. Some elections in the data were postponed to later months; the statement before the vote is still the one concerned (p. 2). The mayor’s levers: pp. 1–2.</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How often does a profit start with 1?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Honest numbers · 2 of 4</p>
+    <h2>Place a bet: how often does a profit start with 1?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Take every profit before tax (the figure the paper uses, pre-tax income) and keep only its first digit. The median ordinary-year profit, 126,912, gives a 1; the quartiles, 30,751 and 484,990, give a 3 and a 4 (Table 1). There are nine possible first digits.</p>
+        <p><strong>In the ordinary years, what share of profits start with&nbsp;a&nbsp;1?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="11" aria-pressed="false">About 11%, one in nine</button>
+          <button class="btn" type="button" data-bet="20" aria-pressed="false">About 20%</button>
+          <button class="btn" type="button" data-bet="30" aria-pressed="false">About 30%</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="bet-chart"></div>
+        <p class="legend" id="bet-legend" style="visibility:hidden"><span><i class="sq far"></i>3,964 ordinary-year profits</span><span><i class="ln law"></i>Benford’s law</span><span><i class="ln near"></i>your bet</span></p>
+        <p class="note">Law: the paper’s equation (1). Bars: profits of companies more than half owned by a town, in years without an election; shares reconstructed from Figure 2, panel B, to within a count or two. Its use in auditing and fraud detection: pp. 1, 3.</p>
+      </div>
+      <div class="t">
+        <p id="bet-verdict" aria-live="polite"></p>
+        <div class="actions" id="bet-next" hidden>
+          <button class="btn primary" type="button" data-next>Why would 1 win?&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why would 1 win?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Honest numbers · 3 of 4</p>
+    <h2>Numbers spread over many powers of ten favour small first digits</h2>
+    <div class="two">
+      <div>
+        <p>Picture a ruler on which every power of ten has the same length: 1 to 10, 10 to 100, 100 to 1,000. To get from 1 to 2 a number must double; to get from 9 to 10 it grows by a ninth. So in every power of ten the stretch where numbers start with 1 is long, and the stretch for 9 is short.</p>
+        <p class="prompt">Crowd the toy amounts together, then spread them out, and watch the share that starts with 1.</p>
+        <p>The paper’s profits run from 1 to 229,809,000, more than eight powers of ten, and their mean is about eleven times their median: just the kind of data that is very likely to follow the law when nobody touches it.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Use the law as a detector&nbsp;→</button></div>
+        <p class="note">Toy amounts drawn by this page: a smooth bell on the logarithmic axis. The preset “the paper’s spread” gives the toy the same middle half as the paper’s ordinary-year profits, 30,751 to 484,990 (Table 1). Range from p. 4; mean ÷ median = 1,403,922 ÷ 126,912 ≈ 11, computed from Table 1. The argument is Fewster’s, as the paper cites it (p. 3); the law’s shares come from equation (1).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Where the amounts fall <span class="tag">toy</span></p>
+        <div class="ctl"><span>Start from</span><div class="seg" id="sp-preset"></div></div>
+        <div class="fig" id="rug"></div>
+        <div class="fig" id="rug-digits"></div>
+        <p class="legend"><span><i class="tk"></i>one toy amount, solid if it starts with 1</span><span><i class="sq stretch"></i>stretch where numbers start with 1</span><span><i class="sq far"></i>share of toy amounts</span><span><i class="ln law"></i>Benford’s law</span></p>
+        <label class="ctl" for="sp-spread">Spread the amounts over more powers of ten</label>
+        <input type="range" id="sp-spread" min="20" max="1500" step="1" value="50">
+        <p class="readout h3l" id="sp-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide text-first" data-title="How far from the law is too far?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Honest numbers · 4 of 4</p>
+    <h2>A detector you can operate</h2>
+    <div class="two">
+      <div>
+        <p>The paper measures how far a pile strays from the law with two yardsticks. The <strong>chi-square</strong> adds up the squared gaps, weighted by how rare each digit is; the <strong>adjusted MAD</strong> (mean absolute deviation, from Cerqueti and Lupi, Lupi being one of this paper’s authors) adds up the plain gaps, each scaled by how much that digit normally wobbles.</p>
+        <p>Each comes with a <strong>p value</strong>: how often an honest pile of the same size would stray at least this far by luck alone. Below 0.05, one time in twenty, the paper treats the pile as not following the law.</p>
+        <p class="prompt">Drag a bar: how big a touch-up does it take to be flagged?</p>
+        <div class="actions">
+          <a class="btn primary" id="det-next" href="02-elections.html#s1">Now the real accounts&nbsp;→</a>
+        </div>
+        <p class="note">Tests: the paper’s equations (2), (4) and (5). Pile size: the paper’s pre-election pile, 1,057 statements (Table 1). Both starting piles are toys: one follows the law exactly, the other has its 1s cut from 30.1% to 24%.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">A pile of 1,057 statements <span class="tag" id="det-tag">toy</span></p>
+        <div class="ctl"><span>Start from</span><div class="seg" id="det-preset"></div></div>
+        <div class="fig drag" id="det-chart"></div>
+        <div class="ctl"><span class="pair"><span>Digit</span><span class="seg digit-seg" id="det-digit"></span></span></div>
+        <label class="ctl" for="det-share" id="det-share-label">Share of statements starting with 1</label>
+        <input type="range" id="det-share" min="0" max="400" step="1" value="301">
+        <div class="fig" id="det-meter"></div>
+        <p class="readout h2l" id="det-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/local-elections-benford-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the spring calendar (p. 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('cal');
+  var ARIA = 'Calendar of a typical spring: on 31 December the year’s books close; by the end of March the board approves the statement; by the end of April the shareholders’ meeting approves and publishes it; election day is one Sunday between 15 April and 15 June.';
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 560, H = 164, yb = 94, x0 = 6, x1 = W - 6;
+    function X(m) { return x0 + (x1 - x0) * m / 6.5; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': ARIA }, box);
+    S('rect', { x: X(0), y: yb, width: X(6.5) - X(0), height: 12, 'class': 'cal-bar' }, root);
+    S('rect', { x: X(3.5), y: yb - 4, width: X(5.5) - X(3.5), height: 20, 'class': 'cal-band' }, root);
+    ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'].forEach(function (m, i) {
+      S('line', { x1: X(i), x2: X(i), y1: yb + 12, y2: yb + 17, 'class': 'axis' }, root);
+      if (i < 6) T(root, X(i + 0.5), yb + 30, m, { 'text-anchor': 'middle' });
+    });
+    /* [month, date, what happens, level, anchor] */
+    var EV = [
+      [0, '31 December', narrow ? 'books close' : 'the year’s books close', 1, 'start'],
+      [3, 'by 31 March', 'the board approves', 2, 'middle'],
+      [4, 'by 30 April', narrow ? 'shareholders publish' : 'shareholders approve and publish', 1, 'start']
+    ];
+    EV.forEach(function (e) {
+      var x = X(e[0]), top = e[3] === 1 ? yb - 36 : yb - 76;
+      S('line', { x1: x, x2: x, y1: yb, y2: top + 18, 'class': 'stem' }, root);
+      S('circle', { cx: x, cy: yb + 6, r: 3.5, 'class': 'text-fill' }, root);
+      var w = Math.max(E.textW(e[1]), E.textW(e[2])), tx = x;
+      if (e[4] === 'start') tx = Math.min(x, W - w - 2); else tx = E.clamp(x, w / 2 + 2, W - w / 2 - 2);
+      T(root, tx, top, e[1], { 'text-anchor': e[4], 'class': 'strong' });
+      T(root, tx, top + 14, e[2], { 'text-anchor': e[4], 'class': 'label' });
+    });
+    var cx = (X(3.5) + X(5.5)) / 2;
+    T(root, cx, yb + 52, 'Election day', { 'text-anchor': 'middle', 'class': 'strong' });
+    T(root, cx, yb + 66, narrow ? 'a Sunday, 15 Apr – 15 Jun' : 'one Sunday between 15 April and 15 June', { 'text-anchor': 'middle', 'class': 'label' });
+  }, { min: 300, max: 760 });
+})();
+
+/* ---------- slide 2: a bet on the share of 1s (eq. 1, Figure 2B) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var ORD = E.shares(E.PILES.ord50);
+  var box = document.getElementById('bet-chart'), betBox = document.getElementById('bet');
+  var verdict = document.getElementById('bet-verdict'), nextBox = document.getElementById('bet-next');
+  var legend = document.getElementById('bet-legend');
+  var bet = null;
+  var LEAD = {
+    '11': 'One in nine would be right if every first digit were equally likely. They are not. ',
+    '20': 'More than one in nine, yes, but further still. ',
+    '30': 'You called it. '
+  };
+  var TAIL = 'Under Benford’s law, 30.1% of profits start with 1; in the paper’s 3,964 ordinary-year profits, about 29% do. Only 4.6% start with 9 under the law, about 4% in the data. The rule is one line: the share starting with d is <span class="formula">log<sub>10</sub>(1 + 1/d)</span>. Much honest accounting data follows it, which is why auditors and fraud examiners use it.';
+  function draw(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.6, 230, 300));
+    var c = E.digitChart(box, { W: W, H: H, shares: bet ? ORD : null, cls: 'far', yMax: 0.35, noLaw: !bet,
+      title: 'Share of profits by first digit',
+      aria: bet ? 'First-digit shares of 3,964 ordinary-year profits against Benford’s law: digit 1 about 29% (law 30.1%), 2 about 19% (17.6%), 3 about 13% (12.5%), 4 about 9% (9.7%), 5 about 9% (7.9%), 6 about 7% (6.7%), 7 about 6% (5.8%), 8 about 5% (5.1%), 9 about 4% (4.6%); your bet: ' + bet + '%.' : 'An empty chart of first-digit shares, waiting for your bet.' });
+    if (!bet) { T(c.root, (c.L + W - c.R) / 2, c.Y(0.2), 'Place your bet to draw the law and the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    /* the bet is a reference line behind the bars, so the law's tick and the bar top stay visible on top of it */
+    var y = c.Y(+bet / 100);
+    c.root.insertBefore(S('line', { x1: c.L, x2: W - c.R, y1: y, y2: y, 'class': 'bet-line' }), c.bars);
+    T(c.root, W - c.R, y - 6, 'your bet: ' + bet + '%', { 'text-anchor': 'end', 'class': 'label halo' });
+  }
+  var redraw = E.fit(box, draw, { min: 300, max: 640 });
+  function place(b) {
+    bet = b;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-ones', b);
+    verdict.innerHTML = LEAD[b] + TAIL;
+    nextBox.hidden = false; legend.style.visibility = 'visible';
+    redraw();
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet')); });
+  var prior = E.load('bet-ones');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior);
+})();
+
+/* ---------- slide 3: why 1 wins, on a logarithmic axis (toy amounts) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  /* centred between the quartiles of the paper's ordinary-year profits, 30,751 and 484,990 (Table 1) */
+  var Q1 = Math.log10(30751), Q3 = Math.log10(484990), MU = (Q1 + Q3) / 2, N = 120;
+  var rug = document.getElementById('rug'), digits = document.getElementById('rug-digits'), slider = document.getElementById('sp-spread'), read = document.getElementById('sp-read');
+  /* spread in thousandths of a power of ten; the paper's preset puts the quartiles exactly on Table 1's */
+  var PRESET = { crowd: 50, paper: Math.round(1000 * (Q3 - Q1) / (2 * 0.6745)) };
+  /* inverse of the standard normal distribution (Acklam), for evenly spaced toy amounts */
+  function invPhi(p) {
+    var a = [-39.6968302866538, 220.946098424521, -275.928510446969, 138.357751867269, -30.6647980661472, 2.50662827745924],
+        b = [-54.4760987982241, 161.585836858041, -155.698979859887, 66.8013118877197, -13.2806815528857],
+        c = [-0.00778489400243029, -0.322396458041136, -2.40075827716184, -2.54973253934373, 4.37466414146497, 2.93816398269878],
+        d = [0.00778469570904146, 0.32246712907004, 2.445134137143, 3.75440866190742], q, r;
+    if (p < 0.02425) { q = Math.sqrt(-2 * Math.log(p)); return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); }
+    if (p > 1 - 0.02425) return -invPhi(1 - p);
+    q = p - 0.5; r = q * q;
+    return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q / (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+  }
+  function sigma() { return +slider.value / 1000; }
+  function shares(s) {
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (d) {
+      var p = 0;
+      for (var k = -3; k <= 14; k++) p += E.Phi((Math.log10(d + 1) + k - MU) / s) - E.Phi((Math.log10(d) + k - MU) / s);
+      return p;
+    });
+  }
+  /* toy amounts, rounded to three significant figures so they do not pretend to precision */
+  function short(v) {
+    if (v >= 1e9) return (v / 1e9).toPrecision(3) + 'bn'; /* the axis style: 1m, 1bn */
+    if (v >= 1e6) return (v / 1e6).toPrecision(3) + 'm';
+    var k = Math.pow(10, Math.max(0, Math.floor(Math.log10(v)) - 2));
+    return th(Math.round(v / k) * k);
+  }
+  var setPreset = E.seg(document.getElementById('sp-preset'), [['crowd', 'Crowded together'], ['paper', 'The paper’s spread']], null, function (k) { slider.value = PRESET[k]; update(); }, 'Start from');
+  var rugGeo = null, digGeo = null;
+  function buildRug(W) {
+    rug.innerHTML = '';
+    var H = 74, L = 4, R = 8, yT = 18, yB = 48;
+    function X(lg) { return L + (W - L - R) * lg / 9; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Toy amounts as ticks on a logarithmic axis from 1 to one billion; in every power of ten the stretch of numbers starting with 1 is shaded.' }, rug);
+    for (var k = 0; k < 9; k++) S('rect', { x: X(k), y: yT, width: X(k + Math.log10(2)) - X(k), height: yB - yT, 'class': 'stretch' }, root);
+    S('line', { x1: X(0), x2: X(9), y1: yB, y2: yB, 'class': 'axis' }, root);
+    var LAB = ['1', '10', '100', '1k', '10k', '100k', '1m', '10m', '100m', '1bn'];
+    for (var j = 0; j <= 9; j++) {
+      S('line', { x1: X(j), x2: X(j), y1: yB, y2: yB + 5, 'class': 'axis' }, root);
+      if (W >= 420 || j % 3 === 0) T(root, X(j), yB + 18, LAB[j], { 'text-anchor': j === 0 ? 'start' : j === 9 ? 'end' : 'middle' });
+    }
+    T(root, 0, 11, W < 460 ? 'Toy amounts, log scale' : 'Toy amounts on a logarithmic axis: each power of ten gets the same length', { 'class': 'label' });
+    rugGeo = { X: X, yT: yT, yB: yB, dyn: S('g', {}, root) };
+  }
+  function buildDigits(W) {
+    digits.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.36, 170, 200));
+    digGeo = { W: W, H: H };
+  }
+  function update() {
+    var s = sigma(), p = shares(s);
+    slider.setAttribute('aria-valuetext', 'spread ' + s.toFixed(2) + ' powers of ten');
+    var match = null; for (var k in PRESET) if (PRESET[k] === +slider.value) match = k; setPreset(match);
+    var lo = Math.pow(10, MU - 0.6745 * s), hi = Math.pow(10, MU + 0.6745 * s);
+    read.innerHTML = '<strong>Middle half of the toy amounts: ' + short(lo) + ' to ' + short(hi) + '</strong>, a factor of ' + (hi / lo < 10 ? (hi / lo).toFixed(1) : th(hi / lo)) + '. ' +
+      'Starting with 1: <strong>' + E.pct(p[0], 0) + '</strong> (law: 30.1%). Starting with 9: <strong>' + E.pct(p[8], 1) + '</strong> (law: 4.6%).';
+    if (rugGeo) {
+      var g = rugGeo.dyn; g.innerHTML = '';
+      for (var i = 0; i < N; i++) {
+        var lg = MU + s * invPhi((i + 0.5) / N);
+        if (lg < 0 || lg > 9) continue;
+        var x = rugGeo.X(lg), one = lg - Math.floor(lg) < Math.log10(2); /* lands in a "starts with 1" stretch */
+        S('line', { x1: x, x2: x, y1: rugGeo.yT + 4, y2: rugGeo.yB - 2, 'class': one ? 'rug one' : 'rug' }, g);
+      }
+    }
+    if (digGeo) {
+      digits.innerHTML = '';
+      E.digitChart(digits, { W: digGeo.W, H: digGeo.H, shares: p, cls: 'far', yMax: 1, title: 'Share of toy amounts by first digit',
+        aria: 'First-digit shares of the toy amounts against Benford’s law: digit 1 ' + E.pct(p[0], 0) + ', digit 9 ' + E.pct(p[8], 1) + '.' });
+    }
+  }
+  slider.addEventListener('input', update);
+  E.fit(rug, function (W) { buildRug(W); update(); }, { min: 300, max: 640 });
+  E.fit(digits, function (W) { buildDigits(W); update(); }, { min: 300, max: 640 });
+  update();
+})();
+
+/* ---------- slide 4: the detector (eqs. 2, 4, 5; Figure 2A) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 1057, YMAX = 0.4;
+  var PAPER = E.shares(E.PILES.pre50);
+  var chart = document.getElementById('det-chart'), meter = document.getElementById('det-meter'), read = document.getElementById('det-read');
+  var range = document.getElementById('det-share'), rangeLabel = document.getElementById('det-share-label'), tag = document.getElementById('det-tag');
+  /* The paper's own pile answers the bet on deck 2, slide 2, so it is offered only once that bet is placed,
+     or when the reader arrives from that bet's verdict (01-digits.html?pile=pre#s4, which works with storage blocked). */
+  var fromBet = /(?:^|&)pile=pre(?:&|$)/.test(location.search.slice(1));
+  var paperOK = fromBet || !!E.load('bet-fail');
+  /* one digit set to share s, the other eight rescaled so the pile still adds up to 100% */
+  function rescale(p, i, s) {
+    s = E.clamp(s, 0.002, 0.6);
+    var rest = 1 - p[i], f = rest > 1e-9 ? (1 - s) / rest : 0;
+    return p.map(function (v, k) { return k === i ? s : (rest > 1e-9 ? v * f : (1 - s) / 8); });
+  }
+  var PRESETS = { honest: E.B, touched: rescale(E.B, 0, 0.24), paper: PAPER }; /* touched: a toy, the 1s cut from 30.1% to 24% */
+  var st = { p: E.B.slice(), sel: 0, from: 'honest' };
+  var saved = E.load('detector');
+  if (saved && Array.isArray(saved.p) && saved.p.length === 9 && saved.p.every(function (v) { return typeof v === 'number' && v >= 0; }) && (saved.from !== 'paper' || paperOK)) { st.p = saved.p; st.from = saved.from || null; }
+  if (fromBet) { st.p = PAPER.slice(); st.from = 'paper'; }
+  var geo = null, mgeo = null, dragging = false;
+
+  var opts = [['honest', 'An honest pile'], ['touched', 'A touched-up pile']];
+  if (paperOK) opts.push(['paper', 'The paper’s pre-election pile']);
+  var setPreset = E.seg(document.getElementById('det-preset'), opts, st.from, function (k) {
+    st.p = PRESETS[k].slice(); st.from = k; update();
+  }, 'Start from');
+  var setDigit = E.seg(document.getElementById('det-digit'), [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (d) { return [String(d), String(d)]; }), '1', function (k) { st.sel = +k - 1; update(); }, 'Digit to adjust');
+  if (fromBet) { /* came from deck 2: the way on is the way back */
+    var cta = document.getElementById('det-next');
+    cta.href = '02-elections.html#s2'; cta.textContent = '← Return to Before the vote, slide 2';
+  }
+
+  function setShare(i, s) { st.p = rescale(st.p, i, s); st.sel = i; st.from = null; }
+  function build(W) {
+    chart.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.4, 190, 220));
+    geo = { W: W, H: H };
+    drawChart();
+  }
+  function drawChart() {
+    if (!geo) return;
+    chart.innerHTML = '';
+    /* blue while the pile is the honest one, gold once it is touched up (the site's colour meaning) */
+    var c = E.digitChart(chart, { W: geo.W, H: geo.H, shares: st.p, cls: st.from === 'honest' ? 'far' : 'near', yMax: YMAX, title: 'First digits of the pile: drag a bar',
+      aria: 'Your pile of 1,057 statements by first digit, against Benford’s law: ' + st.p.map(function (v, i) { return (i + 1) + ': ' + E.pct(v, 1); }).join(', ') + '.' });
+    var i = st.sel, x = c.X(i), w = (geo.W - c.L - c.R) / 9;
+    S('rect', { x: x - w / 2 + 1, y: c.TOP - 4, width: w - 2, height: c.Y(0) - c.TOP + 8, 'class': 'sel' }, c.root);
+    T(c.root, x, Math.max(c.TOP + 10, c.Y(Math.min(st.p[i], YMAX)) - 6), E.pct(st.p[i], 1), { 'text-anchor': 'middle', 'class': 'strong halo' });
+    geo.c = c;
+  }
+  function buildMeter(W) {
+    meter.innerHTML = '';
+    var H = 84, L = W < 420 ? 92 : 112, R = 14;
+    function X(p) { return L + (W - L - R) * Math.min(4, -Math.log10(Math.max(p, 1e-4))) / 4; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'p values of the two tests on a scale from 1 to 0.0001, with the 0.05 line' }, meter);
+    S('rect', { x: X(0.05), y: 4, width: X(1e-4) - X(0.05), height: 52, 'class': 'flag-zone' }, root);
+    T(root, X(1e-4) - 4, 16, 'flagged', { 'text-anchor': 'end', 'class': 'label' });
+    [[1, '1'], [0.1, '0.1'], [0.01, '0.01'], [0.001, '0.001'], [0.0001, '0.0001']].forEach(function (t) {
+      S('line', { x1: X(t[0]), x2: X(t[0]), y1: 56, y2: 61, 'class': 'axis' }, root);
+      if (W >= 420 || t[0] > 0.01 || t[0] < 0.001) T(root, X(t[0]), 74, t[1], /* on a phone 0.01 and 0.001 would touch the 0.05 label */ { 'text-anchor': t[0] === 1 ? 'start' : t[0] === 1e-4 ? 'end' : 'middle' });
+    });
+    S('line', { x1: X(0.05), x2: X(0.05), y1: 4, y2: 61, 'class': 'axis zero' }, root);
+    T(root, X(0.05) + 4, 74, '0.05', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: 56, y2: 56, 'class': 'axis' }, root);
+    T(root, 0, 26, 'Chi-square', { 'class': 'label' });
+    T(root, 0, 46, 'Adjusted MAD', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: 22, y2: 22, 'class': 'grid' }, root);
+    S('line', { x1: L, x2: W - R, y1: 42, y2: 42, 'class': 'grid' }, root);
+    mgeo = { X: X, dyn: S('g', {}, root) };
+    drawMeter();
+  }
+  var res = null;
+  function drawMeter() {
+    if (!mgeo || !res) return;
+    var g = mgeo.dyn; g.innerHTML = '';
+    S('circle', { cx: mgeo.X(res.pChi), cy: 22, r: 6, 'class': res.pChi < 0.05 ? 'near-fill' : 'far-fill' }, g);
+    S('circle', { cx: mgeo.X(res.pMad), cy: 42, r: 6, 'class': res.pMad < 0.05 ? 'near-fill' : 'far-fill' }, g);
+  }
+  function verdict(p) { return p < 0.05 ? 'flagged at the 5% level' : 'passes'; }
+  function update() {
+    res = E.tests(st.p, N);
+    setPreset(st.from); setDigit(String(st.sel + 1));
+    tag.textContent = st.from === 'paper' ? 'reconstructed from Figure 2A' : 'toy';
+    rangeLabel.textContent = 'Share of statements starting with ' + (st.sel + 1);
+    range.value = Math.round(st.p[st.sel] * 1000);
+    range.setAttribute('aria-valuetext', E.pct(st.p[st.sel], 1));
+    read.innerHTML = '<strong>Chi-square ' + res.chi.toFixed(1) + ', ' + E.peq(res.pChi) + ':</strong> ' + verdict(res.pChi) + '. ' +
+      '<strong>Adjusted MAD ' + E.fmt(res.z, 2) + ', ' + E.peq(res.pMad) + ':</strong> ' + verdict(res.pMad) + '.' +
+      (st.from === 'paper' ? ' The paper reports 0.033 and 0.016 (Figure 2A).' : '');
+    drawChart(); drawMeter();
+    E.save('detector', { p: st.p, from: st.from });
+  }
+  range.addEventListener('input', function () { setShare(st.sel, +range.value / 1000); update(); });
+  function pointer(e) {
+    if (!geo || !geo.c) return;
+    var r = chart.firstChild.getBoundingClientRect(), k = geo.W / r.width;
+    var x = (e.clientX - r.left) * k, y = (e.clientY - r.top) * k, c = geo.c;
+    var i = E.clamp(Math.floor((x - c.L) / ((geo.W - c.L - c.R) / 9)), 0, 8);
+    var v = YMAX * (c.Y(0) - y) / (c.Y(0) - c.TOP);
+    setShare(i, v); update();
+  }
+  chart.addEventListener('pointerdown', function (e) { dragging = true; try { chart.setPointerCapture(e.pointerId); } catch (x) {} pointer(e); e.preventDefault(); });
+  chart.addEventListener('pointermove', function (e) { if (dragging) pointer(e); });
+  chart.addEventListener('pointerup', function () { dragging = false; });
+  chart.addEventListener('pointercancel', function () { dragging = false; });
+  E.fit(chart, build, { min: 300, max: 640 });
+  E.fit(meter, buildMeter, { min: 300, max: 640 });
+  update();
+})();
+</script>
+</body>
+</html>

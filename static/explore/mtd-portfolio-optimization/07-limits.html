@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the test leaves out · A Network-Based MTD Approach to Portfolio Optimization</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: what the twenty-year test of the network rules does not cover.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="07-limits.html">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="What does the test leave out?">
+  <div class="inner">
+    <p class="kicker">Side path · What the test leaves out · 1 of 1</p>
+    <h2>What the test leaves out</h2>
+    <ul class="facts">
+      <li><b>Costs</b>Portfolios are rebuilt every 30 trading days; trading costs lie outside what the paper measures.</li>
+      <li><b>Cash</b>The risk-free rate is set to zero “for convenience” (page 8), so a Sharpe ratio here is average return per unit of volatility.</li>
+      <li><b>Which stocks</b>28, 46 and 78 stocks from three large indices. The authors present the method as suited to small and medium universes, up to around 100 assets, a size common in practice (page 2).</li>
+      <li><b>Size</b>Each window the model estimates 5,460 numbers for the Dow and 42,510 for the FTSE 100. The authors find their results “slightly less consistent” in bigger markets, tie this to the model’s computational cost, and note that practitioners usually work with small batches of stocks (page 10).</li>
+    </ul>
+    <p class="caveat">Held fixed throughout: one dislike of risk, <span class="num">δ = 10</span>, which the paper calls moderate to high, within the usual range of 5 to 15, and one cut-off for a flat day, half a standard deviation. The authors report that a test on a Singapore index left the results “qualitatively unchanged” (pages 7 and 9).</p>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-portfolio.html#s5">← Return to the main path</a>
+    </div>
+    <p class="note">Numbers of estimates: computed from the formula in Section 2.2. Risk aversion: page 9, footnote †. The authors’ own limits: computational cost and the focus on local assortativity (page 12).</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/mtd-portfolio-optimization/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+</body>
+</html>

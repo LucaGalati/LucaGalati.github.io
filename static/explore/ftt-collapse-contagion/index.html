@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: Financial Contagion in Cryptocurrency Exchanges</title>
+<meta name="description" content="An explorable explanation of Galati, Webb and Webb, Financial Contagion in Cryptocurrency Exchanges: Evidence from the FTT Collapse (Finance Research Letters, 2024): did the collapse of FTX’s token spread across exchanges, and where did money go while FTX traded but withdrawals were frozen?">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/ftt-collapse-contagion/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <p class="kicker">An explorable explanation</p>
+  <h1>Financial Contagion in Cryptocurrency Exchanges: Evidence from the FTT Collapse</h1>
+  <p class="byline">Luca Galati, Alexander Webb and Robert I. Webb · Finance Research Letters, 2024</p>
+  <figure class="strip">
+    <div class="fig" id="strip"></div>
+    <figcaption class="caption">FTT’s minute-by-minute returns on FTX, 31 October to 12 November 2022, traced from the letter’s Figure 1: blue before 05:59 UTC on 6 November, gold after.</figcaption>
+  </figure>
+  <p class="lede">In November 2022 the crypto exchange FTX collapsed, and with it FTT, the coin it had issued itself. This short explorable follows the letter’s two questions: did the collapse spread to the other exchanges where FTT traded, and during the days when FTX still let customers trade but withdraw almost nothing, where did their money go? Two decks on the main path, two side paths, a few things to play with, about fifteen minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-tremor.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-tremor.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/ftt-collapse-contagion/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script src="traces.js"></script>
+<script>
+/* the header strip: FTX's trace from Figure 1, as a seismograph */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('strip'), tr = E.trace('fig1', 'FTX');
+  if (!tr) return;
+  var T0 = 9, T1 = 291, AMP = 44;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 84, mid = 44, half = 34;
+    function X(t) { return W * (t - T0) / (T1 - T0); }
+    function Y(v) { return mid - half * E.clamp(v / AMP, -1, 1); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'FTT minute returns on FTX from 31 October to 12 November 2022, traced from the paper’s Figure 1: almost flat until 6 November, then swings of up to about 22 per cent up and 43 per cent down in a minute (Table 3).' }, box);
+    S('line', { x1: 0, x2: W, y1: mid, y2: mid, 'class': 'axis' }, root);
+    E.envelope(root, tr, X, Y, { from: T0, to: T1, minPx: 1.2 });
+    var xc = X(E.CUT);
+    S('line', { x1: xc, x2: xc, y1: 0, y2: H, 'class': 'cutline' }, root);
+    T(root, xc - 6, 10, W < 520 ? '05:59, 6 Nov' : '05:59 UTC, 6 November', { 'text-anchor': 'end', 'class': 'label' });
+  }, { min: 300, max: 1100 });
+})();
+</script>
+</body>
+</html>

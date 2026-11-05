@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who leads whom · A Network-Based MTD Approach to Portfolio Optimization</title>
+<meta name="description" content="Deck 1 of an explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: how the MTD model turns days of ups and downs into a network of who leads whom, and how assortativity asks whether like links to like.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .fig .op { font-size: 20px; fill: var(--text); }
+  .fig .st { font-size: 12px; }
+  #net-chart, #hook-chart { max-width: 34rem; margin-left: auto; margin-right: auto; }
+  .hook-stage { min-width: 0; align-self: center; }
+  #mix-lam { max-width: none; }
+  #lik-chart { margin-top: 0; }
+</style>
+</head>
+<body data-deck="01-leaders.html">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Which stock moves first?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">An explorable explanation · De Blasis, Galati &amp; Petroni</p>
+      <h1>If you knew which stocks lead, would you choose a better portfolio?</h1>
+      <p>Since Harry Markowitz in 1952, the classic recipe for a portfolio has needed two ingredients: what each stock tends to earn, and how stocks move together. “Together” is measured by correlation, and correlation is symmetric. It can say that two stocks rise and fall as a pair; it cannot say which of them moves first.</p>
+      <p>Yet some stocks lead. When one stock’s move today says something about another’s tomorrow, information travels in a direction. Draw those directions between all the stocks of an index and you have a map of who leads whom.</p>
+      <p><strong>Can such a map tell you what to own?</strong> This paper builds one and tests it on twenty years of three stock markets.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>See how a lead is measured&nbsp;→</button>
+        <a class="door" href="04-correlation.html#s1" data-return="next">Why isn’t correlation enough? See a lead it misses&nbsp;→</a>
+      </div>
+    </div>
+    <div class="hook-stage">
+      <div class="ctl"><span>Show</span><span class="seg" id="hook-view"></span><span class="tag" id="hook-tag" style="visibility:hidden">illustrative</span></div>
+      <div class="fig" id="hook-chart"></div>
+      <p class="readout" id="hook-read" aria-live="polite"></p>
+      <p class="note">Ten stocks from the paper’s worked example (Section 2.6), named A to J. The paper computes no correlations for them: the first view drops the direction and strength of the same links. It is illustrative, not a correlation network.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How can one stock’s today shape another’s tomorrow?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Who leads whom · 2 of 4</p>
+    <h2>Tomorrow, as a mix of today</h2>
+    <div class="two">
+      <div>
+        <p>The model, a <strong>mixture transition distribution</strong> (MTD), first sorts every trading day of every stock into one of three states: down, flat or up. Flat is any move within half a standard deviation of zero, too small to count as a signal.</p>
+        <p>Then it makes one assumption. A stock’s chances of being down, flat or up tomorrow are a weighted mix of what each stock’s state today suggests, its own included. The weights, written <span class="num">λ</span>, are shares of influence: none is negative, and for each stock they add up to one.</p>
+        <p>The weights are fitted, not chosen: the best weight is the one that makes the history the model saw most likely. Find it for two invented stocks.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Now for ten stocks&nbsp;→</button></div>
+        <p class="note">Toy: Leader, Follower and their 250-day history are invented, counted as in Section 2.2 and fitted by maximum likelihood, equation (5). The paper’s optimizer starts from equal shares, like the slider. Three states: page 7.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Two invented stocks: Leader (gold) and Follower (blue) <span class="tag">toy</span></p>
+        <div class="ctl"><span class="pair"><span>Today, Leader is</span><span class="seg" id="mix-l"></span></span><span class="pair"><span>Follower is</span><span class="seg" id="mix-f"></span></span></div>
+        <div class="fig" id="mix-chart"></div>
+        <label class="ctl" for="mix-lam">Weight on Leader, <span class="num">λ</span> (Follower’s own past gets the rest)</label>
+        <input type="range" id="mix-lam" min="0" max="100" step="1" value="50">
+        <div class="fig" id="lik-chart"></div>
+        <p class="readout" id="mix-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does the whole web look like?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Who leads whom · 3 of 4</p>
+    <h2>Everyone is led about equally. Some lead far more.</h2>
+    <div class="two">
+      <div>
+        <p>Fit the weights for every stock of an index and you have a table of how much each stock pulls on each other. Leave out each stock’s pull on itself and the table becomes a network of arrows, thicker where the pull is stronger.</p>
+        <p>Two numbers describe each stock. Its <strong>in-strength</strong> adds up the arrows coming in: how much it is led. Its <strong>out-strength</strong> adds up the arrows going out: how much it leads, which the paper reads, once normalized, as its share of price leadership.</p>
+        <p>Switch the circles between the two. In-strength hardly varies, because the weights into each stock add up to one, less what it takes from its own past. Out-strength runs from 0.37 for H to 1.85 for E. Click a stock to see whom it leads.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Do leaders link to leaders?&nbsp;→</button></div>
+        <p class="note">The paper’s worked example (Section 2.6): its weight matrix and Figure 1. Strengths are row and column sums of that matrix (computed); E’s out-strength 1.853 and in-strength 1.000 are printed in Table 1. Definitions: Section 2.3.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Circle size</span><span class="seg" id="net-size"></span></div>
+        <div class="fig" id="net-chart"></div>
+        <p class="legend"><span><i class="ln hi"></i>whom it leads</span><span><i class="ln"></i>who leads it</span><span>thicker: stronger pull</span></p>
+        <p class="readout" id="net-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Do leaders link to leaders?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Who leads whom · 4 of 4</p>
+    <h2>Like with like, asked four ways</h2>
+    <div class="two">
+      <div>
+        <p>Popular children tend to befriend popular children. Network scientists call that <strong>assortative</strong> mixing; when opposites pair up instead, the network is disassortative.</p>
+        <p>With arrows the question comes in four versions, because every arrow has a source and a target, and each can be judged by how much it is led (in) or how much it leads (out). In–Out, for instance, asks whether arrows run from much-led stocks to strong leaders.</p>
+        <p>Each dot is one of the 28 arrows. Across: its source’s strength; up: its target’s, each counted without the arrow itself. The tilt of the cloud, a correlation weighted by the arrows, is the network’s assortativity.</p>
+        <p class="door-row"><a class="door" href="05-excess.html#s1">Why leave the arrow itself out?&nbsp;→</a></p>
+        <div class="actions"><a class="btn primary" href="02-portfolio.html#s1">From network to portfolio&nbsp;→</a></div>
+        <p class="note">Equation (8), after Pigorsch and Sabek (2022). The four values for the example are computed from the Section 2.6 matrix; they equal the column sums of Table 2. Market averages: Table 3.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Source, then target</span><span class="seg" id="sc-mode"></span></div>
+        <div class="fig" id="sc-chart"></div>
+        <p class="legend"><span><i class="dt base" style="opacity:.42"></i>one arrow; bigger when stronger</span><span><i class="ln"></i>the tilt, a weighted fit</span></p>
+        <p class="readout" id="sc-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/mtd-portfolio-optimization/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the same ten stocks, without and with direction ---------- */
+(function () {
+  var E = Explore, box = document.getElementById('hook-chart'), read = document.getElementById('hook-read');
+  var view = 'first';
+  var TEXT = {
+    together: '<strong>Illustrative:</strong> the same links with direction and strength removed. A correlation network draws only lines like these, never arrows: B and C now look just like I and C.',
+    first: '<strong>Who moves first:</strong> each arrow points from a stock to one whose next move it helps predict, thicker when the pull is stronger. B pulls hard on C (0.71); I barely touches C (0.04).'
+  };
+  function build(W, vh) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.74, 230, Math.max(230, vh * 0.5)));
+    var root = E.svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': view === 'first' ? 'The ten-stock example as weighted arrows of influence, from A to J.' : 'The ten-stock example as plain lines between stocks, without direction or strength (illustrative).' }, box);
+    E.net.draw(root, E.net.W0, { x: 0, y: 0, w: W, h: H }, { R: 12, plain: view === 'together',
+      edgeClass: function () { return view === 'together' ? 'plain' : ''; } });
+    read.innerHTML = TEXT[view];
+    tag.style.visibility = view === 'together' ? 'visible' : 'hidden';
+  }
+  var tag = document.getElementById('hook-tag');
+  var redraw = E.fit(box, build, { min: 280, max: 560, useHeight: true });
+  E.seg(document.getElementById('hook-view'), [['together', 'Who moves with whom'], ['first', 'Who moves first']], view, function (k) { view = k; redraw(); }, 'Show');
+  read.innerHTML = TEXT[view];
+})();
+
+/* ---------- slide 2: the mixing dial, two invented stocks ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* invented 250-day history, counted: F[leader today][follower today][follower tomorrow], states 0 down, 1 flat, 2 up */
+  var F = [[[10, 6, 3], [6, 9, 6], [11, 6, 10]], [[7, 13, 4], [8, 27, 7], [8, 15, 13]], [[6, 5, 9], [5, 12, 20], [2, 7, 14]]];
+  var ST = ['down', 'flat', 'up'];
+  /* stage 1: transition chances, counted (Billingsley): from Leader today, and from Follower's own today */
+  var PL = [0, 1, 2].map(function (h) { var c = [0, 0, 0]; for (var f = 0; f < 3; f++) for (var k = 0; k < 3; k++) c[k] += F[h][f][k]; var s = c[0] + c[1] + c[2]; return c.map(function (x) { return x / s; }); });
+  var PF = [0, 1, 2].map(function (f) { var c = [0, 0, 0]; for (var h = 0; h < 3; h++) for (var k = 0; k < 3; k++) c[k] += F[h][f][k]; var s = c[0] + c[1] + c[2]; return c.map(function (x) { return x / s; }); });
+  /* stage 2: log-likelihood of the history for each weight on Leader (equation 5) */
+  function ll(l) { var s = 0; for (var h = 0; h < 3; h++) for (var f = 0; f < 3; f++) for (var k = 0; k < 3; k++) s += F[h][f][k] * Math.log(l * PL[h][k] + (1 - l) * PF[f][k]); return s; }
+  var LL = [], best = 0, bestLL = -Infinity;
+  for (var i = 0; i <= 100; i++) { LL.push(ll(i / 100)); if (LL[i] > bestLL) { bestLL = LL[i]; best = i; } }
+  var REL = LL.map(function (v) { return Math.exp(v - bestLL); });
+  var st = { l: 2, f: 0 };
+  var box = document.getElementById('mix-chart'), lik = document.getElementById('lik-chart'), slider = document.getElementById('mix-lam'), read = document.getElementById('mix-read');
+  var geo = null, lgeo = null, found = false; /* the peak is marked only once the reader has found it */
+  function pct(x) { return Math.round(x * 100) + '%'; }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 470, H = narrow ? 178 : 168, op = narrow ? 18 : 30, gw = (W - 2 * op) / 3, base = H - 22, top = narrow ? 52 : 40;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'A visual equation: the next-day chances suggested by Leader’s state today, times the weight on Leader, plus those suggested by Follower’s own state, times the rest, give the forecast for Follower tomorrow.' }, box);
+    geo = { W: W, H: H, gw: gw, op: op, base: base, top: top, narrow: narrow, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function bars(g, x0, vals, cls, stack) {
+    var gw = geo.gw, bw = Math.min(26, gw / 3 - 8), Y = function (v) { return geo.base - (geo.base - geo.top) * v / 0.75; };
+    vals.forEach(function (v, k) {
+      var cx = x0 + gw * (k + 0.5) / 3;
+      if (stack) {
+        var y1 = Y(stack[k][0]);
+        S('rect', { x: cx - bw / 2, y: y1, width: bw, height: geo.base - y1, 'class': 'hi-fill' }, g);
+        var y2 = Y(stack[k][0] + stack[k][1]);
+        S('rect', { x: cx - bw / 2, y: y2, width: bw, height: y1 - y2, 'class': 'base-fill' }, g);
+      } else {
+        var y = Y(v);
+        S('rect', { x: cx - bw / 2, y: y, width: bw, height: geo.base - y, 'class': cls }, g);
+      }
+      T(g, cx, Y(v) - 5, pct(v), { 'text-anchor': 'middle', 'class': stack ? 'strong' : 'label' });
+      T(g, cx, geo.base + 15, ST[k], { 'text-anchor': 'middle' });
+    });
+    S('line', { x1: x0 + 2, x2: x0 + gw - 2, y1: geo.base, y2: geo.base, 'class': 'axis' }, g);
+  }
+  function draw() {
+    var l = +slider.value / 100, a = PL[st.l], b = PF[st.f];
+    var mix = [0, 1, 2].map(function (k) { return l * a[k] + (1 - l) * b[k]; });
+    slider.setAttribute('aria-valuetext', l.toFixed(2));
+    if (geo) {
+      var g = geo.dyn, gw = geo.gw, op = geo.op, x1 = 0, x2 = gw + op, x3 = 2 * (gw + op), n = geo.narrow;
+      g.innerHTML = '';
+      T(g, x1 + gw / 2, 13, n ? 'Leader is ' + ST[st.l] : 'Leader is ' + ST[st.l] + ', so', { 'text-anchor': 'middle', 'class': 'label' });
+      T(g, x1 + gw / 2, 28, '× ' + l.toFixed(2), { 'text-anchor': 'middle', 'class': 'strong' });
+      T(g, x2 + gw / 2, 13, n ? 'Follower is ' + ST[st.f] : 'Follower is ' + ST[st.f] + ', so', { 'text-anchor': 'middle', 'class': 'label' });
+      T(g, x2 + gw / 2, 28, '× ' + (1 - l).toFixed(2), { 'text-anchor': 'middle', 'class': 'strong' });
+      T(g, x3 + gw / 2, 13, n ? 'Follower,' : 'Follower tomorrow', { 'text-anchor': 'middle', 'class': 'label' });
+      if (n) T(g, x3 + gw / 2, 28, 'tomorrow', { 'text-anchor': 'middle', 'class': 'label' });
+      bars(g, x1, a, 'hi-fill');
+      bars(g, x2, b, 'base-fill');
+      bars(g, x3, mix, null, [0, 1, 2].map(function (k) { return [l * a[k], (1 - l) * b[k]]; }));
+      var yop = (geo.top + geo.base) / 2 + 6;
+      T(g, x2 - op / 2, yop, '+', { 'text-anchor': 'middle', 'class': 'op' });
+      T(g, x3 - op / 2, yop, '=', { 'text-anchor': 'middle', 'class': 'op' });
+    }
+    var r = REL[Math.round(l * 100)], at = Math.abs(Math.round(l * 100) - best) <= 1;
+    if (Math.abs(Math.round(l * 100) - best) <= 3) found = true;
+    drawLik(l);
+    read.innerHTML = 'Tomorrow, Follower is up with chance ' + l.toFixed(2) + ' × ' + pct(a[2]) + ' + ' + (1 - l).toFixed(2) + ' × ' + pct(b[2]) + ' = <strong>' + pct(mix[2]) + '</strong>. ' +
+      (at ? '<strong>This is the weight the model would estimate:</strong> the invented history is most likely when Follower takes about ' + Math.round(best) + '% of its cue from Leader.'
+          : 'The invented history is ' + (r < 0.01 ? 'less than 1%' : Math.round(r * 100) + '%') + ' as likely at λ = ' + l.toFixed(2) + ' as at the best fit. Drag λ to the top of the hump.');
+  }
+  function buildLik(W) {
+    lik.innerHTML = '';
+    var H = 92, L = 8, R = 8, TOP = 16, B = 26; /* 8px: the slider thumb's half width, so the thumb sits above its own λ */
+    function X(v) { return L + (W - L - R) * v; }
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'How likely the invented history is for each weight on Leader, relative to the best: a hump that peaks at λ = ' + (best / 100).toFixed(2) + '.' }, lik);
+    S('line', { x1: X(0), x2: X(1), y1: Y(0), y2: Y(0), 'class': 'axis' }, root);
+    [0, 0.25, 0.5, 0.75, 1].forEach(function (v) { T(root, X(v), H - 9, v.toFixed(2), { 'text-anchor': v === 0 ? 'start' : v === 1 ? 'end' : 'middle' }); });
+    var pts = REL.map(function (v, i) { return X(i / 100).toFixed(1) + ',' + Y(v).toFixed(1); });
+    S('path', { d: 'M' + X(0) + ',' + Y(0) + ' L' + pts.join(' L') + ' L' + X(1) + ',' + Y(0) + ' Z', 'class': 'band' }, root);
+    S('polyline', { points: pts.join(' '), 'class': 'text-line' }, root);
+    T(root, L, TOP - 4, W < 470 ? 'Fit to the history' : 'How well each λ explains the invented history', {});
+    lgeo = { X: X, Y: Y, H: H, TOP: TOP, B: B, dyn: S('g', {}, root) };
+    drawLik(+slider.value / 100);
+  }
+  function drawLik(l) {
+    if (!lgeo) return;
+    var g = lgeo.dyn; g.innerHTML = '';
+    if (found) {
+      S('line', { x1: lgeo.X(best / 100), x2: lgeo.X(best / 100), y1: lgeo.Y(1), y2: lgeo.Y(0), 'class': 'grid' }, g);
+      T(g, lgeo.X(best / 100) - 6, lgeo.TOP - 4, 'best fit ' + (best / 100).toFixed(2), { 'text-anchor': 'end', 'class': 'label' });
+    }
+    S('line', { x1: lgeo.X(l), x2: lgeo.X(l), y1: lgeo.TOP, y2: lgeo.Y(0), 'class': 'cursor' }, g);
+    S('circle', { cx: lgeo.X(l), cy: lgeo.Y(REL[Math.round(l * 100)]), r: 5.5, 'class': 'hi-fill' }, g);
+  }
+  E.seg(document.getElementById('mix-l'), [['0', 'Down'], ['1', 'Flat'], ['2', 'Up']], '2', function (k) { st.l = +k; draw(); }, 'Leader today');
+  E.seg(document.getElementById('mix-f'), [['0', 'Down'], ['1', 'Flat'], ['2', 'Up']], '0', function (k) { st.f = +k; draw(); }, 'Follower today');
+  slider.setAttribute('aria-label', 'Weight on Leader, from 0 to 1');
+  slider.addEventListener('input', draw);
+  E.fit(box, build, { min: 300, max: 600 });
+  E.fit(lik, buildLik, { min: 300, max: 600 });
+  draw();
+})();
+
+/* ---------- slide 3: the network, sized by in- or out-strength ---------- */
+(function () {
+  var E = Explore, N = E.net.names, W0 = E.net.W0, ST = E.net.strengths(W0);
+  var box = document.getElementById('net-chart'), read = document.getElementById('net-read');
+  var cur = { size: 'in', sel: 4 };
+  function list(pairs) {
+    pairs.sort(function (a, b) { return b[1] - a[1]; });
+    var s = pairs.map(function (p) { return N[p[0]] + ' (' + p[1].toFixed(2) + ')'; });
+    return s.length > 1 ? s.slice(0, -1).join(', ') + ' and ' + s[s.length - 1] : s[0];
+  }
+  function readout() {
+    var i = cur.sel, outs = [], ins = [];
+    for (var j = 0; j < 10; j++) { if (W0[i][j] > 0) outs.push([j, W0[i][j]]); if (W0[j][i] > 0) ins.push([j, W0[j][i]]); }
+    var o = ST.out[i], rank = ST.out.filter(function (v) { return v > o; }).length;
+    read.innerHTML = '<strong>' + N[i] + ' leads ' + list(outs) + ':</strong> out-strength ' + o.toFixed(2) +
+      (rank === 0 ? ', the highest' : rank === 9 ? ', the lowest' : '') + '. <strong>' + N[i] + ' is led by ' + list(ins) + ':</strong> in-strength ' + ST['in'][i].toFixed(2) + '.';
+  }
+  function build(W, vh) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.74, 240, Math.max(240, vh * 0.48)));
+    var root = E.svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group',
+      'aria-label': 'The ten-stock network with circles sized by ' + (cur.size === 'in' ? 'in-strength, from 0.79 to 1.00' : 'out-strength, from 0.37 for H to 1.85 for E') + '. Stock ' + N[cur.sel] + ' is highlighted.' }, box);
+    E.net.draw(root, W0, { x: 0, y: 0, w: W, h: H }, { R: 15, size: cur.size,
+      nodeClass: function (i) { return i === cur.sel ? 'hi' : ''; },
+      edgeClass: function (i, j) { return i === cur.sel ? 'lead' : j === cur.sel ? 'led' : 'dim'; },
+      onNode: function (i) { cur.sel = i; redraw(); readout(); } });
+  }
+  var redraw = E.fit(box, build, { min: 280, max: 560, useHeight: true });
+  E.seg(document.getElementById('net-size'), [['in', 'Influence received'], ['out', 'Influence exerted']], 'in', function (k) { cur.size = k; redraw(); }, 'Circle size');
+  readout();
+})();
+
+/* ---------- slide 4: every arrow as a dot, and the assortativity of the cloud (equation 8) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, N = E.net.names;
+  var MODES = {
+    ii: ['in', 'in', 'In–In', 'Do much-led stocks point at much-led stocks?', '+0.021 to +0.032'],
+    io: ['in', 'out', 'In–Out', 'Do arrows run from much-led stocks to strong leaders?', '−0.061 to −0.096'],
+    oi: ['out', 'in', 'Out–In', 'Do strong leaders point at much-led stocks?', '−0.086 to −0.109'],
+    oo: ['out', 'out', 'Out–Out', 'Do leaders point at leaders?', '−0.019 to −0.069']
+  };
+  var box = document.getElementById('sc-chart'), read = document.getElementById('sc-read');
+  var mode = 'io', pin = null;
+  function word(r) { var a = Math.abs(r); return a < 0.05 ? 'hardly at all' : r > 0 ? (a > 0.25 ? 'yes, moderately' : 'yes, slightly') : (a > 0.25 ? 'no: opposites attract' : 'slightly the opposite'); }
+  function build(W, vh) {
+    box.innerHTML = '';
+    var m = MODES[mode], A = E.net.assort(E.net.W0, m[0], m[1]);
+    var H = Math.round(E.clamp(W * 0.62, 230, Math.max(230, Math.min(330, vh * 0.42)))), L = 40, R = 12, TOP = 34, B = 40;
+    var xMax = m[0] === 'in' ? 1.05 : 1.9, yMax = m[1] === 'in' ? 1.05 : 1.9;
+    function X(v) { return L + (W - L - R) * v / xMax; }
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v / yMax); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group',
+      'aria-label': 'Each of the 28 arrows of the example as a dot: across, the source’s excess ' + m[0] + '-strength; up, the target’s excess ' + m[1] + '-strength. Weighted correlation, the ' + m[2] + ' assortativity: ' + E.plus(A.glob) + '.' }, box);
+    var tx = xMax > 1.5 ? [0, 0.5, 1, 1.5] : [0, 0.25, 0.5, 0.75, 1], ty = yMax > 1.5 ? [0, 0.5, 1, 1.5] : [0, 0.25, 0.5, 0.75, 1];
+    var dx = xMax > 1.5 ? 1 : 2, dy = yMax > 1.5 ? 1 : 2;
+    ty.forEach(function (v) { S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root); T(root, L - 6, Y(v) + 4, v.toFixed(dy), { 'text-anchor': 'end' }); });
+    tx.forEach(function (v) { S('line', { x1: X(v), x2: X(v), y1: H - B, y2: H - B + 4, 'class': 'axis' }, root); T(root, X(v), H - B + 16, v.toFixed(dx), { 'text-anchor': 'middle' }); });
+    T(root, (L + W - R) / 2, H - 6, 'Source: how much it ' + (m[0] === 'in' ? 'is led' : 'leads') + ' (excess ' + m[0] + '-strength)', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, L - 34, TOP - 14, W < 470 ? 'Target: how much it ' + (m[1] === 'in' ? 'is led' : 'leads') : 'Target: how much it ' + (m[1] === 'in' ? 'is led' : 'leads') + ' (excess ' + m[1] + '-strength)', { 'class': 'label' });
+    T(root, W - R, TOP - 14, m[2] + ' ' + E.plus(A.glob), { 'text-anchor': 'end', 'class': 'big label' });
+    /* the weighted least-squares line shows the tilt */
+    var O = 0, mx = 0, my = 0, sxx = 0, sxy = 0;
+    A.edges.forEach(function (e) { O += e.w; mx += e.w * e.src[m[0]]; my += e.w * e.tgt[m[1]]; });
+    mx /= O; my /= O;
+    A.edges.forEach(function (e) { var dx = e.src[m[0]] - mx; sxx += e.w * dx * dx; sxy += e.w * dx * (e.tgt[m[1]] - my); });
+    var b = sxy / sxx, xa = 0.05 * xMax, xb = 0.95 * xMax;
+    function cy(x) { return E.clamp(my + b * (x - mx), 0, yMax); }
+    S('line', { x1: X(xa), y1: Y(cy(xa)), x2: X(xb), y2: Y(cy(xb)), 'class': 'text-line', 'stroke-width': 2 }, root);
+    var g = S('g', {}, root);
+    A.edges.forEach(function (e, k) {
+      var d = S('g', { 'class': 'sc-dot', role: 'button', tabindex: '0', 'aria-label': 'Arrow ' + N[e.i] + ' to ' + N[e.j] + ', weight ' + e.w.toFixed(3) }, g);
+      var c = S('circle', { cx: X(e.src[m[0]]), cy: Y(e.tgt[m[1]]), r: (2.5 + 9 * Math.sqrt(e.w)).toFixed(1), 'class': pin === k ? 'hi-fill' : 'base-fill', 'fill-opacity': pin === k ? 1 : 0.42 }, d);
+      S('title', {}, c).textContent = N[e.i] + ' → ' + N[e.j] + ' (' + e.w.toFixed(3) + ')';
+      function choose() { pin = pin === k ? null : k; redraw(); }
+      d.addEventListener('click', choose);
+      d.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choose(); } });
+    });
+    if (pin != null && A.edges[pin]) {
+      var e = A.edges[pin], px = X(e.src[m[0]]), py = Y(e.tgt[m[1]]), right = px > W * 0.6;
+      T(root, px + (right ? -14 : 14), py - 10, N[e.i] + ' → ' + N[e.j] + '  (' + e.w.toFixed(2) + ')', { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+    }
+    var flip = (A.glob > 0) !== (m[4].charAt(0) === '+');
+    read.innerHTML = '<strong>' + m[3] + '</strong> Here: ' + E.plus(A.glob) + ', ' + word(A.glob) + '. In the paper’s three markets, on average: ' + m[4] + ' (Table 3)' +
+      (flip ? ', the opposite sign: this ten-stock example is only a small illustration.' : '.') + ' Click a dot to name its arrow.';
+  }
+  var redraw = E.fit(box, build, { min: 290, max: 600, useHeight: true });
+  E.seg(document.getElementById('sc-mode'), [['ii', 'In–In'], ['io', 'In–Out'], ['oi', 'Out–In'], ['oo', 'Out–Out']], mode, function (k) { mode = k; pin = null; redraw(); }, 'Modality: source trait, then target trait');
+})();
+</script>
+</body>
+</html>

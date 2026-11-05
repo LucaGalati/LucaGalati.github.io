@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Four o’clock · To Fix or not to Fix, the Fix</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Benenchia, Galati and Lepone, To Fix or not to Fix, the Fix: what the 4 pm fix is, how a window turns trades into a fix, the three yardsticks used to judge it, and the data.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .hook-clock { max-width: 19rem; margin: 0 auto; }
+  .clock-row { display: flex; gap: 1rem; align-items: center; }
+  .clock-row > div:first-child { flex: 1 1 auto; min-width: 0; }
+  .mini-clock { width: 64px; flex: none; }
+  @media (min-width: 820px) { .two.hook { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+</style>
+</head>
+<body data-deck="01-fix.html">
+<lg-sitebar><noscript><a href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why does the fix last five minutes?">
+  <div class="inner two hook" style="align-items:center">
+    <div>
+      <p class="kicker">An explorable explanation · Benenchia, Galati &amp; Lepone</p>
+      <h1>Why does the 4&nbsp;pm fix last five minutes?</h1>
+      <p>The currency market never closes: about $7.5 trillion a day, traded around the clock, mostly directly between two parties and spread over many platforms. So it has no closing price. The <strong>WM/Refinitiv 4 pm fix</strong> stands in: one reference rate per currency pair, computed from a short window of trading around 4 pm in London. Fund managers rebalance at it, companies value their foreign-currency holdings with it, and multi-currency stock, bond and credit indices are built on it, so large sums hang on those few minutes.</p>
+      <p>In 2013 traders were found to have exploited the way it was computed, often at their clients’ expense; five banks were fined £1.1 billion. In 2015 the window was stretched from one minute to five. Some now argue for twenty.</p>
+      <p><strong>If one minute was too short, would twenty be better?</strong></p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>See how a short window invites a push&nbsp;→</button>
+      </div>
+      <p class="note">Sources: p.&nbsp;1–2 with footnotes 2 (the FCA fines) and 3 (the case for twenty minutes in the industry press); p.&nbsp;20–21 for the market’s size and who relies on the fix. Arcs drawn centred on 4 pm, where the paper places the five-minute window (Table 1).</p>
+    </div>
+    <div>
+      <div class="fig hook-clock" id="hook-clock"></div>
+      <p class="legend" style="justify-content:center"><span><i class="ln toy"></i>1 minute, until 2015</span><span><i class="ln base"></i>5 minutes, since 2015</span><span><i class="ln alt"></i>20 minutes, proposed</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How does a window make a fix?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Four o’clock · 2 of 4</p>
+    <h2>A fix is an average over a window</h2>
+    <div class="two">
+      <div>
+        <p>In this toy, the fix is simply the average of the prices seen in the window around 4 pm. Now someone buys hard for one minute at four o’clock, lifting the price for a moment before it falls back.</p>
+        <p>Stretch the window. The same burst is shared among more prices, so it moves the fix less, measured in pips: the fourth decimal of most rates, as in 1.2650 to 1.2651. That is the logic behind lengthening it in 2015.</p>
+        <p>So is longer simply better? A longer fix also averages prices further from four o’clock. The paper asks what that costs.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Three ways to judge a fix&nbsp;→</button></div>
+        <p class="note">Toy: an invented price path and an invented five-pip burst, to show the mechanism; these are not the paper’s data. The real recipe samples prices from three trading platforms and checks each one before computing the rate (p.&nbsp;2 and p.&nbsp;4).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Price around 4 pm, pips <span class="tag">toy</span></p>
+        <div class="fig" id="push-chart"></div>
+        <p class="legend"><span><i class="sq win"></i>your window</span><span><i class="sq win-base"></i>five minutes</span><span><i class="ln"></i>the burst</span></p>
+        <div class="clock-row">
+          <div>
+            <label class="ctl" for="push-w">Window length</label>
+            <input type="range" id="push-w" min="1" max="20" step="1" value="1">
+          </div>
+          <div class="fig mini-clock" id="push-clock"></div>
+        </div>
+        <p class="readout h2l" id="push-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How do you judge a fix?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Four o’clock · 3 of 4</p>
+    <h2>Three yardsticks</h2>
+    <div class="two">
+      <div>
+        <p>The paper borrows its yardsticks from a study for the UK regulator (Evans et al., 2018). Each is a daily gap, in pips, between the fix and something it should be close to:</p>
+        <ul class="defs" id="defs">
+          <li data-k="re"><b>Representativeness</b>Does it reflect that day’s market? The gap to the day’s average traded price.</li>
+          <li data-k="at"><b>Attainability</b>Can a bank that promised a client the fix get it? The gap to the average price traded in the window.</li>
+          <li data-k="ro"><b>Robustness</b>Does it hold up against manipulation and bad data? The gap to the same fix without its outlier checks.</li>
+        </ul>
+        <p>Over each year, the daily gaps are summed up as a root mean square: the typical size of the gap.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Measured on nine years of trading&nbsp;→</button></div>
+        <p class="note">Definitions: equations (2) to (4), p.&nbsp;3. Everything on the right is a toy: the day, the prints and the gaps. The toy fix averages a price sampled every ten seconds, after dropping prints far from the rest.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Show</span><div class="seg" id="yard-seg"></div></div>
+        <div class="fig" id="yard-chart"></div>
+        <p class="readout h2l" id="yard-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What did the authors look at?">
+  <div class="inner two" style="align-items:center">
+    <div>
+      <p class="kicker">Deck 1 · Four o’clock · 4 of 4</p>
+      <h2>Nine years, six currency pairs, three windows</h2>
+      <p>The authors had Refinitiv’s own record of every order, cancellation and trade, to the millisecond, on the three platforms the fix is computed from: Refinitiv Matching, EBS and Currenex. It runs from 15 February 2015, when the five-minute method took effect, to the end of 2023.</p>
+      <p>With it they rebuilt the fix every day over five, ten and twenty minutes, the same way each time, and each once more without the outlier checks. Every yardstick then has three values a day, and a simple question: do the longer windows score better?</p>
+      <p class="door-row"><a class="door" href="04-behind.html#s1">How do you rebuild a fix nobody published?&nbsp;→</a> <a class="door" href="04-behind.html#s2">The tests were promised in advance: what “pre-registered” means&nbsp;→</a></p>
+      <div class="actions"><a class="btn primary" href="02-stretch.html#s1">Stretch the window&nbsp;→</a></div>
+      <p class="note">Data and pairs: p.&nbsp;4 and footnote 11 (CNH/USD left out for its low liquidity); the five-minute fix rebuilt too, for consistency: footnote 10; the version without checks: equation (4). JPY/USD is the paper’s label. The ten- and twenty-minute windows are drawn centred on 4 pm like the five-minute one, as a schematic.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="win-chart"></div>
+      <p class="legend"><span><i class="sq win-base"></i>5 minutes, the rule since 2015</span><span><i class="sq win"></i>10 and 20 minutes, rebuilt</span></p>
+      <ul class="chips" aria-label="The six currency pairs">
+        <li>GBP/USD</li><li>EUR/USD</li><li>USD/CAD</li><li>AUD/USD</li><li>NZD/USD</li><li>JPY/USD</li>
+      </ul>
+      <p class="caption">GBP/USD, EUR/USD and USD/CAD, among the most liquid anywhere; AUD/USD, NZD/USD and JPY/USD, the most liquid in the Asia-Pacific region (p.&nbsp;4).</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/fix-4pm-effectiveness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* a small seeded random generator, so every toy is the same on every visit */
+function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { return Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r()); }
+function hms(sec) { var h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = Math.round(sec % 60); return h + ':' + (m < 10 ? '0' : '') + m + (s ? ':' + (s < 10 ? '0' : '') + s : ''); }
+
+/* ---------- slide 1: the clock with three windows ---------- */
+(function () {
+  var box = document.getElementById('hook-clock'), S = Explore.svg;
+  var root = S('svg', { viewBox: '0 0 300 300', role: 'img', 'aria-label': 'A clock at four o’clock with three arcs on the minute ring, all centred on the hour: a one-minute window, used until 2015; the five-minute window used since 2015; and a twenty-minute window that some propose.' }, box);
+  Explore.clock(root, 150, 150, 104, [
+    { min: 20, cls: 'arc-alt', w: 7, dr: 30 },
+    { min: 5, cls: 'arc-base', w: 7, dr: 19 },
+    { min: 1, cls: 'arc-muted', w: 3, dr: 8 }
+  ]);
+})();
+
+/* ---------- slide 2: a burst of buying, diluted by a longer window (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('push-chart'), slider = document.getElementById('push-w'), read = document.getElementById('push-read'), clockBox = document.getElementById('push-clock');
+  var T0 = 15 * 3600 + 48 * 60, T1 = 16 * 3600 + 12 * 60, FOUR = 16 * 3600, N = T1 - T0;
+  /* toy path: a seeded random walk, pinned to 0 at 4 pm; the burst: +5 pips for a minute around 4 pm, ramping in and out, then fading */
+  var r = rng(7), base = [], v = 0;
+  for (var i = 0; i <= N; i++) { v += 0.11 * gauss(r); base.push(v); }
+  var off = base[FOUR - T0]; base = base.map(function (x) { return x - off; });
+  function bump(t) {
+    var a = t - (FOUR - 30), b = t - (FOUR + 30);
+    if (a < 0) return 0;
+    if (a < 10) return 5 * a / 10;
+    if (b < 0) return 5;
+    return 5 * Math.exp(-b / 40);
+  }
+  var push = base.map(function (x, k) { return x + bump(T0 + k); });
+  function lift(w) {
+    var a = FOUR - w * 30 - T0, b = FOUR + w * 30 - T0, s = 0, n = 0;
+    for (var k = a; k <= b; k++) { s += push[k] - base[k]; n++; }
+    return s / n;
+  }
+  function mean(arr, w) { var a = FOUR - w * 30 - T0, b = FOUR + w * 30 - T0, s = 0; for (var k = a; k <= b; k++) s += arr[k]; return s / (b - a + 1); }
+  var lo = Math.min.apply(null, base), hi = Math.max.apply(null, push);
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 230, 280)), L = 30, R = W < 480 ? 92 : 112, TOP = 14, B = 36;
+    function X(t) { return L + (W - L - R) * (t - T0) / N; }
+    var ymin = Math.floor(lo - 1), ymax = Math.ceil(hi + 1);
+    function Y(p) { return TOP + (H - TOP - B) * (ymax - p) / (ymax - ymin); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy price path from 15:48 to 16:12 with a one-minute burst of buying at 4 pm that lifts the price by five pips and then fades. A shaded window centred on 4 pm marks the prices the fix averages; the fix with and without the burst is marked at the right.' }, box);
+    var g0 = S('g', {}, root);
+    for (var p = Math.ceil(ymin / 2) * 2; p <= ymax; p += 2) {
+      S('line', { x1: L, x2: W - R, y1: Y(p), y2: Y(p), 'class': p === 0 ? 'axis' : 'grid' }, root);
+      T(root, L - 6, Y(p) + 4, (p > 0 ? '+' : p < 0 ? '−' : '') + Math.abs(p), { 'text-anchor': 'end' });
+    }
+    [15 * 3600 + 50 * 60, 15 * 3600 + 55 * 60, FOUR, FOUR + 300, FOUR + 600].forEach(function (t) {
+      S('line', { x1: X(t), x2: X(t), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      if (W >= 420 || t % 600 === 0) T(root, X(t), H - B + 18, hms(t), { 'text-anchor': 'middle' });
+    });
+    geo = { X: X, Y: Y, W: W, H: H, L: L, R: R, TOP: TOP, B: B, band: S('g', {}, g0), dyn: S('g', {}, root) };
+    var pts = [], k;
+    for (k = 0; k <= N; k += 4) pts.push(X(T0 + k).toFixed(1) + ',' + Y(base[k]).toFixed(1));
+    S('polyline', { points: pts.join(' '), 'class': 'toy' }, root);
+    var bp = [];
+    for (k = FOUR - 30 - T0; k <= FOUR + 200 - T0; k += 2) bp.push(X(T0 + k).toFixed(1) + ',' + Y(push[k]).toFixed(1));
+    S('polyline', { points: bp.join(' '), 'class': 'burst' }, root);
+    root.appendChild(geo.dyn);
+    draw();
+  }
+  function draw() {
+    var w = +slider.value, d = lift(w);
+    slider.setAttribute('aria-valuetext', w + (w === 1 ? ' minute' : ' minutes'));
+    read.innerHTML = '<strong>' + (w === 8 || w === 11 || w === 18 ? 'An ' : 'A ') + w + '-minute window</strong>, ' + hms(FOUR - w * 30) + ' to ' + hms(FOUR + w * 30) + ': the burst lifts the fix by <strong>' + d.toFixed(1) + ' pips</strong>' +
+      (w === 5 ? ', today’s rule.' : w === 1 ? ', as before 2015.' : '.');
+    clockBox.innerHTML = '';
+    var c = S('svg', { viewBox: '0 0 64 64', 'aria-hidden': 'true' }, clockBox);
+    E.clock(c, 32, 32, 24, [{ min: w, cls: 'arc-alt', w: 5, dr: 4 }]);
+    if (!geo) return;
+    var X = geo.X, Y = geo.Y, b = geo.band, g = geo.dyn;
+    b.innerHTML = ''; g.innerHTML = '';
+    var xa = X(FOUR - w * 30), xb = X(FOUR + w * 30);
+    S('rect', { x: xa, y: geo.TOP, width: Math.max(1, xb - xa), height: geo.H - geo.TOP - geo.B, 'class': 'win' }, b);
+    if (w !== 5) S('rect', { x: X(FOUR - 150), y: geo.TOP, width: X(FOUR + 150) - X(FOUR - 150), height: geo.H - geo.TOP - geo.B, 'class': 'win-base' }, b);
+    var fWith = mean(push, w), fNo = mean(base, w), xr = geo.W - geo.R;
+    S('line', { x1: xa, x2: xr + 6, y1: Y(fWith), y2: Y(fWith), 'class': 'hl-bracket' }, g);
+    S('line', { x1: xa, x2: xr + 6, y1: Y(fNo), y2: Y(fNo), 'class': 'ghost' }, g);
+    var ys = E.spread([Y(fWith) + 4, Y(fNo) + 4], 15);
+    T(g, xr + 10, ys[0], 'fix with burst', { 'class': 'label' });
+    T(g, xr + 10, ys[1], 'fix without');
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 3: three yardsticks on a toy day ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('yard-chart'), read = document.getElementById('yard-read'), defs = document.getElementById('defs');
+  /* the toy day: one price a minute, pinned to 0 at 4 pm, its average about 9 pips below */
+  var r = rng(21), day = [], v = 0, i;
+  for (i = 0; i < 1440; i++) { v += 0.55 * gauss(r) + 0.012; day.push(v); }
+  var at4 = day[960]; day = day.map(function (x) { return x - at4; });
+  var dmean = day.reduce(function (a, b) { return a + b; }, 0) / day.length;
+  var sc = -9 / dmean; day = day.map(function (x) { return x * sc; }); dmean = -9;
+  /* the zoom: one price a second, 15:55 to 16:05; the window 15:57:30 to 16:02:30 */
+  var Z0 = 960 * 60 - 300, zoom = [], z = 0;
+  for (i = 0; i <= 600; i++) { z += 0.07 * gauss(r); zoom.push(z); }
+  var z4 = zoom[300]; zoom = zoom.map(function (x) { return x - z4; });
+  var W0 = 150, W1 = 450;
+  var samples = []; for (i = W0; i <= W1; i += 10) samples.push(zoom[i]);
+  var STRAY = [[W0 + 95, 3.9], [W0 + 205, 4.3]];
+  var fix = samples.reduce(function (a, b) { return a + b; }, 0) / samples.length;
+  var dirty = (fix * samples.length + STRAY[0][1] + STRAY[1][1]) / (samples.length + 2);
+  var trades = []; for (i = 0; i < 40; i++) { var t = W0 + Math.floor(r() * (W1 - W0)); trades.push([t, zoom[t] + 0.12 * gauss(r) + 0.16]); }
+  var wmean = trades.reduce(function (a, b) { return a + b[1]; }, 0) / trades.length;
+  var GAP = { re: fix - dmean, at: fix - wmean, ro: fix - dirty };
+  var TXT = {
+    re: 'the fix sits <strong>' + Math.abs(GAP.re).toFixed(1) + ' pips</strong> above the day’s average price. The day’s average can sit far from the price at 4 pm (p.&nbsp;7), which makes this the widest of the three gaps.',
+    at: 'the trades inside the window averaged <strong>' + Math.abs(GAP.at).toFixed(1) + ' pips</strong> away from the fix: what a bank trading through the window would miss by.',
+    ro: 'with the two stray prints (reported prices far from the rest) left in, the fix would be <strong>' + Math.abs(GAP.ro).toFixed(1) + ' pips</strong> higher. The checks keep them out.'
+  };
+  var cur = 're', geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var L = 30, R = W < 480 ? 88 : 104, H1 = 118, gapH = 50, H2 = 150, TOP = 16, H = TOP + H1 + gapH + H2 + 26;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy day. Top: the price through the day, its daily average and the fix at 4 pm, about nine pips above the average. Bottom: a zoom on 15:55 to 16:05 with the five-minute window, the trades inside it, two stray prints, the fix, the average traded price in the window and the fix without outlier checks, all within half a pip of each other.' }, box);
+    /* top panel: the day */
+    var dmin = Math.min.apply(null, day) - 1, dmax = Math.max.apply(null, day) + 1;
+    function XA(m) { return L + (W - L - R) * m / 1440; }
+    function YA(p) { return TOP + H1 * (dmax - p) / (dmax - dmin); }
+    T(root, L, TOP - 4, 'The whole day', { 'class': 'label' });
+    [0, 360, 720, 1080, 1440].forEach(function (m) {
+      S('line', { x1: XA(m), x2: XA(m), y1: TOP + H1, y2: TOP + H1 + 4, 'class': 'axis' }, root);
+      if (W >= 420 || m % 720 === 0) T(root, XA(m), TOP + H1 + 16, (m / 60 < 10 ? '0' : '') + m / 60 + ':00', { 'text-anchor': m === 0 ? 'start' : m === 1440 ? 'end' : 'middle' });
+    });
+    var pa = []; for (var k = 0; k < 1440; k += 2) pa.push(XA(k).toFixed(1) + ',' + YA(day[k]).toFixed(1));
+    S('polyline', { points: pa.join(' '), 'class': 'toy' }, root);
+    S('line', { x1: XA(0), x2: XA(1440), y1: YA(dmean), y2: YA(dmean), 'class': 'ghost' }, root);
+    S('line', { x1: XA(957.5), x2: XA(957.5), y1: TOP, y2: TOP + H1, 'class': 'win-edge' }, root);
+    S('circle', { cx: XA(960), cy: YA(fix), r: 4, 'class': 'text-fill' }, root);
+    var xr = W - R;
+    var la = E.spread([YA(fix) + 4, YA(dmean) + 4], 15);
+    T(root, xr + 8, la[0], 'fix at 4 pm', { 'class': 'label' });
+    T(root, xr + 8, la[1], 'day’s average');
+    S('line', { x1: XA(960), x2: xr + 4, y1: YA(fix), y2: YA(fix), 'class': 'grid' }, root);
+    /* bottom panel: the window */
+    var top2 = TOP + H1 + gapH;
+    var zmin = Math.min.apply(null, zoom) - 0.4, zmax = 4.7;
+    function XB(s) { return L + (W - L - R) * s / 600; }
+    function YB(p) { return top2 + H2 * (zmax - p) / (zmax - zmin); }
+    /* zoom connectors start below the time labels of the top panel */
+    var cy0 = TOP + H1 + 20, f = (cy0 - (TOP + H1)) / (top2 - (TOP + H1));
+    S('line', { x1: XA(955) + (XB(0) - XA(955)) * f, y1: cy0, x2: XB(0), y2: top2, 'class': 'grid' }, root);
+    S('line', { x1: XA(965) + (XB(600) - XA(965)) * f, y1: cy0, x2: XB(600), y2: top2, 'class': 'grid' }, root);
+    T(root, L, top2 - 8, W < 420 ? 'Zoom: 15:55 to 16:05' : 'Zoom on the window, 15:55 to 16:05', { 'class': 'label halo' });
+    S('rect', { x: XB(W0), y: top2, width: XB(W1) - XB(W0), height: H2, 'class': 'win' }, root);
+    [0, 150, 300, 450, 600].forEach(function (s) {
+      S('line', { x1: XB(s), x2: XB(s), y1: top2 + H2, y2: top2 + H2 + 4, 'class': 'axis' }, root);
+      if (W >= 420 || s % 300 === 0) T(root, XB(s), top2 + H2 + 16, hms(960 * 60 - 300 + s), { 'text-anchor': s === 0 ? 'start' : s === 600 ? 'end' : 'middle' });
+    });
+    var pb = []; for (k = 0; k <= 600; k += 2) pb.push(XB(k).toFixed(1) + ',' + YB(zoom[k]).toFixed(1));
+    S('polyline', { points: pb.join(' '), 'class': 'toy' }, root);
+    trades.forEach(function (tr) { S('circle', { cx: XB(tr[0]), cy: YB(tr[1]), r: 2, 'class': 'muted-fill' }, root); });
+    STRAY.forEach(function (st) { S('circle', { cx: XB(st[0]), cy: YB(st[1]), r: 4.5, 'class': 'hollow' }, root); });
+    T(root, XB(STRAY[1][0]) + 9, YB(STRAY[1][1]) + 4, 'stray prints', { 'class': 'halo' });
+    geo = { XA: XA, YA: YA, XB: XB, YB: YB, xr: xr, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    [].forEach.call(defs.querySelectorAll('li'), function (li) { li.classList.toggle('on', li.getAttribute('data-k') === cur); });
+    read.innerHTML = '<strong>Toy day:</strong> ' + TXT[cur];
+    if (!geo) return;
+    var g = geo.dyn, XB = geo.XB, YB = geo.YB, xr = geo.xr; g.innerHTML = '';
+    var x0 = XB(W0), x1 = XB(W1);
+    function hline(y, cls, on) { S('line', { x1: x0, x2: xr + 4, y1: y, y2: y, 'class': cls + (on ? '' : ' faint') }, g); }
+    hline(YB(fix), 'hl-bracket', true);
+    hline(YB(wmean), 'ghost', cur === 'at');
+    hline(YB(dirty), 'ghost', cur === 'ro');
+    var ys = E.spread([YB(fix) + 4, YB(wmean) + 4, YB(dirty) + 4], 14);
+    T(g, xr + 8, ys[0], 'the fix', { 'class': 'label' });
+    T(g, xr + 8, ys[1], 'window trades', { 'class': cur === 'at' ? 'label' : '' });
+    T(g, xr + 8, ys[2], 'no checks', { 'class': cur === 'ro' ? 'label' : '' });
+    /* the highlighted gap as a gold bracket with its size */
+    var bx, ya, yb;
+    if (cur === 're') { bx = geo.XA(960) + 12; ya = geo.YA(fix); yb = geo.YA(-9); }
+    else { bx = x1 + 10; ya = YB(fix); yb = YB(cur === 'at' ? wmean : dirty); }
+    /* a gap of 0.2 pips is a few pixels: draw the bracket at least 10 px tall, the label gives the true size */
+    if (Math.abs(yb - ya) < 10) { var mid = (ya + yb) / 2, s = ya <= yb ? 1 : -1; ya = mid - 5 * s; yb = mid + 5 * s; }
+    S('path', { d: 'M' + (bx - 6) + ',' + ya.toFixed(1) + ' H' + bx + ' V' + yb.toFixed(1) + ' H' + (bx - 6), 'class': 'alt', 'stroke-width': 3 }, g);
+    var lab = Math.abs(GAP[cur]).toFixed(1) + ' pips';
+    if (cur === 're') T(g, bx - 14, (ya + yb) / 2 + 4, lab, { 'class': 'strong halo', 'text-anchor': 'end' });
+    else T(g, bx + 6, Math.min(ya, yb) - 6, lab, { 'class': 'strong halo' });
+  }
+  E.seg(document.getElementById('yard-seg'), [['re', 'Representativeness'], ['at', 'Attainability'], ['ro', 'Robustness']], 're', function (k) { cur = k; draw(); }, 'Yardstick');
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 4: three windows around 4 pm ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('win-chart');
+  var T0 = 15 * 3600 + 48 * 60, T1 = 16 * 3600 + 12 * 60, FOUR = 16 * 3600;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var L = 8, R = 8, H = 190, yAx = 150;
+    function X(t) { return L + (W - L - R) * (t - T0) / (T1 - T0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Three windows centred on 4 pm: five minutes, from 15:57:30 to 16:02:30, the rule since 2015; ten minutes, 15:55 to 16:05; twenty minutes, 15:50 to 16:10. The ten- and twenty-minute fixes are rebuilt from the data.' }, box);
+    var rows = [[20, 18, 'win', '20 minutes, rebuilt'], [10, 62, 'win', '10 minutes, rebuilt'], [5, 106, 'win-base-fill', '5 minutes, the rule']];
+    rows.forEach(function (rw, i) {
+      var xa = X(FOUR - rw[0] * 30), xb = X(FOUR + rw[0] * 30);
+      var g = S('g', { 'class': 'rise', style: 'animation-delay:' + (0.15 + 0.3 * i) + 's' }, root);
+      S('rect', { x: xa, y: rw[1], width: xb - xa, height: 26, 'class': rw[2] }, g);
+      if (rw[0] === 5) S('rect', { x: xa, y: rw[1], width: xb - xa, height: 26, 'class': 'win-base' }, g);
+      var lab = rw[3], tw = E.textW(lab);
+      if (xb - xa > tw + 16) T(g, (xa + xb) / 2, rw[1] + 17, lab, { 'text-anchor': 'middle', 'class': 'label' });
+      else T(g, xb + 8, rw[1] + 17, lab, { 'class': 'label' });
+    });
+    S('line', { x1: L, x2: W - R, y1: yAx, y2: yAx, 'class': 'axis' }, root);
+    S('line', { x1: X(FOUR), x2: X(FOUR), y1: 10, y2: yAx, 'class': 'grid' }, root);
+    [15 * 3600 + 50 * 60, 15 * 3600 + 55 * 60, FOUR, FOUR + 300, FOUR + 600].forEach(function (t) {
+      S('line', { x1: X(t), x2: X(t), y1: yAx, y2: yAx + 5, 'class': 'axis' }, root);
+      if (W >= 420 || t % 600 === 0) T(root, X(t), yAx + 19, hms(t), { 'text-anchor': 'middle' });
+    });
+    T(root, W - R, yAx + 36, 'London time', { 'text-anchor': 'end' });
+  }, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

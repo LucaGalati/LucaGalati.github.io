@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The measuring tape · To Fix or Not to Fix</title>
+<meta name="description" content="Side path of an explorable explanation of Benenchia, Galati and Lepone, To fix or not to fix: the spread, effective spread, price impact and depth measures of the event study, computed live on one toy trade.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .score .f { font-family: var(--sans); font-size: .76rem; color: var(--muted); margin-left: .4em; white-space: nowrap; }
+  @media (max-width: 640px) { .score .f { display: block; margin-left: 0; } }
+  .score td.v { font-family: var(--sans); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+  .score { margin: .3rem 0 .4rem; }
+  .score td { padding: .28em .5em; }
+  .sliders { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 1.4rem; }
+  @media (min-width: 640px) { .sliders { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+</style>
+</head>
+<body data-deck="04-measures.html">
+<lg-sitebar><noscript><a href="../../publication/wmr-fix-representativeness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="What do the market measures measure?">
+  <div class="inner">
+    <p class="kicker">Side path · The measuring tape · 1 of 1</p>
+    <h2>Measuring the market on one trade</h2>
+    <div class="two">
+      <div>
+        <p>Every five-second bucket around 4&nbsp;pm gets the same tape measure. Here it is on a single trade, so you can watch what each number does.</p>
+        <p>The letter q is the trade’s direction: <span class="num">+1</span> if a buyer started it, <span class="num">−1</span> if a seller did. That sign makes a sell that drags the price down count the same way as a buy that lifts it.</p>
+        <p>Price impact looks 20 seconds ahead. The authors read it as the cost a trader pays, minus the part that ends up as revenue for whoever supplied the liquidity.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-test.html#s3">← Return to the main path</a>
+        </div>
+        <p class="note">Equations (5) to (8), page 7. Toy quotes, sizes and prices; one basis point (bp) is a hundredth of a percent. Effective spread and price impact are doubled, as in the paper, to count a round trip. Two more measures need a whole bucket: the number of trades and of quote updates, and the standard deviation of prices within it.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">One GBP/USD trade <span class="tag">toy</span></p>
+        <div class="ctl"><span>The trade was started by</span><div class="seg" id="mt-side"></div></div>
+        <div class="fig" id="mt-chart"></div>
+        <div class="sliders">
+          <div><label class="ctl" for="mt-imp">How far inside the quotes it printed</label>
+          <input type="range" id="mt-imp" min="0" max="4" step="1" value="0"></div>
+          <div><label class="ctl" for="mt-later">The midpoint 20 seconds later</label>
+          <input type="range" id="mt-later" min="-10" max="10" step="1" value="4"></div>
+        </div>
+        <table class="score" id="mt-table"><tbody></tbody></table>
+        <p class="readout" id="mt-read"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/wmr-fix-representativeness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- equations (5)-(8) on one toy trade ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var BID = 126996, ASK = 127004, MID = 127000, BS = 2, AS = 3; /* prices in 0.00001, sizes in GBP million */
+  var box = document.getElementById('mt-chart'), imp = document.getElementById('mt-imp'), later = document.getElementById('mt-later');
+  var tbody = document.querySelector('#mt-table tbody'), read = document.getElementById('mt-read');
+  var q = 1, geo = null;
+  function R5(x) { return (x / 100000).toFixed(5); }
+  function bp(x) { return (x / MID * 10000).toFixed(2); }
+  function state() {
+    var i = +imp.value, p = q > 0 ? ASK - i : BID + i, m20 = MID + (+later.value);
+    return { i: i, p: p, m20: m20, rel: (ASK - BID), eff: 2 * q * (p - MID), pi: 2 * q * (m20 - MID) };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 132, TOP = 8, B = 18, lo = MID - 11, hi = MID + 11;
+    function Y(v) { return TOP + (H - TOP - B) * (hi - v) / (hi - lo); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy quotes for GBP/USD: bid 1.26996 for 2 million pounds, ask 1.27004 for 3 million, midpoint 1.27000; the trade price; and the midpoint 20 seconds later.' }, box);
+    var xq = W < 480 ? 124 : 170, xt = xq + (W - xq) * 0.3, xl = xq + (W - xq) * 0.72;
+    S('line', { x1: xq, x2: W, y1: Y(MID), y2: Y(MID), 'class': 'ghost' }, root);
+    /* the quotes run across the whole chart, so the reader sees where the trade printed against them */
+    S('line', { x1: xq - 10, x2: W, y1: Y(ASK), y2: Y(ASK), 'class': 'tick-strong' }, root);
+    S('line', { x1: xq - 10, x2: W, y1: Y(BID), y2: Y(BID), 'class': 'tick-strong' }, root);
+    S('rect', { x: 0, y: Y(ASK) - 3, width: xq - 10, height: 6, 'class': 'mkt-fill' }, root);
+    S('rect', { x: 0, y: Y(BID) - 3, width: xq - 10, height: 6, 'class': 'mkt-fill', 'fill-opacity': 0.45 }, root);
+    T(root, 0, Y(ASK) - 8, 'ask ' + R5(ASK) + ' · £3m', { 'class': 'label' });
+    T(root, 0, Y(BID) + 18, 'bid ' + R5(BID) + ' · £2m', { 'class': 'label' });
+    T(root, 0, Y(MID) + 4, 'midpoint ' + R5(MID), {});
+    T(root, xt, H - 1, 'the trade', { 'text-anchor': 'middle' });
+    T(root, xl, H - 1, '20 s later', { 'text-anchor': 'middle' });
+    geo = { Y: Y, xt: xt, xl: xl, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var s = state();
+    /* the sliders speak their result, so the readout needs no live region that would chatter on every step */
+    imp.setAttribute('aria-valuetext', (s.i / 10).toFixed(1) + ' pips inside the quotes; effective spread ' + bp(s.eff) + ' bp');
+    later.setAttribute('aria-valuetext', 'midpoint ' + R5(s.m20) + '; price impact ' + bp(s.pi) + ' bp');
+    var rows = [
+      ['Raw spread', 'a − b, eq. (5)', '0.0000' + s.rel + ' (' + (s.rel / 10).toFixed(1) + ' pips)'],
+      ['Relative spread', '(a − b) ÷ m', bp(s.rel) + ' bp'],
+      ['Effective spread', '2q(p − m) ÷ m, eq. (6)', bp(s.eff) + ' bp'],
+      ['Price impact', '2q(m<sub>+20</sub> − m) ÷ m, eq. (7)', bp(s.pi) + ' bp'],
+      ['Depth', 'as + bs, eq. (8); in dollars a·as + b·bs', '£' + (AS + BS) + 'm · $' + ((ASK * AS + BID * BS) / 100000).toFixed(2) + 'm']
+    ];
+    tbody.innerHTML = rows.map(function (r) { return '<tr><td>' + r[0] + ' <span class="f">' + r[1] + '</span></td><td class="v">' + r[2] + '</td></tr>'; }).join('');
+    var who = q > 0 ? 'A buy' : 'A sell', at = s.i === 0 ? (q > 0 ? 'at the ask' : 'at the bid') : (s.i / 10).toFixed(1) + ' pips inside the quotes';
+    var moved = s.m20 === MID ? 'did not move' : ((s.m20 - MID) * q > 0 ? 'moved with the trade' : 'moved against the trade');
+    read.innerHTML = '<strong>' + who + ' ' + at + '</strong>: effective spread ' + bp(s.eff) + ' bp against a quoted ' + bp(s.rel) + ' bp. The midpoint ' + moved + ' in the next 20 seconds, so the price impact is ' + E.fmt(+bp(s.pi)) + ' bp.';
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y; g.innerHTML = '';
+    S('line', { x1: geo.xt - 22, x2: geo.xt - 22, y1: Y(MID), y2: Y(s.p), 'class': 'bracket' }, g);
+    if (s.p !== MID) T(g, geo.xt - 28, (Y(MID) + Y(s.p)) / 2 + 4, 'p − m', { 'text-anchor': 'end', 'class': 'halo' });
+    S('circle', { cx: geo.xt, cy: Y(s.p), r: 6, 'class': 'text-fill' }, g);
+    T(g, geo.xt + 12, Y(s.p) + (q > 0 ? -6 : 14), 'p ' + R5(s.p), { 'class': 'strong halo' });
+    S('line', { x1: geo.xt + 8, x2: geo.xl - 8, y1: Y(MID), y2: Y(s.m20), 'class': 'thin', 'stroke-dasharray': '3 3' }, g);
+    S('circle', { cx: geo.xl, cy: Y(s.m20), r: 5.5, 'class': 'hollow' }, g);
+    T(g, geo.xl + 11, Y(s.m20) + (s.m20 >= MID ? -6 : 14), R5(s.m20), { 'class': 'label halo' });
+  }
+  E.seg(document.getElementById('mt-side'), [['1', 'a buyer, q = +1'], ['-1', 'a seller, q = −1']], '1', function (k) { q = +k; draw(); }, 'The trade was started by');
+  imp.addEventListener('input', draw);
+  later.addEventListener('input', draw);
+  E.fit(box, build, { min: 300, max: 640 });
+  draw();
+})();
+</script>
+</body>
+</html>

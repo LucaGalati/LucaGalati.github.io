@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The toll · Trading Stranded Assets on FTX</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Galati, Webb and Webb, Trading Stranded Assets on FTX: spreads and depth, a bet on how much wider Bitcoin's spread got, six coins on two exchanges, a market-maker toy, and who kept the extra.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .slide.end > .inner { max-width: 50rem; }
+  .slide.end .takeaways li { margin-bottom: .35em; }
+  #mm-cmp { min-height: 5.8em; }
+  #mm-cmp.wait { color: var(--muted); border-left-color: var(--border); }
+  @media (max-width: 819px) { #mm-cmp { min-height: 10em; } #keep-read { min-height: 10em; } }
+</style>
+</head>
+<body data-deck="02-toll.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-stranded-assets/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What does it cost to trade right now?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The toll · 1 of 6</p>
+    <h2>Trading right now has a price</h2>
+    <div class="two">
+      <div>
+        <p>On an exchange a coin has no single price. Some traders post the most they will pay, the <strong>bid</strong>; others the least they will sell for, the <strong>ask</strong>. Whoever wants to trade at once sells at the bid or buys at the ask. The gap between the two, the <strong>spread</strong>, is the toll for not waiting; halfway across it sits the <strong>midpoint</strong>, the fairest single price.</p>
+        <p>How many coins are waiting at those prices is the market’s <strong>depth</strong>. When it is thin, a larger order has to reach further down the queue, at worse prices.</p>
+        <p>Swap a few toy coins for Tether in an ordinary book, then in a book like a frozen exchange’s.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>How much wider did it get?&nbsp;→</button></div>
+        <p class="note">Toy order books, illustrative only: midpoint 100; the ordinary book has levels 0.05 apart holding 2 to 5 coins each, the frozen one levels 0.5 apart holding 0.5 to 1.5 coins. Outlined bars are coins offered for sale, solid bars coins wanted; a dark frame marks the bids your sale takes. The paper’s definitions of spread and depth: Section 4.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span class="pair"><span>Book</span><span class="seg" id="book-kind"></span></span><span class="pair"><span>Sell now</span><span class="seg" id="book-size"></span></span></div>
+        <div class="fig" id="book-chart"></div>
+        <p class="readout" id="book-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How much wider did Bitcoin’s spread get?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The toll · 2 of 6 · Place your bet</p>
+    <h2>How much wider did Bitcoin’s spread get?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Bitcoin and Ether are the two most traded coins in crypto. If any market could absorb a shock, Bitcoin’s should.</p>
+        <p><strong>On FTX, in the four days after withdrawals froze, how much wider was Bitcoin’s average spread than in the four days before?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="2" aria-pressed="false">About 2 times</button>
+          <button class="btn" type="button" data-bet="5" aria-pressed="false">About 5 times</button>
+          <button class="btn" type="button" data-bet="10" aria-pressed="false">About 10 times</button>
+          <button class="btn" type="button" data-bet="20" aria-pressed="false">More than 20 times</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="btc-chart"></div>
+        <p class="legend"><span><i class="sq ftx-before"></i>FTX, before</span><span><i class="sq ftx"></i>FTX, after</span><span><i class="sq bin-before"></i>Binance, before</span><span><i class="sq bin"></i>Binance, after</span></p>
+        <p class="note" id="btc-note" hidden>Table 2, absolute spread (ask − bid), averaged over the observations in each four-day window; both changes, on FTX and on Binance, are significant at 1%. Ratios computed from Table 2. Most traded coins: p. 6.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="btc-verdict" aria-live="polite"></p>
+        <div class="actions" id="btc-next" hidden>
+          <button class="btn primary" type="button" data-next>Was it only Bitcoin?&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Was it every coin, and only on FTX?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The toll · 3 of 6</p>
+    <h2>On FTX trading got far dearer; on Binance, much less so</h2>
+    <div class="two">
+      <div>
+        <p>The same before-and-after comparison for all six coins, as multiples: 1 means no change. Filled dots are changes Table 2 marks as statistically significant; hollow ones could be noise.</p>
+        <p>On FTX, quoted spreads rose 8 to 24 times for Litecoin, Ether, BNB and Bitcoin. Depth thinned for every coin but FTT, whose depth rose several times over. On Binance only Bitcoin’s and Ether’s spreads moved significantly, though depth shifted everywhere.</p>
+        <p class="door-row"><a class="door" href="04-yardstick.html#s1">Is Binance a fair yardstick?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Why would anyone charge that much?&nbsp;→</button></div>
+        <p class="note">Table 2; multiples computed from it. Filled: starred in Table 2 (10% or better). FTT’s rise in depth on FTX: Table 2 and p. 6. Effective spread: what trades paid, measured from the midpoint and doubled (Section 4). Dogecoin’s spreads are printed to four decimals (0.0001 → 0.0003), too coarse for a ratio.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Measure</span><span class="seg" id="six-measure"></span></div>
+        <div class="fig" id="six-chart"></div>
+        <p class="legend"><span><i class="dt ftx"></i>FTX</span><span><i class="dt bin"></i>Binance</span><span><i class="dt hollow"></i>not significant</span></p>
+        <div class="ctl"><span>Details for</span><span class="seg" id="six-coin"></span></div>
+        <p class="readout" id="six-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Why would a market maker charge more?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The toll · 4 of 6</p>
+    <h2>Why a market maker widens the gap</h2>
+    <div class="two">
+      <div>
+        <p>Someone has to post those bids and asks: a <strong>market maker</strong>, or in the paper’s words a liquidity provider, who earns the spread and carries the risk of whatever they end up holding. Be one, on a toy exchange where stranded holders mostly want to sell.</p>
+        <p>With the exit open, you pass the coins you buy on to another exchange each hour. With it shut, they pile up in your account while the price slides. Find the narrowest spread that does not lose money, first with the exit open, then shut.</p>
+        <p>A toy in the spirit of the paper’s explanation (p. 6): in a funding crisis, liquidity providers face more risk and one-sided selling, and widen their quotes to cover it.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What did real providers keep?&nbsp;→</button></div>
+        <p class="note">Toy, every number illustrative: 12 sellers and 4 buyers an hour for 12 hours; a coin priced 100 that falls steadily by the amount you choose; trades thin to nothing at a 3% half-spread; passing a coin on costs 0.1% when the exit is open. Not a model the paper estimates. Bitcoin’s spreads: Table 2, multiples computed from it.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>The exit</span><span class="seg" id="mm-exit"></span></div>
+        <label class="ctl" for="mm-h">Your half-spread, from the midpoint to your bid and your ask: <strong id="mm-hv"></strong></label>
+        <input type="range" id="mm-h" min="0" max="3" step="0.05" value="0.3">
+        <label class="ctl" for="mm-d">How far the coin’s price falls over the 12 hours: <strong id="mm-dv"></strong></label>
+        <input type="range" id="mm-d" min="1" max="10" step="1" value="6">
+        <div class="fig" id="mm-chart"></div>
+        <p class="readout" id="mm-read" aria-live="polite"></p>
+        <p class="readout" id="mm-cmp" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Who kept the extra?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The toll · 5 of 6</p>
+    <h2>Traders paid more; liquidity providers kept more</h2>
+    <div class="two">
+      <div>
+        <p>The <strong>effective spread</strong> is what a trade paid, measured from the midpoint. The <strong>realized spread</strong> is what the provider kept: the effective spread minus the <strong>price impact</strong>, how far the midpoint moved in the trade’s direction a moment later.</p>
+        <p>Kept can exceed paid. On FTX, Table 2’s price impact is negative in both windows, and subtracting a negative number adds to what the provider keeps.</p>
+        <p>On FTX both spreads rose sharply after the freeze; on Binance far less. The paper reads this as providers earning more for the risks of a funding crisis.</p>
+        <p class="door-row"><a class="door" href="04-yardstick.html#s2" data-return="next">What can this comparison not tell us?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What it adds up to&nbsp;→</button></div>
+        <p class="note">Table 2, for the two most traded coins; realized spread = effective spread − price impact (Section 4). The paper takes price impact as its gauge of adverse selection and reads its larger size on FTX after the freeze as higher adverse-selection costs (pp. 2, 8). Providers’ revenues: p. 8.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span class="pair"><span>Coin</span><span class="seg" id="keep-coin"></span></span><span class="pair"><span>Exchange</span><span class="seg" id="keep-ex"></span></span></div>
+        <div class="fig" id="keep-chart"></div>
+        <p class="caption">One scale per coin for both exchanges, so Binance’s bars look short.</p>
+        <p class="readout" id="keep-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide end" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The toll · 6 of 6</p>
+    <h2>What to take away</h2>
+    <p class="closer">For four days FTX was a market you could trade in but not leave.</p>
+    <ol class="takeaways">
+      <li>Trading did not stop: about twice as many trades in Bitcoin, Ether and BNB as in the four days before, nearly three times as many in FTT, though most coins peaked on the first day.</li>
+      <li>Trading inside got far dearer: Bitcoin’s spread grew about 24 times, against 2.7 on Binance. The paper’s explanation: providers facing more risk and one-sided selling widen their quotes.</li>
+      <li>With no way to carry coins out and sell them elsewhere, nothing pulled prices inside back to the market: Bitcoin held its price, BNB went over 400% above it.</li>
+      <li>Traders appear to have run toward safety, selling into Tether or dollars; that motive is the paper’s reading.</li>
+    </ol>
+    <p class="caveat">The evidence compares four-day averages before and after, one measure at a time, around a single event; Binance, the yardstick, was touched by the shock too.</p>
+    <p class="prompt">A question the authors pass on to future research: why would anyone pay several times the market price for BNB, the token of FTX’s rival, inside an exchange they could not leave?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-go="4">Be the market maker again&nbsp;→</button>
+      <a class="btn" href="../../publication/ftx-stranded-assets/">← Back to the paper</a>
+      <button class="btn" type="button" data-map>Map, with the side paths</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-stranded-assets/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* multiples: one decimal under 10, whole numbers above */
+function mult(x) { return '×' + (x >= 10 ? x.toFixed(0) : x.toFixed(1)); }
+
+/* ---------- slide 1: a toy order book (illustrative) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var BOOK = {
+    ord: { step: 0.05, sizes: [2, 3, 4, 5], name: 'ordinary' },
+    frz: { step: 0.5, sizes: [0.5, 1, 1, 1.5], name: 'frozen-exchange' }
+  };
+  var box = document.getElementById('book-chart'), read = document.getElementById('book-read');
+  var cur = { k: 'ord', n: 3 }, geo = null;
+  function levels(b, side) { return b.sizes.map(function (q, i) { return { p: 100 + side * b.step * (i + 1), q: q }; }); }
+  function fill(b, n) {
+    var left = n, out = [];
+    levels(b, -1).forEach(function (l) { var take = Math.min(left, l.q); out.push(take); left -= take; });
+    return { take: out, unfilled: left };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 24, H = 9 * rowH + 8;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'A toy order book: four ask levels above the midpoint, four bid levels below, with the coins waiting at each price; the bids your sale takes are marked.' }, box);
+    geo = { W: W, rowH: rowH, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var b = BOOK[cur.k], f = fill(b, cur.n), sold = cur.n - f.unfilled;
+    var proceeds = 0;
+    levels(b, -1).forEach(function (l, i) { proceeds += f.take[i] * l.p; });
+    var avg = proceeds / sold, toll = 100 - avg;
+    read.innerHTML = '<strong>Sold ' + E.fmt(sold, sold % 1 ? 1 : 0) + ' of ' + cur.n + ' coin' + (cur.n > 1 ? 's' : '') + ' at an average ' + avg.toFixed(2) + '</strong>, ' + toll.toFixed(2) + ' below the midpoint: a toll of ' + toll.toFixed(2) + '% of their value.' +
+      (f.unfilled > 0 ? ' The bids ran out: ' + E.fmt(f.unfilled, f.unfilled % 1 ? 1 : 0) + ' coins found no buyer.' : '') + ' <span class="nw">(Toy numbers.)</span>';
+    if (!geo) return;
+    var g = geo.dyn, W = geo.W, rowH = geo.rowH, px = 64, bx = px + 10, bMax = W - bx - 120;
+    g.innerHTML = '';
+    function X(q) { return bMax * q / 6; }
+    /* neutral for an ordinary market, gold for the frozen exchange; outline = offered, solid = wanted */
+    var askCls = cur.k === 'ord' ? 'hollow-muted' : 'ftx-hollow', bidCls = cur.k === 'ord' ? 'muted-fill' : 'ftx-fill';
+    levels(b, 1).reverse().forEach(function (l, i) {
+      var y = 4 + i * rowH;
+      T(g, px, y + 15, l.p.toFixed(2), { 'text-anchor': 'end' });
+      S('rect', { x: bx, y: y + 5, width: X(l.q), height: 13, 'class': askCls }, g);
+      T(g, bx + X(l.q) + 6, y + 16, E.fmt(l.q, l.q % 1 ? 1 : 0) + ' to sell' + (i === 3 ? ': the ask' : ''), {});
+    });
+    var ym = 4 + 4 * rowH + rowH / 2;
+    S('line', { x1: bx, x2: W, y1: ym, y2: ym, 'class': 'ghost' }, g);
+    T(g, px, ym + 4, '100.00', { 'text-anchor': 'end', 'class': 'label' });
+    T(g, W, ym - 5, 'midpoint', { 'text-anchor': 'end' });
+    levels(b, -1).forEach(function (l, i) {
+      var y = 4 + (5 + i) * rowH, take = f.take[i];
+      T(g, px, y + 15, l.p.toFixed(2), { 'text-anchor': 'end' });
+      S('rect', { x: bx, y: y + 5, width: X(l.q), height: 13, 'class': bidCls }, g);
+      if (take > 0) S('rect', { x: bx, y: y + 5, width: X(take), height: 13, fill: 'none', stroke: 'var(--text)', 'stroke-width': 2 }, g);
+      T(g, bx + X(l.q) + 6, y + 16, E.fmt(l.q, l.q % 1 ? 1 : 0) + ' wanted' + (i === 0 ? ': the bid' : '') + (take > 0 ? ' · you sell ' + E.fmt(take, take % 1 ? 1 : 0) : ''), { 'class': take > 0 ? 'strong' : '' });
+    });
+  }
+  E.seg(document.getElementById('book-kind'), [['ord', 'ordinary'], ['frz', 'frozen exchange']], 'ord', function (k) { cur.k = k; draw(); }, 'Book');
+  E.seg(document.getElementById('book-size'), [['1', '1 coin'], ['3', '3 coins'], ['6', '6 coins']], '3', function (k) { cur.n = +k; draw(); }, 'Sell now');
+  draw();
+  E.fit(box, build, { min: 300, max: 560 });
+})();
+
+/* ---------- slide 2: the bet on Bitcoin's spread (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var ROWS = [['FTX, before', 1.3275, 'ftx-before'], ['FTX, after', 31.8699, 'ftx-fill'], ['Binance, before', 0.6546, 'bin-before'], ['Binance, after', 1.7539, 'bin-fill']];
+  var MAX = 35;
+  var ARIA = 'Average quoted spread of Bitcoin against Tether, Table 2: on FTX 1.3275 before and 31.8699 after the freeze, about 24 times as wide; on Binance 0.6546 before and 1.7539 after, about 2.7 times.';
+  var betBox = document.getElementById('bet'), box = document.getElementById('btc-chart'), verdict = document.getElementById('btc-verdict');
+  var nextBox = document.getElementById('btc-next'), note = document.getElementById('btc-note');
+  var st = { bet: null, p: 0 }, geo = null, raf = null;
+  function build(W) {
+    box.innerHTML = '';
+    var lab = W < 480 ? 104 : 116, rowH = 44, TOP = 4, H = TOP + ROWS.length * rowH + 24, xMax = W - lab - 92;
+    function X(v) { return lab + xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    [0, 10, 20, 30].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 20, 'class': v ? 'grid' : 'axis' }, root);
+    });
+    ROWS.forEach(function (r, i) { T(root, 0, TOP + i * rowH + 26, r[0], { 'class': 'label' }); });
+    geo = { X: X, TOP: TOP, rowH: rowH, W: W, H: H, lab: lab, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X;
+    g.innerHTML = '';
+    geo.root.setAttribute('aria-label', st.bet ? ARIA : 'Chart of Bitcoin’s spread; it appears after you place your bet.');
+    if (!st.bet) { T(g, geo.lab + (geo.W - geo.lab) / 2 - 20, geo.H / 2, 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    /* the scale is drawn only after the bet, so it gives nothing away */
+    [0, 10, 20, 30].forEach(function (v) { T(g, X(v), geo.H - 5, String(v), { 'text-anchor': 'middle' }); });
+    T(g, geo.W, geo.H - 5, 'ask − bid', { 'text-anchor': 'end' });
+    ROWS.forEach(function (r, i) {
+      var y = geo.TOP + i * geo.rowH + 14, w = Math.max(2, (X(r[1]) - X(0)) * st.p);
+      S('rect', { x: X(0), y: y, width: w, height: 18, 'class': r[2] }, g);
+      if (st.p >= 1) T(g, X(0) + w + 7, y + 14, r[1].toFixed(4) + (i === 1 ? ' ' + mult(ROWS[1][1] / ROWS[0][1]) : i === 3 ? ' ' + mult(ROWS[3][1] / ROWS[2][1]) : ''), { 'class': i % 2 ? 'strong' : 'label' });
+    });
+  }
+  var LEAD = {
+    '2': 'Far more. ',
+    '5': 'Far more. ',
+    '10': 'More than that. ',
+    '20': 'You called it. '
+  };
+  var TAIL = 'On FTX the average gap between the best bid and the best ask for Bitcoin went from 1.33 to 31.87, about 24 times as wide. On Binance, where withdrawals still worked, it widened too, from 0.65 to 1.75, about 2.7 times: the shock spilled over, on a different scale.';
+  function finish() { st.p = 1; draw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-btc', bet);
+    if (raf) cancelAnimationFrame(raf);
+    if (!animate || E.still) { finish(); return; }
+    verdict.textContent = ''; nextBox.hidden = true; note.hidden = true;
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var q = Math.min(1, (ts - t0) / 1100);
+      st.p = 1 - Math.pow(1 - q, 3);
+      if (q < 1) { draw(); raf = requestAnimationFrame(step); } else { raf = null; finish(); }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-btc');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: six coins, two exchanges, three measures (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [before, after, stars] for FTX then Binance; stars as printed in Table 2 */
+  var D = {
+    qs: { BTC: [[1.3275, 31.8699, 3], [0.6546, 1.7539, 3]], ETH: [[0.1633, 2.9951, 3], [0.0149, 0.0785, 3]], BNB: [[0.1378, 2.8571, 3], [0.1011, 0.1092, 0]],
+          FTT: [[0.0193, 0.035, 1], [0.0108, 0.0068, 0]], LTC: [[0.051, 0.4201, 3], [0.0114, 0.0197, 0]], DOGE: [[0.0001, 0.0003, 0], [0.0001, 0.0000, 0]] },
+    es: { BTC: [[2.1608, 29.6403, 3], [1.2995, 2.4913, 3]], ETH: [[0.3214, 3.6153, 3], [0.1483, 0.2863, 3]], BNB: [[0.1462, 3.6663, 3], [0.1074, 0.1235, 0]],
+          FTT: [[0.0164, 0.0288, 0], [0.0109, 0.0082, 0]], LTC: [[0.0329, 0.248, 1], [0.0227, 0.03, 0]], DOGE: [[0.0001, 0.0003, 0], [0.0000, 0.0000, 0]] },
+    dp: { BTC: [[2.3656, 0.9198, 3], [0.1453, 0.2357, 3]], ETH: [[13.1526, 5.8436, 3], [93.339, 22.3091, 3]], BNB: [[16.3931, 11.4189, 3], [214.227, 90.1653, 3]],
+          FTT: [[113.6533, 700.704, 3], [526.9074, 643.0944, 3]], LTC: [[43.2824, 25.8754, 3], [101.4891, 59.1027, 3]], DOGE: [[20626.1625, 16367.4299, 3], [50541.6961, 43965.769, 3]] }
+  };
+  var NAME = { BTC: 'Bitcoin', ETH: 'Ether', BNB: 'BNB', FTT: 'FTT', LTC: 'Litecoin', DOGE: 'Dogecoin' };
+  var MEAS = { qs: 'quoted spread', es: 'effective spread', dp: 'depth' };
+  var ORDER = ['BTC', 'ETH', 'BNB', 'LTC', 'FTT', 'DOGE'];
+  var SIG = ['not significant', 'significant at 10%', 'significant at 5%', 'significant at 1%'];
+  var LO = 0.2, HI = 30;
+  var box = document.getElementById('six-chart'), read = document.getElementById('six-read');
+  var cur = { m: 'qs', c: 'BTC' }, geo = null;
+  function ok(v) { return v[0] > 0 && !(cur.m !== 'dp' && v[0] < 0.001); }
+  function num(x) { return x >= 1000 ? E.thousands(x) : String(x); }
+  function build(W) {
+    box.innerHTML = '';
+    /* room on the right for the largest multiple's label, on its own row */
+    var lab = W < 480 ? 66 : 76, rowH = 32, TOP = 18, H = TOP + ORDER.length * rowH + 26, R = 40;
+    function X(v) { return lab + (W - lab - R) * Math.log(v / LO) / Math.log(HI / LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'After-to-before multiples for six coins on FTX and Binance, on a logarithmic scale.' }, box);
+    geo = { X: X, TOP: TOP, rowH: rowH, W: W, H: H, lab: lab, root: root, dyn: S('g', {}, root) };
+    [0.25, 0.5, 1, 2, 5, 10, 20].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP - 4, y2: H - 22, 'class': v === 1 ? 'axis zero' : 'grid' }, root);
+      if (W >= 440 || [0.25, 1, 5, 20].indexOf(v) >= 0) T(root, X(v), H - 6, '×' + v, { 'text-anchor': 'middle' });
+    });
+    T(root, X(1) + 5, TOP - 6, 'no change', {});
+    draw();
+  }
+  function draw() {
+    var m = D[cur.m], v = m[cur.c];
+    var aria = [];
+    ORDER.forEach(function (c) {
+      var r = m[c];
+      if (!ok(r[0])) aria.push(NAME[c] + ': not comparable');
+      else aria.push(NAME[c] + ': FTX ' + mult(r[0][1] / r[0][0]) + ', Binance ' + mult(r[1][1] / r[1][0]));
+    });
+    if (geo) geo.root.setAttribute('aria-label', 'After-to-before multiples of the ' + MEAS[cur.m] + ', log scale, FTX and Binance. ' + aria.join('; ') + '.');
+    function line(ex, r) {
+      if (!ok(r)) return ex + ': ' + num(r[0]) + ' → ' + num(r[1]) + ', too small to compare at four decimals';
+      return ex + ': ' + num(r[0]) + ' → ' + num(r[1]) + ' <span class="nw">(' + mult(r[1] / r[0]) + ', ' + SIG[r[2]] + ')</span>';
+    }
+    read.innerHTML = '<strong>' + NAME[cur.c] + ', ' + MEAS[cur.m] + '.</strong> ' + line('FTX', v[0]) + '. ' + line('Binance', v[1]) + '.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X;
+    g.innerHTML = '';
+    ORDER.forEach(function (c, i) {
+      var y = geo.TOP + i * geo.rowH + 14, r = m[c], sel = c === cur.c;
+      T(g, 0, y + 4, NAME[c], { 'class': sel ? 'strong' : 'label' });
+      if (sel) S('rect', { x: geo.lab - 4, y: y - 13, width: geo.W - geo.lab + 4, height: 26, 'class': 'surface', 'fill-opacity': 0.6 }, g);
+      if (!ok(r[0])) { T(g, X(1) + 8, y + 4, 'not comparable at four decimals', { 'class': 'placeholder' }); return; }
+      [[r[0], -5, 'ftx'], [r[1], 5, 'bin']].forEach(function (p) {
+        var k = E.clamp(p[0][1] / p[0][0], LO, HI), yy = y + p[1];
+        S('line', { x1: X(1), x2: X(k), y1: yy, y2: yy, 'class': 'thin' }, g);
+        S('circle', { cx: X(k), cy: yy, r: 5, 'class': p[0][2] ? p[2] + '-fill' : p[2] + '-hollow' }, g);
+      });
+      var kf = r[0][1] / r[0][0], left = kf < 1;
+      T(g, X(E.clamp(kf, LO, HI)) + (left ? -9 : 9), y - 1, mult(kf), { 'text-anchor': left ? 'end' : 'start', 'class': 'strong halo' });
+    });
+  }
+  E.seg(document.getElementById('six-measure'), [['qs', 'Quoted spread'], ['es', 'Effective spread'], ['dp', 'Depth']], 'qs', function (k) { cur.m = k; draw(); }, 'Measure');
+  E.seg(document.getElementById('six-coin'), ORDER.map(function (c) { return [c, c]; }), 'BTC', function (k) { cur.c = k; draw(); }, 'Details for');
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 4: the market-maker toy (illustrative), set beside Table 2 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var SELL = 12, BUY = 4, HOURS = 12, HMAX = 3, MOVE = 0.1, SCALE = 560, MAXCOINS = HOURS * (SELL - BUY);
+  var hs = document.getElementById('mm-h'), ds = document.getElementById('mm-d'), hv = document.getElementById('mm-hv'), dv = document.getElementById('mm-dv');
+  var box = document.getElementById('mm-chart'), read = document.getElementById('mm-read'), cmp = document.getElementById('mm-cmp');
+  /* found: the reader has had a non-losing spread with the exit open, and with it shut */
+  var cur = { open: true, found: { open: false, shut: false } }, geo = null;
+  function run(h, D, open) {
+    var f = Math.max(0, 1 - h / HMAX), pEnd = 100 * (1 - D / 100), earn = 0, lose = 0, sumP = 0, sumDrop = 0;
+    for (var t = 0; t < HOURS; t++) {
+      var p = 100 * (1 - D / 100 * t / HOURS);
+      earn += (SELL + BUY) * f * h / 100 * p;
+      lose += open ? (SELL - BUY) * f * MOVE / 100 * p : (SELL - BUY) * f * (p - pEnd);
+      sumP += p; sumDrop += p - pEnd;
+    }
+    var be = open ? (SELL - BUY) / (SELL + BUY) * MOVE : (SELL - BUY) * sumDrop / ((SELL + BUY) * sumP / 100);
+    return { earn: earn, lose: lose, net: earn - lose, stuck: open ? 0 : HOURS * (SELL - BUY) * f, be: be, trades: f > 0 };
+  }
+  function layout(W) {
+    var narrow = W < 480, top = narrow ? 16 : 0, vy = 3 * (34 + top) + 6;
+    var cols = Math.max(10, Math.floor((W - 20) / 10)), rows = Math.ceil(MAXCOINS / cols);
+    return { narrow: narrow, top: top, vy: vy, cols: cols, H: vy + 30 + rows * 10 + 2 };
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var lay = layout(W);
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + lay.H, role: 'img', 'aria-label': 'Toy market maker’s ledger: earnings from the spread, losses, net result, and the coins left stuck in the account.' }, box);
+    geo = { W: W, lay: lay, root: root, fillUrl: E.hatch(root, 'hatch-line'), dyn: S('g', {}, root) };
+    draw();
+  }
+  function compare() {
+    var D = +ds.value;
+    if (!(cur.found.open && cur.found.shut)) {
+      cmp.className = 'readout wait';
+      cmp.innerHTML = 'Find a half-spread that does not lose money with the exit open, then one with it shut. The two break-even spreads, and the real ones from Table 2, appear here.';
+      return;
+    }
+    var o = run(0, D, true).be, s = run(0, D, false).be;
+    cmp.className = 'readout';
+    cmp.innerHTML = '<strong>Break-even at a ' + D + '% fall: open ' + o.toFixed(2) + '%, shut ' + s.toFixed(2) + '%, ' + mult(s / o).slice(1) + ' times wider.</strong> The toy’s numbers are invented, so only the direction carries over. In Table 2, Bitcoin’s quoted spread grew about 24 times on FTX, where the exit was shut, and 2.7 times on Binance, where it stayed open.';
+  }
+  function draw() {
+    var h = +hs.value, D = +ds.value, r = run(h, D, cur.open);
+    if (r.trades && r.net >= -0.5) cur.found[cur.open ? 'open' : 'shut'] = true;
+    hv.textContent = h.toFixed(2) + '%'; dv.textContent = D + '%';
+    hs.setAttribute('aria-valuetext', h.toFixed(2) + ' percent'); ds.setAttribute('aria-valuetext', D + ' percent');
+    var verdict = !r.trades ? 'nobody trades with you.' : r.net >= -0.5 ? 'you do not lose money.' : 'you lose money.';
+    read.innerHTML = '<strong>Exit ' + (cur.open ? 'open' : 'shut') + ', half-spread ' + h.toFixed(2) + '%: ' + verdict + '</strong> Earned ' + r.earn.toFixed(0) + ', ' + (cur.open ? 'spent ' + r.lose.toFixed(0) + ' passing coins on' : 'lost ' + r.lose.toFixed(0) + ' on ' + r.stuck.toFixed(0) + ' stuck coins') +
+      ', net ' + (r.net >= 0 ? '+' : '−') + Math.abs(r.net).toFixed(0) + '. <span class="nw">(Toy money.)</span>';
+    compare();
+    if (!geo) return;
+    var g = geo.dyn, W = geo.W, lay = geo.lay, top = lay.top, lab = lay.narrow ? 0 : 150, x0 = lab + (W - lab) / 2, half = (W - lab) / 2 - 44;
+    function L(v) { return half * Math.min(1, Math.abs(v) / SCALE); }
+    g.innerHTML = '';
+    var rows = [['Earned from the spread', r.earn, 'text-fill'], [cur.open ? 'Cost of passing coins on' : 'Lost on coins stuck with you', -r.lose, 'muted-fill'], ['Net', r.net, r.net >= 0 ? 'text-fill' : 'muted-fill']];
+    S('line', { x1: x0, x2: x0, y1: 0, y2: 3 * (34 + top) - 6, 'class': 'axis zero' }, g);
+    rows.forEach(function (row, i) {
+      var y = i * (34 + top) + top, w = L(row[1]);
+      T(g, 0, lab ? y + 18 : y - 3, row[0], { 'class': i === 2 ? 'strong' : 'label' });
+      S('rect', { x: row[1] >= 0 ? x0 : x0 - w, y: y + 6, width: Math.max(1, w), height: 16, 'class': row[2] }, g);
+      T(g, row[1] >= 0 ? x0 + w + 6 : x0 - w - 6, y + 19, (row[1] >= 0 ? '+' : '−') + Math.abs(row[1]).toFixed(0), { 'text-anchor': row[1] >= 0 ? 'start' : 'end', 'class': 'strong' });
+    });
+    /* the vault: coins left in the account when the exit is shut; sized for the most it can ever hold */
+    var vy = lay.vy, vh = lay.H - vy - 2, n = Math.round(r.stuck), cols = lay.cols;
+    S('rect', { x: 0, y: vy, width: W, height: vh, fill: cur.open ? 'none' : geo.fillUrl, opacity: cur.open ? 1 : 0.25 }, g);
+    S('rect', { x: 0, y: vy, width: W, height: vh, 'class': cur.open ? 'surface' : 'box', 'fill-opacity': cur.open ? 0.5 : 0 }, g);
+    T(g, 8, vy + 16, cur.open ? 'Your account: coins passed on each hour' : 'Your account: ' + n + ' coins you cannot move', { 'class': 'label' });
+    for (var i = 0; i < n; i++) {
+      S('circle', { cx: 12 + (i % cols) * 10, cy: vy + 28 + Math.floor(i / cols) * 10, r: 3.6, 'class': 'ftx-fill' }, g);
+    }
+  }
+  function save() { E.save('mm', { h: +hs.value, d: +ds.value, open: cur.open, found: cur.found }); }
+  var prior = E.load('mm');
+  if (prior && typeof prior.h === 'number') {
+    hs.value = prior.h; ds.value = Math.max(1, prior.d); cur.open = prior.open !== false;
+    if (prior.found) cur.found = { open: !!prior.found.open, shut: !!prior.found.shut };
+  }
+  E.seg(document.getElementById('mm-exit'), [['open', 'open'], ['shut', 'shut']], cur.open ? 'open' : 'shut', function (k) { cur.open = k === 'open'; draw(); save(); }, 'The exit');
+  hs.addEventListener('input', function () { draw(); save(); });
+  ds.addEventListener('input', function () { draw(); save(); });
+  draw();
+  E.fit(box, build, { min: 300, max: 600 });
+})();
+
+/* ---------- slide 5: what trades paid, the price impact, and what providers kept (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* per exchange: [effective], [price impact], [realized], each [before, after, stars]; lo/hi: one scale per coin */
+  var D = {
+    BTC: { FTX: [[2.1608, 29.6403, 3], [-3.6797, -4.7099, 3], [5.8405, 34.3502, 3]], BIN: [[1.2995, 2.4913, 3], [0.1154, -0.2356, 3], [1.1841, 2.7269, 3]], lo: -6, hi: 36 },
+    ETH: { FTX: [[0.3214, 3.6153, 3], [-0.4814, -0.7089, 2], [0.8028, 4.3242, 3]], BIN: [[0.1483, 0.2863, 3], [-0.054, -0.0785, 2], [0.2024, 0.3648, 3]], lo: -0.9, hi: 4.6 }
+  };
+  var NAME = { BTC: 'Bitcoin', ETH: 'Ether' }, EXN = { FTX: 'FTX', BIN: 'Binance' };
+  var SIG = ['not significant', 'significant at 10%', 'significant at 5%', 'significant at 1%'];
+  var ROWN = ['paid by trades', 'price impact', 'kept by providers'];
+  var box = document.getElementById('keep-chart'), read = document.getElementById('keep-read');
+  var cur = { c: 'BTC', x: 'FTX' }, geo = null;
+  function sgn(v) { return (v < 0 ? '−' : '') + String(Math.abs(v)); }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 480, rh = narrow ? 36 : 23, gh = 22 + 3 * rh + 10, H = 2 * gh + 4;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    geo = { W: W, H: H, rh: rh, gh: gh, narrow: narrow, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var d = D[cur.c], v = d[cur.x], hue = cur.x === 'FTX' ? 'ftx' : 'bin';
+    function part(name, r, withMult) { return name + ': ' + sgn(r[0]) + ' → ' + sgn(r[1]) + ' <span class="nw">(' + (withMult ? mult(r[1] / r[0]) + ', ' : '') + SIG[r[2]] + ')</span>'; }
+    read.innerHTML = '<strong>' + NAME[cur.c] + ' on ' + EXN[cur.x] + '.</strong> ' + part('Paid', v[0], true) + '. ' + part('Price impact', v[1], false) + '. ' + part('Kept', v[2], true) + '.';
+    if (!geo) return;
+    geo.root.setAttribute('aria-label', NAME[cur.c] + ' on ' + EXN[cur.x] + ', Table 2: effective spread ' + sgn(v[0][0]) + ' before and ' + sgn(v[0][1]) + ' after the freeze; price impact ' + sgn(v[1][0]) + ' and ' + sgn(v[1][1]) + '; realized spread ' + sgn(v[2][0]) + ' and ' + sgn(v[2][1]) + '. Realized equals effective minus price impact. Scale fixed for this coin across both exchanges.');
+    var g = geo.dyn, W = geo.W, rh = geo.rh, lab = geo.narrow ? 0 : 128, x0 = lab, x1 = W - 70;
+    function X(val) { return x0 + (x1 - x0) * (val - d.lo) / (d.hi - d.lo); }
+    g.innerHTML = '';
+    [['Four days before', 0, '-before'], ['Four days after', 1, '-fill']].forEach(function (gr, i) {
+      var y = i * geo.gh;
+      T(g, 0, y + 14, gr[0], { 'class': 'strong' });
+      v.forEach(function (row, j) {
+        var val = row[gr[1]], yy = y + 22 + j * rh;
+        if (geo.narrow) T(g, 0, yy + 11, ROWN[j], {});
+        else T(g, 0, yy + 13, ROWN[j], { 'class': 'label' });
+        var by = geo.narrow ? yy + 16 : yy + 2, a = Math.min(X(0), X(val)), w = Math.max(2, Math.abs(X(val) - X(0)));
+        S('rect', { x: a, y: by, width: w, height: 14, 'class': hue + gr[2] }, g);
+        T(g, Math.max(X(0), X(val)) + 6, by + 11, sgn(val), { 'class': j === 1 ? 'label' : 'strong' });
+        /* on a phone the labels sit above the bars, so the zero line is drawn bar by bar */
+        if (geo.narrow) S('line', { x1: X(0), x2: X(0), y1: by - 2, y2: by + 16, 'class': 'axis zero' }, g);
+      });
+      if (!geo.narrow) S('line', { x1: X(0), x2: X(0), y1: y + 20, y2: y + 22 + 3 * rh + 2, 'class': 'axis zero' }, g);
+    });
+  }
+  E.seg(document.getElementById('keep-coin'), [['BTC', 'Bitcoin'], ['ETH', 'Ether']], 'BTC', function (k) { cur.c = k; draw(); }, 'Coin');
+  E.seg(document.getElementById('keep-ex'), [['FTX', 'FTX'], ['BIN', 'Binance']], 'FTX', function (k) { cur.x = k; draw(); }, 'Exchange');
+  draw();
+  E.fit(box, build, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

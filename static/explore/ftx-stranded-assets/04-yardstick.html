@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How sure can we be? · Trading Stranded Assets on FTX</title>
+<meta name="description" content="Side path of an explorable explanation of Galati, Webb and Webb, Trading Stranded Assets on FTX: how the comparison with Binance works, and what it cannot tell.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-yardstick.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-stranded-assets/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Is Binance a fair yardstick?">
+  <div class="inner">
+    <p class="kicker">Side path · How sure can we be? · 1 of 2</p>
+    <h2>Binance as the yardstick</h2>
+    <div class="two">
+      <div>
+        <p>Each result sets the average over the four days before the freeze against the average over the four days after, for one coin, one measure and one exchange, with a t-test for whether the difference could be chance.</p>
+        <p>If FTX moves and Binance does not, the move is put down to the freeze. Binance is the natural yardstick: the same coins on the same days, by far the largest exchange, and its customers could still withdraw.</p>
+        <p>The catch, which the paper names itself: a collapse this size can spread. On Binance, Bitcoin’s and Ether’s spreads widened significantly too, and depth changed for every coin. So the comparison sets the frozen exchange against a market that was itself shaken, and measures how much more things changed on FTX.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What can it not tell us?&nbsp;→</button>
+          <a class="btn return-link" href="02-toll.html#s3" data-primary-when="02-toll.html">← Return to the main path</a>
+        </div>
+        <p class="note">Method: Section 4 (p. 5). Contagion caveat: p. 5; spillover: Section 5.1 (p. 6) and Table 2, Panel B. Binance’s 39–62% share of 2022 crypto trading: footnote 3. Data: Refinitiv Tick History (pp. 2, 5).</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="grid-chart"></div>
+        <ul class="facts">
+          <li><b>Data</b>every trade and every best bid and ask, time-stamped to the millisecond, with the side that started each trade</li>
+          <li><b>Size</b><span class="num">22,199,534</span> observations on FTX, <span class="num">100,816,148</span> on Binance</li>
+          <li><b>Window</b>4 to 12 November 2022, split at 06:37 UTC on 8 November: about four days on each side</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What can this comparison not tell us?">
+  <div class="inner">
+    <p class="kicker">Side path · How sure can we be? · 2 of 2</p>
+    <h2>What the comparison cannot tell</h2>
+    <ul class="facts">
+      <li><b>Two averages</b>Each result compares two four-day means with a t-test, one measure at a time. Nothing else that moved that week is held fixed.</li>
+      <li><b>A moving yardstick</b>Binance felt the shock too, a spillover in the paper’s reading, so FTX is set against a market that was itself shaken.</li>
+      <li><b>Price units</b>The quoted spread is ask minus bid, a price gap. FTT lost 89% of its price between 4 and 11 November, so the same gap was a larger share of it; the paper reports that versions relative to price gave qualitatively similar results.</li>
+      <li><b>One event</b>A single collapse, about four days each side; most coins traded most on the first day of the freeze, and a four-day average sums up the whole window.</li>
+      <li><b>Who traded</b>There are no trader identities. Large average transactions on one FTX wallet hint at institutions; the paper calls this suggestive.</li>
+      <li><b>Why</b>The flight to safety is the authors’ reading of the selling pressure and the turnover; they say traders’ motives need further analysis.</li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-toll.html#s6">← Return to the main path</a>
+      <a class="btn" href="02-toll.html#s6">Skip to the takeaways&nbsp;→</a>
+    </div>
+    <p class="note">Section 4 (p. 5), spillover: Section 5.1 (p. 6), Section 5.2 (pp. 9–13), Section 5.3 (p. 13), Section 6 (p. 14); FTT’s price from Table 1, the fall computed from it.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-stranded-assets/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the comparison as a grid (Section 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('grid-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var lab = W < 480 ? 92 : 132, H = 196, cw = (W - lab - 8) / 2, rh = 64, top = 30;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The comparison: FTX and Binance, each measured over the four days before and the four days after the freeze; the change on FTX is set against the change on Binance.' }, box);
+    var fillUrl = E.hatch(root, 'hatch-line');
+    T(root, lab + cw / 2, top - 10, '4 days before', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, lab + 8 + cw * 1.5, top - 10, '4 days after', { 'text-anchor': 'middle', 'class': 'label' });
+    [['FTX', 'withdrawals frozen', 'ftx'], ['Binance', 'withdrawals open', 'bin']].forEach(function (r, i) {
+      var y = top + i * (rh + 10);
+      T(root, 0, y + 28, r[0], { 'class': 'strong' });
+      T(root, 0, y + 44, r[1], {});
+      S('rect', { x: lab, y: y, width: cw, height: rh, rx: 3, 'class': r[2] + '-before' }, root);
+      S('rect', { x: lab + 8 + cw, y: y, width: cw, height: rh, rx: 3, 'class': r[2] + '-before' }, root);
+      if (i === 0) S('rect', { x: lab + 8 + cw, y: y, width: cw, height: rh, rx: 3, fill: fillUrl }, root);
+      T(root, lab + cw / 2, y + rh / 2 + 4, '4-day mean', { 'text-anchor': 'middle', 'class': 'label' });
+      T(root, lab + 8 + cw * 1.5, y + rh / 2 + 4, '4-day mean', { 'text-anchor': 'middle', 'class': 'label' });
+      S('circle', { cx: lab + 4 + cw, cy: y + rh / 2, r: 9, 'class': 'paper-fill' }, root);
+      T(root, lab + 4 + cw, y + rh / 2 + 4, '→', { 'text-anchor': 'middle', 'class': 'strong' });
+    });
+    T(root, lab, H - 6, 'Each row: did the average change? A t-test per coin and measure.', { 'class': 'label' });
+  }, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From network to portfolio · A Network-Based MTD Approach to Portfolio Optimization</title>
+<meta name="description" content="Deck 2 of an explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: which links a portfolio should seek or avoid, a two-stock portfolio picked from the paper's example, a bet on how many stocks the classic recipe holds, and how the rule was tested.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .rules { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; margin: 1rem 0 .4rem; max-width: 52rem; }
+  @media (min-width: 640px) { .rules { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .rule { background: var(--paper); padding: .7rem .9rem .8rem; display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: .2rem .9rem; align-items: center; }
+  .rule svg { width: 92px; height: 52px; display: block; font-family: var(--sans); font-size: 11px; overflow: visible; grid-row: span 2; }
+  .rule h3 { font-family: var(--sans); font-size: .9rem; font-weight: 500; margin: 0; }
+  .rule h3 .tag { font-size: .78em; }
+  .rule h3 .tag.seek { border-color: var(--hi); }
+  .rule p { font-size: .9rem; line-height: 1.4; margin: 0; }
+  .rule .src, .rule .tgt { fill: var(--base); }
+  .rule .stub { stroke: var(--muted); stroke-width: 1.2; fill: none; }
+  .rule .stub-h { fill: var(--muted); }
+  .rule .main { stroke: var(--text); stroke-width: 2; fill: none; }
+  .rule .main-h { fill: var(--text); }
+  .rule.seek .main { stroke: var(--hi); } .rule.seek .main-h { fill: var(--hi); }
+  .pickrow { display: flex; flex-wrap: wrap; gap: .5rem .7rem; align-items: center; margin: .5rem 0 .2rem; font-family: var(--sans); font-size: .8rem; }
+  .btn.small { font-size: .8rem; padding: .45em .8em; }
+  #pick-chart { margin-top: .3rem; }
+  .fig .bar-row { cursor: pointer; }
+  .fig .bar-row:focus { outline: none; }
+  .fig .bar-row:focus-visible rect.hit { stroke: var(--focus); stroke-width: 2; }
+  .fig rect.hit { fill: transparent; }
+  #held-chart { min-height: 10px; }
+  #win-k { max-width: none; }
+  .toytag { font-family: var(--sans); font-size: .74rem; color: var(--text); border: 1px solid var(--hi); border-radius: 3px; padding: .05em .45em; }
+</style>
+</head>
+<body data-deck="02-portfolio.html">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Which links should a portfolio seek or avoid?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · From network to portfolio · 1 of 5</p>
+    <h2>Seek some links, avoid others</h2>
+    <p class="lead">To choose stocks the paper needs a score for each stock, not one number for the whole network. A stock’s <strong>local assortativity</strong> is its share of the network’s assortativity (the tilt from the last slide), computed from the arrows it sends; the ten shares add up to the whole. Then comes a choice the paper makes on structural and economic grounds: two modalities are sought, two avoided.</p>
+    <div class="rules" id="rules">
+      <div class="rule seek"><svg data-m="ii" role="img" aria-label="A much-led stock pointing at another much-led stock"></svg><h3>In–In <span class="tag seek">maximize the score</span></h3><p>Stocks that mostly absorb influence, each from its own sources rather than the same ones.</p></div>
+      <div class="rule"><svg data-m="io" role="img" aria-label="A much-led stock pointing at a strong leader"></svg><h3>In–Out <span class="tag">minimize the score</span></h3><p>A much-led stock tied to a strong leader, where a shock can echo back and forth. Prefer clearly different roles.</p></div>
+      <div class="rule seek"><svg data-m="oi" role="img" aria-label="A strong leader pointing at a much-led stock"></svg><h3>Out–In <span class="tag seek">maximize the score</span></h3><p>Leaders feeding followers: a one-way, top-down flow with few loops back.</p></div>
+      <div class="rule"><svg data-m="oo" role="img" aria-label="A strong leader pointing at another strong leader"></svg><h3>Out–Out <span class="tag">minimize the score</span></h3><p>Leaders tied to leaders: a club of dominant stocks that move together.</p></div>
+    </div>
+    <p class="caption">In each name the first word judges the arrow’s source, the second its target. The sought pair judges the target by how much it is led; the avoided pair, by how much it leads.</p>
+    <div class="actions"><button class="btn primary" type="button" data-next>Try the rule on ten stocks&nbsp;→</button></div>
+    <p class="note">Section 2.5, pages 5–6. Local assortativity, equation (9), extends Piraveenan, Prokopenko and Zomaya (2010) to directed, weighted networks. The paper also reads its Figure 2, where In–In and Out–In scores fall as stocks lead more while In–Out and Out–Out rise, as support for this pairing (page 9).</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Which two stocks would you pick?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · From network to portfolio · 2 of 5</p>
+    <h2>Pick two stocks</h2>
+    <div class="two">
+      <div>
+        <p>The paper’s own exercise: pick two of the ten stocks by their scores alone. The bars show each stock’s score, computed live; untouched, they match the paper’s Table 2.</p>
+        <p>Under In–In the rule picks D and G. D is led mostly by I and C, G by A: their leaders differ. The opposite pick, E and A, joins a leader to the stock it leads most.</p>
+        <p>Then pull on the arrow between your two stocks. Every score moves, even for stocks you never touched: a score belongs to the whole web.</p>
+        <p class="door-row"><a class="door" href="05-excess.html#s1">How is each score computed? Start from one arrow&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Add returns and risk&nbsp;→</button></div>
+        <p class="note">Scores: equation (9) applied to the Section 2.6 matrix. A pair’s score is the average of its two stocks’ scores, the network term of equation (13) with equal weights; ranks among the 45 possible pairs are computed. The paper’s picks: G and D against E and A for In–In, J and D against C and I for In–Out (pages 6–7).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Modality</span><span class="seg" id="pick-mode"></span></div>
+        <div class="fig" id="pick-chart"></div>
+        <div class="pickrow">
+          <button class="btn small" type="button" id="pick-best">The rule’s pick</button>
+          <button class="btn small" type="button" id="pick-worst">The opposite pick</button>
+          <button class="btn small" type="button" id="pick-restore" disabled>Restore the paper’s numbers</button>
+          <span class="toytag" id="pick-toy" style="visibility:hidden">toy: weights changed</span>
+        </div>
+        <label class="ctl" for="pick-w" id="pick-wlab">Arrow between your two stocks</label>
+        <input type="range" id="pick-w" min="0" max="100" step="1" value="0">
+        <p class="readout" id="pick-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How many stocks does the classic recipe hold?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · From network to portfolio · 3 of 5</p>
+    <h2>Place your bet: how many stocks?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The classic recipe is Markowitz’s: weights that balance each stock’s expected return against the portfolio’s risk, with no short selling and the weights adding up to one. The network rules start from the same recipe.</p>
+        <p><strong>In each test the classic recipe chooses among the Dow Jones’ 28 stocks. On average, how many does it end up holding?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="3" aria-pressed="false">About 3</button>
+          <button class="btn" type="button" data-bet="10" aria-pressed="false">About 10</button>
+          <button class="btn" type="button" data-bet="28" aria-pressed="false">All 28</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="held-chart"></div>
+        <p class="legend"><span><i class="dt base"></i>held by the classic recipe, on average</span><span><i class="dt hollow"></i>not held</span></p>
+      </div>
+      <div class="t">
+        <p id="held-verdict" aria-live="polite"></p>
+        <div class="actions" id="held-next" hidden><button class="btn primary" type="button" data-next>Watch the network term at work&nbsp;→</button></div>
+        <p class="note" id="held-note" hidden>Average number of stocks held per window: Tables 4, 5 and 6. Network rules on the Dow: 3.07, 3.03, 3.24 and 3.20; correlation network 3.38.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What does the network term do to a portfolio?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · From network to portfolio · 4 of 5</p>
+    <h2>The network term moves money between a few stocks</h2>
+    <div class="two">
+      <div>
+        <p>In full, the classic recipe picks the weights that maximize expected return minus half of <span class="num">δ</span> times the portfolio’s variance. The paper sets <span class="num">δ = 10</span>, a moderate-to-high dislike of risk.</p>
+        <p>The network version adds one more term: each stock’s score times its weight, added under In–In and Out–In, subtracted under In–Out and Out–Out. Here are four invented stocks with In–In scores. Turn the term up and see where the money goes.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>How was it tested?&nbsp;→</button></div>
+        <p class="note">Toy: the four stocks, their returns, volatilities and scores are invented, with a correlation of 0.55 between every pair; P’s and R’s scores equal the Dow’s average In–In scores of assortative and disassortative stocks (Table 3). The objective: equations (10) to (13), <span class="num">δ = 10</span> (page 9). Strength 1 is equation (13) as written; values in between are for illustration.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Four invented stocks, In–In rule <span class="tag">toy</span></p>
+        <div class="fig" id="tilt-chart"></div>
+        <p class="legend"><span><i class="dt base"></i>classic recipe</span><span><i class="ln hi"></i>with the network term</span></p>
+        <label class="ctl" for="tilt-s" id="tilt-lab">Strength of the network term</label>
+        <input type="range" id="tilt-s" min="0" max="100" step="1" value="50">
+        <p class="readout" id="tilt-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How was it tested?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · From network to portfolio · 5 of 5</p>
+    <h2>Twenty years, about 160 fresh starts</h2>
+    <div class="two">
+      <div>
+        <p>Each test fits everything on a window of past days, the network, the scores, average returns and risks, then holds the portfolio for the next 30 trading days, which the model never saw. Then the window rolls forward 30 days and everything is fitted again. Daily closing prices run from December 2004 to December 2024: more than 5,000 days, about 160 windows.</p>
+        <p>The window is three times the number in the index’s name, because the model is hungry: with three states and <span class="num">n</span> stocks it has <span class="num">n²·3·2 + n(n − 1)</span> numbers to estimate.</p>
+        <p>Every network portfolio faces two yardsticks: the classic recipe, and the same recipe tilted by scores from an ordinary correlation network, without arrows, built on the same window.</p>
+        <p class="door-row"><a class="door" href="07-limits.html#s1">What does the test leave out?&nbsp;→</a></p>
+        <div class="actions"><a class="btn primary" href="03-results.html#s1">So, did it pay?&nbsp;→</a></div>
+        <p class="note">Section 3.1, page 7 and footnote ‡; the correlation-network benchmark, page 9. Window positions are illustrative: the paper gives the span and the count, not the dates of each window. Numbers to estimate computed from the formula in Section 2.2; months are rough conversions, not the paper’s.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Market</span><span class="seg" id="win-mkt"></span></div>
+        <div class="fig" id="win-chart"></div>
+        <p class="legend"><span><i class="sq base"></i>fit on these days</span><span><i class="sq hi"></i>then hold, unseen</span></p>
+        <label class="ctl" for="win-k">Roll the window</label>
+        <input type="range" id="win-k" min="1" max="160" step="1" value="1">
+        <p class="readout" id="win-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/mtd-portfolio-optimization/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the four modalities as small diagrams ---------- */
+(function () {
+  var E = Explore, S = E.svg;
+  /* each node shows its trait: three short arrows coming in (much led) or going out (a leader) */
+  function stubs(g, cx, cy, kind, side) {
+    [-0.8, 0, 0.8].forEach(function (a) {
+      var ang = (side < 0 ? Math.PI : 0) + a, r1 = 11, r2 = 23;
+      var x1 = cx + Math.cos(ang) * r1, y1 = cy + Math.sin(ang) * r1, x2 = cx + Math.cos(ang) * r2, y2 = cy + Math.sin(ang) * r2;
+      var from = kind === 'in' ? [x2, y2] : [x1, y1], to = kind === 'in' ? [x1, y1] : [x2, y2];
+      S('line', { x1: from[0], y1: from[1], x2: to[0], y2: to[1], 'class': 'stub' }, g);
+      var ux = to[0] - from[0], uy = to[1] - from[1], l = Math.sqrt(ux * ux + uy * uy); ux /= l; uy /= l;
+      S('path', { d: 'M' + to[0] + ',' + to[1] + ' l' + (-ux * 5 - uy * 2.5) + ',' + (-uy * 5 + ux * 2.5) + ' l' + (uy * 5) + ',' + (-ux * 5) + ' Z', 'class': 'stub-h' }, g);
+    });
+  }
+  [].forEach.call(document.querySelectorAll('#rules svg'), function (svgEl) {
+    var m = svgEl.getAttribute('data-m');
+    svgEl.setAttribute('viewBox', '0 0 92 52');
+    var g = S('g', {}, svgEl), y = 26, xs = 24, xt = 68;
+    stubs(g, xs, y, m[0] === 'i' ? 'in' : 'out', -1);
+    stubs(g, xt, y, m[1] === 'i' ? 'in' : 'out', 1);
+    S('line', { x1: xs + 9, y1: y, x2: xt - 15, y2: y, 'class': 'main' }, g);
+    S('path', { d: 'M' + (xt - 9) + ',' + y + ' l-7,-4 l0,8 Z', 'class': 'main-h' }, g);
+    S('circle', { cx: xs, cy: y, r: 8, 'class': 'src' }, g);
+    S('circle', { cx: xt, cy: y, r: 8, 'class': 'tgt' }, g);
+  });
+})();
+
+/* ---------- slide 2: pick two stocks, with live local assortativity (equation 9) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, N = E.net.names, net = E.net;
+  var MODES = { ii: ['in', 'in', 'In–In', 1], io: ['in', 'out', 'In–Out', -1], oi: ['out', 'in', 'Out–In', 1], oo: ['out', 'out', 'Out–Out', -1] };
+  var W = net.copy(net.W0), mode = 'ii', picks = [3, 6];
+  var box = document.getElementById('pick-chart'), read = document.getElementById('pick-read'), slider = document.getElementById('pick-w');
+  var wlab = document.getElementById('pick-wlab'), toy = document.getElementById('pick-toy'), restore = document.getElementById('pick-restore');
+  function scores(m) { var md = MODES[m]; return net.assort(W, md[0], md[1]).local; }
+  function pairRanks(m) {
+    var v = scores(m), sgn = MODES[m][3], all = [];
+    for (var a = 0; a < 10; a++) for (var b = a + 1; b < 10; b++) all.push([a, b, sgn * (v[a] + v[b]) / 2]);
+    all.sort(function (x, y) { return y[2] - x[2]; });
+    return all;
+  }
+  function rankOf(m, a, b) { var lo = Math.min(a, b), hi = Math.max(a, b), all = pairRanks(m); for (var k = 0; k < all.length; k++) if (all[k][0] === lo && all[k][1] === hi) return k + 1; return 0; }
+  function ord(n) { var s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+  function changed() { for (var i = 0; i < 10; i++) for (var j = 0; j < 10; j++) if (Math.abs(W[i][j] - net.W0[i][j]) > 1e-9) return true; return false; }
+  function link() { if (picks.length < 2) return null; var a = picks[0], b = picks[1]; if (W[a][b] > 0) return [a, b]; if (W[b][a] > 0) return [b, a]; return [a, b]; }
+  function leaders(i) {
+    var l = []; for (var j = 0; j < 10; j++) if (W[j][i] > 0) l.push([j, W[j][i]]);
+    l.sort(function (x, y) { return y[1] - x[1]; });
+    l = l.slice(0, 2).map(function (p) { return N[p[0]] + ' (' + p[1].toFixed(2) + ')'; });
+    return l.length ? l.join(', ') : 'no one';
+  }
+  var geo = null;
+  function build(Wd, vh) {
+    box.innerHTML = '';
+    var side = Wd >= 520, netW = side ? Math.round(Wd * 0.56) : Wd, netH = side ? Math.round(E.clamp(netW * 0.8, 230, Math.max(230, Math.min(300, vh * 0.36)))) : Math.round(E.clamp(Wd * 0.66, 210, 300));
+    var rowH = side ? Math.min(26, (netH - 24) / 10) : 21, barsX = side ? netW + 14 : 0, barsY = side ? 22 : netH + 26, barsW = side ? Wd - netW - 14 : Wd;
+    var H = side ? netH : barsY + 10 * rowH + 4;
+    var root = S('svg', { viewBox: '0 0 ' + Wd + ' ' + H, role: 'group', 'aria-label': 'The ten-stock network with your two picks highlighted, and a bar for each stock’s local assortativity in the chosen modality.' }, box);
+    geo = { root: root, Wd: Wd, H: H, netW: netW, netH: netH, rowH: rowH, barsX: barsX, barsY: barsY, barsW: barsW, gNet: S('g', {}, root), gBars: S('g', {}, root) };
+    draw();
+  }
+  function choose(i) {
+    var k = picks.indexOf(i);
+    if (k >= 0) picks.splice(k, 1); else { picks.push(i); if (picks.length > 2) picks.shift(); }
+    syncSlider(); draw();
+  }
+  function draw() {
+    var v = scores(mode), md = MODES[mode];
+    if (geo) {
+      var gN = geo.gNet, gB = geo.gBars; gN.innerHTML = ''; gB.innerHTML = '';
+      var lk = link();
+      net.draw(gN, W, { x: 0, y: 0, w: geo.netW, h: geo.netH }, { R: 12, size: null,
+        nodeClass: function (i) { return picks.indexOf(i) >= 0 ? 'hi' : ''; },
+        edgeClass: function (i, j) { return lk && i === lk[0] && j === lk[1] ? 'lead' : picks.indexOf(j) >= 0 ? 'led' : 'dim'; },
+        onNode: choose });
+      /* columns: stock letter, bars around a zero line, value right-aligned at the end */
+      var x0 = geo.barsX, bw = geo.barsW, half = (bw - 18 - 52) / 2, zx = x0 + 18 + half, MAX = 0.6;
+      T(gB, x0, geo.barsY - 8, md[2] + ' score, each stock', { 'class': 'label' });
+      S('line', { x1: zx, x2: zx, y1: geo.barsY - 2, y2: geo.barsY + 10 * geo.rowH, 'class': 'axis zero' }, gB);
+      v.forEach(function (val, i) {
+        var y = geo.barsY + i * geo.rowH, hi = picks.indexOf(i) >= 0, w = Math.min(half, Math.abs(val) / MAX * half);
+        var row = S('g', { 'class': 'bar-row', role: 'button', tabindex: '0', 'aria-label': 'Stock ' + N[i] + ', score ' + E.plus(val, 3) + (hi ? ', picked' : '') }, gB);
+        S('rect', { x: x0, y: y, width: bw, height: geo.rowH, 'class': 'hit' }, row);
+        T(row, x0 + 4, y + geo.rowH / 2 + 4, N[i], { 'class': hi ? 'strong' : 'label' });
+        S('rect', { x: val >= 0 ? zx : zx - w, y: y + geo.rowH * 0.22, width: Math.max(1, w), height: geo.rowH * 0.56, 'class': hi ? 'hi-fill' : 'muted-fill', 'fill-opacity': hi ? 1 : 0.45 }, row);
+        T(row, x0 + bw, y + geo.rowH / 2 + 4, E.plus(val, 3), { 'text-anchor': 'end', 'class': hi ? 'strong' : '' });
+        row.addEventListener('click', function () { choose(i); });
+        row.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(i); } });
+      });
+    }
+    var isToy = changed();
+    toy.style.visibility = isToy ? 'visible' : 'hidden'; restore.disabled = !isToy;
+    if (picks.length < 2) {
+      read.innerHTML = picks.length ? '<strong>You hold ' + N[picks[0]] + '.</strong> Pick a second stock, on the network or the bars.' : 'Click two stocks, on the network or on the bars.';
+      return;
+    }
+    var a = picks[0], b = picks[1], avg = (v[a] + v[b]) / 2, r = rankOf(mode, a, b);
+    var all = ['ii', 'io', 'oi', 'oo'].map(function (m) { return MODES[m][2] + ' ' + ord(rankOf(m, a, b)); }).join(', ');
+    read.innerHTML = '<strong>' + N[a] + ' and ' + N[b] + ', ' + md[2] + ' (' + (md[3] > 0 ? 'maximize' : 'minimize') + '):</strong> average ' + E.plus(avg, 3) + ', ' +
+      (r === 1 ? 'the rule’s first choice' : r === 45 ? 'the rule’s last choice' : ord(r)) + ' of 45 pairs. All four rules: ' + all + '. ' +
+      N[a] + ' is led most by ' + leaders(a) + '; ' + N[b] + ' by ' + leaders(b) + '.';
+  }
+  function syncSlider() {
+    var lk = link();
+    slider.disabled = !lk;
+    if (!lk) { wlab.textContent = 'Arrow between your two stocks: pick two first'; return; }
+    var w = W[lk[0]][lk[1]];
+    slider.value = Math.round(w * 100);
+    wlab.textContent = 'Arrow ' + N[lk[0]] + ' → ' + N[lk[1]] + ': weight ' + w.toFixed(2) + (w === 0 ? ' (none: slide to add one)' : '');
+    slider.setAttribute('aria-valuetext', w.toFixed(2));
+  }
+  slider.setAttribute('aria-label', 'Weight of the arrow between your two stocks');
+  slider.addEventListener('input', function () {
+    var lk = link(); if (!lk) return;
+    W[lk[0]][lk[1]] = +slider.value / 100;
+    wlab.textContent = 'Arrow ' + N[lk[0]] + ' → ' + N[lk[1]] + ': weight ' + (+slider.value / 100).toFixed(2) + (+slider.value === 0 ? ' (removed)' : '');
+    slider.setAttribute('aria-valuetext', (+slider.value / 100).toFixed(2));
+    draw();
+  });
+  restore.addEventListener('click', function () { W = net.copy(net.W0); syncSlider(); draw(); });
+  document.getElementById('pick-best').addEventListener('click', function () { var p = pairRanks(mode)[0]; picks = [p[0], p[1]]; syncSlider(); draw(); });
+  document.getElementById('pick-worst').addEventListener('click', function () { var p = pairRanks(mode)[44]; picks = [p[0], p[1]]; syncSlider(); draw(); });
+  E.seg(document.getElementById('pick-mode'), [['ii', 'In–In'], ['io', 'In–Out'], ['oi', 'Out–In'], ['oo', 'Out–Out']], mode, function (k) { mode = k; draw(); }, 'Modality');
+  syncSlider();
+  E.fit(box, build, { min: 290, max: 640 });
+  draw();
+})();
+
+/* ---------- slide 3: a bet on how many stocks the classic recipe holds (Tables 4 to 6) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var MK = [['Dow Jones 30', 28, 3.23], ['Euro Stoxx 50', 46, 4.16], ['FTSE 100', 78, 6.59]];
+  var betBox = document.getElementById('bet'), box = document.getElementById('held-chart'), verdict = document.getElementById('held-verdict'),
+      nextBox = document.getElementById('held-next'), note = document.getElementById('held-note');
+  var st = { bet: null, shown: 0 }, timer = null;
+  function build(W) {
+    box.innerHTML = '';
+    var gap = 17, r = 6.2, per = Math.max(10, Math.floor((W - 4) / gap)), y = 0, rows = [];
+    MK.forEach(function (m) { var lines = Math.ceil(m[1] / per); rows.push({ m: m, y: y, lines: lines }); y += 26 + lines * gap + 18; });
+    var H = y - 4 + 26; /* the same height before and after the bet: the last band holds the placeholder */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Each dot is a stock in the index. On average the classic recipe held 3.23 of the Dow’s 28 stocks, 4.16 of the Euro Stoxx 50’s 46 and 6.59 of the FTSE 100’s 78.' }, box);
+    rows.forEach(function (rw, ri) {
+      var m = rw.m, held = st.shown ? m[2] : 0;
+      T(root, 0, rw.y + 13, m[0] + (st.shown ? ': ' + m[2].toFixed(2) + ' of ' + m[1] + ' held' : ': ' + m[1] + ' stocks'), { 'class': st.shown ? 'strong' : 'label' });
+      for (var k = 0; k < m[1]; k++) {
+        var cx = r + 1 + (k % per) * gap, cy = rw.y + 28 + Math.floor(k / per) * gap, frac = E.clamp(held - k, 0, 1);
+        S('circle', { cx: cx, cy: cy, r: r, 'class': 'hollow-base' }, root).setAttribute('stroke-width', '1.3');
+        if (frac >= 1) S('circle', { cx: cx, cy: cy, r: r, 'class': 'base-fill' }, root);
+        else if (frac > 0) {
+          var id = 'held-clip-' + ri;
+          var cp = S('clipPath', { id: id }, root);
+          S('circle', { cx: cx, cy: cy, r: r }, cp);
+          S('rect', { x: cx - r, y: cy - r, width: 2 * r * frac, height: 2 * r, 'class': 'base-fill', 'clip-path': 'url(#' + id + ')' }, root);
+        }
+      }
+    });
+    if (!st.shown) T(root, 0, H - 8, 'Place your bet to fill the dots', { 'class': 'placeholder' });
+  }
+  var redraw = E.fit(box, build, { min: 290, max: 620 });
+  var LEAD = {
+    '3': 'You called it. On average the classic recipe held 3.23 of the Dow’s 28 stocks. ',
+    '10': 'Fewer. On average the classic recipe held 3.23 of the Dow’s 28 stocks. ',
+    '28': 'Far fewer. On average the classic recipe held 3.23 of the Dow’s 28 stocks. '
+  };
+  var TAIL = 'In the Euro Stoxx 50 it held 4.16 of 46; in the FTSE 100, 6.59 of 78. The network portfolios are just as small, 3.03 to 3.24 stocks on the Dow. So the network term barely changes how many stocks are held; it changes which few, and how much of each.';
+  function finish() { st.shown = 1; redraw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-held', bet);
+    if (timer) clearTimeout(timer);
+    if (!animate || E.still) { finish(); return; }
+    timer = setTimeout(finish, 250);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-held');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+})();
+
+/* ---------- slide 4: the network term at work, four invented stocks (equations 10 to 13) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* toy: expected returns, volatilities, one correlation for every pair, In–In scores (P and R sized like Table 3's Dow averages) */
+  var ST = [['P', 0.10, 0.20, 0.083], ['Q', 0.28, 0.25, 0.02], ['R', 0.34, 0.30, -0.143], ['S', 0.03, 0.20, 0.04]];
+  var RHO = 0.55, DELTA = 10, n = ST.length;
+  var COV = ST.map(function (a) { return ST.map(function (b) { return a === b ? a[2] * a[2] : RHO * a[2] * b[2]; }); });
+  /* max m·x − δ/2 x'Σx with x ≥ 0 and Σx = 1: the optimum is the best feasible stationary point over all supports (four stocks, fifteen supports) */
+  function solve(m) {
+    var best = null;
+    for (var mask = 1; mask < (1 << n); mask++) {
+      var idx = []; for (var i = 0; i < n; i++) if (mask & (1 << i)) idx.push(i);
+      var k = idx.length, A = [];
+      idx.forEach(function (r) { A.push(idx.map(function (c) { return DELTA * COV[r][c]; }).concat([1, m[r]])); });
+      A.push(idx.map(function () { return 1; }).concat([0, 1]));
+      var z = gauss(A); if (!z) continue;
+      var x = [0, 0, 0, 0], ok = true;
+      idx.forEach(function (j, r) { x[j] = z[r]; if (z[r] < -1e-12) ok = false; });
+      if (!ok) continue;
+      var u = 0; for (i = 0; i < n; i++) { u += m[i] * x[i]; for (var j = 0; j < n; j++) u -= DELTA / 2 * x[i] * COV[i][j] * x[j]; }
+      if (!best || u > best.u + 1e-12) best = { x: x.map(function (v) { return Math.max(0, v); }), u: u };
+    }
+    return best.x;
+  }
+  function gauss(M) {
+    var N = M.length;
+    for (var c = 0; c < N; c++) {
+      var p = c; for (var r = c + 1; r < N; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+      if (Math.abs(M[p][c]) < 1e-14) return null;
+      var t = M[c]; M[c] = M[p]; M[p] = t;
+      for (r = 0; r < N; r++) if (r !== c) { var f = M[r][c] / M[c][c]; for (var q = c; q <= N; q++) M[r][q] -= f * M[c][q]; }
+    }
+    return M.map(function (row, i) { return row[N] / row[i]; });
+  }
+  function weights(s) { return solve(ST.map(function (a) { return a[1] + s * a[3]; })); }
+  var CL = weights(0);
+  var box = document.getElementById('tilt-chart'), slider = document.getElementById('tilt-s'), read = document.getElementById('tilt-read'), lab = document.getElementById('tilt-lab'), geo = null;
+  function pct(x) { return Math.round(x * 100) + '%'; }
+  function build(W) {
+    box.innerHTML = '';
+    var lw = W < 440 ? 150 : 180, rw = 44, rowH = 40, TOP = 8, H = TOP + n * rowH + 30;
+    function X(v) { return lw + (W - lw - rw) * v / 0.6; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Weights of four invented stocks under the classic recipe and with the network term.' }, box);
+    [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 24, 'class': v ? 'grid' : 'axis' }, root);
+      if (W >= 440 || v * 10 % 2 === 0) T(root, X(v), H - 8, pct(v), { 'text-anchor': 'middle' });
+    });
+    ST.forEach(function (a, i) {
+      var cy = TOP + i * rowH + rowH / 2;
+      T(root, 0, cy - 2, a[0], { 'class': 'strong big' });
+      T(root, 18, cy - 3, (W < 440 ? 'ret. ' : 'return ') + a[1].toFixed(2) + (W < 440 ? ' vol. ' : ', vol. ') + a[2].toFixed(2), {});
+      T(root, 18, cy + 12, 'score ' + E.plus(a[3], 3), { 'class': 'label' });
+    });
+    geo = { root: root, X: X, rowH: rowH, TOP: TOP, W: W, rw: rw, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var s = +slider.value / 100, x = weights(s);
+    slider.setAttribute('aria-valuetext', s.toFixed(2));
+    lab.textContent = 'Strength of the network term: ' + s.toFixed(2) + (s === 0 ? ' (the classic recipe)' : s === 1 ? ' (equation 13 as written)' : '');
+    if (geo) {
+      var g = geo.dyn, X = geo.X; g.innerHTML = '';
+      ST.forEach(function (a, i) {
+        var cy = geo.TOP + i * geo.rowH + geo.rowH / 2, x0 = X(CL[i]), x1 = X(x[i]), d = x1 - x0, dir = d >= 0 ? 1 : -1;
+        if (Math.abs(d) > 8) {
+          S('line', { x1: x0, y1: cy, x2: x1 - dir * 7, y2: cy, 'class': 'hi-line' }, g);
+          S('path', { d: 'M' + x1.toFixed(1) + ',' + cy + ' l' + (-dir * 9) + ',-5 l0,10 Z', 'class': 'hi-fill' }, g);
+        } else if (x[i] > 1e-4 || CL[i] > 1e-4) S('circle', { cx: x1, cy: cy, r: 4.5, 'class': 'hi-fill' }, g);
+        S('circle', { cx: x0, cy: cy, r: 5.5, 'class': CL[i] > 1e-4 ? 'base-fill' : 'hollow-base' }, g);
+        T(g, geo.W, cy + 4, x[i] > 1e-4 ? pct(x[i]) : 'none', { 'text-anchor': 'end', 'class': 'strong' });
+      });
+    }
+    var held = x.filter(function (v) { return v > 1e-4; }).length, heldCl = CL.filter(function (v) { return v > 1e-4; }).length;
+    var parts = ST.map(function (a, i) { return a[0] + ' ' + (CL[i] > 1e-4 ? pct(CL[i]) : 'none') + ' → ' + (x[i] > 1e-4 ? pct(x[i]) : 'none'); }).join(', ');
+    read.innerHTML = s === 0 ? '<strong>Strength 0: the classic recipe.</strong> It holds ' + heldCl + ' of the 4 stocks: ' + ST.map(function (a, i) { return a[0] + ' ' + (CL[i] > 1e-4 ? pct(CL[i]) : 'none'); }).join(', ') + '. Turn the network term up.' :
+      '<strong>' + parts + '.</strong> Money flows from R, the only negative score, to P, the highest. ' +
+      (held < heldCl ? 'R drops out: ' + held + ' stocks instead of ' + heldCl + '.' : 'Still ' + held + ' stocks; S, with a positive score but a thin return, stays out.');
+  }
+  slider.setAttribute('aria-label', 'Strength of the network term, from 0 (the classic recipe) to 1 (equation 13)');
+  slider.addEventListener('input', draw);
+  E.fit(box, build, { min: 290, max: 600 });
+  draw();
+})();
+
+/* ---------- slide 5: the rolling test, illustrative (Section 3.1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var MK = { dj: ['Dow Jones 30', 28, 90, 'about four months'], sx: ['Euro Stoxx 50', 46, 150, 'about seven months'], ft: ['FTSE 100', 78, 300, 'about fourteen months'] };
+  var DAYS = 5040; /* drawing span only: "more than 5,000" days, December 2004 to December 2024 */
+  var mk = 'dj', box = document.getElementById('win-chart'), slider = document.getElementById('win-k'), read = document.getElementById('win-read'), geo = null;
+  function params(n) { return n * n * 3 * 2 + n * (n - 1); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 120, L = 2, R = 2, yB = 46, bh = 28;
+    function X(d) { return L + (W - L - R) * d / DAYS; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'An illustrative timeline from December 2004 to December 2024 with the current estimation window and the 30 trading days held after it.' }, box);
+    S('rect', { x: X(0), y: yB, width: X(DAYS) - X(0), height: bh, 'class': 'surface-fill' }, root);
+    for (var yr = 2005; yr <= 2024; yr += (W < 480 ? 5 : 2)) {
+      var d = (yr - 2005 + 1 / 12) * 252;
+      S('line', { x1: X(d), x2: X(d), y1: yB + bh, y2: yB + bh + 5, 'class': 'axis' }, root);
+      T(root, X(d), yB + bh + 18, String(yr), { 'text-anchor': 'middle' });
+    }
+    T(root, W - R, H - 4, 'illustrative', { 'text-anchor': 'end' });
+    geo = { X: X, yB: yB, bh: bh, W: W, ticks: S('g', {}, root), dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var m = MK[mk], k = +slider.value, Lw = m[2], start = (k - 1) / 159 * (DAYS - Lw - 30);
+    slider.setAttribute('aria-valuetext', 'Window ' + k + ' of about 160');
+    if (geo) {
+      var g = geo.dyn, X = geo.X; g.innerHTML = ''; geo.ticks.innerHTML = '';
+      /* every holding period of the test, one hairline each: about 160 fresh starts */
+      for (var j = 1; j <= 160; j++) {
+        var hs = (j - 1) / 159 * (DAYS - Lw - 30) + Lw;
+        S('line', { x1: X(hs), x2: X(hs), y1: geo.yB + geo.bh * 0.45, y2: geo.yB + geo.bh, 'class': 'muted-line', 'stroke-opacity': j <= k ? 0.55 : 0.2 }, geo.ticks);
+      }
+      S('rect', { x: X(start), y: geo.yB, width: Math.max(2, X(start + Lw) - X(start)), height: geo.bh, 'class': 'base-fill' }, g);
+      /* the 30-day hold is only a few pixels wide on a laptop: never thinner than 6px, with a tick at its end */
+      var hx = X(start + Lw), hw = Math.max(6, X(start + Lw + 30) - hx);
+      S('rect', { x: hx, y: geo.yB, width: hw, height: geo.bh, 'class': 'hi-fill' }, g);
+      S('line', { x1: hx + hw, x2: hx + hw, y1: geo.yB - 3, y2: geo.yB + geo.bh + 3, 'class': 'cursor' }, g);
+      var cx = X(start + Lw / 2), right = cx > geo.W * 0.7;
+      T(g, right ? X(start + Lw + 30) : X(start), geo.yB - 22, 'window ' + k, { 'text-anchor': right ? 'end' : 'start', 'class': 'strong' });
+      T(g, right ? X(start + Lw + 30) : X(start), geo.yB - 8, 'fit ' + Lw + ' days, hold 30', { 'text-anchor': right ? 'end' : 'start' });
+    }
+    read.innerHTML = '<strong>' + m[0] + ', window ' + k + ' of about 160.</strong> Fit on the previous ' + Lw + ' trading days (' + m[3] + '), hold the next 30 (about six weeks). With ' + m[1] +
+      ' stocks the model estimates <strong>' + E.thousands(params(m[1])) + ' numbers</strong> from those ' + Lw + ' days.';
+  }
+  E.seg(document.getElementById('win-mkt'), [['dj', 'Dow Jones 30'], ['sx', 'Euro Stoxx 50'], ['ft', 'FTSE 100']], mk, function (k) { mk = k; draw(); }, 'Market');
+  slider.setAttribute('aria-label', 'Rolling window number');
+  slider.addEventListener('input', draw);
+  E.fit(box, build, { min: 290, max: 640 });
+  draw();
+})();
+</script>
+</body>
+</html>

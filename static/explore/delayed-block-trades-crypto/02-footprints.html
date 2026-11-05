@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Footprints · The Information Content of Delayed Block Trades</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Galati and De Blasis, The information content of delayed block trades in cryptocurrency markets: permanent and temporary price impact, a bet on book trades against blocks, the whole price path from Table 2, and how the gap between book and block closed after December 2019.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .score th, .score td { padding: .3em .6em; }
+  .score button { font: inherit; background: none; border: 0; padding: 0; color: var(--text); cursor: pointer; text-align: left; text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 3px; }
+  .score button[aria-pressed="true"] { font-weight: 500; text-decoration-color: var(--gold); }
+  /* what each measure spans, beside its name; it drops under the name on a phone */
+  .score .def { display: inline-block; margin-left: .6em; font-size: .72rem; color: var(--muted); white-space: nowrap; }
+  .score .sig { color: var(--muted); }
+  .score td.n, .score th.n { text-align: right; }
+  #fp-table { margin: .3rem 0 0; }
+  .liveline { font-family: var(--sans); font-size: .78rem; color: var(--muted); margin: 0; max-width: none; min-height: 1.5em; }
+  @media (max-width: 819px) { .liveline { min-height: 3em; } }
+  .liveline strong { color: var(--text); }
+</style>
+</head>
+<body data-deck="02-footprints.html">
+<lg-sitebar><noscript><a href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What does a trade leave behind?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Footprints · 1 of 4</p>
+    <h2>A large trade leaves two kinds of footprint</h2>
+    <div class="two">
+      <div>
+        <p>Follow the price around a large buy. Some of the move is the price of hurrying: to fill a big order fast you pay up, and once you are gone the price drifts back. That part is <strong>temporary</strong>. Some of it stays, because the market has concluded that the buyer knew something. That part is <strong>permanent</strong>, and it is the paper’s yardstick for how much information a trade carries.</p>
+        <p>The paper looks twenty trades either side. If the price had already moved before the trade, that is <strong>leakage</strong>: word got out first.</p>
+        <p class="door-row"><a class="door" href="05-data.html#s2">Why twenty trades? And how do they know which way a block went?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Book or block: which leaves more?&nbsp;→</button></div>
+        <p class="note">Section 3.2 and Fig. 2: permanent = ln P<sub>+20</sub> − ln P<sub>−20</sub>; temporary = ln P<sub>trade</sub> − ln P<sub>+20</sub>; total = ln P<sub>trade</sub> − ln P<sub>−20</sub>, which is permanent plus temporary; leakage = ln P<sub>−1</sub> − ln P<sub>−20</sub>. The prices in this chart are invented for illustration.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">One large buy <span class="tag">illustrative numbers</span></p>
+        <div class="fig" id="fp"></div>
+        <label class="ctl" for="fp-settle">Where the price settles twenty trades later</label>
+        <input type="range" id="fp-settle" min="-0.02" max="0.2" step="0.01" value="0.09">
+        <p class="readout r3" id="fp-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Book or block: which moves the price for good?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Footprints · 2 of 4</p>
+    <h2>Place a bet: once it is printed, does a block move the price as much as a book trade?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Take the large trades on Gemini’s order book, and the blocks at the moment they finally appear on the tape. For each, measure the permanent footprint: how far the price has moved for good twenty trades later.</p>
+        <p><strong>Compared with a book trade, how much does a newly printed block move the price for good?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="more" aria-pressed="false">More</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">About the same</button>
+          <button class="btn" type="button" data-bet="less" aria-pressed="false">Much less</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="ctl"><span class="pair"><span>Period</span><span class="seg" id="b4-period"></span></span></div>
+        <div class="fig" id="b4"></div>
+        <p class="legend"><span><i class="sq book"></i>book trade</span><span><i class="sq blk-hollow"></i>block, when executed</span><span><i class="sq blk"></i>block, when printed</span></p>
+        <p class="readout r5" id="b4-read" aria-live="polite">The data draw once you have placed your bet.</p>
+        <p class="note pending" id="b4-note">Table 4, permanent price impact in percent; sells’ signs flipped so that both sides read in the direction of the trade; the verdict quotes both years. Book trades are measured when they happen; blocks around the print, and around their execution, found by moving each block’s timestamp back by the delay. Blocks are on average about a third larger than book trades (pages 9–10). The reading of the bars at execution: page 11. The pattern fits theory for upstairs markets (Seppi, 1990; Grossman, 1992): upstairs draws traders who can show they trade for liquidity, not on information (pages 2–3).</p>
+      </div>
+      <div class="t">
+        <p id="b4-verdict" aria-live="polite"></p>
+        <div class="actions" id="b4-next" hidden>
+          <button class="btn primary" type="button" data-next>Now the whole footprint&nbsp;→</button>
+          <a class="door" href="05-data.html#s2" data-return="next">How do they find the moment a block was executed?&nbsp;→</a>
+          <a class="door" href="06-doubts.html#s2" data-return="next">Does a different method agree?&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What does the whole footprint look like?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Footprints · 3 of 4</p>
+    <h2>Book trades leak before they happen. Blocks do not.</h2>
+    <div class="two">
+      <div>
+        <p>Both paths start at the price twenty trades before and end twenty trades after. Blue is the average large trade on the book; gold the average block, which vanishes for ten minutes between execution and print.</p>
+        <p>Before a book trade the price is already moving its way: 0.133% for buys before the change. Large trades are “shopped” on the book first. Before a block, nothing.</p>
+        <p>This window runs from twenty trades before execution to twenty after the print, so it takes in the ten unseen minutes. That is why blocks look larger here than on the previous slide, which measured them around the print alone.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Compare the two years&nbsp;→</button></div>
+        <p class="note">Table 2, means in percent; *, **, *** = significant at 10, 5, 1%. Here sells keep their own sign: a negative number is a fall in the price. A block’s window: footnote 18. “Shopped”: page 10.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span class="pair"><span>Side</span><span class="seg" id="fp2-side"></span></span><span class="pair"><span>Period</span><span class="seg" id="fp2-period"></span></span></div>
+        <div class="fig" id="fp2"></div>
+        <p class="liveline" id="fp2-read" aria-live="polite"></p>
+        <table class="score" id="fp-table"></table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What changed between the two years?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Footprints · 4 of 4</p>
+    <h2>Before the change, book trades left the deeper mark. After it, the gap was gone.</h2>
+    <div class="two">
+      <div>
+        <p>Same window, now the permanent footprint alone. Before December 2019 a book trade moved the price for good more than a block did, on both sides, by a gap significant at 1%. After it the two are level, and the gap can no longer be told apart from zero.</p>
+        <p>The gap closed in two different ways. For buys, book trades left a shallower mark, 0.211% down to 0.114%, while blocks stayed about where they were. For sells, blocks left a deeper one, 0.008% up to 0.117%, a change the paper’s before-and-after test on blocks finds significant at 5%.</p>
+        <p>So did the right to delay let the newly eligible 5 to 10 BTC trades carry more information upstairs, as delays did in futures markets? Deck 3 tests it.</p>
+        <div class="actions"><a class="btn primary" href="03-experiment.html#s1">Test it&nbsp;→</a></div>
+        <p class="note">Table 2, Panels A and B, permanent impact in percent; sells’ signs flipped so both sides read in the direction of the trade. Book minus block: 0.085*** and 0.142*** before, 0.001 and 0.011 after. Blocks before against after, Table 3, which tests blocks only: buys p = 0.739, sells p = 0.018. The question is the paper’s own (page 10).</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Permanent footprint, in the direction of the trade, %</p>
+        <div class="fig" id="gap2"></div>
+        <p class="legend"><span><i class="ln book"></i>book trades</span><span><i class="ln blk"></i>blocks</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/delayed-block-trades-crypto/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: permanent and temporary, on a toy buy (definitions of Section 3.2, Fig. 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var P1 = 0.02, PB = 0.15, LO = -0.04, HI = 0.2; /* toy: price before the trade, price of the trade, in % from P-20 */
+  var box = document.getElementById('fp'), slider = document.getElementById('fp-settle'), read = document.getElementById('fp-read');
+  var geo = null;
+  function pct(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(2) + '%'; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 236, L = 44, TOP = 14, B = 34, pw = W - L - 150;
+    var xs = [L + 14, L + pw * 0.36, L + pw * 0.6, L + pw];
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Illustrative price path of a large buy, in percent from the price twenty trades before: 0.02% on the trade before, 0.15% on the buy itself, and a movable point for where the price settles twenty trades later; the brackets split the move into permanent and temporary parts.' }, box);
+    [0, 0.1, 0.2].forEach(function (v) {
+      S('line', { x1: L, x2: W - 6, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, E.pct(v, 1), { 'text-anchor': 'end' });
+    });
+    var labs = W < 470 ? ['−20', '−1', 'buy', '+20'] : ['20 trades before', 'trade before', 'the large buy', '20 trades after'];
+    xs.forEach(function (x, i) { T(root, x, H - 12, labs[i], { 'text-anchor': i === 0 ? 'start' : 'middle', 'class': i === 2 ? 'label' : '' }); });
+    geo = { xs: xs, Y: Y, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function bracket(g, x, a, b, cls, label, lcls) {
+    S('path', { d: 'M' + (x - 5) + ',' + a.toFixed(1) + ' H' + x + ' V' + b.toFixed(1) + ' H' + (x - 5), 'class': cls }, g);
+    if (Math.abs(b - a) > 1) T(g, x + 7, (a + b) / 2 + 4, label, { 'class': lcls });
+  }
+  function draw() {
+    var s = Math.round(+slider.value * 100) / 100, perm = s, temp = PB - s;
+    slider.setAttribute('aria-valuetext', pct(s) + ' above the price twenty trades before');
+    var txt = 'Total move to the buy, <strong>' + pct(PB) + '</strong> = permanent <strong>' + pct(perm) + '</strong> + temporary <strong>' + pct(temp) + '</strong>. ';
+    if (Math.abs(temp) < 0.005) txt += 'All information: the market kept the price the buyer paid.';
+    else if (Math.abs(perm) < 0.005) txt += 'All hurry: the price went back to where it started; nobody thinks the buyer knew anything.';
+    else if (temp < 0) txt += 'The price kept rising after the buy: the market learned more than the buyer paid for, so the temporary part is negative.';
+    else if (perm < 0) txt += 'The price ended below where it started: the buy left no lasting mark at all.';
+    else txt += 'Partly information, partly the price of hurrying.';
+    read.innerHTML = txt;
+    if (!geo) return;
+    var g = geo.dyn, xs = geo.xs, Y = geo.Y;
+    g.innerHTML = '';
+    var pts = [[xs[0], 0], [xs[1], P1], [xs[2], PB], [xs[3], s]];
+    S('polyline', { points: pts.map(function (p) { return p[0].toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' '), 'class': 'path' }, g);
+    S('line', { x1: xs[2], x2: xs[3] + 30, y1: Y(PB), y2: Y(PB), 'class': 'ghost' }, g);
+    S('circle', { cx: xs[0], cy: Y(0), r: 4, 'class': 'hollow' }, g);
+    S('circle', { cx: xs[1], cy: Y(P1), r: 4, 'class': 'hollow' }, g);
+    S('rect', { x: xs[2] - 6, y: Y(PB) - 6, width: 12, height: 12, 'class': 'text-fill' }, g);
+    S('circle', { cx: xs[3], cy: Y(s), r: 6, 'class': 'link-fill' }, g);
+    /* leakage: a short bracket left of the trade before */
+    S('path', { d: 'M' + (xs[1] - 9) + ',' + Y(0).toFixed(1) + ' H' + (xs[1] - 14) + ' V' + Y(P1).toFixed(1) + ' H' + (xs[1] - 9), 'class': 'bracket lo' }, g);
+    T(g, xs[1] - 14, Y(0) + 16, 'leakage', { 'text-anchor': 'end' });
+    var bx = xs[3] + 30;
+    bracket(g, bx, Y(0), Y(s), 'bracket hi', 'permanent ' + pct(perm), 'strong halo');
+    bracket(g, bx + 4, Y(s), Y(PB), 'bracket lo', 'temporary ' + pct(temp), 'label halo');
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: the bet, then Table 4 (permanent impact around execution and print) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* in the direction of the trade (sells' signs flipped): [book, block at execution, block at print]; stars; differences book − execution, book − print */
+  var D = {
+    pre:   { buy: [0.211, 0.100, 0.038], bs: ['***', '***', '***'], sell: [0.150, 0.064, -0.005], ss: ['***', '***', ''], dx: [[0.112, '***'], [0.086, '***']], dr: [[0.173, '***'], [0.155, '***']] },
+    post:  { buy: [0.114, 0.136, 0.027], bs: ['***', '***', '**'], sell: [0.128, 0.147, 0.006], ss: ['***', '***', ''], dx: [[-0.021, ''], [-0.019, '']], dr: [[0.087, '***'], [0.122, '***']] },
+    whole: { buy: [0.139, 0.116, 0.033], bs: ['***', '***', '***'], sell: [0.133, 0.099, 0.000], ss: ['***', '***', ''], dx: [[0.023, ''], [0.034, '']], dr: [[0.106, '***'], [0.133, '***']] }
+  };
+  var NAME = { pre: 'Before the change', post: 'After the change', whole: 'Whole two years' };
+  var LO = -0.02, HI = 0.24;
+  var betBox = document.getElementById('bet'), box = document.getElementById('b4'), read = document.getElementById('b4-read');
+  var verdict = document.getElementById('b4-verdict'), nextBox = document.getElementById('b4-next'), note = document.getElementById('b4-note');
+  var periodBtns = document.getElementById('b4-period');
+  var st = { bet: null, period: 'whole' }, geo = null, shown = null, own = {};
+  function f3(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(3); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 222, L = 46, R = 8, TOP = 16, B = 30;
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Permanent price impact in percent, in the direction of the trade, for book trades and for blocks at execution and at the print. Whole period: buys 0.139 on the book, 0.116 for blocks at execution, 0.033 at the print; sells 0.133, 0.099 and 0.000.' }, box);
+    [0, 0.1, 0.2].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, E.pct(v, 1), { 'text-anchor': 'end' });
+    });
+    var gw = (W - L - R) / 2;
+    ['Buys', 'Sells'].forEach(function (n, i) { T(root, L + gw * (i + 0.5), H - 8, n, { 'text-anchor': 'middle', 'class': 'label' }); });
+    geo = { Y: Y, L: L, gw: gw, W: W, R: R, root: root, dyn: S('g', {}, root) };
+    render(shown);
+  }
+  function target() { var d = D[st.period]; return d.buy.concat(d.sell); }
+  function render(v) {
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, d = D[st.period];
+    if (v) geo.root.setAttribute('aria-label', 'Permanent price impact in percent, in the direction of the trade. ' + NAME[st.period] + ': buys ' + d.buy[0] + ' on the book, ' + d.buy[1] + ' for blocks at execution, ' + d.buy[2] + ' at the print; sells ' + d.sell[0] + ', ' + d.sell[1] + ' and ' + d.sell[2] + '.');
+    g.innerHTML = '';
+    if (!v) { T(g, (geo.L + geo.W - geo.R) / 2, Y(0.12), 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    var bw = Math.min(46, geo.gw / 5), cls = ['book-fill', 'blk-hollow', 'blk-fill'];
+    for (var s = 0; s < 2; s++) for (var k = 0; k < 3; k++) {
+      var val = v[s * 3 + k], cx = geo.L + geo.gw * (s + 0.5) + (k - 1) * (bw + 10);
+      var y0 = Y(0), y1 = Y(val), top = Math.min(y0, y1), h = Math.max(1, Math.abs(y1 - y0));
+      S('rect', { x: cx - bw / 2 + (k === 1 ? 1 : 0), y: top + (k === 1 ? 1 : 0), width: bw - (k === 1 ? 2 : 0), height: Math.max(1, h - (k === 1 ? 2 : 0)), 'class': cls[k] }, g);
+      T(g, cx, Math.min(y0, y1) - 6, f3(val), { 'text-anchor': 'middle', 'class': 'label' });
+    }
+  }
+  function readout() {
+    var d = D[st.period];
+    function sig(x) { return x[1] ? 'significant at ' + (x[1] === '***' ? '1%' : x[1] === '**' ? '5%' : '10%') : 'not distinguishable from zero'; }
+    /* every period's book-minus-print gap is significant at 1%, so the plain-words meaning of "significant" always applies */
+    read.innerHTML = '<strong>' + NAME[st.period] + '.</strong> Book trade minus printed block: ' + f3(d.dr[0][0]) + ' for buys, ' + f3(d.dr[1][0]) + ' for sells, ' +
+      (d.dr[0][1] && d.dr[1][1] ? 'both significant at 1%: a gap this large would turn up by chance less than once in a hundred samples if there were truly none' : sig(d.dr[0]) + ' and ' + sig(d.dr[1])) +
+      '. Book trade minus block at execution: ' + f3(d.dx[0][0]) + ' and ' + f3(d.dx[1][0]) + ', ' +
+      (d.dx[0][1] && d.dx[1][1] ? 'both significant at 1%' : !d.dx[0][1] && !d.dx[1][1] ? 'neither distinguishable from zero' : sig(d.dx[0]) + ' and ' + sig(d.dx[1])) + '.';
+  }
+  var LEAD = {
+    more: 'The other way round. ',
+    same: 'At execution, after the change and over both years, yes; at the print, never. ',
+    less: 'Right. '
+  };
+  var TAIL = 'Once printed, a block moved the price for good by 0.033% (buys) and 0.000% (sells), against 0.139% and 0.133% for a book trade. From the moment it was executed, it looks far more like a book trade, 0.116% and 0.099%: the paper reads this as the mark it would have left had it been printed at once.';
+  var setPeriod = E.seg(periodBtns, [['pre', 'Before'], ['post', 'After'], ['whole', 'Both years']], st.period, function (k) {
+    if (!st.bet) { setPeriod(st.period); return; }
+    st.period = k; readout(); E.tween(own, shown, target(), function (v) { shown = v; render(v); });
+  }, 'Period');
+  /* the period switch only means something once there are data to switch: off until the bet */
+  function lockPeriod(off) { [].forEach.call(periodBtns.querySelectorAll('button'), function (b) { b.disabled = off; }); }
+  lockPeriod(true);
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-print', bet);
+    verdict.textContent = LEAD[bet] + TAIL;
+    nextBox.hidden = false; note.classList.remove('pending');
+    lockPeriod(false);
+    readout();
+    var to = target();
+    E.tween(own, animate ? [0, 0, 0, 0, 0, 0] : null, to, function (v) { shown = v; render(v); }, 700);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-print');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: the whole footprint, rebuilt from Table 2's means ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* each measure: [book, stars, block, stars, book − block, stars], in percent: leakage, temporary, post-trade, permanent, total */
+  var D = {
+    pre: {
+      buy:  { lpi: [0.133, '***', -0.008, '', 0.141, '***'], tepi: [-0.063, '***', -0.006, '', -0.057, '***'], ptpi: [0.078, '***', 0.135, '***', -0.056, '**'], ppi: [0.211, '***', 0.126, '***', 0.085, '***'], topi: [0.149, '***', 0.121, '***', 0.028, ''] },
+      sell: { lpi: [-0.090, '***', 0.009, '', -0.098, '***'], tepi: [0.051, '***', -0.077, '**', 0.128, '***'], ptpi: [-0.061, '***', -0.017, '', -0.043, ''], ppi: [-0.150, '***', -0.008, '', -0.142, '***'], topi: [-0.099, '***', -0.085, '***', -0.014, ''] } },
+    post: {
+      buy:  { lpi: [0.067, '***', 0.009, '', 0.058, '***'], tepi: [-0.033, '***', 0.044, '**', -0.077, '***'], ptpi: [0.047, '***', 0.105, '***', -0.058, '***'], ppi: [0.114, '***', 0.114, '***', 0.001, ''], topi: [0.081, '***', 0.158, '***', -0.077, '***'] },
+      sell: { lpi: [-0.087, '***', 0.015, '', -0.102, '***'], tepi: [0.025, '***', -0.007, '', 0.032, ''], ptpi: [-0.040, '***', -0.132, '***', 0.092, '***'], ppi: [-0.128, '***', -0.117, '***', -0.011, ''], topi: [-0.102, '***', -0.123, '***', 0.021, ''] } },
+    whole: {
+      buy:  { lpi: [0.084, '***', 0.000, '', 0.085, '***'], tepi: [-0.041, '***', 0.017, '', -0.058, '***'], ptpi: [0.055, '***', 0.121, '***', -0.066, '***'], ppi: [0.139, '***', 0.121, '***', 0.019, ''], topi: [0.099, '***', 0.138, '***', -0.039, '***'] },
+      sell: { lpi: [-0.088, '***', 0.011, '', -0.099, '***'], tepi: [0.031, '***', -0.047, '**', 0.079, '***'], ptpi: [-0.045, '***', -0.065, '***', 0.020, ''], ppi: [-0.133, '***', -0.053, '**', -0.080, '***'], topi: [-0.102, '***', -0.101, '***', -0.001, ''] } }
+  };
+  /* [key, name, what it measures, in the chart's own labels] */
+  var MEAS = [['lpi', 'Leakage', '20 before → 1 before'], ['ppi', 'Permanent', '20 before → 20 after'], ['tepi', 'Temporary', 'trade price minus 20 after'], ['topi', 'Total', '20 before → trade price'], ['ptpi', 'Post-trade', '1 before → 20 after']];
+  var SIDE = { buy: 'Buys', sell: 'Sells' }, PERIOD = { pre: 'before the change', post: 'after the change', whole: 'both years' };
+  var LO = -0.25, HI = 0.25;
+  var box = document.getElementById('fp2'), table = document.getElementById('fp-table'), live = document.getElementById('fp2-read');
+  var st = { side: 'buy', period: 'pre', m: 'lpi' }, geo = null, shown = null, own = {};
+  function f3(v) { return (v < 0 ? '−' : v > 0 ? '+' : '') + Math.abs(v).toFixed(3); }
+  /* [book: leakage, total, permanent; block: leakage, total, permanent] */
+  function target() { var d = D[st.period][st.side]; return [d.lpi[0], d.topi[0], d.ppi[0], d.lpi[2], d.topi[2], d.ppi[2]]; }
+  function build(W, vh) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(vh * 0.3, 220, 260)), L = 44, TOP = 14, B = 34, gut = W < 470 ? 74 : 128, pw = W - L - gut;
+    var xs = [L + 10, L + pw * 0.26, L + pw * 0.48, L + pw * 0.74, L + pw];
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Average price path around large book trades and around blocks, in percent from the price twenty trades before, rebuilt from Table 2: the trade before, the trade or block, the block’s print ten minutes later, and twenty trades after; a bracket shows the selected measure for each.' }, box);
+    [-0.2, -0.1, 0, 0.1, 0.2].forEach(function (v) {
+      S('line', { x1: L, x2: W - 4, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, E.pct(v, 1, true), { 'text-anchor': 'end' });
+    });
+    var labs = W < 520 ? ['−20', '−1', 'trade', 'print', '+20'] : ['20 before', '1 before', 'trade / execution', 'block printed', '20 after'];
+    xs.forEach(function (x, i) { T(root, x, H - 12, labs[i], { 'text-anchor': i === 0 ? 'start' : 'middle' }); });
+    geo = { xs: xs, Y: Y, W: W, H: H, gut: gut, dyn: S('g', {}, root) };
+    render(shown || target());
+  }
+  function render(v) {
+    if (!geo) return;
+    var g = geo.dyn, xs = geo.xs, Y = geo.Y;
+    g.innerHTML = '';
+    function P(x, y) { return x.toFixed(1) + ',' + Y(y).toFixed(1); }
+    /* book: start, trade before, the trade, 20 after */
+    S('polyline', { points: [P(xs[0], 0), P(xs[1], v[0]), P(xs[2], v[1]), P(xs[4], v[2])].join(' '), 'class': 'book' }, g);
+    /* block: start, trade before, executed; unseen ten minutes; printed at its own price, then 20 after */
+    S('polyline', { points: [P(xs[0], 0), P(xs[1], v[3]), P(xs[2], v[4])].join(' '), 'class': 'blk' }, g);
+    S('polyline', { points: [P(xs[3], v[4]), P(xs[4], v[5])].join(' '), 'class': 'blk' }, g);
+    var ya = Math.min(Y(v[4]), Y(v[1])) - 18;
+    S('path', { d: 'M' + xs[2] + ',' + (Y(v[4]) - 8) + ' Q' + (xs[2] + xs[3]) / 2 + ',' + (ya - 16) + ' ' + xs[3] + ',' + (Y(v[4]) - 8), 'class': 'arc' }, g);
+    T(g, (xs[2] + xs[3]) / 2, ya - 6, '10 min unseen', { 'text-anchor': 'middle', 'class': 'halo' });
+    S('rect', { x: xs[2] - 6, y: Y(v[1]) - 6, width: 12, height: 12, 'class': 'book-fill' }, g);
+    S('rect', { x: xs[2] - 6, y: Y(v[4]) - 6, width: 12, height: 12, 'class': 'blk-hollow' }, g);
+    S('rect', { x: xs[3] - 6, y: Y(v[4]) - 6, width: 12, height: 12, 'class': 'blk-fill' }, g);
+    [[xs[1], v[0], 'book-fill'], [xs[4], v[2], 'book-fill'], [xs[1], v[3], 'blk-fill'], [xs[4], v[5], 'blk-fill']].forEach(function (p) { S('circle', { cx: p[0], cy: Y(p[1]), r: 3.5, 'class': p[2] }, g); });
+    /* the selected measure, as two brackets in the right-hand gutter */
+    var m = st.m, from = [0, 0], to = [0, 0], anchorX = [xs[4], xs[4]];
+    if (m === 'lpi') { to = [v[0], v[3]]; anchorX = [xs[1], xs[1]]; }
+    else if (m === 'ppi') { to = [v[2], v[5]]; }
+    else if (m === 'topi') { to = [v[1], v[4]]; anchorX = [xs[2], xs[3]]; }
+    else if (m === 'tepi') { from = [v[2], v[5]]; to = [v[1], v[4]]; anchorX = [xs[2], xs[3]]; }
+    else if (m === 'ptpi') { from = [v[0], v[3]]; to = [v[2], v[5]]; }
+    var d = D[st.period][st.side][m], vals = [d[0], d[2]];
+    var bx = [xs[4] + 16, xs[4] + 30];
+    [0, 1].forEach(function (k) {
+      var a = Y(from[k]), b = Y(to[k]), x = bx[k];
+      S('line', { x1: anchorX[k], x2: x, y1: b, y2: b, 'class': 'grid' }, g);
+      if (m === 'tepi' || m === 'ptpi') S('line', { x1: xs[m === 'ptpi' ? 1 : 4], x2: x, y1: a, y2: a, 'class': 'grid' }, g);
+      S('path', { d: 'M' + (x - 4) + ',' + a.toFixed(1) + ' H' + x + ' V' + b.toFixed(1) + ' H' + (x - 4), 'class': k ? 'blk' : 'book', 'stroke-width': 2 }, g);
+    });
+    /* on a phone the gutter holds the numbers only: the blue and gold brackets say which is which */
+    var narrow = geo.W < 470;
+    var ly = E.spread([(Y(from[0]) + Y(to[0])) / 2 + 4, (Y(from[1]) + Y(to[1])) / 2 + 4], 16);
+    T(g, bx[1] + 8, ly[0], (narrow ? '' : 'book ') + f3(vals[0]), { 'class': 'label halo' });
+    T(g, bx[1] + 8, ly[1], (narrow ? '' : 'block ') + f3(vals[1]), { 'class': 'strong halo' });
+  }
+  function drawLive() {
+    var d = D[st.period][st.side], r = d[st.m], m = MEAS.filter(function (x) { return x[0] === st.m; })[0];
+    live.innerHTML = '<strong>' + m[1] + '</strong>, ' + m[2] + '. ' + SIDE[st.side] + ', ' + PERIOD[st.period] + ': book <strong>' + f3(r[0]) + r[1] + '</strong>, block <strong>' + f3(r[2]) + r[3] + '</strong>.';
+  }
+  function drawTable() {
+    var d = D[st.period][st.side];
+    var h = '<thead><tr><th>Measure</th><th class="n">Book</th><th class="n">Block</th><th class="n">Book − block</th></tr></thead><tbody>';
+    MEAS.forEach(function (m) {
+      var r = d[m[0]], on = m[0] === st.m;
+      h += '<tr' + (on ? ' class="on"' : '') + '><td><button type="button" data-m="' + m[0] + '" aria-pressed="' + on + '">' + m[1] + '</button><span class="def">' + m[2] + '</span></td>' +
+        '<td class="n">' + f3(r[0]) + '<span class="sig">' + (r[1] || '') + '</span></td><td class="n">' + f3(r[2]) + '<span class="sig">' + (r[3] || '') + '</span></td><td class="n">' + f3(r[4]) + '<span class="sig">' + (r[5] || '') + '</span></td></tr>';
+    });
+    table.innerHTML = h + '</tbody>';
+    drawLive();
+  }
+  table.addEventListener('click', function (e) { var b = e.target.closest('[data-m]'); if (!b) return; st.m = b.getAttribute('data-m'); drawTable(); render(shown || target()); });
+  function update() { drawTable(); E.tween(own, shown, target(), function (v) { shown = v; render(v); }); }
+  E.seg(document.getElementById('fp2-side'), [['buy', 'Buys'], ['sell', 'Sells']], st.side, function (k) { st.side = k; update(); }, 'Side');
+  E.seg(document.getElementById('fp2-period'), [['pre', 'Before'], ['post', 'After'], ['whole', 'Both years']], st.period, function (k) { st.period = k; update(); }, 'Period');
+  drawTable();
+  E.fit(box, build, { min: 300, max: 640, useHeight: true });
+})();
+
+/* ---------- slide 4: the permanent gap before and after, buys and sells side by side (Table 2, Panels A and B) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* in the direction of the trade (sells' signs flipped): [panel, book before/after, block before/after] */
+  var P = [['Buys', [0.211, 0.114], [0.126, 0.114]], ['Sells', [0.150, 0.128], [0.008, 0.117]]];
+  var box = document.getElementById('gap2'), LO = 0, HI = 0.24;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 270, L = 40, TOP = 34, B = 30, gap = 16, pw = (W - L - gap) / 2, inset = W < 470 ? 40 : 52;
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Permanent price impact in percent, in the direction of the trade, before and after the change. Buys: book trades 0.211 before and 0.114 after; blocks 0.126 and 0.114. Sells: book trades 0.150 and 0.128; blocks 0.008 and 0.117.' }, box);
+    [0, 0.1, 0.2].forEach(function (v) {
+      S('line', { x1: L, x2: W - 4, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis zero' }, root);
+      T(root, L - 6, Y(v) + 4, E.pct(v, 1), { 'text-anchor': 'end' });
+    });
+    P.forEach(function (p, i) {
+      var x0 = L + i * (pw + gap), xa = x0 + inset, xb = x0 + pw - inset;
+      T(root, (xa + xb) / 2, TOP - 16, p[0], { 'text-anchor': 'middle', 'class': 'label' });
+      T(root, xa, H - 8, 'before', { 'text-anchor': 'middle' });
+      T(root, xb, H - 8, 'after', { 'text-anchor': 'middle' });
+      var rows = [[p[1], 'book'], [p[2], 'blk']];
+      var la = E.spread(rows.map(function (r) { return Y(r[0][0]) + 4; }), 15), lb = E.spread(rows.map(function (r) { return Y(r[0][1]) + 4; }), 15);
+      rows.forEach(function (r, k) {
+        S('line', { x1: xa, x2: xb, y1: Y(r[0][0]), y2: Y(r[0][1]), 'class': r[1] }, root);
+        S('circle', { cx: xa, cy: Y(r[0][0]), r: 4.5, 'class': r[1] + '-fill' }, root);
+        S('circle', { cx: xb, cy: Y(r[0][1]), r: 4.5, 'class': r[1] + '-fill' }, root);
+        T(root, xa - 9, la[k], r[0][0].toFixed(3), { 'text-anchor': 'end', 'class': r[1] === 'blk' ? 'strong' : 'label' });
+        T(root, xb + 9, lb[k], r[0][1].toFixed(3), { 'class': r[1] === 'blk' ? 'strong' : 'label' });
+      });
+    });
+  }, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

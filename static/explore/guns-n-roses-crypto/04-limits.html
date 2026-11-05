@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The scope of one event · Guns ’N Roses</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and Russo, Guns ’N Roses (Finance Research Letters, 2026): what a single event can and cannot show.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  /* the six limits of one event: two columns on a laptop, one on a phone */
+  .facts.cols { max-width: none; }
+  @media (min-width: 820px) {
+    .facts.cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2.6rem; }
+    .facts.cols li, .facts.cols li:last-child { border-bottom: 0; border-top: 1px solid var(--border); padding: .5em 0 .6em; }
+  }
+</style>
+</head>
+<body data-deck="04-limits.html">
+<lg-sitebar><noscript><a href="../../publication/guns-n-roses-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What can one shot show?">
+  <div class="inner">
+    <p class="kicker">Side path · The scope of one event</p>
+    <h2>What one shot can and cannot show</h2>
+    <p>The paper calls the shot a plausibly exogenous event: nobody in the crypto market chose its timing, which is what makes it useful. A single event also sets limits on what it can show.</p>
+    <ul class="facts cols">
+      <li><b>One event</b>No second shot to compare with and no comparison market: crypto has no index, so each token is measured against its own June. Anything else that lifted crypto that fortnight would show up the same way.</li>
+      <li><b>XRP’s own news</b>XRP had begun to climb before the shot; the paper links that to a court ruling on its legal status. Rerun without XRP, the results are “qualitatively unchanged”.</li>
+      <li><b>Window</b>One week either side in the tables; the paper reports that shorter and longer windows give similar results, with and without XRP.</li>
+      <li><b>One venue</b>Mid-prices from Gemini only, the largest tokens available there; USD Coin left out as a stablecoin.</li>
+      <li><b>Prices only</b>The data are prices, minute by minute: they show how the tokens moved, not who traded. Herding is read from the pattern of abnormal returns, which the paper finds consistent with a cascade.</li>
+      <li><b>A strict bar</b>With 10,080 minutes in each week, the paper asks for significance at 0.1% rather than the usual 5%, to keep false alarms rare in a large high-frequency sample.</li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary return-link" href="01-shot.html#s5" data-primary-when="01-shot.html">← Return to the main path</a>
+    </div>
+    <p class="note">p. 2 (plausibly exogenous); footnote 4 (no index); Section 4.2 and footnote 5 (XRP, other windows); Section 3.1 and footnote 2 (Gemini mid-prices, USD Coin); Sections 2 and 4.2 (abnormal returns read as a record of coordinated trading, after Tse and Hackard, 2006); Section 3.2 (α = 0.001, chosen to limit Type I errors) and Table A.1 (10,080 minutes a side).</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/guns-n-roses-crypto/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+</body>
+</html>

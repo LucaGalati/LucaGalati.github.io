@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: To Fix or not to Fix, the Fix</title>
+<meta name="description" content="An explorable explanation of Benenchia, Galati and Lepone, To Fix or not to Fix, the Fix (Pacific-Basin Finance Journal, 2025): what the five-minute window of the WM/Refinitiv 4 pm fix does, and what a ten- or twenty-minute window would and would not buy, in nine years of trading data on six currency pairs.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <div class="hub-head">
+    <div>
+      <p class="kicker">An explorable explanation</p>
+      <h1>To Fix or not to Fix, the Fix: Reassessing the Effectiveness of the 4&nbsp;pm Fix</h1>
+      <p class="byline">Matteo Benenchia, Luca Galati and Andrew Lepone · Pacific-Basin Finance Journal 93, 2025 · a pre-registered study</p>
+    </div>
+    <div class="fig hub-clock" id="hub-clock"></div>
+  </div>
+  <p class="lede">Every weekday at 4 pm in London, a few minutes of currency trading become the exchange rates that funds and index providers around the world use for the day. After a manipulation scandal the window was stretched from one minute to five; some say it should be twenty. This explorable follows nine years of trading data on six currency pairs to see what a longer window would and would not buy. Three short decks on the main path, three side paths, two bets, about fifteen minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-fix.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-fix.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the motif: four o'clock, with the five-minute window on the minute ring */
+(function () {
+  var box = document.getElementById('hub-clock'), S = Explore.svg;
+  var root = S('svg', { viewBox: '0 0 200 200', role: 'img', 'aria-label': 'A clock at four o’clock; an arc on the minute ring marks the five-minute fixing window, from two and a half minutes before four to two and a half minutes after.' }, box);
+  Explore.clock(root, 100, 100, 84, [{ min: 5, cls: 'arc-base', w: 9, dr: 0 }]);
+})();
+</script>
+</body>
+</html>

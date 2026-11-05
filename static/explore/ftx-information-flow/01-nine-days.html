@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nine days in November · Information Flow in the FTX Bankruptcy</title>
+<meta name="description" content="Deck 1 of an explorable explanation of De Blasis, Galati, Grassi and Rizzini, Information Flow in the FTX Bankruptcy: the nine days of November 2022, the split of the sample, and how two coins that move together become a link on a map.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-nine-days.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-information-flow/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="When FTX fell, which coins sat at the centre?">
+  <div class="inner with-motif">
+    <div>
+      <p class="kicker">An explorable explanation · De Blasis, Galati, Grassi &amp; Rizzini</p>
+      <h1>When FTX fell, which coins sat at the centre of the market?</h1>
+      <p>On 2 November 2022 a news report suggested that Alameda Research, the trading firm run alongside the crypto exchange FTX, held mostly FTT, a token FTX had issued itself. Nine days later FTX filed for bankruptcy.</p>
+      <p>Prices record who lost. This paper looks at something prices alone do not show: the web of coins that rise and fall together, minute by minute, on FTX and on Binance. Think of it as a map of roads between coins. Some coins sit at the crossroads, where the market’s moves pass through. It matters which: a jolt at a crossroads reaches every other coin by the shortest roads, and a coin the market leans on is a weak point if it fails.</p>
+      <p>Which coins held that position before the collapse? Was it Bitcoin? And when FTT fell apart, did the centre move?</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>Walk through the nine days&nbsp;→</button>
+      </div>
+      <p class="note">Events and dates from the paper’s Table 4 (times in UTC).</p>
+    </div>
+    <div class="motif">
+      <div id="hook-motif"></div>
+      <p class="motif-cap">Illustration: a map of coins as a mesh of triangles, one coin in gold.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What happened, and when?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Nine days in November · 2 of 3</p>
+    <h2>Nine days, timestamped</h2>
+    <div class="two">
+      <div>
+        <p>The authors cut their month of data at event (c), the moment Binance moved the FTT. The three weeks before it are the <strong>pre-collapse</strong> period; the days after it are the <strong>collapse</strong>. They chose the cut by looking at the price chart, where the break is plain.</p>
+        <p>FTT’s own price moves show it. During the collapse its one-minute returns swung about 22 times as widely as before, and its worst single minute took about a quarter off its price.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>How do prices become a map?&nbsp;→</button></div>
+        <p class="note">Table 4 of the paper, which follows an earlier study of FTX by Galati, Webb and Webb. The slider stops at the events this explorable comes back to; the short ticks are Table 4’s six others (hover to read them). The sample runs from 16 October to 16 November 2022; FTX’s data stop at 03:28 UTC on 12 November (p.5–6). FTT’s standard deviation of one-minute log returns: 0.0724% before, 1.5709% during; its worst minute, −29.96% in logs, is about −26% in price (computed from Table 6).</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="tl-chart"></div>
+        <label class="ctl" for="tl-ev">Walk through the events</label>
+        <input type="range" id="tl-ev" min="0" max="7" step="1" value="0">
+        <p class="readout" id="tl-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How do prices become a network?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Nine days in November · 3 of 3</p>
+    <h2>A link is two coins moving together</h2>
+    <div class="two">
+      <div>
+        <p>Line up two coins’ price moves, minute by minute. When they rise and fall in the same minutes their <strong>correlation</strong> is close to 1; when they move independently it is close to 0. Slide to see it.</p>
+        <p>The paper does this for every pair among 195 coins on FTX (and 324 on Binance). Each pair becomes a <strong>link</strong> whose strength is the size of its correlation, whatever its sign.</p>
+        <p>195 coins make 18,915 pairs, far too many to read. The map keeps 579 of them.</p>
+        <p class="door-row"><a class="door" href="04-map.html#s1">Which 579? Build the map yourself&nbsp;→</a></p>
+        <div class="actions"><a class="btn primary" href="02-centre.html#s1">What makes a coin central?&nbsp;→</a></div>
+        <p class="note">Toy coins with invented returns, for illustration. The paper’s data: one-minute log returns from Refinitiv (p.5–6). Of 442 coins listed on FTX, 195 remain once leveraged, partial and hedging tokens and ordinary currencies are set aside and only prices in US dollars are kept; on Binance, 324 of 344, priced in Tether (USDT), a token pegged to the dollar, since Binance does not let customers trade against the US dollar itself (p.6, fn. 10). Correlations in absolute value with the diagonal set to zero; negative ones were rare (p.7, fn. 12). Pairs 195 × 194 ÷ 2 = 18,915; links kept 3 × (195 − 2) = 579 (computed from Section 2.1). ETH–BTC: Table 5.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Two coins, forty minutes <span class="tag">toy</span></p>
+        <div class="fig" id="co-chart"></div>
+        <label class="ctl" for="co-share">Share of each coin’s moves that comes from the same news</label>
+        <input type="range" id="co-share" min="0" max="100" step="5" value="30">
+        <p class="readout" id="co-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-information-flow/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the motif beside the hook ---------- */
+Explore.mesh(document.getElementById('hook-motif'), { max: 420 });
+
+/* ---------- slide 2: the nine days, every event of Table 4 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [letter, day of November, hour (UTC, decimal), time label, event in our words, key]; null hour: time not given.
+     key: a stop of the slider, an event the explorable comes back to; the others are short ticks with a hover title. */
+  var EV = [
+    ['a', 2, 14 + 44 / 60, '14:44', 'A CoinDesk report suggests that the balance sheet of Alameda Research, FTX’s sister firm, may be compromised and is mostly FTT.', 1],
+    ['b', 5, 12 + 51 / 60, '12:51', 'Binance’s chief executive, Changpeng Zhao, tweets that crypto is high risk.'],
+    ['c', 5, 14 + 9 / 60, '14:09', 'Binance moves $585 million of FTT. The paper’s collapse period starts here.', 1],
+    ['d', 6, 5 + 59 / 60, '05:59', 'A tweet speculates that FTX is insolvent.', 1],
+    ['e', 6, 14 + 32 / 60, '14:32', 'Alameda’s chief executive, Caroline Ellison, tweets against the insolvency claims; FTX’s chief executive, Sam Bankman-Fried, retweets her.'],
+    ['f', 6, 15 + 47 / 60, '15:47', 'Zhao tweets that Binance will sell whatever FTT it still holds.'],
+    ['g', 6, 22 + 49 / 60, '22:49', 'Zhao confirms Binance’s stance against FTX on the rumoured acquisition.'],
+    [null, 7, null, 'time not given', 'Bankman-Fried tweets in FTX’s defence against what he calls false rumours; the tweet is later deleted.'],
+    ['h', 8, 10 + 37 / 60, '10:37', 'The last outgoing transaction from FTX on the Ethereum blockchain: withdrawals have stopped.', 1],
+    ['i', 9, 21, '21:00', 'Binance drops out of the acquisition of FTX.', 1],
+    ['j', 10, 19 + 8 / 60, '19:08', 'FTX says it is reopening some withdrawals, for customers in the Bahamas only.'],
+    ['k', 11, 0, '00:00', 'FTT has collapsed entirely.', 1],
+    [null, 11, null, 'time not given', 'FTX files for Chapter 11 bankruptcy.', 1],
+    ['l', 12, 3 + 28 / 60, '03:28', 'FTX closes for business. The paper’s FTX data end here.', 1]
+  ];
+  var KEY = EV.filter(function (e) { return e[5]; });
+  var D0 = 2, D1 = 12 + 6 / 24; /* axis from 2 Nov 00:00 to 12 Nov 06:00 */
+  function t(e) { return e[1] + (e[2] == null ? 0.5 : e[2] / 24); }
+  /* "(a) 2 November, 14:44 UTC" in the readout, "(a) 2 Nov, 14:44" in the chart */
+  function longName(e) { return (e[0] ? '(' + e[0] + ') ' : '') + e[1] + ' November, ' + e[3] + (e[2] == null ? '' : ' UTC'); }
+  function shortName(e) { return (e[0] ? '(' + e[0] + ') ' : '') + e[1] + ' Nov' + (e[2] == null ? '' : ', ' + e[3]); }
+  var box = document.getElementById('tl-chart'), slider = document.getElementById('tl-ev'), read = document.getElementById('tl-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 168, L = 8, R = 8, yA = 112;
+    function X(d) { return L + (W - L - R) * (d - D0) / (D1 - D0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Timeline of the FTX collapse, 2 to 12 November 2022, in UTC, with the events of the paper’s Table 4. The pre-collapse period runs until event (c), 5 November 14:09; the collapse runs from there to the end of FTX’s data, 12 November 03:28. Short ticks mark six further events: ' + EV.filter(function (e) { return !e[5]; }).map(function (e) { return longName(e) + ', ' + e[4]; }).join(' ') }, box);
+    var xc = X(t(EV[2])), xl = X(t(EV[13]));
+    S('rect', { x: L, y: 34, width: xc - L, height: yA - 34, 'class': 'period-pre' }, root);
+    S('rect', { x: xc, y: 34, width: xl - xc, height: yA - 34, 'class': 'period-col' }, root);
+    S('line', { x1: xc, x2: xl, y1: 34, y2: 34, 'class': 'period-edge' }, root);
+    T(root, L + 4, 48, W < 520 ? '← since 16 Oct' : '← pre-collapse, since 16 October', { 'class': 'label' });
+    T(root, xc + 5, 48, 'collapse', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: yA, y2: yA, 'class': 'axis' }, root);
+    for (var d = 2; d <= 12; d++) {
+      S('line', { x1: X(d), x2: X(d), y1: yA, y2: yA + 5, 'class': 'axis' }, root);
+      if (W >= 520 || d % 2 === 0) T(root, X(d), yA + 19, d === 2 ? '2 Nov' : String(d), { 'text-anchor': d === 2 ? 'start' : 'middle' });
+    }
+    T(root, W - R, yA + 40, 'November 2022, UTC', { 'text-anchor': 'end' });
+    EV.forEach(function (e) {
+      if (e[5]) return;
+      var x = X(t(e)), g = S('g', {}, root);
+      S('title', {}, g).textContent = longName(e) + ': ' + e[4];
+      S('line', { x1: x, x2: x, y1: 86, y2: yA, 'class': 'hit' }, g);
+      S('line', { x1: x, x2: x, y1: 86, y2: yA, 'class': 'ev-tick minor', 'stroke-dasharray': e[2] == null ? '3 3' : null }, g);
+    });
+    var ticks = KEY.map(function (e) {
+      var x = X(t(e));
+      return S('line', { x1: x, x2: x, y1: 58, y2: yA, 'class': 'ev-tick', 'stroke-dasharray': e[2] == null ? '3 3' : null }, root);
+    });
+    geo = { X: X, W: W, yA: yA, ticks: ticks, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var i = +slider.value, e = KEY[i];
+    slider.setAttribute('aria-valuetext', longName(e));
+    read.innerHTML = '<strong>' + longName(e) + '.</strong> ' + e[4];
+    if (!geo) return;
+    geo.ticks.forEach(function (tk, k) { tk.setAttribute('class', 'ev-tick' + (k === i ? ' on' : '')); });
+    var g = geo.dyn, x = geo.X(t(e));
+    g.innerHTML = '';
+    S('circle', { cx: x, cy: geo.yA, r: 5, 'class': 'near-fill' }, g);
+    var lab = shortName(e), w = E.textW(lab), cx = E.clamp(x, w / 2 + 2, geo.W - w / 2 - 2);
+    T(g, cx, 22, lab, { 'text-anchor': 'middle', 'class': 'strong' });
+  }
+  slider.setAttribute('aria-label', 'Event in the FTX timeline');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 720 });
+})();
+
+/* ---------- slide 3: two toy coins and their correlation ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 40, seed = 7;
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+  function gauss() { var u = Math.max(1e-9, rnd()), v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  var COMMON = [], OWN_A = [], OWN_B = [];
+  for (var i = 0; i < N; i++) { COMMON.push(gauss()); OWN_A.push(gauss()); OWN_B.push(gauss()); }
+  function series(s) {
+    var a = [], b = [], ws = Math.sqrt(s), wo = Math.sqrt(1 - s);
+    for (var k = 0; k < N; k++) { a.push(ws * COMMON[k] + wo * OWN_A[k]); b.push(ws * COMMON[k] + wo * OWN_B[k]); }
+    return [a, b];
+  }
+  function corr(a, b) {
+    var ma = 0, mb = 0, k; for (k = 0; k < N; k++) { ma += a[k]; mb += b[k]; } ma /= N; mb /= N;
+    var sab = 0, saa = 0, sbb = 0; for (k = 0; k < N; k++) { sab += (a[k] - ma) * (b[k] - mb); saa += (a[k] - ma) * (a[k] - ma); sbb += (b[k] - mb) * (b[k] - mb); }
+    return sab / Math.sqrt(saa * sbb);
+  }
+  var box = document.getElementById('co-chart'), slider = document.getElementById('co-share'), read = document.getElementById('co-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 262;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Forty one-minute returns of two invented coins drawn as bars, one row each, and below them a link between the two coins whose thickness is their correlation.' }, box);
+    geo = { W: W, H: H, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var s = +slider.value / 100, ab = series(s), r = corr(ab[0], ab[1]);
+    slider.setAttribute('aria-valuetext', Math.round(s * 100) + ' percent shared');
+    var word = r > 0.7 ? 'their minutes line up closely' : r > 0.4 ? 'they often move together' : r > 0.15 ? 'they move together only now and then' : 'they move almost independently';
+    read.innerHTML = '<strong>Correlation ' + r.toFixed(2).replace('-', '−') + ':</strong> ' + word + '. For scale, ETH and BTC on FTX before the collapse: 0.80.';
+    if (!geo) return;
+    var g = geo.dyn, W = geo.W, L = 0, bw = (W - L) / N;
+    g.innerHTML = '';
+    function row(arr, y0, label, cls) {
+      T(g, 0, y0 - 34, label, { 'class': 'label' });
+      S('line', { x1: 0, x2: W, y1: y0, y2: y0, 'class': 'axis' }, g);
+      arr.forEach(function (v, k) {
+        var h = E.clamp(v, -2.6, 2.6) * 11;
+        S('rect', { x: (L + k * bw + bw * 0.18).toFixed(1), y: (h > 0 ? y0 - h : y0).toFixed(1), width: (bw * 0.64).toFixed(1), height: Math.max(0.8, Math.abs(h)).toFixed(1), 'class': cls }, g);
+      });
+    }
+    row(ab[0], 52, 'Coin A: one-minute returns', 'far-fill');
+    row(ab[1], 142, 'Coin B: one-minute returns', 'muted-fill');
+    var yL = 222, xa = W * 0.22, xb = W * 0.78;
+    S('line', { x1: xa, x2: xb, y1: yL, y2: yL, 'class': 'edge', 'stroke-width': (0.8 + 10 * Math.abs(r)).toFixed(1) }, g);
+    S('circle', { cx: xa, cy: yL, r: 15, 'class': 'node' }, g);
+    S('circle', { cx: xb, cy: yL, r: 15, 'class': 'node' }, g);
+    T(g, xa, yL + 5, 'A', { 'text-anchor': 'middle', 'class': 'node-label' });
+    T(g, xb, yL + 5, 'B', { 'text-anchor': 'middle', 'class': 'node-label' });
+    T(g, W / 2, yL - 14, 'link strength ' + Math.abs(r).toFixed(2), { 'text-anchor': 'middle', 'class': 'strong halo' });
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

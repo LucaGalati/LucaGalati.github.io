@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The first two digits · Elections and Earnings Management</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Capalbo and Galati, Elections and Earnings Management: Further Evidence from Benford’s Law: a bet on how often revenue figures start with 1, the ninety two-digit bins, and what rounding up does to them.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-digits.html">
+<lg-sitebar><noscript><a href="../../publication/elections-benford/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="Can a revenue figure betray an election?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Capalbo &amp; Galati</p>
+    <h1>Can the first two digits of a revenue figure tell you an election is coming?</h1>
+    <p>Italian towns own companies that run their buses, supply water, gas and power, and collect the rubbish. In the year a town votes, those companies publish their accounts shortly before the ballot, and the people in charge may want them to look good.</p>
+    <p>This paper looks at those accounts in an unusual way: not at how big the numbers are, but at which digits they start with.</p>
+    <p class="motif" role="img" aria-label="Toy example: 5,940,000 euros becomes 6,000,000 euros; the first two digits change from 59 to 60.">
+      <span class="figure-line"><span class="cur">€</span><span class="t">5</span><span class="t">9</span><span class="rest">40,000</span></span>
+      <span class="arrow-r">→</span>
+      <span class="figure-line"><span class="cur">€</span><span class="t gold">6</span><span class="t gold">0</span><span class="rest">00,000</span></span>
+    </p>
+    <p>Nudge a revenue figure from €5.94 million to €6.0 million and it grows by only one percent, but it now starts with 60 instead of 59. Do that often enough and the pattern of first digits shifts. Did it shift before local elections?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Start with a single digit&nbsp;→</button>
+    </div>
+    <p class="note">The euro figures are a toy example, not from the paper. Setting: the paper’s introduction and Section 3 (pp. 106–110, 116); the accounts are approved and published soon before the vote (p. 128).</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How often does a figure start with 1?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The first two digits · 2 of 4</p>
+    <h2>Place a bet: how often does a revenue figure start with <span class="num">1</span>?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The paper’s data hold 3,036 revenue figures: one a year from 2009 to 2014 for each of 506 town-owned companies, from €1,618 to €1.1 billion. Look only at the first digit of each.</p>
+        <p><strong>What share of them start with a <span class="num">1</span>?</strong></p>
+        <div class="actions bet" id="bet-a" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="11" aria-pressed="false">About 11%, one in nine</button>
+          <button class="btn" type="button" data-bet="20" aria-pressed="false">About 20%</button>
+          <button class="btn" type="button" data-bet="30" aria-pressed="false">About 30%</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="a-chart"></div>
+        <p class="legend"><span><i class="ln ink"></i>Benford’s law</span><span><i class="sq far"></i>the paper’s 3,036 figures</span><span><i class="ln ghost"></i>every digit equally likely</span><span id="a-yours" hidden><i class="ln link"></i>your bet</span></p>
+        <p class="note" id="a-note" hidden>922 is the sum of the counts for 10 to 19 in Table 3; 3,036 figures and their range: Table 1. Benford’s shares from the paper’s equation (i), log<sub>10</sub>(1 + 1/d), computed.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="a-verdict" aria-live="polite"></p>
+        <div class="actions" id="a-next" hidden>
+          <button class="btn primary" type="button" data-next>From one digit to two&nbsp;→</button>
+          <a class="door" href="03-why-one.html#s1" data-return="next">Why would 1 come first so often? Grow a company&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What are the ninety bins?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · The first two digits · 3 of 4</p>
+      <h2>Two digits, ninety bins</h2>
+      <p>One digit is a blunt tool. Take the 490 sets of accounts published in a year the town voted (more on them shortly): even there, the share starting with 1 looks ordinary, 147 of 490, or 30.0%.</p>
+      <p>So the paper reads the first two digits, from 10 to 99. That makes ninety bins, each with its own share under Benford’s law, from 4.1% for 10 down to 0.44% for 99. The paper’s 3,036 figures sit close to that curve.</p>
+      <p>Slide along the bins. In a sample the size of the election-year one, the rarest bins should hold only two or three figures.</p>
+      <p class="door-row"><a class="door" href="04-tests.html#s1">How one number judges all ninety bins&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Now nudge a few figures&nbsp;→</button></div>
+      <p class="note">147 of 490: counts for 10 to 19 in Table 5, added up. Bars: Table 3, all 3,036 figures; the paper prints 21 of the ninety bins, the rest appear only in its Figure 1. Benford’s two-digit share is log<sub>10</sub>(1 + 1/ab), the two-digit form of the law the paper describes (p. 112); it gives the Benford column of Tables 3 to 5. Expected counts are share × sample size, computed.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="bins-chart"></div>
+      <p class="legend"><span><i class="ln ink"></i>Benford’s law</span><span><i class="sq far"></i>the paper’s 3,036 figures, bins printed in Table 3</span></p>
+      <label class="ctl" for="bins-d">Walk along the ninety bins</label>
+      <input type="range" id="bins-d" min="10" max="99" step="1" value="10">
+      <p class="readout" id="bins-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does rounding up leave behind?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · The first two digits · 4 of 4</p>
+      <h2>Rounding up leaves holes and heaps</h2>
+      <p>In 1988 Carslaw found that New Zealand companies reported income with too few 9s and too many 0s as the second digit: figures just short of a round number had been pushed over it, to what he called a cognitive reference point. Studies of firms in the United States, Britain and Japan found the same habit.</p>
+      <p>The paper expects the same move when a vote is near. Try it on 490 toy revenue figures shaped to Benford’s law: push the ones just below a round number over the line.</p>
+      <p>Each nudge empties a bin ending in 9 and swells the round bin above it; 99 rolls over into 10, as €99 million becomes €100 million.</p>
+      <div class="actions"><a class="btn primary" href="02-vote.html#s1">To the real accounts&nbsp;→</a></div>
+      <p class="note">Toy figures: 490 of them, the size of the paper’s election-year sample (Table 1), spread over the ninety bins in Benford’s proportions and rounded to whole figures. “Just below a round number” means a second digit of 9, the pattern Carslaw (1988) and Van Caneghem (2002) describe (pp. 112–115). Bins 59 and 99 of the election-year accounts: Table 5.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">490 toy revenue figures <span class="tag">toy</span></p>
+      <p class="tile-row" aria-hidden="true">
+        <span class="figure-line"><span class="t">1</span><span class="t">9</span>&nbsp;→&nbsp;<span class="t gold">2</span><span class="t gold">0</span></span>
+        <span class="figure-line"><span class="t">5</span><span class="t">9</span>&nbsp;→&nbsp;<span class="t gold">6</span><span class="t gold">0</span></span>
+        <span class="figure-line"><span class="t">9</span><span class="t">9</span>&nbsp;→&nbsp;<span class="t gold">1</span><span class="t gold">0</span><span class="rest">0</span></span>
+      </p>
+      <div class="fig" id="rnd-chart"></div>
+      <p class="legend"><span><i class="ln ink"></i>Benford’s law</span><span><i class="sq far"></i>untouched</span><span><i class="sq near"></i>nudged up from just below</span><span><i class="sq drained"></i>what a 9-bin held before</span></p>
+      <label class="ctl" for="rnd-s">Share of figures just below a round number that get nudged over it</label>
+      <input type="range" id="rnd-s" min="0" max="100" step="10" value="0">
+      <p class="readout" id="rnd-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/elections-benford/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: a bet on the share of figures starting with 1 (Table 3, equation i) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var BEN = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (a) { return Math.log10(1 + 1 / a); });
+  var ONES = 922 / 3036, YMAX = 0.35;
+  var betBox = document.getElementById('bet-a'), box = document.getElementById('a-chart');
+  var verdict = document.getElementById('a-verdict'), nextBox = document.getElementById('a-next'), note = document.getElementById('a-note');
+  var bet = null, geo = null, fresh = false;
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 230, 280)), L = 40, R = 12, TOP = 24, B = 40;
+    function X(a) { return L + (W - L - R) * (a - 0.5) / 9; }
+    function Y(p) { return TOP + (H - TOP - B) * (1 - p / YMAX); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img' }, box);
+    [0, 0.1, 0.2, 0.3].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis zero' }, root);
+      T(root, L - 6, Y(v) + 4, Math.round(v * 100) + '%', { 'text-anchor': 'end' });
+    });
+    for (var a = 1; a <= 9; a++) T(root, X(a), H - B + 16, String(a), { 'text-anchor': 'middle' });
+    T(root, (L + W - R) / 2, H - 6, 'First digit of the revenue figure', { 'text-anchor': 'middle' });
+    T(root, L, TOP - 10, 'Share of figures', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: Y(1 / 9), y2: Y(1 / 9), 'class': 'ghost' }, root);
+    T(root, W - R, Y(1 / 9) - 6, W < 520 ? 'equal shares: 11.1%' : 'if every digit were equally likely: 11.1%', { 'text-anchor': 'end', 'class': 'halo' });
+    geo = { X: X, Y: Y, W: W, H: H, L: L, R: R, root: root, slot: (W - L - R) / 9, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y;
+    g.innerHTML = '';
+    /* the description gives the answer only once the bet is placed */
+    geo.root.setAttribute('aria-label', bet
+      ? 'Share of revenue figures by first digit. If every digit were equally likely, 11.1% each. Benford’s law: 30.1% for 1, then 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1 and 4.6% for 9. The paper’s 3,036 figures: 30.4% start with 1. Your bet: ' + bet + '%.'
+      : 'Share of revenue figures by first digit, with the line for every digit equally likely at 11.1%. Benford’s law and the paper’s figures appear after your bet.');
+    if (!bet) { T(g, (geo.L + geo.W - geo.R) / 2, Y(0.25), 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    if (fresh && !E.still) g.setAttribute('class', 'reveal');
+    var bw = Math.min(26, geo.slot * 0.5);
+    S('rect', { x: X(1) - bw / 2, y: Y(ONES), width: bw, height: Y(0) - Y(ONES), 'class': 'far-fill' }, g);
+    S('polyline', { points: BEN.map(function (p, i) { return X(i + 1).toFixed(1) + ',' + Y(p).toFixed(1); }).join(' '), 'class': 'benford' }, g);
+    BEN.forEach(function (p, i) {
+      S('circle', { cx: X(i + 1), cy: Y(p), r: 3.5, 'class': 'text-fill' }, g);
+      /* above and to the right of each dot: the curve falls away below the label */
+      if (i > 0) T(g, X(i + 1) + 6, Y(p) - 7, (100 * p).toFixed(1), { 'class': 'halo' });
+    });
+    T(g, X(1), Y(ONES) - 9, '30.4%', { 'text-anchor': 'middle', 'class': 'strong halo' });
+    /* the reader's bet: a tick across the bar, named in the legend, since any label beside it meets the curve */
+    var yb = Y(+bet / 100), x0 = X(1) - bw / 2 - 6, x1 = X(1) + bw / 2 + 6;
+    S('line', { x1: x0, x2: x1, y1: yb, y2: yb, 'class': 'cursor', 'stroke-width': 2 }, g);
+  }
+  var LEAD = {
+    '11': 'Most people would guess one in nine. In the paper’s data, 922 of the 3,036 revenue figures start with 1: 30.4%, nearly three times as many. ',
+    '20': 'More than that. In the paper’s data, 922 of the 3,036 revenue figures start with 1: 30.4%. ',
+    '30': 'Right. In the paper’s data, 922 of the 3,036 revenue figures start with 1: 30.4%. '
+  };
+  var TAIL = 'That is what Benford’s law predicts: 30.1% for 1, falling to 4.6% for 9. Many collections of real-world numbers follow it, and accounting figures are expected to, so a set of accounts that departs from it draws an auditor’s eye.';
+  function place(b, animate) {
+    bet = b; fresh = !!animate;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-ones', b);
+    verdict.textContent = LEAD[b] + TAIL;
+    nextBox.hidden = false; note.hidden = false; document.getElementById('a-yours').hidden = false;
+    draw(); fresh = false;
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-ones');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: the ninety bins, Benford's curve and the bins Table 3 prints ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, D = E.DATA.all;
+  var box = document.getElementById('bins-chart'), slider = document.getElementById('bins-d'), read = document.getElementById('bins-read');
+  var printed = {}; D.rows.forEach(function (r) { printed[r[0]] = r[1]; });
+  var f = null;
+  function cnt(x) { return x < 10 ? x.toFixed(1) : String(Math.round(x)); }
+  function build(W) {
+    f = E.binFrame(box, W, { H: Math.round(E.clamp(W * 0.5, 230, 270)), title: 'Share of figures starting with each pair of digits', short: 'Share of figures',
+      aria: 'Benford’s law for the first two digits, from 4.1% for 10 down to 0.44% for 99, with the paper’s 3,036 revenue figures as bars where Table 3 prints the bin; the bars sit close to the curve.' });
+    var g = S('g', {}, f.root), bw = Math.max(1.5, f.bw - 1);
+    D.rows.forEach(function (r) { var p = r[1] / D.n; S('rect', { x: f.X(r[0]) - bw / 2, y: f.Y(p), width: bw, height: f.Y(0) - f.Y(p), 'class': 'far-fill' }, g); });
+    E.benfordLine(g, f);
+    f.dyn = S('g', {}, f.root);
+    draw();
+  }
+  function draw() {
+    var d = +slider.value, q = E.benford(d);
+    slider.setAttribute('aria-valuetext', 'first two digits ' + d);
+    read.innerHTML = '<strong>Figures starting with ' + d + ':</strong> Benford’s law expects ' + E.pct(q, q < 0.01 ? 2 : 1) + ' of them, about ' + cnt(q * 3036) + ' of 3,036 and ' + cnt(q * 490) + ' of 490. ' +
+      (printed[d] != null ? 'The paper counts ' + printed[d] + ' of 3,036 (' + E.pct(printed[d] / 3036) + ').' : 'Table 3 does not print this bin.');
+    if (!f) return;
+    var g = f.dyn; g.innerHTML = '';
+    var x = f.X(d);
+    S('rect', { x: x - f.bw / 2 - 1, y: f.TOP, width: f.bw + 2, height: f.H - f.B - f.TOP, 'class': 'sel' }, g);
+    S('circle', { cx: x, cy: f.Y(q), r: 4.5, 'class': 'hollow' }, g);
+    var right = x > f.W * 0.62;
+    T(g, x + (right ? -8 : 8), f.Y(q) - 10, String(d), { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 720 });
+})();
+
+/* ---------- slide 4: round up the toy figures just below a round number ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, N = 490;
+  /* toy population: Benford's shares × 490, rounded to whole figures by largest remainder */
+  var raw = [], base = {}, d;
+  for (d = 10; d <= 99; d++) raw.push([d, E.benford(d) * N]);
+  raw.forEach(function (r) { base[r[0]] = Math.floor(r[1]); });
+  var left = N - raw.reduce(function (s, r) { return s + Math.floor(r[1]); }, 0);
+  raw.slice().sort(function (a, b) { return (b[1] % 1) - (a[1] % 1); }).slice(0, left).forEach(function (r) { base[r[0]]++; });
+  var NINES = [19, 29, 39, 49, 59, 69, 79, 89, 99];
+  var TOTAL9 = NINES.reduce(function (s, x) { return s + base[x]; }, 0);
+  function target(x) { return x === 99 ? 10 : x + 1; }
+  var box = document.getElementById('rnd-chart'), slider = document.getElementById('rnd-s'), read = document.getElementById('rnd-read');
+  var f = null;
+  function moved() { var s = +slider.value / 100, m = {}; NINES.forEach(function (x) { m[x] = Math.round(base[x] * s); }); return m; }
+  function build(W) {
+    f = E.binFrame(box, W, { H: Math.round(E.clamp(W * 0.52, 230, 270)), title: 'Share of the 490 toy figures in each bin', short: 'Share of toy figures',
+      aria: 'Ninety bins of 490 toy figures shaped to Benford’s law. Moving the slider pushes figures from the bins ending in 9 into the round bin above: 19 into 20, 59 into 60, 99 into 10.' });
+    f.dyn = S('g', {}, f.root);
+    draw();
+  }
+  function draw() {
+    var m = moved(), k = 0;
+    NINES.forEach(function (x) { k += m[x]; });
+    var s = +slider.value;
+    slider.setAttribute('aria-valuetext', s + ' percent nudged');
+    if (k === 0) read.innerHTML = '<strong>Nothing nudged yet.</strong> ' + TOTAL9 + ' of the 490 toy figures sit just below a round number: their second digit is 9. Bin 59 holds ' + base[59] + ', bin 99 holds ' + base[99] + '.';
+    /* at 100% every bin ending in 9 is empty; the readout names the two the paper finds empty (Table 5) */
+    else if (s === 100) read.innerHTML = '<strong>Nudged up: all ' + k + '.</strong> Every bin ending in 9 is now empty, and the round bins above them hold what those bins lost. In the paper’s 490 election-year accounts, bins 59 and 99 are empty too (Table 5).';
+    else read.innerHTML = '<strong>Nudged up: ' + k + ' of ' + TOTAL9 + ' figures.</strong> Bin 59 now holds ' + (base[59] - m[59]) + ' of ' + base[59] + ', bin 99 holds ' + (base[99] - m[99]) + ' of ' + base[99] + '; the round bins above them gained what they lost.';
+    if (!f) return;
+    var g = f.dyn; g.innerHTML = '';
+    var bw = Math.max(1.5, f.bw - 1), Y = f.Y;
+    for (var x = 10; x <= 99; x++) {
+      var own = base[x] - (m[x] || 0), got = 0;
+      NINES.forEach(function (n9) { if (target(n9) === x) got = m[n9]; });
+      var y0 = Y(own / N), y1 = Y((own + got) / N), X0 = f.X(x) - bw / 2;
+      if (own > 0) S('rect', { x: X0, y: y0, width: bw, height: Y(0) - y0, 'class': 'far-fill' }, g);
+      if (got > 0) S('rect', { x: X0, y: y1, width: bw, height: y0 - y1, 'class': 'near-fill' }, g);
+      if (m[x]) S('rect', { x: X0 + 0.5, y: Y(base[x] / N), width: Math.max(1, bw - 1), height: Y(own / N) - Y(base[x] / N), 'class': 'drained' }, g);
+    }
+    E.benfordLine(g, f);
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 720 });
+})();
+</script>
+</body>
+</html>

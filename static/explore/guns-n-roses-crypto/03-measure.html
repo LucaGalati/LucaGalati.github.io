@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading the numbers · Guns ’N Roses</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and Russo, Guns ’N Roses (Finance Research Letters, 2026): what an abnormal return is, and what the paper’s after-minus-before comparison of average CAR levels measures.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-measure.html">
+<lg-sitebar><noscript><a href="../../publication/guns-n-roses-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What counts as abnormal?">
+  <div class="inner">
+    <p class="kicker">Side path · Reading the numbers · 1 of 2</p>
+    <h2>Abnormal means ahead of its own normal</h2>
+    <div class="two">
+      <div>
+        <p>A price that rises is not, by itself, a reaction to news: some tokens drift up in most weeks. So an event study first asks what is normal for each token, and counts only what goes beyond it.</p>
+        <p>In the paper, a token’s normal is its average minute return from 1 June to 5 July. Its <strong>abnormal return</strong> each minute is its return minus that normal; the <strong>CAR</strong> adds them up from the start of the sample, 6 July.</p>
+        <p>Slide the normal and watch the CAR: the same prices give a rising line after a weak June and a falling one after a strong June. The benchmark is part of the result.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What the paper’s number compares&nbsp;→</button>
+          <a class="btn return-link" href="01-shot.html#s3" data-primary-when="01-shot.html">← Return to the main path</a>
+        </div>
+        <p class="note">Mean-adjusted returns with a 1 June – 5 July benchmark, as in De Blasis et al. (2023) (Section 4.2). Toy: one illustrative token; its path and the range of normals are invented to show the arithmetic, not taken from the paper.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">One token over the fortnight <span class="tag">toy</span></p>
+        <div class="fig" id="ar"></div>
+        <p class="legend"><span><i class="ln muted"></i>its cumulative return</span><span><i class="ln ghost"></i>its normal pace</span><span><i class="ln far"></i><i class="ln near"></i>CAR, before and after</span></p>
+        <label class="ctl" for="ar-norm">Its normal pace, set by its June</label>
+        <input type="range" id="ar-norm" min="-1.5" max="1.5" step="0.1" value="-0.5">
+        <p class="readout h3l" id="ar-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does “before and after” compare?">
+  <div class="inner">
+    <p class="kicker">Side path · Reading the numbers · 2 of 2</p>
+    <h2>What the paper’s number compares</h2>
+    <div class="two">
+      <div>
+        <p>Table 2 sums up each token’s CAR line by its average height in each week. The paper’s measure is the difference: the week after minus the week before. Pick a shape; each is flat until the shot and ends the fortnight 20 points up, only the timing of the rise differs.</p>
+        <p>A jump right at the shot scores the full 20 points. A climb spread over the week after scores half as much, because the line spends most of that week below its final height; a jump followed by a climb lands in between. The measure records how high the line sits across the whole week, so height that arrives early counts for more.</p>
+        <p id="paper-line"></p>
+        <div class="actions">
+          <a class="btn primary return-link" id="back-s2" href="01-shot.html#s4" data-primary-when="01-shot.html">← Return to the main path</a>
+        </div>
+        <p class="note">Toy shapes, illustrative. The measure is Table 2’s Mean<sub>post</sub> − Mean<sub>pre</sub>, both averages of a CAR line cumulated from 6 July.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Three CAR lines, flat until the shot, all ending 20 points up <span class="tag">toy</span></p>
+        <div class="ctl"><span class="seg" id="avg-shape"></span></div>
+        <div class="fig" id="avg"></div>
+        <p class="legend"><span><i class="ln text"></i>the CAR line</span><span><i class="ln far"></i>its average, week before</span><span><i class="ln near"></i>its average, week after</span></p>
+        <p class="readout h2l" id="avg-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/guns-n-roses-crypto/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* shared: a fortnight axis, 7 days either side of the shot */
+function fortnight(root, W, H, L, R, TOP, B, Y, ticks, label) {
+  var E = Explore, S = E.svg, T = E.text;
+  function X(d) { return L + (W - L - R) * d / 14; }
+  S('rect', { x: X(0), y: TOP, width: X(7) - X(0), height: H - TOP - B, 'class': 'week-before' }, root);
+  S('rect', { x: X(7), y: TOP, width: X(14) - X(7), height: H - TOP - B, 'class': 'week-after' }, root);
+  ticks.forEach(function (v) {
+    S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+    T(root, L - 6, Y(v) + 4, (v < 0 ? '−' : '') + Math.abs(v), { 'text-anchor': 'end' });
+  });
+  var first = (60 + 49) / 1440;
+  /* on a narrow chart only the first tick keeps its month, so the axis still says July */
+  for (var k = 0; k < 7; k++) T(root, X(first + 2 * k), H - B + 16, W < 420 && k ? String(7 + 2 * k) : (7 + 2 * k) + ' Jul', { 'text-anchor': 'middle' });
+  T(root, L, TOP - 10, label, { 'class': 'label' });
+  S('line', { x1: X(7), x2: X(7), y1: TOP, y2: H - B, 'class': 'event' }, root);
+  T(root, X(7) + 5, TOP + 12, 'the shot', { 'class': 'halo' });
+  return X;
+}
+
+/* ---------- slide 1: abnormal returns against a normal pace (toy) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* an invented token: hourly cumulative return in percent over the fortnight, seeded so it never changes */
+  var seed = 2024, P = [0], NZ = [], mean = 0;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  for (var j = 0; j < 14 * 24; j++) { NZ.push((rnd() - 0.5) * 0.9); mean += NZ[j] / (14 * 24); }
+  /* the noise is centred, so the path ends where its two drifts take it: +0.6% a day, then +1.6% a day */
+  for (var h = 1; h <= 14 * 24; h++) {
+    var drift = h <= 7 * 24 ? 0.6 / 24 : 1.6 / 24;
+    P.push(P[h - 1] + drift + NZ[h - 1] - mean);
+  }
+  var END = P[P.length - 1];
+  var box = document.getElementById('ar'), slider = document.getElementById('ar-norm'), read = document.getElementById('ar-read');
+  var geo = null, YMIN = -15, YMAX = 40;
+  function car(n) { return P.map(function (p, h) { return p - n * h / 24; }); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 230, 270)), L = 34, R = 10, TOP = 26, B = 34;
+    function Y(v) { return TOP + (H - TOP - B) * (YMAX - v) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    var X = fortnight(root, W, H, L, R, TOP, B, Y, [-10, 0, 10, 20, 30, 40], W < 420 ? 'Percent since 6 July' : 'Percent since 6 July, toy token');
+    geo = { X: X, Y: Y, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function pts(arr, a, b, X, Y) { var o = []; for (var h = a; h <= b; h++) o.push(X(h / 24).toFixed(1) + ',' + Y(arr[h]).toFixed(1)); return o.join(' '); }
+  function draw() {
+    var n = +slider.value, c = car(n), cEnd = c[c.length - 1], normEnd = n * 14;
+    slider.setAttribute('aria-valuetext', (n < 0 ? 'minus ' : '') + Math.abs(n).toFixed(1) + ' percent a day');
+    var nTxt = (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n).toFixed(1) + '% a day';
+    read.innerHTML = '<strong>Normal pace ' + nTxt + '.</strong> By 20 July the token is up ' + END.toFixed(1) + '%; its normal alone would have taken it to ' + (normEnd < 0 ? '−' : '+') + Math.abs(normEnd).toFixed(1) + '%. Its CAR ends at <strong class="nw">' + (cEnd < 0 ? '−' : '+') + Math.abs(cEnd).toFixed(1) + ' points</strong>' +
+      (n < -0.05 ? ': a weak June makes the same fortnight look stronger.' : n > 0.05 ? ': a strong June makes the same fortnight look weaker.' : ': with a normal of zero, abnormal and actual returns coincide.');
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, last = P.length - 1;
+    g.innerHTML = '';
+    S('line', { x1: X(0), x2: X(14), y1: Y(0), y2: Y(normEnd), 'class': 'ghost' }, g);
+    S('polyline', { points: pts(P, 0, last, X, Y), 'class': 'path' }, g);
+    S('polyline', { points: pts(c, 0, 7 * 24, X, Y), 'class': 'lvl-before', 'fill': 'none', 'stroke-width': 2.5 }, g);
+    S('polyline', { points: pts(c, 7 * 24, last, X, Y), 'class': 'lvl-after', 'fill': 'none', 'stroke-width': 2.5 }, g);
+    T(g, X(14) - 2, Y(cEnd) + (cEnd > END ? -8 : 16), 'CAR ' + (cEnd < 0 ? '−' : '+') + Math.abs(cEnd).toFixed(1), { 'text-anchor': 'end', 'class': 'strong halo' });
+    geo.root.setAttribute('aria-label', 'A toy token’s cumulative return over the fortnight, ending at ' + END.toFixed(1) + ' percent, its normal pace of ' + nTxt + ', and its CAR, ending at ' + cEnd.toFixed(1) + ' points.');
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: average height before and after, for three toy shapes ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var END = 20;
+  var SHAPES = {
+    jump: { name: 'A jump at the shot', f: function (t) { return t < 7 ? 0 : END; } },
+    both: { name: 'A jump, then a climb', f: function (t) { return t < 7 ? 0 : END / 2 + END / 2 * (t - 7) / 7; } },
+    after: { name: 'A climb after the shot', f: function (t) { return t < 7 ? 0 : END * (t - 7) / 7; } }
+  };
+  var box = document.getElementById('avg'), read = document.getElementById('avg-read');
+  var shape = 'jump', geo = null, YMIN = -5, YMAX = 25;
+  function means(f) {
+    var n = 700, a = 0, b = 0;
+    for (var i = 0; i < n; i++) { a += f(7 * (i + 0.5) / n); b += f(7 + 7 * (i + 0.5) / n); }
+    return [a / n, b / n];
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.48, 220, 260)), L = 34, R = 10, TOP = 26, B = 34;
+    function Y(v) { return TOP + (H - TOP - B) * (YMAX - v) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    var X = fortnight(root, W, H, L, R, TOP, B, Y, [0, 10, 20], W < 420 ? 'CAR, points (toy)' : 'CAR, percentage points (toy line)');
+    geo = { X: X, Y: Y, root: root, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var s = SHAPES[shape], m = means(s.f), d = m[1] - m[0];
+    read.innerHTML = '<strong>' + s.name + ':</strong> average ' + m[0].toFixed(1) + ' in the week before, ' + m[1].toFixed(1) + ' in the week after. After minus before: <strong class="nw">+' + d.toFixed(1) + ' points</strong>.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, p = [];
+    g.innerHTML = '';
+    /* at the shot the line rises straight up to wherever the shape starts the week after */
+    for (var i = 0; i <= 280; i++) { var t = 14 * i / 280; if (i === 140) p.push(X(7).toFixed(1) + ',' + Y(0).toFixed(1)); p.push(X(t).toFixed(1) + ',' + Y(s.f(t)).toFixed(1)); }
+    /* the line first, the two averages on top of it, their labels at the outer ends where the line is never in the way */
+    S('polyline', { points: p.join(' '), 'class': 'cov' }, g);
+    S('line', { x1: X(0.15), x2: X(6.85), y1: Y(m[0]), y2: Y(m[0]), 'class': 'lvl-before' }, g);
+    S('line', { x1: X(7.15), x2: X(13.85), y1: Y(m[1]), y2: Y(m[1]), 'class': 'lvl-after' }, g);
+    T(g, X(0.3), Y(m[0]) - 8, 'average ' + m[0].toFixed(1), { 'class': 'label halo' });
+    T(g, X(13.7), Y(m[1]) - 8, 'average ' + m[1].toFixed(1), { 'text-anchor': 'end', 'class': 'label halo' });
+    geo.root.setAttribute('aria-label', 'Toy CAR line, ' + s.name.toLowerCase() + ', ending 20 points up. Its average is ' + m[0].toFixed(1) + ' in the week before and ' + m[1].toFixed(1) + ' in the week after, a difference of ' + d.toFixed(1) + '.');
+  }
+  E.seg(document.getElementById('avg-shape'), [['jump', 'Jump at the shot'], ['both', 'Jump, then climb'], ['after', 'Climb after']], 'jump', function (k) { shape = k; draw(); }, 'Shape of the CAR line');
+  /* the paper's own ten-token average waits for the bet in deck 1, so this page never gives the answer away */
+  var bet = E.load('bet'), line = document.getElementById('paper-line');
+  if (bet === 'm15' || bet === '0' || bet === '5' || bet === '15') {
+    line.innerHTML = 'The paper’s ten-token average: <span class="num">0.38</span> in the week before, <span class="num">15.54</span> in the week after, a difference of <strong class="num">+15.17</strong> (Table 2).';
+  } else {
+    line.innerHTML = '<a href="01-shot.html#s3">Place the bet in deck 1</a> to see where the paper’s ten tokens land.';
+    /* no bet yet (or storage blocked): a way back to deck 1 goes to the bet, never past it */
+    var back = document.getElementById('back-s2');
+    if (/^01-shot\.html/.test(back.getAttribute('href') || '')) { back.href = '01-shot.html#s3'; back.textContent = '← Return to the bet in deck 1'; }
+  }
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

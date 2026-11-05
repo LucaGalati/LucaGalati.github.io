@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: Diversity, Inclusion, and Firm Performance</title>
+<meta name="description" content="An explorable explanation of Monaco, Galati, Dal Maso and Mattei, Diversity, Inclusion, and Firm Performance: The Corporate Innovation Channel. Build a D&amp;I score, bet on what it goes with, and follow the detour through innovation.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <p class="kicker">An explorable explanation</p>
+  <h1>Diversity, Inclusion, and Firm Performance: The Corporate Innovation Channel</h1>
+  <p class="byline">Eleonora Monaco, Luca Galati, Lorenzo Dal Maso and Marco Maria Mattei · Business Strategy and the Environment, 2026</p>
+  <div class="fig hub-motif" id="motif"></div>
+  <p class="lede">Many large firms are scaling back their diversity and inclusion programmes, and the research has never agreed on whether D&amp;I pays. This paper follows 6,948 firms in 55 countries from 2010 to 2021 and asks a sharper question: if it pays, by which road? Here you build a D&amp;I score, bet on what it goes with, and follow the detour through innovation. Three short decks on the main path, two side paths, about fifteen minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-question.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-question.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/diversity-inclusion-innovation/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the motif: a straight blue road and a gold detour over innovation (after the paper's Figure 1) */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('motif');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 116, y = 84, x0 = 10, x1 = W - 10, xm = W / 2;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'The paper’s idea as a road map: D&I reaches performance along a straight road and along a detour through innovation.' }, box);
+    S('line', { x1: x0, x2: x1, y1: y, y2: y, 'class': 'road', style: 'stroke-width:2.5px' }, root);
+    S('path', { d: 'M' + x0 + ',' + y + ' Q' + xm + ',' + (-20) + ' ' + x1 + ',' + y, 'class': 'detour', style: 'stroke-width:2.5px' }, root);
+    S('circle', { cx: xm, cy: 32, r: 4.5, 'class': 'near-fill' }, root);
+    [x0, x1].forEach(function (x) { S('circle', { cx: x, cy: y, r: 4.5, 'class': 'text-fill' }, root); });
+    T(root, xm, 20, 'innovation', { 'text-anchor': 'middle', 'class': 'label halo' });
+    T(root, x0, y + 22, 'diversity & inclusion', { 'class': 'label' });
+    T(root, x1, y + 22, 'performance', { 'text-anchor': 'end', 'class': 'label' });
+  }, { min: 280, max: 560 });
+})();
+</script>
+</body>
+</html>

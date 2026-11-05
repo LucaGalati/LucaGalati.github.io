@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The fix · To Fix or Not to Fix</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Benenchia, Galati and Lepone, To fix or not to fix: why a market that never closes needs a fix, how much trading crowds into its five-minute window, how the WM/R fix is computed, and the worry that prompted the study.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  #bf-zoom { margin-top: .2rem; }
+  .bf-btns { display: flex; flex-wrap: wrap; gap: .45rem .6rem; margin: .5rem 0 .2rem; }
+  .bf-btns .btn { padding: .45em .8em; font-size: .8rem; }
+  .bet .btn { min-width: 9.5em; }
+</style>
+</head>
+<body data-deck="01-fix.html">
+<lg-sitebar><noscript><a href="../../publication/wmr-fix-representativeness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="How do you close a market that never closes?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Benenchia, Galati &amp; Lepone</p>
+    <h1>A market that never closes still needs a closing price</h1>
+    <p>A stock exchange shuts every evening, and its last price becomes the price of the day. The currency market has no closing time: it trades around the clock, about <span class="num">$7.5</span> trillion a day in April 2022, against roughly <span class="num">$551</span> billion traded in equities over the same period.</p>
+    <p>So the industry made a close. Every afternoon at 4&nbsp;pm London time, WM/Reuters publishes a rate for each currency pair, the <strong>WM/R fix</strong>. Funds value what they hold abroad at it, and index providers build it into multi-currency equity and bond indices. In 2014 the Financial Stability Board called it “by far the dominant benchmark”.</p>
+    <div class="fig" id="day-ruler"></div>
+    <p>One number, taken from a market that never stops. How is it made, and is it still a fair picture of that market?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Five minutes out of a whole day&nbsp;→</button>
+      <a class="door" href="03-before.html#s1" data-return="next">Why five minutes? The scandal that changed the window&nbsp;→</a>
+    </div>
+    <p class="note">Page 1 (no closing time), page 2 (turnover from BIS, 2022, and the World Federation of Exchanges; the Financial Stability Board, 2014). Two other benchmarks exist, the ECB fix and Bloomberg’s BFIX (pages 1–2). The ruler is drawn to scale.</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How much trading fits in five minutes?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The fix · 2 of 4</p>
+    <h2>Place a bet before the money is drawn</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The fix uses only trades inside a window of five minutes, from 3:57:30 to 4:02:30&nbsp;pm London time. On a 24-hour clock, five minutes are about a third of one percent of the day.</p>
+        <p><strong>In January and February 2023, what share of all the GBP/USD trading in the authors’ data happened inside those five minutes?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="0.35" aria-pressed="false">About 0.3%, its share of the clock</button>
+          <button class="btn" type="button" data-bet="1" aria-pressed="false">About 1%</button>
+          <button class="btn" type="button" data-bet="5" aria-pressed="false">About 5%</button>
+          <button class="btn" type="button" data-bet="25" aria-pressed="false">About 25%</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="share-chart"></div>
+        <p class="legend"><span><i class="sq" style="background:var(--fix)"></i>the five-minute window</span><span><i class="ln dash"></i>your bet</span></p>
+        <p class="note">The clock share, computed: 5 ÷ 1,440 minutes ≈ 0.35%, a yardstick that assumes trading spread evenly over 24 hours; window times from page 2.<span id="share-note" hidden> Page 2 and its footnote 1: the authors’ own calculations on Refinitiv data, $85 billion of GBP/USD in the first two months of 2023, $4.6 billion of it in the five-minute window. Computed from page 2: 4.6 ÷ 85 ≈ 5.4%. The month-end hedging: page 4, citing Melvin and Prins (2015).</span></p>
+      </div>
+      <div class="t">
+        <p id="share-verdict" aria-live="polite"></p>
+        <div class="actions" id="share-next" hidden>
+          <button class="btn primary" type="button" data-next>How is the fix computed?&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How is the fix computed?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The fix · 3 of 4</p>
+    <h2>Three hundred snapshots and a median</h2>
+    <div class="two text-first">
+      <div>
+        <p>A trade is a buy at the <strong>ask</strong>, the lowest price on offer, or a sell at the <strong>bid</strong>, the highest price anyone will pay; the gap is the <strong>spread</strong>. Today the fix for the 39 currencies WM/R classes as traded takes four steps:</p>
+        <ol class="steps">
+          <li>Take the five minutes from 3:57:30 to 4:02:29.999&nbsp;pm, London time.</li>
+          <li>Every second, pick a trade at random and run it through validation checks: up to 300 snapshots.</li>
+          <li>Turn each into a bid and an ask. A buy gives the ask; subtract the spread showing at that moment to get the bid. A sell, the other way round.</li>
+          <li>Take the median bid and the median ask, separately. After a last check, their midpoint is the fix.</li>
+        </ol>
+        <div class="actions"><button class="btn primary" type="button" data-next>Is that number still the market?&nbsp;→</button></div>
+        <p class="note">Section 1.2, page 2; 300 is computed. Less traded currencies use quotes instead, sampled every 15 seconds. The toy picks one of each second’s trades, always has one, and leaves the validation checks out. A pip is 0.0001.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Five minutes of GBP/USD trades <span class="tag">toy</span></p>
+        <div class="fig" id="bf-chart"></div>
+        <p class="legend"><span><i class="dt mkt"></i>a trade</span><span><i class="dt fix"></i>the trade picked that second</span><span><i class="ln fixline"></i>the fix</span><span><i class="ln"></i>median bid and ask</span></p>
+        <div class="fig" id="bf-zoom"></div>
+        <div class="bf-btns">
+          <button class="btn" type="button" id="bf-run">Run the window again</button>
+          <button class="btn" type="button" id="bf-draw">Draw the random picks again</button>
+          <button class="btn" type="button" id="bf-burst" aria-pressed="false">Add a toy burst of buys</button>
+        </div>
+        <label class="ctl" for="bf-sec">Look inside one second</label>
+        <input type="range" id="bf-sec" min="0" max="299" step="1" value="128">
+        <p class="readout" id="bf-read"></p>
+        <p class="sr-only" id="bf-live" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Is that number still the market?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The fix · 4 of 4</p>
+    <h2>The worry: the market moves before the window opens</h2>
+    <div class="two">
+      <div>
+        <p>Eight years after the reform, Refinitiv was preparing a new consultation, and warnings had piled up: from an ECB currency group uneasy about month-end trading at the fixes to a senior central banker who said funds might be letting their clients down, with currency swings twice as large as before.</p>
+        <p>The authors’ hypothesis: when unusual moves <em>well ahead of</em> 4&nbsp;pm drive the trading around the fix, the fix stops representing the market. Their yardstick is the day’s median trade price, the middle of all the day’s trades. Look first at month-ends, when funds rebalance their currency hedges at the fix.</p>
+        <p class="door-row"><a class="door" href="03-before.html#s2">If someone pushes the price into the fix, does it snap back?&nbsp;→</a></p>
+        <div class="actions"><a class="btn primary" href="02-test.html#s1">How would you judge the fix?&nbsp;→</a></div>
+        <p class="note">Page 4: the consultation and the ECB group, April 2020 (Section 3.1); the central banker (Section 2.3); the hypothesis (Section 3.1); month-end hedging, from Melvin and Prins (2015) as cited in Section 2.2. The yardstick: equation (1), page 6. The afternoons are toys, invented paths and trade counts drawn to show the hypothesis, not a finding.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">An afternoon around the fix <span class="tag">toy</span></p>
+        <div class="ctl"><span>Show</span><div class="seg" id="me-mode"></div></div>
+        <div class="fig" id="me-chart"></div>
+        <p class="legend"><span><i class="ln"></i>the price</span><span><i class="sq win"></i>the window</span><span><i class="ln fixline"></i>the fix</span><span><i class="ln mktdash"></i>the day’s median trade price (toy day from 9:00)</span></p>
+        <p class="readout" id="me-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/wmr-fix-representativeness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the day ruler, five minutes in 1,440, drawn to scale ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, box = document.getElementById('day-ruler');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 66, L = 2, R = 2, y = 30;
+    function X(min) { return L + (W - L - R) * min / 1440; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'One day of currency trading, midnight to midnight London time, drawn to scale. The fix window, five minutes centred on 4\u00a0pm, is a thin gold sliver.' }, box);
+    S('line', { x1: X(0), x2: X(1440), y1: y, y2: y, 'class': 'tick-strong' }, root);
+    for (var h = 0; h <= 24; h++) {
+      var big = h % 6 === 0, lab = W >= 620 ? h % 3 === 0 : big;
+      S('line', { x1: X(h * 60), x2: X(h * 60), y1: y - (big ? 8 : 4), y2: y + (big ? 8 : 4), 'class': big ? 'tick-strong' : 'tick' }, root);
+      if (lab) T(root, X(h * 60), y + 24, (h < 10 ? '0' : '') + h + ':00', { 'text-anchor': h === 0 ? 'start' : h === 24 ? 'end' : 'middle' });
+    }
+    S('rect', { x: X(957.5), y: y - 14, width: Math.max(2, X(962.5) - X(957.5)), height: 28, 'class': 'sliver' }, root);
+    T(root, X(962.5) + 6, y - 13, W < 520 ? 'the fix: 5 min' : 'the fix: five minutes at 4\u00a0pm', { 'class': 'label' });
+    T(root, X(0), y - 13, 'London time, one day', {});
+  }, { min: 300, max: 900 });
+})();
+
+/* ---------- slide 2: a bet on the share of trading in the window (page 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var CLOCK = 5 / 1440 * 100, MONEY = 4.6 / 85 * 100; /* percent; computed from page 2 */
+  var betBox = document.getElementById('bet'), box = document.getElementById('share-chart');
+  var verdict = document.getElementById('share-verdict'), nextBox = document.getElementById('share-next'), note = document.getElementById('share-note');
+  var st = { bet: null, shown: 0 }, geo = null, raf = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 200, L = 2, R = 2;
+    function X(min) { return L + (W - L - R) * min / 1440; }
+    var cx = X(960);
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two bars of the same length. The clock: the five-minute window is a sliver, about 0.35 percent of a 24-hour day. The money: once the bet is placed, the share of GBP/USD trading inside the window, $4.6 billion of $85 billion, about 5.4 percent.' }, box);
+    T(root, 0, 14, 'The clock: one 24-hour day', { 'class': 'label' });
+    S('rect', { x: L, y: 24, width: W - L - R, height: 26, 'class': 'surface' }, root);
+    S('rect', { x: cx - (W - L - R) * CLOCK / 200, y: 24, width: Math.max(2, (W - L - R) * CLOCK / 100), height: 26, 'class': 'sliver' }, root);
+    T(root, W - R, 66, 'five minutes ≈ 0.35%', { 'text-anchor': 'end' });
+    T(root, 0, 104, W < 480 ? 'The money: $85bn of GBP/USD' : 'The money: $85 billion of GBP/USD trading, Jan–Feb 2023', { 'class': 'label' });
+    S('rect', { x: L, y: 114, width: W - L - R, height: 26, 'class': 'surface' }, root);
+    geo = { W: W, L: L, R: R, cx: cx, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, span = geo.W - geo.L - geo.R;
+    g.innerHTML = '';
+    if (st.bet == null) {
+      T(g, geo.W / 2, 132, 'Place your bet to draw the money', { 'text-anchor': 'middle', 'class': 'placeholder' });
+      return;
+    }
+    function band(pct) { var w = Math.max(2, span * pct / 100), x = E.clamp(geo.cx - w / 2, geo.L, geo.W - geo.R - w); return [x, w]; }
+    var b = band(+st.bet);
+    S('rect', { x: b[0], y: 110, width: b[1], height: 34, 'class': 'ghost' }, g);
+    var m = band(st.shown);
+    S('rect', { x: m[0], y: 114, width: m[1], height: 26, 'class': 'sliver' }, g);
+    if (st.shown >= MONEY - 0.01) {
+      var lab = '$4.6bn ≈ 5.4%', right = m[0] + m[1] + 8 + E.textW(lab) < geo.W;
+      T(g, right ? m[0] + m[1] + 8 : m[0] - 8, 164, lab, { 'text-anchor': right ? 'start' : 'end', 'class': 'strong' });
+      T(g, geo.W - geo.R, 186, 'your bet: ' + (st.bet === '0.35' ? '0.3' : st.bet) + '% (dashed)', { 'text-anchor': 'end' });
+    }
+  }
+  var LEAD = {
+    '0.35': 'That is what five minutes would get if trading were spread evenly over the day. It is not. ',
+    '1': 'More than that. ',
+    '5': 'You called it. ',
+    '25': 'Less than that, though still a crowd. '
+  };
+  var TAIL = '$4.6 billion of $85 billion of GBP/USD changed hands inside the window: about 5.4%, one dollar in every eighteen, crammed into five minutes a day, roughly fifteen times the window’s share of the clock. Part of the reason, as the report tells it: portfolios are valued at the fix, so fund managers hedge at it, and much of that hedging lands on the last trading day of the month.';
+  function finish() {
+    st.shown = MONEY; draw();
+    verdict.textContent = LEAD[st.bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+  }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-share', bet);
+    if (raf) cancelAnimationFrame(raf);
+    if (!animate || E.still) { finish(); return; }
+    verdict.textContent = ''; nextBox.hidden = true; note.hidden = true;
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 900), e = 1 - Math.pow(1 - p, 3);
+      st.shown = CLOCK + (MONEY - CLOCK) * e; draw();
+      if (p < 1) raf = requestAnimationFrame(step); else { raf = null; finish(); }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-share');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 720 });
+})();
+
+/* ---------- slide 3: build a fix from a toy five minutes of trades (rules of Section 1.2, page 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 300, BASE = 127000; /* prices in units of 0.00001; 10 units = 1 pip */
+  function R5(x) { return (x / 100000).toFixed(5); }
+  function pips(x) { return (Math.abs(x) / 10).toFixed(1); }
+  function clock(t) { var s = 57 * 60 + 30 + t, m = Math.floor(s / 60), ss = s % 60; return (m < 60 ? '3:' + (m < 10 ? '0' : '') + m : '4:' + ((m - 60) < 10 ? '0' : '') + (m - 60)) + ':' + (ss < 10 ? '0' : '') + ss; }
+  /* the toy market: a fixed seed, so it looks the same on every visit */
+  var r = E.rng(20150215), mid = BASE, SECS = [], t, k;
+  for (t = 0; t < N; t++) {
+    mid += E.gauss(r) * 1.0;
+    var spr = 6 + Math.floor(r() * 5), bid = Math.round(mid - spr / 2), ask = bid + spr, n = 1 + Math.floor(r() * 4), tr = [];
+    for (k = 0; k < n; k++) { var side = r() < 0.5 ? 1 : -1; tr.push({ ms: r() * 1000, side: side, p: side > 0 ? ask : bid }); }
+    SECS.push({ bid: bid, ask: ask, spr: spr, trades: tr, burst: [] });
+  }
+  /* the toy burst: 40 buys a second, 4 pips above the ask, for 20 seconds */
+  var rb = E.rng(77), B0 = 120, B1 = 140;
+  for (t = B0; t < B1; t++) for (k = 0; k < 40; k++) SECS[t].burst.push({ ms: rb() * 1000, side: 1, p: SECS[t].ask + 40, b: true });
+  var YMIN = Infinity, YMAX = -Infinity;
+  SECS.forEach(function (s) { YMIN = Math.min(YMIN, s.bid); YMAX = Math.max(YMAX, s.ask + 40); });
+  YMIN = Math.floor((YMIN - 6) / 10) * 10; YMAX = Math.ceil((YMAX + 4) / 10) * 10;
+
+  var box = document.getElementById('bf-chart'), zoom = document.getElementById('bf-zoom'), slider = document.getElementById('bf-sec'), read = document.getElementById('bf-read'), live = document.getElementById('bf-live');
+  var runBtn = document.getElementById('bf-run'), drawBtn = document.getElementById('bf-draw'), burstBtn = document.getElementById('bf-burst');
+  var st = { draw: 1, burst: false, sec: 128, k: N, fixes: [[], []] }, P = null, geo = null, zgeo = null, raf = null;
+
+  function tradesOf(s, withBurst) { return withBurst ? s.trades.concat(s.burst) : s.trades; }
+  function picksFor(withBurst) {
+    return SECS.map(function (s, i) {
+      var pr = E.rng(st.draw * 7919 + i * 104729), all = tradesOf(s, withBurst), tr = all[Math.floor(pr() * all.length)];
+      return { tr: tr, bid: tr.side > 0 ? tr.p - s.spr : tr.p, ask: tr.side > 0 ? tr.p : tr.p + s.spr };
+    });
+  }
+  function fixOf(picks, k) {
+    var sub = picks.slice(0, k), mb = E.median(sub.map(function (x) { return x.bid; })), ma = E.median(sub.map(function (x) { return x.ask; }));
+    return { mb: mb, ma: ma, fix: (mb + ma) / 2 };
+  }
+  function avgAll(withBurst) { var a = []; SECS.forEach(function (s) { tradesOf(s, withBurst).forEach(function (x) { a.push(x.p); }); }); return { mean: E.mean(a), n: a.length }; }
+  function recompute() {
+    P = picksFor(st.burst);
+    var f = fixOf(P, N).fix, list = st.fixes[st.burst ? 1 : 0];
+    if (list.length < st.draw) list.push(f);
+  }
+
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, H = 178, L = 52, Rm = narrow ? 6 : 78, TOP = 10, B = 28;
+    function X(t) { return L + (W - L - Rm) * (t + 0.5) / N; }
+    function Y(p) { return TOP + (H - TOP - B) * (YMAX - p) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A toy five-minute window of GBP/USD trades from 3:57:30 to 4:02:30\u00a0pm: buys along the ask, sells along the bid, one picked trade per second in gold, and the median bid, median ask and fix drawn across the window.' }, box);
+    for (var v = YMIN; v <= YMAX; v += 20) {
+      S('line', { x1: L, x2: W - Rm, y1: Y(v), y2: Y(v), 'class': 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, R5(v), { 'text-anchor': 'end' });
+    }
+    for (var s = 0; s <= N; s += 30) {
+      S('line', { x1: X(s - 0.5), x2: X(s - 0.5), y1: H - B, y2: H - B + (s % 150 ? 3 : 6), 'class': 'axis' }, root);
+      if (s % 60 === 30 && (!narrow || s % 120 === 30)) T(root, X(s - 0.5), H - B + 17, clock(s).replace(/:00$/, ''), { 'text-anchor': 'middle' });
+    }
+    S('line', { x1: L, x2: W - Rm, y1: H - B, y2: H - B, 'class': 'axis' }, root);
+    var stat = S('g', {}, root);
+    SECS.forEach(function (sc, i) {
+      sc.trades.forEach(function (x) { S('circle', { cx: X(i - 0.5 + x.ms / 1000), cy: Y(x.p), r: 1.7, 'class': 'dot-mkt' }, stat); });
+      if (st.burst) sc.burst.forEach(function (x) { S('circle', { cx: X(i - 0.5 + x.ms / 1000), cy: Y(x.p), r: 1.7, 'class': 'burst' }, stat); });
+    });
+    if (st.burst) T(root, X(B0 + 10), Y(SECS[B0].ask + 40) - 10, 'toy burst', { 'text-anchor': 'middle', 'class': 'label halo' });
+    geo = { X: X, Y: Y, W: W, H: H, L: L, Rm: Rm, TOP: TOP, B: B, narrow: narrow, dyn: S('g', {}, root) };
+    drawDyn();
+  }
+  function drawDyn() {
+    if (!geo || !P) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, k = st.k, cur = raf ? k - 1 : st.sec;
+    g.innerHTML = '';
+    S('line', { x1: X(cur), x2: X(cur), y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    for (var i = 0; i < k; i++) S('circle', { cx: X(i - 0.5 + P[i].tr.ms / 1000), cy: Y(P[i].tr.p), r: i === cur ? 4.5 : 2.6, 'class': 'fix-fill', stroke: 'var(--text)', 'stroke-width': 0.6 }, g);
+    if (k < 1) return;
+    var f = fixOf(P, k), xa = geo.L, xb = X(k - 1) + 1;
+    S('line', { x1: xa, x2: xb, y1: Y(f.ma), y2: Y(f.ma), 'class': 'thin' }, g);
+    S('line', { x1: xa, x2: xb, y1: Y(f.mb), y2: Y(f.mb), 'class': 'thin' }, g);
+    S('line', { x1: xa, x2: xb, y1: Y(f.fix), y2: Y(f.fix), 'class': 'casing' }, g);
+    S('line', { x1: xa, x2: xb, y1: Y(f.fix), y2: Y(f.fix), 'class': 'fixline' }, g);
+    if (k === N) {
+      var ys = E.spread([Y(f.ma) + 4, Y(f.fix) + 4, Y(f.mb) + 4], 14);
+      if (!geo.narrow) {
+        T(g, geo.W - geo.Rm + 6, ys[0], 'median ask', {});
+        T(g, geo.W - geo.Rm + 6, ys[1], 'fix ' + R5(f.fix), { 'class': 'strong' });
+        T(g, geo.W - geo.Rm + 6, ys[2], 'median bid', {});
+      } else {
+        T(g, geo.W - geo.Rm - 2, Y(f.fix) - 7, 'fix ' + R5(f.fix), { 'text-anchor': 'end', 'class': 'strong halo' });
+      }
+    }
+  }
+  function buildZoom(W) {
+    zoom.innerHTML = '';
+    var H = 78, Lz = W < 480 ? 92 : 128, Rz = 52;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'A zoom on one second of the toy window: its trades, the one picked, and the bid and ask built from it.' }, zoom);
+    S('rect', { x: 0.5, y: 0.5, width: W - 1, height: H - 1, 'class': 'surface' }, root);
+    zgeo = { W: W, H: H, Lz: Lz, Rz: Rz, dyn: S('g', {}, root) };
+    drawZoom();
+  }
+  function drawZoom() {
+    if (!zgeo || !P) return;
+    var g = zgeo.dyn, sec = st.sec, s = SECS[sec], all = tradesOf(s, st.burst), pk = P[sec];
+    g.innerHTML = '';
+    var lo = Math.min(s.bid, pk.bid) - 3, hi = Math.max(s.ask, pk.ask, pk.tr.p) + 3;
+    if (st.burst && sec >= B0 && sec < B1) hi = Math.max(hi, s.ask + 43);
+    function Y(p) { return 12 + (zgeo.H - 24) * (hi - p) / (hi - lo); }
+    function X(ms) { return zgeo.Lz + 10 + (zgeo.W - zgeo.Lz - zgeo.Rz - 20) * ms / 1000; }
+    T(g, 12, 26, clock(sec), { 'class': 'strong big' });
+    T(g, 12, 46, 'second ' + (sec + 1) + ' of 300');
+    T(g, 12, 64, all.length + (all.length === 1 ? ' trade' : ' trades'));
+    S('line', { x1: zgeo.Lz, x2: zgeo.W - zgeo.Rz, y1: Y(s.ask), y2: Y(s.ask), 'class': 'tick-strong' }, g);
+    S('line', { x1: zgeo.Lz, x2: zgeo.W - zgeo.Rz, y1: Y(s.bid), y2: Y(s.bid), 'class': 'tick-strong' }, g);
+    var ly = E.spread([Y(s.ask) + 4, Y(s.bid) + 4], 13); /* in a burst second the scale tightens: keep the two labels apart */
+    T(g, zgeo.W - zgeo.Rz + 6, ly[0], 'ask', { 'class': 'label' });
+    T(g, zgeo.W - zgeo.Rz + 6, ly[1], 'bid', { 'class': 'label' });
+    all.forEach(function (x) { if (x !== pk.tr) S('circle', { cx: X(x.ms), cy: Y(x.p), r: 3.6, 'class': x.b ? 'burst' : 'dot-mkt' }, g); });
+    var px = X(pk.tr.ms), other = pk.tr.side > 0 ? pk.bid : pk.ask;
+    S('line', { x1: px, x2: px, y1: Y(pk.tr.p), y2: Y(other), 'class': 'fixline', 'stroke-width': 1.5 }, g);
+    S('circle', { cx: px, cy: Y(other), r: 4.5, fill: 'var(--paper)', stroke: 'var(--fix)', 'stroke-width': 2 }, g);
+    S('circle', { cx: px, cy: Y(pk.tr.p), r: 5.5, 'class': 'fix-fill', stroke: 'var(--text)', 'stroke-width': 1 }, g);
+  }
+  function snapMean(picks) { return E.mean(picks.map(function (x) { return (x.bid + x.ask) / 2; })); }
+  function readout() {
+    var sec = st.sec, s = SECS[sec], pk = P[sec], n = tradesOf(s, st.burst).length, buy = pk.tr.side > 0, f = fixOf(P, N);
+    var spTxt = s.spr === 10 ? '0.00010' : '0.0000' + s.spr;
+    var html = '<strong>' + clock(sec) + ', second ' + (sec + 1) + ':</strong> ' + n + (n === 1 ? ' trade' : ' trades') + '; picked a ' + (buy ? 'buy' : 'sell') + ' at <span class="rate">' + R5(pk.tr.p) + '</span>' + (pk.tr.b ? ', a burst trade' : '') +
+      '. Spread ' + pips(s.spr) + ' pips, so its ' + (buy ? 'bid is <span class="rate">' + R5(pk.tr.p) + ' − ' + spTxt + ' = ' + R5(pk.bid) + '</span>' : 'ask is <span class="rate">' + R5(pk.tr.p) + ' + ' + spTxt + ' = ' + R5(pk.ask) + '</span>') + '.<br>' +
+      '<strong>All 300 snapshots:</strong> median bid <span class="rate">' + R5(f.mb) + '</span>, median ask <span class="rate">' + R5(f.ma) + '</span>, <strong>fix <span class="rate">' + R5(f.fix) + '</span></strong>.<br>';
+    var list = st.fixes[st.burst ? 1 : 0];
+    if (st.burst) {
+      /* the burst sentence replaces the draws sentence, so the readout keeps three blocks */
+      var a0 = avgAll(false), a1 = avgAll(true), p0 = picksFor(false), f0 = fixOf(p0, N).fix, m0 = snapMean(p0), m1 = snapMean(P), nb = 0;
+      P.forEach(function (x) { if (x.tr.b) nb++; });
+      var dm = Math.abs(m1 - m0), df = Math.abs(f.fix - f0);
+      html += '<strong>Toy burst:</strong> 800 of ' + E.thousands(a1.n) + ' trades, so the mean of all trades rises ' + pips(a1.mean - a0.mean) + ' pips. It lands in only ' + nb + ' of the 300 snapshots: their plain mean moves ' + pips(dm) + ' pips, the median-based fix ' + pips(df) + '. ' +
+        'One trade a second does most of the work' + (df <= dm / 2 ? '; the median trims most of the rest.' : df < dm - 0.04 ? '; the median adds a little.' : '.');
+    } else if (list.length > 1) {
+      var lo = Math.min.apply(null, list), hi = Math.max.apply(null, list);
+      html += 'Over ' + list.length + ' random draws ' + (hi - lo < 0.5 ? 'the fix has not moved.' : 'the fix has stayed within ' + pips(hi - lo) + ' pips.') + ' Now try the toy burst.';
+    } else {
+      html += 'Draw the random picks again to see how much luck moves the fix, then add the toy burst.';
+    }
+    read.innerHTML = html;
+    slider.setAttribute('aria-valuetext', clock(sec) + ', second ' + (sec + 1) + ' of 300: picked a ' + (buy ? 'buy' : 'sell') + ' at ' + R5(pk.tr.p));
+  }
+  function announce() {
+    var f = fixOf(P, N);
+    live.textContent = 'Fix ' + R5(f.fix) + (st.burst ? ', with the toy burst' : '') + (st.fixes[st.burst ? 1 : 0].length > 1 ? ', draw ' + st.draw : '') + '.';
+  }
+  function all() { drawDyn(); drawZoom(); readout(); }
+  function run() {
+    if (raf) cancelAnimationFrame(raf);
+    if (E.still) { raf = null; st.k = N; all(); return; }
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 2400);
+      st.k = Math.max(1, Math.round(p * N));
+      if (p < 1) { raf = requestAnimationFrame(step); drawDyn(); } else { raf = null; st.k = N; all(); }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  slider.addEventListener('input', function () { st.sec = +slider.value; if (!raf) drawDyn(); drawZoom(); readout(); });
+  runBtn.addEventListener('click', run);
+  drawBtn.addEventListener('click', function () { st.draw++; recompute(); all(); announce(); });
+  burstBtn.addEventListener('click', function () {
+    st.burst = !st.burst; burstBtn.setAttribute('aria-pressed', st.burst ? 'true' : 'false');
+    burstBtn.textContent = st.burst ? 'Remove the toy burst' : 'Add a toy burst of buys';
+    st.fixes[st.burst ? 1 : 0] = []; var d = st.draw; st.draw = 1; recompute(); while (st.draw < d) { st.draw++; recompute(); }
+    if (st.burst && (st.sec < B0 || st.sec >= B1)) { st.sec = 130; slider.value = 130; }
+    redraw(); drawZoom(); readout(); announce();
+  });
+  recompute();
+  var redraw = E.fit(box, build, { min: 300, max: 700 });
+  E.fit(zoom, buildZoom, { min: 300, max: 700 });
+  readout();
+  E.onShow(3, function () { if (!E.load('bf-ran')) { E.save('bf-ran', true); st.k = 0; run(); } });
+})();
+
+/* ---------- slide 4: the hypothesis drawn as a toy afternoon ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var BASE = 127000, NPT = 540, W0 = 57.5 * 6, W1 = 62.5 * 6, PREM = 360; /* 10-second points from 15:00; window index range; toy morning 9:00-15:00 */
+  /* median of trade prices, each price counted with its minute's toy trade count */
+  function wmedian(v, w) {
+    var idx = v.map(function (x, i) { return i; }).sort(function (a, b) { return v[a] - v[b]; }), tot = 0, acc = 0, i;
+    for (i = 0; i < w.length; i++) tot += w[i];
+    for (i = 0; i < idx.length; i++) { acc += w[idx[i]]; if (acc >= tot / 2) return v[idx[i]]; }
+    return NaN;
+  }
+  function make(month) {
+    var r = E.rng(month ? 4242 : 4141), x = 0, p = [], c = [], vals = [], wts = [], i, j;
+    /* the toy day starts at 9:00: six hours of ordinary trading off the chart, which the day's median includes */
+    for (j = 0; j < PREM; j++) { var cj = 10 + 4 * r(); for (i = 0; i < 6; i++) { x += -0.03 * x + E.gauss(r) * 2.2; vals.push(BASE + x); wts.push(cj); } }
+    for (i = 0; i < NPT; i++) {
+      x += -0.03 * x + E.gauss(r) * 2.2;
+      var m = i / 6, lift = 0;
+      if (month) { if (m >= 25 && m < 52) lift = 55 * (m - 25) / 27; else if (m >= 52 && m < 65) lift = 55; else if (m >= 65) lift = 55 - 25 * Math.min(1, (m - 65) / 25); }
+      p.push(BASE + x + lift);
+    }
+    for (j = 0; j < 90; j++) {
+      var base = 10 + 4 * r(), inWin = j >= 57 && j < 63;
+      c.push(base * (inWin ? (month ? 8 : 4) : (month && j >= 25 && j < 52 ? 2.5 : 1)));
+    }
+    for (i = 0; i < NPT; i++) { vals.push(p[i]); wts.push(c[Math.floor(i / 6)]); }
+    var fix = E.median(p.slice(W0, W1));
+    return { p: p, c: c, fix: fix, day: wmedian(vals, wts), end: E.mean(p.slice(NPT - 18)) };
+  }
+  var DATA = { ord: make(false), month: make(true) };
+  var box = document.getElementById('me-chart'), read = document.getElementById('me-read');
+  var mode = 'ord', geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 266, L = 52, Rm = 10, TOP = 12, H1 = 160, A0 = 180, A1 = 236;
+    function X(min) { return L + (W - L - Rm) * min / 90; }
+    var lo = BASE - 30, hi = BASE + 80;
+    function Y(v) { return TOP + (H1 - TOP) * (hi - v) / (hi - lo); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A toy afternoon from 3\u00a0pm to 4:30\u00a0pm: the price, toy trade counts per minute, the five-minute window at 4\u00a0pm, the fix computed in it, and the day’s median trade price.' }, box);
+    for (var v = BASE - 20; v <= hi; v += 20) {
+      S('line', { x1: L, x2: W - Rm, y1: Y(v), y2: Y(v), 'class': 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v / 100000).toFixed(4), { 'text-anchor': 'end' });
+    }
+    S('rect', { x: X(57.5), y: TOP, width: X(62.5) - X(57.5), height: A1 - TOP, 'class': 'win' }, root);
+    [0, 15, 30, 45, 60, 75, 90].forEach(function (m) {
+      S('line', { x1: X(m), x2: X(m), y1: A1, y2: A1 + 4, 'class': 'axis' }, root);
+      if (W >= 480 || m % 30 === 0) T(root, X(m), A1 + 17, (m < 60 ? '3:' : '4:') + ((m % 60) < 10 ? '0' : '') + (m % 60), { 'text-anchor': m === 0 ? 'start' : m === 90 ? 'end' : 'middle' });
+    });
+    S('line', { x1: L, x2: W - Rm, y1: A1, y2: A1, 'class': 'axis' }, root);
+    T(root, L, A0 - 4, 'trades per minute', {});
+    geo = { X: X, Y: Y, W: W, L: L, Rm: Rm, A0: A0, A1: A1, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var d = DATA[mode], gap = (d.fix - d.day) / 10, back = (d.fix - d.end) / 10;
+    read.innerHTML = (mode === 'ord' ? '<strong>An ordinary afternoon:</strong> the price wanders and trading picks up inside the window. The fix lands ' + Math.abs(gap).toFixed(1) + ' pips from the day’s median trade price.'
+      : '<strong>A month-end afternoon, as feared:</strong> heavy trading lifts the price from 3:25 to 3:52, before the window opens. The fix records a level the market does not keep: ' + gap.toFixed(1) + ' pips above the day’s median trade price, and by 4:30 the price has slid back ' + back.toFixed(1) + ' pips. A fund that bought at the fix paid near the top of the climb.') + ' A toy, not a finding.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y; g.innerHTML = '';
+    var cmax = 115, bw = (X(1) - X(0)) * 0.7;
+    d.c.forEach(function (c, j) {
+      var h = (geo.A1 - geo.A0) * Math.min(1, c / cmax);
+      S('rect', { x: X(j + 0.15), y: geo.A1 - h, width: bw, height: h, 'class': j >= 57 && j < 63 ? 'fix-fill' : 'mkt-fill', 'fill-opacity': j >= 57 && j < 63 ? 1 : 0.5 }, g);
+    });
+    S('line', { x1: X(0), x2: X(90), y1: Y(d.day), y2: Y(d.day), 'class': 'mktdash' }, g);
+    var pts = d.p.map(function (v, i) { return X(i / 6).toFixed(1) + ',' + Y(v).toFixed(1); });
+    S('polyline', { points: pts.join(' '), 'class': 'path' }, g);
+    S('line', { x1: X(56), x2: X(64), y1: Y(d.fix), y2: Y(d.fix), 'class': 'casing' }, g);
+    S('line', { x1: X(56), x2: X(64), y1: Y(d.fix), y2: Y(d.fix), 'class': 'fixline' }, g);
+  }
+  E.seg(document.getElementById('me-mode'), [['ord', 'An ordinary afternoon'], ['month', 'A month-end, as feared']], 'ord', function (k) { mode = k; draw(); }, 'Show');
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+</script>
+</body>
+</html>

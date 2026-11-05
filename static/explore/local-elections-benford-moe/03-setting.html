@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The mayor’s companies · Local Elections and the Quality of Financial Statements</title>
+<meta name="description" content="Side path of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2023): who owns Italian municipal utility companies, how a mayor can reach them, when towns vote, and how the sample of 5,021 profits was built.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .score td.n { font-family: var(--sans); font-size: .9rem; text-align: right; padding-right: 1em; }
+  .score td:first-child { width: 7.5em; }
+  @media (max-width: 640px) { .score td:first-child { width: 4.8em; padding-left: 0; } }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-setting.html">
+<lg-sitebar><noscript><a href="../../publication/local-elections-benford-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Who owns the buses, and who votes when?">
+  <div class="inner">
+    <p class="kicker">Side path · The mayor’s companies · 1 of 2</p>
+    <h2>The mayor’s companies</h2>
+    <div class="two">
+      <div>
+        <p>Every Italian town elects a mayor and a council for five years; a mayor can serve two terms in a row. Resignations, or a council dissolved for mafia infiltration, can force an early vote, so towns do not all vote in the same year. Each year one Sunday between 15 April and 15 June is set for every town that votes, well in advance.</p>
+        <p>The town is usually not only the majority owner of its utility company but also its main customer, paying for its services under contract. When it owns more than half, the mayor can appoint or remove the company’s director with very wide discretion. The mayor does not prepare the accounts, but holds both levers.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="01-digits.html#s2" data-primary-when="01-digits.html">← Return to the main path</a>
+          <button class="btn" type="button" data-next>How the sample was built&nbsp;→</button>
+        </div>
+        <p class="note">Section 2, p. 2, and the introduction, pp. 1–2. Bars: Figure 1 (p. 3), the utility companies attached to towns with an election and the towns that had elections, each year from 2011 to 2020.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="years"></div>
+        <p class="legend"><span><i class="sq near"></i>utility companies whose town voted</span><span><i class="sq far outline"></i>towns with an election</span></p>
+        <label class="ctl" for="yr">Pick a year</label>
+        <input type="range" id="yr" min="2011" max="2020" step="1" value="2014">
+        <p class="readout h3l" id="yr-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="How did 9,091 entities become 5,021 numbers?">
+  <div class="inner">
+    <p class="kicker">Side path · The mayor’s companies · 2 of 2</p>
+    <h2>From 9,091 entities to 5,021 numbers</h2>
+    <p class="lead">The authors joined the Treasury’s open data on public shareholdings with AIDA, Bureau van Dijk’s database of Italian company accounts. Each step keeps the unit the paper reports.</p>
+    <table class="score">
+      <thead><tr><th>Number</th><th>What it counts</th></tr></thead>
+      <tbody>
+        <tr><td class="n">262,315</td><td>Treasury records of shareholdings and board seats, merged and cleaned of duplicates (only the largest owner kept)</td></tr>
+        <tr><td class="n">9,091</td><td>entities in the Treasury data</td></tr>
+        <tr><td class="n">6,495</td><td>observations a year that are also in AIDA</td></tr>
+        <tr><td class="n">1,877</td><td>observations a year more than half owned by a town</td></tr>
+        <tr><td class="n">717</td><td>of those companies in the five utility industries</td></tr>
+        <tr><td class="n">6,261</td><td>statements with a pre-tax profit figure, about 626 companies a year</td></tr>
+        <tr><td class="n">5,021</td><td>positive profits over the decade: 1,057 pre-election and 3,964 ordinary; 2,983 of them from companies the town owns outright</td></tr>
+      </tbody>
+    </table>
+    <p>Election dates come from the Interior Ministry’s archive, gaps filled by hand. The authors are not allowed to share the data.</p>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-elections.html#s1">← Return to the main path</a>
+      <button class="btn" type="button" data-prev>← The mayor’s companies</button>
+    </div>
+    <p class="note">Section 2 (p. 2), Section 4 and Table 1 (p. 4), data availability (p. 6). Only positive profits are kept: Benford’s law applies to positive quantities, and losses may follow other incentives (p. 4).</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/local-elections-benford-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: elections per year (Figure 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [year, utility companies attached to towns with an election, towns with an election] (Figure 1) */
+  var YRS = [[2011, 139, 94], [2012, 131, 93], [2013, 92, 57], [2014, 226, 185], [2015, 116, 88], [2016, 123, 86], [2017, 118, 88], [2018, 86, 61], [2019, 192, 154], [2020, 80, 67]];
+  var box = document.getElementById('years'), slider = document.getElementById('yr'), read = document.getElementById('yr-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 210, 250)), L = 32, R = 6, TOP = 22, BOT = 26, MAX = 250;
+    function X(i) { return L + (W - L - R) * (i + 0.5) / 10; }
+    function Y(v) { return TOP + (H - TOP - BOT) * (1 - v / MAX); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Utility companies whose town voted, and towns with an election, by year: ' + YRS.map(function (y) { return y[0] + ': ' + y[1] + ' companies, ' + y[2] + ' towns'; }).join('; ') + '.' }, box);
+    [0, 50, 100, 150, 200, 250].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    });
+    T(root, 0, 12, 'Number per election year', { 'class': 'label' });
+    var bw = Math.min(16, (W - L - R) / 10 * 0.36);
+    YRS.forEach(function (y, i) {
+      S('rect', { x: X(i) - bw - 1, y: Y(y[1]), width: bw, height: Y(0) - Y(y[1]), 'class': 'near-fill' }, root);
+      S('rect', { x: X(i) + 1, y: Y(y[2]), width: bw, height: Y(0) - Y(y[2]), 'class': 'far-outline' }, root);
+      T(root, X(i), H - BOT + 17, W < 460 ? '’' + String(y[0]).slice(2) : String(y[0]), { 'text-anchor': 'middle' });
+    });
+    geo = { X: X, Y: Y, TOP: TOP, H: H, BOT: BOT, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var i = +slider.value - 2011, y = YRS[i];
+    slider.setAttribute('aria-valuetext', String(y[0]));
+    read.innerHTML = '<strong>' + y[0] + ':</strong> Figure 1 counts <strong>' + y[2] + ' towns</strong> with an election and <strong>' + y[1] + ' utility companies</strong> attached to them. Those companies’ statements for ' + (y[0] - 1) + ' came out just before the vote.';
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    var x = geo.X(i), w = (geo.W - 38) / 10;
+    S('rect', { x: x - w / 2, y: geo.TOP - 6, width: w, height: geo.H - geo.BOT - geo.TOP + 6, 'class': 'sel' }, g);
+    T(g, x, Math.max(geo.TOP + 6, geo.Y(y[1]) - 6), String(y[1]), { 'text-anchor': 'middle', 'class': 'strong halo' });
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

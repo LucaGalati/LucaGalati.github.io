@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: Liquidity of Futures Markets Over the Last Quarter of a Century</title>
+<meta name="description" content="An explorable explanation of Frino, Galati and Webb, Liquidity of Futures Markets Over the Last Quarter of a Century: what electronic trading, high-frequency trading and co-location did to the cost of trading Australian share index futures, set against the Global Financial Crisis and Covid-19.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/futures-liquidity-24-years/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <p class="kicker">An explorable explanation</p>
+  <h1>Liquidity of Futures Markets Over the Last Quarter of a Century<span class="subtitle">Technology &amp; Market Structure Versus Economic Influences</span></h1>
+  <p class="byline">Alex Frino, Luca Galati and Alexander Webb · Applied Finance Letters, 2022</p>
+  <p class="lede">Between 1996 and 2021 the market for one Australian futures contract was rebuilt three times by technology and shaken twice by economic crises. This short explorable asks which did more to the cost of trading it, using the numbers in the authors’ letter. You will bet twice, throw the paper’s five switches yourself, and see how its simple regression weighs the machines against the storms. Two decks on the main path, two side paths, about ten minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-machines.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-machines.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/futures-liquidity-24-years/">← Back to the paper</a>
+  </div>
+  <div class="fig hub-rails" id="hub-rails"></div>
+  <p class="legend"><span><i class="sq tech"></i>technology: switches on and stays on</span><span><i class="sq crisis"></i>crisis: on for two or three years</span></p>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the switchboard: the five switches of the paper's regression, by the years they are on */
+(function () {
+  var E = Explore, box = document.getElementById('hub-rails');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 520, L = E.gutter(W), X = E.yearScale(L, W - 6), H = 5 * 19 + 26;
+    var root = E.svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The five switches of the paper’s regression over 1996 to 2021: screen trading on from 2000, high-frequency trading from 2011, co-location from 2013, each staying on to 2021; the Global Financial Crisis on in 2007 to 2009 and Covid-19 in 2020 and 2021.' }, box);
+    E.rails(root, X, 0, { labelX: L - 8, narrow: narrow });
+    E.yearAxis(root, X, 5 * 19 + 2, narrow);
+  }, { min: 300, max: 740 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Before 2015 · To Fix or Not to Fix</title>
+<meta name="description" content="Side path of an explorable explanation of Benenchia, Galati and Lepone, To fix or not to fix: the one-minute window and the scandal that ended it, and the snap-back test of a pushed price.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-before.html">
+<lg-sitebar><noscript><a href="../../publication/wmr-fix-representativeness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why did the window get longer?">
+  <div class="inner">
+    <p class="kicker">Side path · Before 2015 · 1 of 2</p>
+    <h2>When the window was one minute</h2>
+    <div class="two">
+      <div>
+        <p>Until 2015 the fix was taken from a single minute around 4&nbsp;pm. In 2013, investigations at major banks showed how easily traders had moved it, colluding with each other and front-running their own clients’ orders. In 2014 the UK’s Financial Conduct Authority fined five banks <span class="num">£1.1</span> billion.</p>
+        <p>After a consultation started by the Financial Stability Board, the window was stretched in 2015 to five minutes centred on 4&nbsp;pm, and Refinitiv set up a surveillance team at the regulator’s request.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What is a price reversal?&nbsp;→</button>
+          <a class="btn return-link" href="01-fix.html#s2" data-primary-when="01-fix.html">← Return to the main path</a>
+        </div>
+        <p class="note">Page 2 (the scandal, the 2015 revision, the surveillance team commissioned by the FCA); page 3 (Evans et al., 2018; Ito and Yamada, 2017); page 13 (the FCA’s 2014 press release on the £1.1 billion fines, in the further reading). The old window is described as one minute around 4&nbsp;pm (page 2); its band is drawn schematically.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="win-chart"></div>
+        <p class="legend"><span><i class="sq win"></i>the window that sets the fix</span></p>
+        <p style="margin-top:1.2rem">Studies the report cites found that the change helped. Price reversals after the fix mostly disappeared, and banks spread their orders more evenly through the new window, though that opened new profit opportunities for non-bank traders. The cost: a five-minute fix is harder to replicate exactly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Why would a price snap back?">
+  <div class="inner">
+    <p class="kicker">Side path · Before 2015 · 2 of 2</p>
+    <h2>A push into the fix, and the snap back</h2>
+    <div class="two">
+      <div>
+        <p>Suppose someone pushes the price up while the fix is being taken, then stops. Once the window closes, the price tends to slide back. Over many days that leaves a fingerprint: the move <em>into</em> the fix and the move <em>after</em> it are negatively correlated.</p>
+        <p>Evans (2018) reported evidence of that fingerprint in 21 currency pairs from 2000 to 2013; after the 2015 reform, Evans et al. (2018) found reversals had mostly gone.</p>
+        <p>The report’s test takes average prices in the 15 minutes before the fix (p<sub>1</sub>), during it (p<sub>2</sub>) and in the 15 minutes after (p<sub>3</sub>), and checks, quarter by quarter, whether the correlation between <span class="num">(p<sub>2</sub> − p<sub>1</sub>)/p<sub>1</sub></span> and <span class="num">(p<sub>3</sub> − p<sub>2</sub>)/p<sub>2</sub></span> is zero.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-test.html#s4">← Return to the main path</a>
+          <button class="btn" type="button" data-prev>← The one-minute window</button>
+        </div>
+        <p class="note">Equation (4), page 6; Evans (2018) and Evans et al. (2018) as cited on page 3. Toy days: 60 invented days, moves in pips. At a rate near 1.27 a move in pips is proportional to the move in percent, so the correlation is the same either way.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Sixty days around the fix <span class="tag">toy</span></p>
+        <div class="fig" id="sb-day"></div>
+        <div class="fig" id="sb-chart"></div>
+        <label class="ctl" for="sb-share">Share of each push that slides back after the fix</label>
+        <input type="range" id="sb-share" min="0" max="100" step="5" value="60">
+        <p class="readout" id="sb-read"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/wmr-fix-representativeness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the two windows on a ten-minute ruler ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, box = document.getElementById('win-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 196, L = 4, Rm = 4;
+    function X(s) { return L + (W - L - Rm) * (s + 300) / 600; } /* seconds from 4\u00a0pm */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Ten minutes from 3:55 to 4:05\u00a0pm. Until 2015 the fix used one minute around 4\u00a0pm, drawn schematically. Since 2015 it uses five minutes, from 3:57:30 to 4:02:30.' }, box);
+    function row(y, a, b, title, sub, dashed) {
+      T(root, L, y - 12, title, { 'class': 'label' });
+      S('rect', { x: X(a), y: y, width: X(b) - X(a), height: 28, 'class': 'win' }, root);
+      S('line', { x1: X(-300), x2: X(300), y1: y + 14, y2: y + 14, 'class': 'tick-strong' }, root);
+      for (var s = -300; s <= 300; s += 30) S('line', { x1: X(s), x2: X(s), y1: y + 14 - (s % 60 ? 3 : 6), y2: y + 14 + (s % 60 ? 3 : 6), 'class': 'comb' }, root);
+      S('line', { x1: X(a), x2: X(a), y1: y, y2: y + 28, 'class': 'win-edge', 'stroke-dasharray': dashed ? '3 3' : null }, root);
+      S('line', { x1: X(b), x2: X(b), y1: y, y2: y + 28, 'class': 'win-edge', 'stroke-dasharray': dashed ? '3 3' : null }, root);
+      T(root, (X(a) + X(b)) / 2, y + 46, sub, { 'text-anchor': 'middle' });
+    }
+    row(28, -30, 30, 'Until 2015: one minute around 4\u00a0pm', 'schematic', true);
+    row(110, -150, 150, 'Since 2015: five minutes centred on 4\u00a0pm', W < 420 ? '3:57:30 – 4:02:30' : '3:57:30 to 4:02:30\u00a0pm', false);
+    [-300, 0, 300].forEach(function (s) { T(root, X(s), H - 4, s === 0 ? '4:00' : s < 0 ? '3:55' : '4:05', { 'text-anchor': s < 0 ? 'start' : s > 0 ? 'end' : 'middle' }); });
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: the snap-back on sixty toy days (equation 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var r = E.rng(606), DAYS = [];
+  for (var i = 0; i < 60; i++) DAYS.push({ x: E.gauss(r) * 2.0, e: E.gauss(r) * 1.1 });
+  var big = 0; DAYS.forEach(function (d, k) { if (d.x > DAYS[big].x) big = k; }); /* the biggest push up, as the text describes */
+  var slider = document.getElementById('sb-share'), box = document.getElementById('sb-chart'), dayBox = document.getElementById('sb-day'), read = document.getElementById('sb-read');
+  var geo = null, dgeo = null, LIM = 8;
+  function ys() { var s = +slider.value / 100; return DAYS.map(function (d) { return -s * d.x + d.e; }); }
+  function corr(a, b) {
+    var ma = E.mean(a), mb = E.mean(b), sab = 0, saa = 0, sbb = 0;
+    for (var k = 0; k < a.length; k++) { sab += (a[k] - ma) * (b[k] - mb); saa += (a[k] - ma) * (a[k] - ma); sbb += (b[k] - mb) * (b[k] - mb); }
+    return sab / Math.sqrt(saa * sbb);
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 244, L = 34, Rm = 8, TOP = 22, B = 36, side = Math.min(W - L - Rm, H - TOP - B);
+    var x0 = L + (W - L - Rm - side) / 2;
+    function X(v) { return x0 + side * (v + LIM) / (2 * LIM); }
+    function Y(v) { return TOP + side * (LIM - v) / (2 * LIM); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Scatter of 60 toy days: the move into the fix against the move after it, in pips. The more of each push slides back, the more the cloud tilts down to the right.' }, box);
+    [-8, -4, 0, 4, 8].forEach(function (v) {
+      S('line', { x1: X(-LIM), x2: X(LIM), y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis zero' }, root);
+      S('line', { x1: X(v), x2: X(v), y1: Y(LIM), y2: Y(-LIM), 'class': v ? 'grid' : 'axis zero' }, root);
+      T(root, x0 - 6, Y(v) + 4, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v), { 'text-anchor': 'end' });
+      T(root, X(v), Y(-LIM) + 16, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v), { 'text-anchor': 'middle' });
+    });
+    T(root, X(0), H - 2, 'move into the fix, pips', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, x0, 12, 'move after the fix, pips', { 'class': 'label' });
+    geo = { X: X, Y: Y, dyn: S('g', {}, root) };
+    draw();
+  }
+  function buildDay(W) {
+    dayBox.innerHTML = '';
+    var H = 78, L = 8, Rm = 8;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'One toy day, the one with the biggest push up: the average price in the 15 minutes before the fix, during it, and in the 15 minutes after.' }, dayBox);
+    dgeo = { W: W, H: H, L: L, Rm: Rm, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var y = ys(), x = DAYS.map(function (d) { return d.x; }), c = corr(x, y), share = +slider.value;
+    slider.setAttribute('aria-valuetext', share + ' percent slides back; correlation ' + E.fmt(c));
+    read.innerHTML = '<strong>' + share + '% of each push slides back:</strong> correlation across the 60 toy days ' + E.fmt(c) + '. ' +
+      (share === 0 ? 'With no snap-back the cloud has no tilt and the correlation sits near zero.' : 'The more of each push slides back, the more the cloud tilts and the more negative the correlation.');
+    if (geo) {
+      var g = geo.dyn; g.innerHTML = '';
+      DAYS.forEach(function (d, k) {
+        if (k === big) return;
+        S('circle', { cx: geo.X(E.clamp(d.x, -LIM, LIM)), cy: geo.Y(E.clamp(y[k], -LIM, LIM)), r: 3.6, 'class': 'mkt-fill', 'fill-opacity': 0.7 }, g);
+      });
+      S('circle', { cx: geo.X(DAYS[big].x), cy: geo.Y(E.clamp(y[big], -LIM, LIM)), r: 6, 'class': 'fix-fill', stroke: 'var(--text)', 'stroke-width': 1 }, g);
+    }
+    if (dgeo) {
+      var dg = dgeo.dyn, W = dgeo.W; dg.innerHTML = '';
+      var p1 = 0, p2 = DAYS[big].x, p3 = p2 + y[big], lo = Math.min(p1, p2, p3) - 1, hi = Math.max(p1, p2, p3) + 1;
+      function Yd(v) { return 14 + (dgeo.H - 30) * (hi - v) / (hi - lo); }
+      var xs = [dgeo.L + 60, W / 2, W - dgeo.Rm - 60];
+      T(dg, 0, 12, 'The day with the biggest push up', { 'class': 'label' });
+      S('polyline', { points: [xs[0], Yd(p1), xs[1], Yd(p2), xs[2], Yd(p3)].join(' '), 'class': 'path' }, dg);
+      [[p1, '15 min before', 'mkt-fill'], [p2, 'during the fix', 'fix-fill'], [p3, '15 min after', 'mkt-fill']].forEach(function (p, k) {
+        S('circle', { cx: xs[k], cy: Yd(p[0]), r: 5, 'class': p[2], stroke: k === 1 ? 'var(--text)' : null, 'stroke-width': k === 1 ? 1 : null }, dg);
+        T(dg, xs[k], dgeo.H - 2, p[1], { 'text-anchor': 'middle' });
+      });
+    }
+  }
+  slider.addEventListener('input', draw);
+  E.fit(dayBox, buildDay, { min: 300, max: 640 });
+  E.fit(box, build, { min: 300, max: 640 });
+  draw();
+})();
+</script>
+</body>
+</html>

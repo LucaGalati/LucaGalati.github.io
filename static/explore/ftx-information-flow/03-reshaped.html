@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The network re-forms · Information Flow in the FTX Bankruptcy</title>
+<meta name="description" content="Deck 3 of an explorable explanation of De Blasis, Galati, Grassi and Rizzini, Information Flow in the FTX Bankruptcy: the strongest pairs come apart, DOGE takes the centre, FTT is left with three links, the break after withdrawals stop, and what Binance saw.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  #ftt-fig { max-width: 26rem; margin-left: auto; margin-right: auto; }
+  #ftt-table td, #ftt-table th { text-align: left; }
+  @media (max-width: 640px) { #rk-coin { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+</style>
+</head>
+<body data-deck="03-reshaped.html">
+<lg-sitebar><noscript><a href="../../publication/ftx-information-flow/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="Did coins move together more in the crash?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The network re-forms · 1 of 7</p>
+    <h2>Place a bet: in the crash, did coins move together more?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>A common belief about crashes: when panic hits, everything falls at once and correlations rise towards one. On FTX before the collapse, ETH and BTC had a correlation of 0.80, the strongest pair in the market.</p>
+        <p><strong>During the collapse, what was it?</strong></p>
+        <div class="actions bet" id="cr-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="hi" aria-pressed="false">Higher: 0.9</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">Same: 0.8</button>
+          <button class="btn" type="button" data-bet="lo" aria-pressed="false">Lower: 0.4</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <p class="stage-title">The twelve strongest pairs before the collapse</p>
+        <div class="fig" id="cr-chart"></div>
+        <p class="legend"><span><i class="dt far"></i>before the collapse</span><span><i class="dt near"></i>during it</span><span><i class="dt bound"></i>dropped out of the top 20: 0.23 or less</span></p>
+      </div>
+      <div class="t">
+        <p id="cr-verdict" aria-live="polite"></p>
+        <div class="actions" id="cr-next" hidden>
+          <button class="btn primary" type="button" data-next>Who took the centre?&nbsp;→</button>
+          <a class="door" href="05-limits.html#s1" data-return="next">How is the month split into two periods?&nbsp;→</a>
+        </div>
+        <p class="note" id="cr-note" hidden>Table 5 prints each period’s top 20 pairs, so a pair missing from the collapse column had a correlation of 0.23 or less. The reading as a dislocation: p.8.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Who took the centre?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The network re-forms · 2 of 7</p>
+    <h2>Place a bet: who took the centre?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The real map is measured exactly like the toy: degree, closeness and information centrality, now for 195 coins on FTX, once with the returns before the collapse and once with those during it.</p>
+        <p><strong>During the collapse, which coin led FTX’s network?</strong></p>
+        <div class="actions bet" id="ct-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="BTC" aria-pressed="false">Bitcoin (BTC)</button>
+          <button class="btn" type="button" data-bet="ETH" aria-pressed="false">Ether (ETH)</button>
+          <button class="btn" type="button" data-bet="DOGE" aria-pressed="false">Dogecoin (DOGE)</button>
+          <button class="btn" type="button" data-bet="DOT" aria-pressed="false">Polkadot (DOT)</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <p class="stage-title">Top five by information centrality on FTX</p>
+        <div class="fig" id="ct-chart"></div>
+      </div>
+      <div class="t">
+        <p id="ct-verdict" aria-live="polite"></p>
+        <div class="actions" id="ct-next" hidden>
+          <button class="btn primary" type="button" data-next>Follow any coin&nbsp;→</button>
+        </div>
+        <p class="note" id="ct-note" hidden>Table 7, panels A and B, and p.10–11. DOGE during the collapse: degree 0.21134, closeness 0.00276, information centrality 0.05907. Links are degree × 194, computed: the paper’s degree is the share of the other 194 coins a coin is linked to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Who moved up, who fell out?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The network re-forms · 3 of 7</p>
+    <h2>Who moved up, who fell out</h2>
+    <div class="two">
+      <div>
+        <p>Each column ranks FTX’s top twenty coins on one measure: before the collapse on the left, during it on the right. A line joins a coin’s two places; coins outside the top twenty sit in the band at the bottom. Pick a measure and a coin, or click any name.</p>
+        <p>Follow ETH. It lost most of its links, 23 down to 8, yet stayed near the top by closeness, because the few it kept lead to DOGE, BTC and AVAX. By information centrality it fell from sixth to nineteenth: the network could route around it.</p>
+        <p class="door-row"><a class="door" href="05-limits.html#s2" data-return="next">What does a map of correlations leave out?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Where did FTT end up?&nbsp;→</button></div>
+        <p class="note">Table 7, panels A and B. Links are degree × 194, computed; ETH’s 23 and 8 links and its neighbours: p.12. Coins level at the printed precision keep the paper’s order in the chart; the readout gives them as ties.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Measure</span><div class="seg" id="rk-measure"></div></div>
+        <div class="ctl"><span>Coin</span><div class="seg" id="rk-coin"></div></div>
+        <div class="fig" id="rk-chart"></div>
+        <p class="readout" id="rk-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Where did FTT end up?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The network re-forms · 4 of 7</p>
+    <h2>FTT kept three links, all to central coins</h2>
+    <div class="two">
+      <div>
+        <p>Before the collapse FTT had eleven links on the map, tied for fifteenth by degree. During it, three were left, to BTC, SOL and DOGE: the fewest any coin can have, since every coin enters the map attached to a triangle.</p>
+        <p>Yet it stayed in the closeness top twenty. Closeness asks only how short your roads are, and FTT’s three led straight to the busiest crossroads, like <em>e</em>’s single road in the toy. Information centrality asks whether the network would miss you. It would not: FTT fell out of that top twenty, which the authors read as investors hurrying to cut their ties to the token.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Hour by hour&nbsp;→</button></div>
+        <p class="note">Table 7 and footnote 14; readings p.12. Eleven links: degree 0.05670 × 194, computed. The floor of three links is a property of the triangulated filter (Massara, Di Matteo and Aste 2017; see the side path on drawing the map), not stated in the paper. The paper does not name FTT’s eleven earlier neighbours, so the drawing does not say whether BTC, SOL and DOGE were among them.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">FTT’s links on FTX’s map <span class="tag">illustrative positions</span></p>
+        <div class="ctl"><span>Show FTT</span><div class="seg" id="ftt-when"></div></div>
+        <div class="fig" id="ftt-fig"></div>
+        <table class="score" id="ftt-table">
+          <thead><tr><th>FTT on FTX</th><th>Before</th><th>During</th></tr></thead>
+          <tbody>
+            <tr><td>Degree</td><td>tied 15th–19th, 11 links</td><td>outside top 20, 3 links</td></tr>
+            <tr><td>Closeness</td><td>tied from 15th, 0.00096</td><td>14th, 0.00237</td></tr>
+            <tr><td>Information</td><td>17th, 0.02355</td><td>outside top 20</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What changed hour by hour?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The network re-forms · 5 of 7</p>
+    <h2>The average turned after withdrawals stopped</h2>
+    <div class="two">
+      <div>
+        <p>A before-and-after comparison hides the timing. So the authors also rebuild the map every hour, each time from the previous 24 hours of returns, and follow the measures through the crisis.</p>
+        <p>Step through the events and watch the network’s average information centrality. It hardly moved while the news broke. It turned up only after FTX stopped withdrawals, climbed until FTT’s collapse and stayed high. The authors see a structural break in the plot after (h), and read it as investors cautiously selling and repositioning once their coins were stuck.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>And on Binance?&nbsp;→</button></div>
+        <p class="note">Section 3.5 and Fig. 6 (p.13–14): the break, p.13; the reading, p.14, consistent with an earlier study of trading on FTX by Galati, Webb and Webb. The paper prints these series only as plots, so the curve here is a schematic of the shape of Fig. 6, drawn by hand, without values.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Average information centrality, FTX <span class="tag">schematic, shape only</span></p>
+        <div class="fig" id="hr-chart"></div>
+        <label class="ctl" for="hr-ev">Step through the crisis</label>
+        <input type="range" id="hr-ev" min="0" max="5" step="1" value="0">
+        <p class="readout" id="hr-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did the rival exchange see it too?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The network re-forms · 6 of 7</p>
+    <h2>On Binance: Bitcoin steady, FTT sinking, spikes before the news</h2>
+    <p class="lead">Binance kept trading after FTX stopped, with its own 324 coins and data to 16 November. The authors map it the same way, hour by hour, as a benchmark for the wider market, and follow six coins on both exchanges: BTC, ETH, SOL, AVAX, DOT and FTT.</p>
+    <table class="ledger">
+      <thead><tr><th></th><th>On FTX</th><th>On Binance</th></tr></thead>
+      <tbody>
+        <tr><th>Steadiest centre</th><td data-x="FTX">BTC keeps the highest closeness of the six coins followed hour by hour (DOGE is not among them) <span class="src">(Fig. 4, p.12)</span></td><td data-x="Binance">BTC high and stable <span class="src">(Fig. 7, p.15)</span></td></tr>
+        <tr><th>FTT</th><td data-x="FTX">closeness drops on 2 November, swings through 5–6 November, lowest by 11 November <span class="src">(Fig. 4, A.9, p.12–13)</span></td><td data-x="Binance">closeness peaks around key events, then sinks below the network’s average <span class="src">(Fig. 7, A.10, p.15)</span></td></tr>
+        <tr><th>After withdrawals stop (h)</th><td data-x="FTX">average information centrality turns upward <span class="src">(Fig. 6)</span></td><td data-x="Binance">closeness turns and rises again; an earlier study by Galati, Webb and Webb found Binance’s market quality improved as FTX froze <span class="src">(p.15)</span></td></tr>
+        <tr><th>Spikes in information centrality</th><td data-x="FTX">DOT around (a) and (d), which the authors read as a safe-haven route; AVAX through the collapse <span class="src">(Fig. 5, p.13)</span></td><td data-x="Binance">FTT ahead of the first news, ETH just before it; the authors say this could arguably be insider trading, or more generally information arriving early <span class="src">(Fig. 8, p.15–17)</span></td></tr>
+      </tbody>
+    </table>
+    <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+    <p class="note">Section 3.6 (p.14–17); Binance’s sample: p.5–6 and 14. FTX’s data stop at 03:28 on 12 November. ETH is described as arguably the most central coin on Binance (fn. 17); ETH and AVAX have the highest information centrality there after event (a).</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner with-motif">
+    <div>
+      <p class="kicker">Deck 3 · The network re-forms · 7 of 7</p>
+      <h2>What to take away</h2>
+      <p class="closer">When FTT fell, the strongest links in FTX’s market loosened and the map <span class="nw">re-formed</span> around different coins.</p>
+      <ol class="takeaways">
+        <li>The centre was not simply Bitcoin: DOT and AVAX led before the collapse, DOGE on every measure during it. BTC was third on every measure before (level with SOL on closeness), second on two of three during it.</li>
+        <li>FTT kept three links, to BTC, SOL and DOGE: still close to the centre, no longer a route the network needed.</li>
+        <li>The clearest change in timing came after withdrawals stopped: a break the authors see in the hourly plots and read as investors repositioning.</li>
+      </ol>
+      <p class="caveat">What the paper reports are rankings and plots of a map built from one-minute correlations, with the month split at a date chosen from the price series. “Information” here is a property of the map, not observed messages.</p>
+      <p>Still open, as the authors note: what would a map that keeps the sign of each correlation add? And which coin would take the centre in the next exchange failure?</p>
+      <div class="actions">
+        <a class="btn primary" href="../../publication/ftx-information-flow/">Read the paper</a>
+        <a class="btn" href="02-centre.html#s4">Rewire the toy network: can <em>c</em> beat <em>e</em>?&nbsp;→</a>
+        <button class="btn" type="button" data-map>Map of this explorable</button>
+      </div>
+      <p class="note">Side paths: <a href="04-map.html#s1">how 18,915 pairs become 579 links</a> · <a href="05-limits.html#s1">what the map measures</a>. Sources: Tables 5 and 7, footnote 14, Fig. 6, p.18.</p>
+    </div>
+    <div class="motif">
+      <div id="end-motif"></div>
+      <p class="motif-cap">Illustration: the gold coin with three of its six links left.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/ftx-information-flow/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the bet on ETH–BTC, then the twelve strongest pairs (Table 5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [pair, before, during or null when outside the collapse top 20 (so 0.23 or less)] */
+  var PAIRS = [['ETH–BTC', .80, .40], ['SOL–BTC', .69, .26], ['SOL–ETH', .68, null], ['FTT–BTC', .66, null], ['SOL–AVAX', .65, .25], ['FTT–ETH', .64, null],
+    ['SOL–DOT', .63, null], ['SHIB–KSHIB', .63, null], ['BTC–AVAX', .61, .31], ['DOT–AVAX', .61, null], ['DOT–BTC', .61, .23], ['ETH–AVAX', .60, .24]];
+  var FLOOR = 0.23, XMAX = 0.85;
+  var betBox = document.getElementById('cr-bet'), box = document.getElementById('cr-chart');
+  var verdict = document.getElementById('cr-verdict'), nextBox = document.getElementById('cr-next'), note = document.getElementById('cr-note');
+  var shown = 0, raf = null, geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 21, TOP = 6, LAB = W < 480 ? 76 : 90, R = 14, H = TOP + PAIRS.length * rowH + 26;
+    function X(v) { return LAB + (W - LAB - R) * v / XMAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The twelve strongest correlations on FTX before the collapse and their values during it: ETH–BTC 0.80 to 0.40, SOL–BTC 0.69 to 0.26, SOL–AVAX 0.65 to 0.25, BTC–AVAX 0.61 to 0.31, DOT–BTC 0.61 to 0.23, ETH–AVAX 0.60 to 0.24; SOL–ETH 0.68, FTT–BTC 0.66, FTT–ETH 0.64, SOL–DOT 0.63, SHIB–KSHIB 0.63 and DOT–AVAX 0.61 drop out of the top 20, to 0.23 or less.' }, box);
+    [0, 0.2, 0.4, 0.6, 0.8].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 22, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 6, v ? v.toFixed(1) : '0', { 'text-anchor': 'middle' });
+    });
+    PAIRS.forEach(function (p, i) { T(root, 0, TOP + i * rowH + 15, p[0], { 'class': p[0].indexOf('FTT') >= 0 ? 'strong' : 'label' }); });
+    geo = { X: X, rowH: rowH, TOP: TOP, W: W, H: H, dyn: S('g', {}, root) };
+    render();
+  }
+  function render() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    PAIRS.forEach(function (p, i) {
+      var y = geo.TOP + i * geo.rowH + 11, to = p[2] == null ? FLOOR : p[2], cur = p[1] + (to - p[1]) * shown;
+      if (shown > 0) S('line', { x1: X(cur), x2: X(p[1]), y1: y, y2: y, 'class': 'axis zero' }, g);
+      S('circle', { cx: X(p[1]), cy: y, r: 5, 'class': 'far-fill' }, g);
+      T(g, X(p[1]) + 9, y + 4, p[1].toFixed(2), { 'class': 'label' });
+      if (shown > 0) {
+        if (p[2] == null) S('circle', { cx: X(cur), cy: y, r: 4.5, 'class': 'bound' }, g);
+        else S('circle', { cx: X(cur), cy: y, r: 5, 'class': 'near-fill' }, g);
+        if (shown === 1) T(g, X(cur) - 9, y + 4, p[2] == null ? '≤ 0.23' : p[2].toFixed(2), { 'text-anchor': 'end', 'class': p[0] === 'ETH–BTC' ? 'strong halo' : 'label halo' });
+      }
+    });
+    if (shown === 0) T(g, X(0.28), geo.TOP + 6 * geo.rowH + 4, geo.W < 480 ? 'Bet to draw the collapse' : 'Place your bet to draw the collapse', { 'text-anchor': 'middle', 'class': 'placeholder halo' });
+  }
+  var LEAD = { hi: 'The opposite. ', same: 'It halved. ', lo: 'Right. ' };
+  var TAIL = 'ETH–BTC fell to 0.40: still the top pair, at half its strength. SOL–BTC went from 0.69 to 0.26, and FTT’s ties to BTC and ETH left the top twenty. Minute by minute, coins moved in step much less; the authors read it as a dislocation, each coin answering the crisis in its own way.';
+  function place(b, animate) {
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-cr', b);
+    verdict.textContent = LEAD[b] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    if (!animate || E.still || !geo) { shown = 1; render(); return; }
+    var t0 = null; if (raf) cancelAnimationFrame(raf);
+    shown = 0.001;
+    function step(ts) { if (!t0) t0 = ts; var q = Math.min(1, (ts - t0) / 700); shown = q < 1 ? Math.max(0.001, 1 - Math.pow(1 - q, 3)) : 1; render(); raf = q < 1 ? requestAnimationFrame(step) : null; }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-cr');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: the bet on the centre, top five by information centrality (Table 7) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var BEFORE = [['DOT', .06773], ['AVAX', .06511], ['BTC', .04789], ['SOL', .03962], ['NEAR', .03362]];
+  var DURING = [['DOGE', .05907], ['BTC', .05406], ['XRP', .04525], ['AVAX', .04434], ['DOT', .03845]];
+  var MAX = 0.07;
+  var betBox = document.getElementById('ct-bet'), box = document.getElementById('ct-chart');
+  var verdict = document.getElementById('ct-verdict'), nextBox = document.getElementById('ct-next'), note = document.getElementById('ct-note');
+  var bet = null, W0 = 0;
+  function render() {
+    if (!W0) return;
+    box.innerHTML = '';
+    var W = W0, colW = (W - 20) / 2, rowH = 30, TOP = 26, H = TOP + 5 * rowH + 4;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Top five coins by information centrality on FTX. Before the collapse: DOT 0.06773, AVAX 0.06511, BTC 0.04789, SOL 0.03962, NEAR 0.03362. ' + (bet ? 'During it: DOGE 0.05907, BTC 0.05406, XRP 0.04525, AVAX 0.04434, DOT 0.03845.' : 'During it: hidden until you place your bet.') }, box);
+    function col(list, x0, title, cls, hide) {
+      T(root, x0, 14, title, { 'class': 'strong' });
+      var nameW = 44, valW = 50, barMax = colW - nameW - valW - 6;
+      list.forEach(function (r, i) {
+        var y = TOP + i * rowH;
+        T(root, x0, y + 15, hide ? (i + 1) + '.' : r[0], { 'class': hide ? '' : 'label' });
+        if (hide) { S('rect', { x: x0 + nameW, y: y + 5, width: barMax, height: 12, 'class': 'bar-empty' }, root); T(root, x0 + nameW + barMax + 6, y + 15, '?'); return; }
+        S('rect', { x: x0 + nameW, y: y + 5, width: barMax * r[1] / MAX, height: 12, 'class': cls }, root);
+        T(root, x0 + nameW + barMax * r[1] / MAX + 5, y + 15, r[1].toFixed(5), { 'class': 'label' });
+      });
+    }
+    col(BEFORE, 0, 'Before the collapse', 'bar-base', false);
+    col(DURING, colW + 20, 'During it', 'bar-hi', !bet);
+  }
+  var LEAD = { BTC: 'Close: Bitcoin came second on two of the three measures. ', ETH: 'No: ETH slipped down the rankings. ', DOGE: 'Yes. ', DOT: 'DOT led on information centrality before the collapse, not during it. ' };
+  var TAIL = 'Dogecoin led on all three measures, with 41 links on the map. And look left: even before the collapse the centre was not Bitcoin but Polkadot (DOT) and Avalanche (AVAX), with BTC third. The authors suggest that in a crisis market participants may turn to other coins.';
+  function place(b) {
+    bet = b;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-ct', b);
+    verdict.textContent = LEAD[b] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+    render();
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet')); });
+  var prior = E.load('bet-ct');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior);
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 300, max: 600 });
+})();
+
+/* ---------- slide 3: ranks before and during, every coin of Table 7 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var T7 = {
+    deg: { A: [['AVAX', .20103], ['DOT', .19588], ['BTC', .18041], ['NEAR', .15979], ['SOL', .15979], ['OMG', .14433], ['KNC', .12371], ['ETH', .11856], ['RAY', .09794], ['1INCH', .08763], ['CHR', .07732], ['TOMO', .07216], ['AAVE', .06701], ['LINK', .06186], ['FTT', .05670], ['CRV', .05670], ['TRX', .05670], ['CRO', .05670], ['STETH', .05670], ['STSOL', .05155]],
+           B: [['DOGE', .21134], ['CHZ', .17010], ['BTC', .14433], ['AVAX', .14433], ['DOT', .13402], ['XRP', .10309], ['MATIC', .10309], ['SOL', .09278], ['ATOM', .08247], ['LTC', .08247], ['GT', .07216], ['STG', .07216], ['LRC', .06701], ['CRV', .06701], ['AAVE', .06186], ['ALICE', .05670], ['WFLOW', .05670], ['BAND', .05670], ['SPELL', .05155], ['IP3', .05155]] },
+    clo: { A: [['AVAX', .00102], ['DOT', .00101], ['BTC', .00100], ['SOL', .00100], ['ETH', .00099], ['NEAR', .00099], ['BCH', .00098], ['KNC', .00098], ['AAVE', .00098], ['LINK', .00098], ['1INCH', .00097], ['RAY', .00097], ['BNB', .00097], ['MATIC', .00097], ['SRM', .00096], ['FTT', .00096], ['LTC', .00096], ['UNI', .00096], ['ATOM', .00096], ['OMG', .00096]],
+           B: [['DOGE', .00276], ['BTC', .00274], ['AVAX', .00266], ['CHZ', .00264], ['XRP', .00258], ['DOT', .00258], ['ETH', .00257], ['SOL', .00252], ['LTC', .00248], ['RSR', .00241], ['BCH', .00241], ['LINK', .00240], ['ATOM', .00239], ['FTT', .00237], ['MATIC', .00235], ['UNI', .00226], ['CRV', .00224], ['USDT', .00224], ['BAND', .00223], ['APT', .00223]] },
+    inf: { A: [['DOT', .06773], ['AVAX', .06511], ['BTC', .04789], ['SOL', .03962], ['NEAR', .03362], ['ETH', .03283], ['RAY', .02847], ['TRX', .02816], ['OMG', .02761], ['AAVE', .02690], ['1INCH', .02665], ['KNC', .02566], ['LINK', .02549], ['BCH', .02511], ['SNX', .02372], ['BNB', .02364], ['FTT', .02355], ['MATIC', .02300], ['SRM', .02280], ['UNI', .02272]],
+           B: [['DOGE', .05907], ['BTC', .05406], ['XRP', .04525], ['AVAX', .04434], ['DOT', .03845], ['CHZ', .03704], ['STG', .03523], ['MATIC', .03458], ['ENS', .02852], ['LDO', .02840], ['LTC', .02569], ['WFLOW', .02553], ['AXS', .02402], ['ATOM', .02291], ['BAND', .02277], ['IP3', .02157], ['SOL', .02157], ['C98', .02126], ['ETH', .02076], ['OMG', .02061]] }
+  };
+  var MNAME = { deg: 'degree', clo: 'closeness', inf: 'information centrality' };
+  var KEY = ['BTC', 'ETH', 'SOL', 'AVAX', 'DOT', 'FTT', 'DOGE', 'XRP'];
+  /* links outside the top 20 that the paper gives in words */
+  var EXTRA = { 'ETH|B': '8 links (p.12)', 'FTT|B': '3 links, to BTC, SOL and DOGE (fn. 14)' };
+  var box = document.getElementById('rk-chart'), read = document.getElementById('rk-read');
+  var st = { m: 'inf', coin: 'ETH' }, W0 = 0;
+  function rankOf(list, c) { for (var i = 0; i < list.length; i++) if (list[i][0] === c) return i; return -1; }
+  function ord(k) { var s = ['th', 'st', 'nd', 'rd'], v = k % 100; return k + (s[(v - 20) % 10] || s[v] || s[0]); }
+  function union(m) { var u = []; T7[m].A.concat(T7[m].B).forEach(function (r) { if (u.indexOf(r[0]) < 0) u.push(r[0]); }); return u; }
+  var setCoin = E.seg(document.getElementById('rk-coin'), KEY.map(function (c) { return [c, c]; }), st.coin, function (k) { st.coin = k; update(); }, 'Coin to follow');
+  E.seg(document.getElementById('rk-measure'), [['deg', 'Degree'], ['clo', 'Closeness'], ['inf', 'Information']], st.m, function (k) { st.m = k; update(); }, 'Measure');
+  function side(list, c, m, half) {
+    var i = rankOf(list, c);
+    if (i < 0) return 'outside the top 20' + (m === 'deg' && EXTRA[c + '|' + half] ? ': ' + EXTRA[c + '|' + half] : '');
+    var v = list[i][1], lo = i, hi = i;
+    while (lo > 0 && list[lo - 1][1] === v) lo--;
+    while (hi < list.length - 1 && list[hi + 1][1] === v) hi++;
+    /* a tie at the printed precision: the print order inside it says nothing; one that reaches 20th may run on below the table */
+    var place = lo === hi ? ord(i + 1) : hi === list.length - 1 ? 'tied from ' + ord(lo + 1) : 'tied ' + ord(lo + 1) + '–' + ord(hi + 1);
+    return place + ' (' + (m === 'deg' ? Math.round(v * 194) + ' links, ' : '') + v.toFixed(5) + ')';
+  }
+  function readout() {
+    var m = st.m, c = st.coin;
+    read.innerHTML = '<strong>' + c + ', ' + MNAME[m] + ':</strong> ' + side(T7[m].A, c, m, 'A') + ' before the collapse; ' + side(T7[m].B, c, m, 'B') + ' during it.';
+  }
+  function render() {
+    if (!W0) return;
+    box.innerHTML = '';
+    var W = W0, m = st.m, rowH = 15, TOP = 30, colL = W < 480 ? 66 : 86, colR = W - colL, bandY = TOP + 20 * rowH + 8, H = bandY + 30;
+    function Y(i) { return i < 0 ? bandY + 12 : TOP + i * rowH + 6; }
+    /* a group, not an image: the coin names inside are buttons */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group',
+      'aria-label': 'Top twenty coins on FTX by ' + MNAME[m] + ', before the collapse (left) and during it (right), with lines joining each coin’s two ranks. Before: ' + T7[m].A.map(function (r) { return r[0]; }).join(', ') + '. During: ' + T7[m].B.map(function (r) { return r[0]; }).join(', ') + '.' }, box);
+    T(root, colL, 14, W < 480 ? 'Before' : 'Before the collapse', { 'text-anchor': 'middle', 'class': 'strong' });
+    T(root, colR, 14, W < 480 ? 'During' : 'During it', { 'text-anchor': 'middle', 'class': 'strong' });
+    S('rect', { x: 0, y: bandY, width: W, height: 24, 'class': 'rk-band' }, root);
+    T(root, W / 2, bandY + 16, 'not in the top 20', { 'text-anchor': 'middle' });
+    T(root, 0, TOP - 4, 'rank', {});
+    [1, 5, 10, 15, 20].forEach(function (k) { T(root, 0, Y(k - 1) + 4, String(k), {}); });
+    var coins = union(m), hiDrawn = null;
+    coins.forEach(function (c) {
+      var a = rankOf(T7[m].A, c), b = rankOf(T7[m].B, c), hi = c === st.coin;
+      var el = S('path', { d: 'M' + colL + ',' + Y(a) + ' C' + (colL + (colR - colL) * 0.45) + ',' + Y(a) + ' ' + (colR - (colR - colL) * 0.45) + ',' + Y(b) + ' ' + colR + ',' + Y(b), 'class': 'rk-line' + (hi ? ' hi' : '') }, root);
+      if (hi) hiDrawn = el;
+    });
+    if (hiDrawn) root.appendChild(hiDrawn); /* the followed coin on top */
+    coins.forEach(function (c) {
+      var a = rankOf(T7[m].A, c), b = rankOf(T7[m].B, c), hi = c === st.coin;
+      [[colL, a], [colR, b]].forEach(function (p) { if (p[1] >= 0 || hi) S('circle', { cx: p[0], cy: Y(p[1]), r: hi ? 4.5 : 2.6, 'class': 'rk-dot' + (hi ? ' hi' : '') }, root); });
+    });
+    function label(x, y, c, anchor) {
+      var hi = c === st.coin;
+      var t = T(root, x, y + 4, c, { 'text-anchor': anchor, 'class': 'rk-label pick' + (hi ? ' hi' : ''), role: 'button', tabindex: '0', 'aria-label': 'Follow ' + c });
+      t.addEventListener('click', function () { pick(c); });
+      t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(c); } });
+    }
+    T7[m].A.forEach(function (r, i) { label(colL - 8, Y(i), r[0], 'end'); });
+    T7[m].B.forEach(function (r, i) { label(colR + 8, Y(i), r[0], 'start'); });
+    var a0 = rankOf(T7[m].A, st.coin), b0 = rankOf(T7[m].B, st.coin);
+    if (a0 < 0) T(root, colL - 8, Y(-1) + 4, st.coin, { 'text-anchor': 'end', 'class': 'rk-label hi' });
+    if (b0 < 0) T(root, colR + 8, Y(-1) + 4, st.coin, { 'class': 'rk-label hi' });
+  }
+  function pick(c) { st.coin = c; setCoin(KEY.indexOf(c) >= 0 ? c : null); update(); }
+  function update() { readout(); render(); }
+  readout();
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 300, max: 560 });
+})();
+
+/* ---------- slide 4: FTT's links before and during (Table 7, footnote 14) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('ftt-fig');
+  var when = 'B', W0 = 0;
+  E.seg(document.getElementById('ftt-when'), [['A', 'before the collapse'], ['B', 'during it']], when, function (k) { when = k; render(); }, 'Show FTT');
+  function render() {
+    if (!W0) return;
+    box.innerHTML = '';
+    var W = W0, H = Math.round(W * 0.7), cx = W * 0.5, cy = H * 0.5, R = Math.min(W * 0.4, H * 0.42);
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': when === 'A' ? 'FTT before the collapse with eleven links to coins the paper does not name. Positions are illustrative.' : 'FTT during the collapse with three links left, to BTC, SOL and DOGE, and eight dashed ghosts: eleven links became three. Positions are illustrative.' }, box);
+    /* eleven slots; during the collapse three stay lit and eight become ghosts: the count is the paper's, the positions are not */
+    var SLOTS = [];
+    for (var k = 0; k < 11; k++) { var a = (k + 0.5) / 11 * 2 * Math.PI; SLOTS.push([cx + R * Math.cos(a), cy + R * 0.92 * Math.sin(a)]); }
+    var KEPT = { 1: 'SOL', 5: 'DOGE', 9: 'BTC' };
+    SLOTS.forEach(function (p, k) {
+      var lit = when === 'A' || KEPT[k];
+      S('line', { x1: cx, y1: cy, x2: p[0], y2: p[1], 'class': when === 'A' ? 'edge' : lit ? 'edge hi' : 'edge ghost-edge', 'stroke-width': when === 'A' ? 1.6 : lit ? 3 : null }, root);
+    });
+    SLOTS.forEach(function (p, k) {
+      if (when === 'B' && KEPT[k]) {
+        S('circle', { cx: p[0], cy: p[1], r: 21, 'class': 'node' }, root);
+        T(root, p[0], p[1] + 4, KEPT[k], { 'text-anchor': 'middle', 'class': 'strong' });
+      } else S('circle', { cx: p[0], cy: p[1], r: 6, 'class': 'node', 'stroke-opacity': when === 'A' ? 1 : 0.35 }, root);
+    });
+    T(root, W / 2, H - 4, when === 'A' ? 'eleven links, to coins the paper does not name' : 'three links left, eight fewer than before (dashed)', { 'text-anchor': 'middle' });
+    S('circle', { cx: cx, cy: cy, r: 22, 'class': 'node hi' }, root);
+    T(root, cx, cy + 4, 'FTT', { 'text-anchor': 'middle', 'class': 'on-gold', 'font-weight': '600', 'font-size': '12px' });
+  }
+  E.fit(box, function (W) { W0 = W; render(); }, { min: 280, max: 420 });
+})();
+
+/* ---------- slide 5: hour by hour, with a schematic of Fig. 6's shape ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [letter, day of November (decimal), day, time UTC, what the average does then (Fig. 6)] */
+  var STOPS = [
+    ['a', 2 + (14 + 44 / 60) / 24, 2, '14:44', 'News about Alameda’s balance sheet. The average stays in the narrow band it has kept since mid-October.'],
+    ['c', 5 + (14 + 9 / 60) / 24, 5, '14:09', 'Binance moves the FTT, and the before-and-after comparison is split here. The average shows no break.'],
+    ['d', 6 + (5 + 59 / 60) / 24, 6, '05:59', 'Speculation that FTX is insolvent. A small bump, then back into the band.'],
+    ['h', 8 + (10 + 37 / 60) / 24, 8, '10:37', 'Withdrawals stop. Within a day the average turns upward, the start of the break the authors point to.'],
+    ['i', 9 + 21 / 24, 9, '21:00', 'Binance drops out of the deal. After a brief dip, a second, steeper climb.'],
+    ['k', 11, 11, '00:00', 'FTT has collapsed. The average is near its peak and stays high, slipping a little before FTX’s data end.']
+  ];
+  /* hand-drawn shape of Fig. 6 (zoomed panel): flat, a small bump after (d), a rise after (h), a dip and a steeper climb after (i),
+     high around (k), a slight fall into 12 November. Shape only, no values. */
+  var SHAPE = [[2, .18], [2.6, .19], [3, .23], [3.6, .2], [4.3, .21], [5, .15], [5.6, .17], [6.3, .3], [6.6, .22], [7.2, .2], [8, .16], [8.44, .17],
+    [8.7, .23], [9, .32], [9.5, .4], [9.82, .45], [9.92, .3], [10.05, .55], [10.4, .65], [10.75, .75], [11.02, .93], [11.3, .84], [11.6, .9], [11.95, .8], [12.13, .66]];
+  var D0 = 2, D1 = 12.15;
+  function at(d) { /* the schematic's height at day d, by straight lines between its points */
+    for (var k = 1; k < SHAPE.length; k++) if (SHAPE[k][0] >= d) { var p = SHAPE[k - 1], q = SHAPE[k]; return p[1] + (q[1] - p[1]) * (d - p[0]) / (q[0] - p[0]); }
+    return SHAPE[SHAPE.length - 1][1];
+  }
+  var box = document.getElementById('hr-chart'), slider = document.getElementById('hr-ev'), read = document.getElementById('hr-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 212, L = 18, R = 8, TOP = 40, B = 34;
+    function X(d) { return L + (W - L - R) * (d - D0) / (D1 - D0); }
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Schematic of the shape of the paper’s Fig. 6, without values: the average information centrality of FTX’s network stays roughly flat from 2 November until withdrawals stop on 8 November, then rises, dips briefly when Binance drops out on 9 November and climbs more steeply, stays high around 11 November and slips a little before FTX’s data end.' }, box);
+    var xc = X(STOPS[1][1]), xl = X(12 + 3.47 / 24);
+    S('rect', { x: xc, y: TOP - 6, width: xl - xc, height: H - B - TOP + 6, 'class': 'period-col' }, root);
+    S('line', { x1: xc, x2: xl, y1: TOP - 6, y2: TOP - 6, 'class': 'period-edge' }, root);
+    T(root, xc + 5, TOP + 9, 'collapse', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: H - B, y2: H - B, 'class': 'axis' }, root);
+    for (var d = 2; d <= 12; d++) {
+      S('line', { x1: X(d), x2: X(d), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      if (W >= 480 || d % 2 === 0) T(root, X(d), H - B + 18, d === 2 ? '2 Nov' : String(d), { 'text-anchor': d === 2 ? 'start' : 'middle' });
+    }
+    S('line', { x1: L - 8, x2: L - 8, y1: H - B, y2: TOP, 'class': 'axis' }, root);
+    S('path', { d: 'M' + (L - 12) + ',' + (TOP + 6) + ' L' + (L - 8) + ',' + TOP + ' L' + (L - 4) + ',' + (TOP + 6), 'class': 'axis', fill: 'none' }, root);
+    T(root, L, TOP - 12, 'higher', { 'class': 'label' });
+    /* the whole shape faint; draw() inks it up to the chosen event */
+    S('polyline', { points: SHAPE.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' '), 'class': 'schematic ahead' }, root);
+    var ticks = STOPS.map(function (s) { return S('line', { x1: X(s[1]), x2: X(s[1]), y1: TOP, y2: H - B, 'class': 'ev-tick', 'stroke-dasharray': '2 3' }, root); });
+    STOPS.forEach(function (s) { T(root, X(s[1]), H - 3, '(' + s[0] + ')', { 'text-anchor': 'middle' }); });
+    geo = { X: X, Y: Y, ticks: ticks, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var i = +slider.value, s = STOPS[i];
+    slider.setAttribute('aria-valuetext', '(' + s[0] + ') ' + s[2] + ' November, ' + s[3] + ' UTC');
+    read.innerHTML = '<strong>(' + s[0] + ') ' + s[2] + ' November, ' + s[3] + ' UTC.</strong> ' + s[4];
+    if (!geo) return;
+    geo.ticks.forEach(function (t, k) { t.setAttribute('class', 'ev-tick' + (k === i ? ' on' : '')); t.setAttribute('stroke-dasharray', k === i ? '' : '2 3'); });
+    var g = geo.dyn, X = geo.X, Y = geo.Y; g.innerHTML = '';
+    var pts = SHAPE.filter(function (p) { return p[0] < s[1]; }).concat([[s[1], at(s[1])]]);
+    S('polyline', { points: pts.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' '), 'class': 'schematic' }, g);
+    S('circle', { cx: X(s[1]), cy: Y(at(s[1])), r: 5, 'class': 'near-fill' }, g);
+    var x = X(s[1]), lab = '(' + s[0] + ') ' + s[2] + ' Nov, ' + s[3], w = E.textW(lab);
+    T(g, E.clamp(x, w / 2 + 2, geo.W - w / 2 - 2), 12, lab, { 'text-anchor': 'middle', 'class': 'strong' });
+  }
+  slider.setAttribute('aria-label', 'Event in the crisis');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 7: the motif, the gold coin down to three links ---------- */
+Explore.mesh(document.getElementById('end-motif'), { cut: true, max: 380 });
+</script>
+</body>
+</html>

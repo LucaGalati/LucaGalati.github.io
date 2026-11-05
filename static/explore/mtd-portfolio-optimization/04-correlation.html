@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What correlation misses · A Network-Based MTD Approach to Portfolio Optimization</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati and Petroni, A Network-Based Mixture Transition Distribution Approach to Portfolio Optimization: two invented stocks whose dependence a same-day correlation cannot see, because it runs in one direction, from one day to the next.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-correlation.html">
+<lg-sitebar><noscript><a href="../../publication/mtd-portfolio-optimization/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why isn’t correlation enough?">
+  <div class="inner">
+    <p class="kicker">Side path · What correlation misses · 1 of 1</p>
+    <h2>A lead that correlation cannot see</h2>
+    <div class="two">
+      <div>
+        <p>Two invented stocks over 41 days; Follower tends to copy what Leader did the day before. On the same day the correlation is about zero. Leader today against Follower tomorrow, the pattern leaps out; turned around, it vanishes. The dependence has a direction, and a correlation network, one line per pair and no arrow, would miss it.</p>
+        <p>A correlation taken a day apart would catch this pair, but not the second one: after Leader moves, Follower goes flat; after a flat day, Follower moves, up or down. Even a day apart the correlation is about zero, yet the grid is far from even. The paper calls such pairs “dependent yet uncorrelated”. The MTD model works from counts like these grids, so it can see both.</p>
+        <div class="actions">
+          <a class="btn return-link" href="01-leaders.html#s2" data-primary-when="01-leaders.html">← Return to the main path</a>
+          <a class="btn primary" href="01-leaders.html#s2">Go on: how a lead is measured&nbsp;→</a>
+        </div>
+        <p class="note">Toy: invented states for two invented pairs of stocks. Correlations are computed on states coded −1, 0 and +1. The paper’s argument about correlation, and the quoted phrase: page 4.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Invented stocks: Leader (gold) and Follower (blue) <span class="tag">toy</span></p>
+        <div class="ctl"><span>Compare</span><span class="seg" id="cor-mode"></span></div>
+        <div class="fig" id="cor-chart"></div>
+        <p class="legend"><span><i class="dt hi"></i>Leader</span><span><i class="dt base"></i>Follower</span><span>▲ up · – flat · ▼ down</span></p>
+        <p class="readout" id="cor-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/mtd-portfolio-optimization/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* invented daily states, −1 down, 0 flat, +1 up */
+  var L1 = [-1, 1, 0, -1, 0, 1, 1, -1, 1, -1, 1, 0, -1, 0, -1, 0, 1, 0, -1, 0, -1, 1, 1, -1, 0, 0, 1, 1, 1, 1, 0, -1, 1, 0, 0, -1, -1, 0, 1, 0, -1];
+  var F1 = [0, -1, 1, 0, -1, 0, 1, 1, -1, 1, -1, -1, 0, -1, -1, -1, 0, 1, -1, -1, 0, -1, 1, 1, -1, 0, 0, 1, 1, 1, 1, 0, -1, 1, 0, 0, -1, -1, 0, 0, 0];
+  /* a second invented pair: Follower goes flat after Leader moves and moves after a flat Leader day (two exceptions) */
+  var L2 = [1, 0, -1, 0, 1, -1, 0, 0, 1, 0, -1, 1, 0, -1, 0, 1, 0, 0, -1, 1, 0, -1, 0, 1, 1, 0, -1, 0, 0, 1, -1, 0, 1, 0, -1, 0, 1, -1, 0, 0, 1];
+  var F2 = [1, 0, -1, 0, 1, 0, 0, 1, 1, 1, -1, 0, 0, 1, 0, -1, 0, 1, 1, 0, 0, -1, 0, 1, 0, 0, 1, 1, 1, -1, 0, 0, -1, 0, -1, 0, -1, 0, 0, -1, 1];
+  var n = L1.length;
+  /* each mode: pairs of [index in top row, index in bottom row]; top row is Leader except for 'back' */
+  var MODES = {
+    same: { name: 'Same day', pairs: [], text: 'Leader and Follower on the same day' },
+    lead: { name: 'Leader today, Follower tomorrow', pairs: [], text: 'Leader today against Follower tomorrow' },
+    back: { name: 'Follower today, Leader tomorrow', pairs: [], text: 'Follower today against Leader tomorrow' },
+    odd: { name: 'Second pair, Leader today, Follower tomorrow', pairs: [], text: 'The second pair, Leader today against Follower tomorrow' }
+  };
+  for (var t = 1; t < n; t++) { MODES.same.pairs.push([t, t, 'L', 'F']); MODES.lead.pairs.push([t - 1, t, 'L', 'F']); MODES.back.pairs.push([t, t - 1, 'L', 'F']); MODES.odd.pairs.push([t - 1, t, 'L', 'F']); }
+  function corr(a, b) {
+    var m = a.length, ma = 0, mb = 0, c = 0, va = 0, vb = 0, i;
+    for (i = 0; i < m; i++) { ma += a[i]; mb += b[i]; } ma /= m; mb /= m;
+    for (i = 0; i < m; i++) { c += (a[i] - ma) * (b[i] - mb); va += (a[i] - ma) * (a[i] - ma); vb += (b[i] - mb) * (b[i] - mb); }
+    return c / Math.sqrt(va * vb);
+  }
+  var mode = 'same', box = document.getElementById('cor-chart'), read = document.getElementById('cor-read');
+  function mark(g, x, y, s, cls, size) {
+    if (s > 0) S('path', { d: 'M' + x + ',' + (y - size) + ' l' + size + ',' + (1.7 * size) + ' l' + (-2 * size) + ',0 Z', 'class': cls }, g);
+    else if (s < 0) S('path', { d: 'M' + x + ',' + (y + size) + ' l' + size + ',' + (-1.7 * size) + ' l' + (-2 * size) + ',0 Z', 'class': cls }, g);
+    else S('rect', { x: x - size, y: y - 1.2, width: 2 * size, height: 2.4, 'class': cls }, g);
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var M = MODES[mode], L = mode === 'odd' ? L2 : L1, F = mode === 'odd' ? F2 : F1, step = (W - 64) / (n - 1), size = Math.max(2.6, Math.min(4.5, step * 0.38)), x0 = 58, yT = 22, yB = 78;
+    var gridTop = 112, cell = Math.min(46, (W - 120) / 3), H = gridTop + 3 * cell + 46;
+    var a = M.pairs.map(function (p) { return L[p[0]]; }), b = M.pairs.map(function (p) { return F[p[1]]; });
+    var r = corr(a, b), match = 0, cnt = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    a.forEach(function (v, k) { if (v === b[k]) match++; cnt[1 - v][1 - b[k]]++; });
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': M.text + ': states agree on ' + match + ' of ' + a.length + ' days; correlation ' + (Math.abs(r) < 0.005 ? '0.00' : E.plus(r)) + '.' }, box);
+    T(root, 0, yT + 4, 'Leader', { 'class': 'label' });
+    T(root, 0, yB + 4, 'Follower', { 'class': 'label' });
+    function X(t) { return x0 + t * step; }
+    M.pairs.forEach(function (p) {
+      var same = L[p[0]] === F[p[1]];
+      S('line', { x1: X(p[0]), y1: yT + 7, x2: X(p[1]), y2: yB - 7, 'class': same ? 'text-line' : 'muted-line', 'stroke-opacity': same ? 0.75 : 0.25, 'stroke-width': same ? 1.1 : 0.8 }, root);
+    });
+    for (var t = 0; t < n; t++) { mark(root, X(t), yT, L[t], 'hi-fill', size); mark(root, X(t), yB, F[t], 'base-fill', size); }
+    T(root, X(0), yB + 22, 'day 1', {});
+    T(root, X(n - 1), yB + 22, 'day ' + n, { 'text-anchor': 'end' });
+    /* the 3 × 3 count grid */
+    var gx = Math.max(0, (W - 3 * cell - 110) / 2) + 96, names = ['up', 'flat', 'down'], mx = 0;
+    cnt.forEach(function (row) { row.forEach(function (c) { mx = Math.max(mx, c); }); });
+    var CAP = { same: ['Leader', 'Follower, same day'], lead: ['Leader today', 'Follower tomorrow'], back: ['Follower today', 'Leader tomorrow'], odd: ['Leader today', 'Follower tomorrow'] }[mode];
+    T(root, gx + 1.5 * cell, gridTop - 8, 'Across: ' + CAP[1], { 'text-anchor': 'middle', 'class': 'label' });
+    for (var i = 0; i < 3; i++) {
+      T(root, gx - 8, gridTop + i * cell + cell / 2 + 4, names[i], { 'text-anchor': 'end' });
+      T(root, gx + i * cell + cell / 2, gridTop + 3 * cell + 16, names[i], { 'text-anchor': 'middle' });
+      for (var j = 0; j < 3; j++) {
+        var c = mode === 'back' ? cnt[j][i] : cnt[i][j];
+        S('rect', { x: gx + j * cell + 1, y: gridTop + i * cell + 1, width: cell - 2, height: cell - 2, 'class': 'base-fill', 'fill-opacity': (0.06 + 0.8 * c / mx).toFixed(2) }, root);
+        T(root, gx + j * cell + cell / 2, gridTop + i * cell + cell / 2 + 4, String(c), { 'text-anchor': 'middle', 'class': c / mx > 0.55 ? 'paper-fill' : 'strong' });
+      }
+    }
+    T(root, gx + 1.5 * cell, gridTop + 3 * cell + 34, 'Down the side: ' + CAP[0], { 'text-anchor': 'middle', 'class': 'label' });
+    read.innerHTML = '<strong>' + M.name + ':</strong> the states agree on ' + match + ' of ' + a.length + ' days, correlation <strong>' + (Math.abs(r) < 0.005 ? '0.00' : E.plus(r)) + '</strong>. ' +
+      (mode === 'same' ? 'About what chance would give.' : mode === 'lead' ? 'The diagonal fills up: tomorrow’s Follower echoes today’s Leader.' : mode === 'back' ? 'No pattern: Follower does not lead Leader.' :
+       'Yet the grid is lopsided: a move is followed by a flat day, a flat day by a move. Dependent, but uncorrelated.');
+  }
+  var redraw = E.fit(box, build, { min: 300, max: 600 });
+  E.seg(document.getElementById('cor-mode'), [['same', 'Same day'], ['lead', 'Leader, then Follower'], ['back', 'Follower, then Leader'], ['odd', 'Second pair']], mode, function (k) { mode = k; redraw(); }, 'Compare');
+})();
+</script>
+</body>
+</html>

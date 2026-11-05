@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>After the rule · Proportional Appropriation and Financial Statement Quality</title>
+<meta name="description" content="Deck 3 of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2024): a bet on which group of city-owned companies broke Benford's law after the rule, what a before-and-after design can show, and what to take away.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .limits td:first-child { width: 34%; }
+  .limits td { font-size: .8rem; line-height: 1.4; }
+  .limits td:first-child { font-size: .95rem; line-height: 1.3; }
+  @media (max-width: 640px) { .limits td:first-child { width: 38%; font-size: .86rem; } .limits td { font-size: .74rem; } }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-verdict.html">
+<lg-sitebar><noscript><a href="../../publication/proportional-appropriation-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="How clearly did the digits break?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · After the rule · <span class="nw">1 of 3</span></p>
+    <h2>Place a bet: how clearly did the digits break?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Same two tests, same companies, now for the five years under the rule. Start with the companies a city controls: the 835 in which it owns more than half, 4,175 results per period.</p>
+        <p><strong>Under the rule, what do the two tests say about their first digits?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="pass" aria-pressed="false">They still pass</button>
+          <button class="btn" type="button" data-bet="warn" aria-pressed="false">A warning only</button>
+          <button class="btn" type="button" data-bet="strong" aria-pressed="false">Strong evidence</button>
+        </div>
+        <p class="def">As on the rounding toy: a p-value below 0.10 is a warning, below 0.01 strong evidence.</p>
+      </div>
+      <div class="stage c">
+        <div class="ctl"><span>Test</span><span class="seg" id="p-test"></span></div>
+        <div class="fig" id="p-chart"></div>
+        <p class="legend"><span><i class="dt far"></i>2010–2014, before the rule</span><span><i class="dt near"></i>2015–2019, under the rule</span><span>choose a row for its numbers</span></p>
+        <p class="readout" id="p-read" aria-live="polite"></p>
+        <p class="note">Before the rule: Table 2, pre-period columns. <span id="p-note" hidden>Under the rule: Table 2, post-period columns, and Figure 5 (p. 355–357). The excess-MAD test counts only a gap larger than chance against the law, so a negative Z gives a p-value above 0.5 (Table 2). The lines at 0.10 and 0.01 are conventional levels, not results. “Over 50%” contains the 100% owned companies; “All companies” contains everyone. More 1s and fewer 9s: Figure 5 and p. 355. Fewer results make a test harder to fail: p. 357. 464 companies: Table 1’s 4,640 observations ÷ 10, computed.</span></p>
+      </div>
+      <div class="t">
+        <p id="p-verdict" aria-live="polite">The gold dots draw once you have placed your bet.</p>
+        <div class="actions" id="p-next" hidden>
+          <button class="btn primary" type="button" data-next>What can this design show?&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What can a before-and-after design show?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · After the rule · <span class="nw">2 of 3</span></p>
+    <h2>What a before-and-after design can show</h2>
+    <p class="lead">Four questions to ask of any comparison of digits before and under a rule, with what the paper does or says about each.</p>
+    <table class="score limits">
+      <thead><tr><th>The question</th><th>What the paper does or says</th></tr></thead>
+      <tbody>
+        <tr><td>Is there an untouched comparison group?</td><td>No. The paper acknowledges that a comparison group would ideally be untouched by the rule (note 4). Companies with a city stake of 50% or less serve as its comparison, although they too fall under the rule (p. 349); private firms operate, are regulated and report too differently to compare (note 4). The evidence rests on the difference across stakes.</td></tr>
+        <tr><td>Were 2015–2019 simply better years?</td><td>A count of losses moves with the economy (p. 354). First digits should not: a business cycle that scales results up or down leaves Benford’s law in place, under mild conditions (note 5).</td></tr>
+        <tr><td>Do odd digits show intent?</td><td>The test reads the quality of the numbers. It cannot say whether results were pushed up or down, it cannot prove fraud, and processing errors remain a possible explanation (p. 358).</td></tr>
+        <tr><td>Do other windows and samples agree?</td><td>The paper reports qualitatively similar results with windows of three and four years around the rule, and finds that utility companies do not drive its findings (p. 353, 357).</td></tr>
+      </tbody>
+    </table>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>What to take away&nbsp;→</button>
+      <a class="door" href="05-why-digits.html#s2">Can a bad year bend the digits? Try it&nbsp;→</a>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · After the rule · <span class="nw">3 of 3</span></p>
+    <h2>What to take away</h2>
+    <div class="two halves">
+      <div>
+        <p class="closer">After the rule, the first digits reported by companies wholly owned by Italian cities departed from Benford’s law, those of majority-owned companies at the 10% level, those of minority-owned companies not at all. The paper reads this as a sign, not a proof, of steered results.</p>
+        <ol class="takeaways">
+          <li>From the 2015 accounts, a loss at a city-owned company takes money out of the city’s next budget in proportion to its stake. The paper argues this gives mayor and managers a shared reason to make results look healthier.</li>
+          <li>Before the rule every group’s first digits follow Benford’s law, so the departures appear only after it. They are larger the larger the city’s stake, a pattern the paper reads as consistent with its second prediction.</li>
+          <li>The test measures the quality of the numbers, not intent: it cannot tell whether results were pushed up or down, and it cannot prove fraud.</li>
+        </ol>
+      </div>
+      <div>
+        <p class="caveat">The limits the paper names: there is no untouched comparison group (note 4), and processing errors remain a possible explanation (p. 358).</p>
+        <p>Open questions the authors raise: did the rule cut the losses it targeted and save the money it meant to save? Do politicians take part in the steering? Would other countries with many publicly owned companies see the same?</p>
+        <p class="prompt">A question to take with you: if every owner had to set aside the same amount whatever its stake, which of the paper’s two predictions would still make sense?</p>
+        <div class="actions">
+          <a class="btn primary" href="01-rule.html#s2">Work the rule again&nbsp;→</a>
+          <a class="btn" href="../../publication/proportional-appropriation-moe/">Read the paper</a>
+          <button class="btn" type="button" data-map>Map</button>
+        </div>
+        <p class="note">Open questions and the authors’ policy suggestions (closer scrutiny by auditors; shielding managers’ appointments and bonuses from political pressure): p. 358–359. Side paths you may have skipped: <a href="04-entities.html#s1">who owns the bus company</a> · <a href="05-why-digits.html#s1">why digits obey</a> · <a href="06-sample.html#s1">where the 2,120 companies come from</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/proportional-appropriation-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the bet, then Table 2 drawn as p-values on a log scale ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [statistic before, p before, statistic after, p after] for each test (Table 2); rows in Table 2's order of stakes */
+  var ROWS = [
+    { key: 'low', name: 'Up to 50%', n: '6,425', chi: [4.92, 0.7658, 6.74, 0.5644], mad: [-0.46, 0.6788, -0.06, 0.5234] },
+    { key: 'high', name: 'Over 50%', n: '4,175', chi: [10.26, 0.2471, 15.06, 0.0579], mad: [0.19, 0.4234, 1.45, 0.0729] },
+    { key: 'full', name: '100% owned', n: '2,320', chi: [5.14, 0.7420, 23.59, 0.0026], mad: [-1.04, 0.8499, 3.08, 0.0010], extra: ' The smallest group, which makes a test harder to fail.' },
+    { key: 'all', name: 'All companies', n: '10,600', chi: [6.55, 0.5863, 6.43, 0.5996], mad: [-0.41, 0.6580, 0.45, 0.3262] }
+  ];
+  var SMAX = 3.2; /* −log10(p) at the right edge: p = 0.00063 */
+  var betBox = document.getElementById('bet'), box = document.getElementById('p-chart'), read = document.getElementById('p-read');
+  var verdict = document.getElementById('p-verdict'), nextBox = document.getElementById('p-next'), note = document.getElementById('p-note');
+  var st = { bet: null, test: 'chi', sel: 'high', k: 0 }, geo = null, raf = null;
+  function sv(p) { return -Math.log(p) / Math.LN10; }
+  function fmtP(p) { return p < 0.1 ? p.toFixed(4) : p.toFixed(2); }
+  function band(p) { return p < 0.01 ? 'strong evidence' : p < 0.10 ? 'a warning' : 'passes'; }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 480, LW = narrow ? 92 : 112, R = 16, TOP = 30, rowH = 40, H = TOP + ROWS.length * rowH + 50, BOT = TOP + ROWS.length * rowH;
+    function X(s) { return LW + (W - LW - R) * s / SMAX; }
+    function Yr(i) { return TOP + i * rowH + rowH / 2; }
+    /* a group, not an image: its rows are buttons */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group',
+      'aria-label': 'p-values of the Benford tests by group, before and under the rule, on a log scale, with the bands pass, warning (below 0.10) and strong evidence (below 0.01). Before the rule all groups pass. Under the rule: up to 50%, 0.56 and 0.52; over 50%, 0.058 and 0.073; 100% owned, 0.0026 and 0.0010; all companies, 0.60 and 0.33.' }, box);
+    [0.1, 0.01].forEach(function (l) { S('line', { x1: X(sv(l)), x2: X(sv(l)), y1: TOP - 6, y2: BOT, 'class': 'grid' }, root); });
+    [[0, 1, 'passes'], [1, 2, 'warning'], [2, SMAX, narrow ? 'strong' : 'strong evidence']].forEach(function (z) {
+      T(root, (X(z[0]) + X(z[1])) / 2, TOP - 12, z[2], { 'text-anchor': 'middle', 'class': 'label' });
+    });
+    S('line', { x1: LW, x2: W - R, y1: BOT, y2: BOT, 'class': 'axis' }, root);
+    [[1, '1'], [0.1, '0.10'], [0.01, '0.01'], [0.001, '0.001']].forEach(function (t) {
+      var x = X(sv(t[0]));
+      S('line', { x1: x, x2: x, y1: BOT, y2: BOT + 5, 'class': 'axis' }, root);
+      T(root, x, BOT + 18, t[1], { 'text-anchor': t[0] === 1 ? 'start' : 'middle' });
+    });
+    T(root, LW, H - 8, narrow ? 'p-value, log scale; further right = less natural' : 'p-value, log scale: the further right, the less natural the digits', {});
+    geo = { X: X, Yr: Yr, LW: LW, W: W, R: R, rowH: rowH, rows: [] };
+    ROWS.forEach(function (row, i) {
+      var g = S('g', { 'class': 'hit', tabindex: '0', role: 'button', 'aria-label': row.name + ': show its numbers' }, root);
+      S('rect', { x: 0, y: TOP + i * rowH + 2, width: W, height: rowH - 4, 'class': 'rowsel', 'fill-opacity': 0 }, g);
+      T(g, 0, Yr(i) + 4, row.name, { 'class': 'label' });
+      g.addEventListener('click', function () { st.sel = row.key; draw(); });
+      g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); st.sel = row.key; draw(); } });
+      geo.rows.push(g);
+    });
+    /* drawn after the rows, so a selected row's shading stays under the dots */
+    geo.dyn = S('g', { 'pointer-events': 'none' }, root);
+    draw();
+  }
+  function draw() {
+    readout();
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, k = st.k;
+    g.innerHTML = '';
+    ROWS.forEach(function (row, i) {
+      var v = row[st.test], y = geo.Yr(i), x0 = X(sv(v[1])), x1 = X(sv(v[3]));
+      geo.rows[i].firstChild.setAttribute('fill-opacity', row.key === st.sel ? 1 : 0);
+      geo.rows[i].setAttribute('aria-pressed', row.key === st.sel ? 'true' : 'false');
+      S('line', { x1: geo.LW, x2: geo.W - geo.R, y1: y, y2: y, 'class': 'grid' }, g);
+      if (k > 0) {
+        var xe = x0 + (x1 - x0) * k;
+        S('line', { x1: x0, x2: xe, y1: y, y2: y, 'class': 'bracket' }, g);
+        S('circle', { cx: xe, cy: y, r: 6.5, 'class': 'near-fill' }, g);
+      }
+      S('circle', { cx: x0, cy: y, r: 6.5, 'class': 'far-fill' }, g);
+    });
+    if (!k) T(g, geo.X(2.35), geo.Yr(1.5) + 4, 'your bet draws 2015–2019', { 'text-anchor': 'middle', 'class': 'placeholder halo' });
+  }
+  function readout() {
+    var row = ROWS.filter(function (r) { return r.key === st.sel; })[0], v = row[st.test], name = st.test === 'chi' ? 'χ²' : 'excess-MAD Z';
+    var before = name + ' = ' + E.fmt(v[0]) + ', p = ' + fmtP(v[1]);
+    read.innerHTML = '<strong>' + row.name + '</strong>, ' + row.n + ' results per period. Before the rule: <span class="nw">' + before + '</span>, ' + band(v[1]) + '.' +
+      (st.k ? ' Under the rule: <strong class="nw">' + name + ' = ' + E.fmt(v[2]) + ', p = ' + fmtP(v[3]) + '</strong>, ' + band(v[3]) + '.' + (row.extra || '') : ' Under the rule: place your bet.');
+  }
+  var LEAD = {
+    pass: 'Not quite: they slip, though only just. ',
+    warn: 'You called it. ',
+    strong: 'Not for the group as a whole. '
+  };
+  /* \u00a0 keeps each statistic on one line */
+  var TAIL = 'Under the rule, the majority-owned companies fail only at the 10% level: χ²\u00a0p\u00a0=\u00a00.0579, excess-MAD\u00a0p\u00a0=\u00a00.0729. The strong evidence sits inside them: the 464 companies owned 100% fail both tests (p\u00a0=\u00a00.0026 and 0.0010). In both groups the paper sees more 1s and fewer 9s than the law expects. Minority-owned companies and the whole sample pass, as before.';
+  function finish() { st.k = 1; draw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-band', bet);
+    if (!animate || E.still || !geo) { finish(); return; }
+    if (raf) cancelAnimationFrame(raf);
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 900);
+      st.k = Math.max(0.01, 1 - Math.pow(1 - p, 3)); draw();
+      if (p < 1) raf = requestAnimationFrame(step); else { raf = null; finish(); }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  E.seg(document.getElementById('p-test'), [['chi', 'χ² test'], ['mad', 'Excess-MAD test']], 'chi', function (k) { st.test = k; draw(); }, 'Test');
+  var prior = E.load('bet-band');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  readout();
+  E.fit(box, build, { min: 290, max: 640 });
+})();
+</script>
+</body>
+</html>

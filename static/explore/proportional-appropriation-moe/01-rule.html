@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A loss with a price tag · Proportional Appropriation and Financial Statement Quality</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2024): the Italian rule that makes a city set money aside when a company it owns reports a loss, how the cost grows with the city's stake, and a bet on what happened to the losses.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .ctl output { color: var(--text); font-weight: 500; }
+  .hook-q { font-size: 1.22rem; max-width: 30em; }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-rule.html">
+<lg-sitebar><noscript><a href="../../publication/proportional-appropriation-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="When a company’s loss costs its owner, do the books change?">
+  <div class="inner">
+    <p class="kicker">An explorable · Capalbo, Galati, Lupi &amp; Smarra, 2024</p>
+    <h1>When a company’s loss costs its owner, do the books change?</h1>
+    <p>Italian cities own companies: the ones that run the buses, collect the waste, pipe the water. For years a loss in one of them barely touched the city that owned it. A municipal budget counts cash, and a loss inside a company changed nothing in it, until the company could no longer pay its way and had to be rescued.</p>
+    <p>Then Italy changed the rule. From the 2015 accounts, when a company owned by a city reports a loss, the city must set aside part of its next budget, in proportion to its stake. Money set aside is money the mayor cannot spend.</p>
+    <p class="hook-q">The rule was meant to protect public services. It also tied the mayor’s budget to a number the company writes down itself. Did that number start to change?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Work the rule yourself&nbsp;→</button>
+      <a class="door" href="04-entities.html#s1" data-return="next">What is a municipally owned entity?&nbsp;→</a>
+    </div>
+    <p class="note">Article 21 of legislative decree 175 of 2016, applied from the 2015 financial statements; before it, the cash-based budgets of Italian municipalities ignored losses in the entities they owned until a recapitalisation was needed (paper, p. 344–345, 348–349). The services named are from the paper’s list (p. 348).</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What does the rule ask of a city?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · A loss with a price tag · <span class="nw">2 of 4</span></p>
+      <h2>A loss now comes with a price tag</h2>
+      <p>Under the rule the city sets aside, in its budget for the following year, its share of the company’s loss: a 60% owner of a company that loses €100,000 sets aside €60,000. The paper calls this a <strong>proportional appropriation</strong>.</p>
+      <p>Try it. Set the stake to 100% and the result to a loss of €10,000, then push the result just past zero and watch the city’s budget. Then do the same with a 10% stake.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Who feels it most?&nbsp;→</button></div>
+      <p class="note">The rule as the paper describes it: the amount depends on the size of the loss and on the share owned, and it enters the year after the loss (p. 345, 349, 353); this toy follows that description and leaves the decree’s finer points aside. Toy numbers: the company’s result, the €5 million budget and the worked example.</p>
+    </div>
+    <div class="stage">
+      <div class="ctl"><span>Show the rule</span><span class="seg" id="rule-mode"></span></div>
+      <div class="fig" id="rule-chart"></div>
+      <div class="fig" id="rule-bar"></div>
+      <label class="ctl" for="rule-result">The company’s result for the year: <output id="rule-result-v"></output></label>
+      <input type="range" id="rule-result" min="-1000000" max="1000000" step="10000" value="-400000">
+      <label class="ctl" for="rule-stake">The city’s stake in the company: <output id="rule-stake-v"></output></label>
+      <input type="range" id="rule-stake" min="1" max="100" step="1" value="100">
+      <p class="readout" id="rule-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Who feels the rule most?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · A loss with a price tag · <span class="nw">3 of 4</span></p>
+      <h2>More stake, more reason, and above half, the power</h2>
+      <p>Slide the city’s stake from 1% to 100% and watch two things: what a euro of loss that vanishes from the company’s accounts is worth to the city, and who names the company’s board.</p>
+      <p>From these two the paper draws its predictions about <strong>earnings management</strong>, the use of the room that accounting rules leave to steer a reported result. After the rule there should be more of it in these companies, and more of it the larger the city’s stake.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>So, did losses become rarer?&nbsp;→</button>
+        <a class="door" href="04-entities.html#s2">Why does owning more than half matter?&nbsp;→</a>
+      </div>
+      <p class="note">Predictions 1 and 2: p. 347–348; earnings management: p. 346. The mayor names and removes directors, with very wide discretion when the city owns more than half: p. 347 and note 2; no formal say below 50%: p. 357. The paper’s groups: p. 349. The spending freed is the rule’s arithmetic, not an estimate.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="stake-chart"></div>
+      <label class="ctl" for="stake">The city’s stake in the company: <output id="stake-v"></output></label>
+      <input type="range" id="stake" min="1" max="100" step="1" value="30">
+      <p class="readout" id="stake-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Did losses become rarer?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · A loss with a price tag · <span class="nw">4 of 4</span></p>
+    <h2>Place a bet: did losses become rarer?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The paper follows the same 835 companies in which a city holds more than half, for five years before the rule and five years under it. From 2010 to 2014, <span class="num">30.4%</span> of them reported a loss.</p>
+        <p><strong>From 2015 to 2019, what share reported a loss?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="30" aria-pressed="false">About 30%</button>
+          <button class="btn" type="button" data-bet="22" aria-pressed="false">About 22%</button>
+          <button class="btn" type="button" data-bet="10" aria-pressed="false">About 10%</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="loss-chart"></div>
+        <p class="legend"><span><i class="sq far"></i>2010–2014, before the rule</span><span><i class="sq near"></i>2015–2019, under the rule</span></p>
+        <p class="note">835 companies with a city stake above 50%, observed in all ten years, and the 30.4%: p. 349–351. <span id="loss-note" hidden>The 22%: p. 351. The paper gives the medians and averages per company in thousands of euros (9.9 and 28.5; −45.6 and 466.4, p. 349–350). “Almost tripled”: 28.5 ÷ 9.9, computed. That a count of losses also moves with the economy is the paper’s own caveat (p. 351, 354).</span></p>
+      </div>
+      <div class="t">
+        <p id="loss-verdict" aria-live="polite">The second bar draws once you have placed your bet.</p>
+        <div class="actions" id="loss-next" hidden>
+          <a class="btn primary" href="02-digits.html#s1">Look at the digits&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/proportional-appropriation-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: the rule machine (the rule as described on p. 345, 349, 353; toy numbers) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, eur = E.eur;
+  var BUDGET = 5e6, RMAX = 1e6;
+  var chart = document.getElementById('rule-chart'), barBox = document.getElementById('rule-bar');
+  var res = document.getElementById('rule-result'), stake = document.getElementById('rule-stake'), read = document.getElementById('rule-read');
+  var resV = document.getElementById('rule-result-v'), stakeV = document.getElementById('rule-stake-v');
+  var mode = 'after', gc = null, gb = null;
+  function r() { return +res.value; }
+  function s() { return +stake.value / 100; }
+  function aside() { return mode === 'after' ? Math.max(0, -r()) * s() : 0; }
+  function signed(x) { return x === 0 ? '€0' : (x < 0 ? 'a loss of ' : 'a profit of ') + eur(Math.abs(x)); }
+  function buildChart(W) {
+    chart.innerHTML = '';
+    var H = 200, L = 34, R = 14, TOP = 26, B = 42;
+    function X(v) { return L + (W - L - R) * (v + RMAX) / (2 * RMAX); }
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v / RMAX); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The rule as a line: the amount the city sets aside against the company’s reported result. From 2015 the line rises to the left of zero with a slope equal to the city’s stake and is flat at zero to the right; before 2015 it is flat everywhere.' }, chart);
+    /* one style per slide: axes in € million with the unit in the axis title, as the bar and readout say "€… million" */
+    [0, 0.5e6, 1e6].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, String(v / 1e6), { 'text-anchor': 'end' });
+    });
+    S('line', { x1: X(0), x2: X(0), y1: TOP, y2: H - B, 'class': 'axis zero' }, root);
+    (W < 460 ? [-1e6, 0, 1e6] : [-1e6, -0.5e6, 0, 0.5e6, 1e6]).forEach(function (v) {
+      T(root, X(v), H - B + 16, v === 0 ? '0' : (v < 0 ? '−' : '+') + Math.abs(v / 1e6), { 'text-anchor': v === -RMAX ? 'start' : v === RMAX ? 'end' : 'middle' });
+    });
+    T(root, (L + W - R) / 2, H - 6, 'The company’s reported result, € million', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, L, TOP - 12, W < 460 ? 'Set aside next year, € million' : 'Set aside by the city the following year, € million', { 'class': 'label' });
+    T(root, X(-0.5e6), H - B - 8, 'loss', { 'text-anchor': 'middle' });
+    T(root, X(0.5e6), H - B - 8, 'profit', { 'text-anchor': 'middle' });
+    gc = { X: X, Y: Y, W: W, H: H, B: B, dyn: S('g', {}, root) };
+    drawChart();
+  }
+  function drawChart() {
+    if (!gc) return;
+    var g = gc.dyn, X = gc.X, Y = gc.Y, k = mode === 'after' ? s() : 0, a = aside(), x = r();
+    g.innerHTML = '';
+    S('polyline', { points: [X(-RMAX), Y(k * RMAX), X(0), Y(0), X(RMAX), Y(0)].map(function (v) { return v.toFixed(1); }).join(' '), 'class': mode === 'after' ? 'near' : 'far' }, g);
+    if (mode === 'before') T(g, X(-RMAX) + 4, Y(0) - 22, 'nothing set aside, whatever the result', { 'class': 'halo' });
+    if (a > 0) S('line', { x1: X(x), x2: X(x), y1: Y(a), y2: Y(0), 'class': 'ghost' }, g);
+    S('circle', { cx: X(x), cy: Y(a), r: 6, 'class': mode === 'after' ? 'near-fill' : 'far-fill' }, g);
+    var right = X(x) < gc.W * 0.55;
+    if (a > 0) T(g, X(x) + (right ? 10 : -10), Y(a) - 8, eur(a), { 'text-anchor': right ? 'start' : 'end', 'class': 'strong halo' });
+  }
+  function buildBar(W) {
+    barBox.innerHTML = '';
+    var H = 78;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'The city’s toy budget for the following year, €5 million, split into money it can spend and money it must set aside.' }, barBox);
+    gb = { W: W, H: H, fill: E.hatch(root), dyn: S('g', {}, root) };
+    drawBar();
+  }
+  function drawBar() {
+    if (!gb) return;
+    var g = gb.dyn, W = gb.W, a = aside(), wa = W * a / BUDGET, narrow = W < 460;
+    g.innerHTML = '';
+    T(g, 0, 12, narrow ? 'City budget next year (toy): €5 million' : 'The city’s budget for the following year (toy): €5 million', { 'class': 'label' });
+    S('rect', { x: 0, y: 20, width: W - wa, height: 20, 'class': 'far-fill' }, g);
+    if (wa > 0.5) {
+      S('rect', { x: W - wa, y: 20, width: wa, height: 20, fill: gb.fill }, g);
+      S('rect', { x: W - wa + 0.75, y: 20.75, width: Math.max(0, wa - 1.5), height: 18.5, 'class': 'aside-edge' }, g);
+    }
+    S('line', { x1: 0, x2: W, y1: 45, y2: 45, 'class': 'rule2' }, g);
+    S('line', { x1: 0, x2: W, y1: 48, y2: 48, 'class': 'rule2' }, g);
+    T(g, 0, 66, 'free to spend ' + eur(BUDGET - a));
+    T(g, W, 66, a > 0 ? 'set aside ' + eur(a) : 'nothing set aside', { 'text-anchor': 'end', 'class': a > 0 ? 'strong' : null });
+  }
+  function readout() {
+    var x = r(), pct = Math.round(s() * 100), a = aside();
+    resV.textContent = x === 0 ? '€0' : (x < 0 ? '−' : '+') + eur(Math.abs(x));
+    stakeV.textContent = pct + '%';
+    res.setAttribute('aria-valuetext', signed(x));
+    stake.setAttribute('aria-valuetext', pct + ' percent');
+    if (mode === 'before') {
+      read.innerHTML = '<strong>Before 2015.</strong> ' + (x < 0 ? 'The loss of ' + eur(-x) + ' stays in the company’s books.' : 'The company reports ' + signed(x) + '.') +
+        ' The city’s budget does not move, unless one day the company can no longer carry on and has to be recapitalised.';
+    } else if (x < 0) {
+      read.innerHTML = '<strong>From 2015.</strong> A loss of ' + eur(-x) + ' and a ' + pct + '% stake: next year the city sets aside <strong class="nw">' + eur(a) + '</strong> and can spend ' + eur(BUDGET - a) +
+        '. Each further euro of loss would cost it ' + (pct === 100 ? 'a full euro' : pct + (pct === 1 ? ' cent' : ' cents')) + ' of spending.';
+    } else {
+      read.innerHTML = '<strong>From 2015.</strong> ' + (x === 0 ? 'A result of exactly zero' : 'A profit of ' + eur(x)) + ': nothing is set aside, whatever the stake.' +
+        (x > 0 ? ' A loss of the same size would have cost this city ' + eur(x * s()) + '.' : ' One euro less and the set-aside begins.');
+    }
+  }
+  function update() { readout(); drawChart(); drawBar(); }
+  E.seg(document.getElementById('rule-mode'), [['before', 'Before 2015'], ['after', 'From 2015']], 'after', function (k) { mode = k; update(); }, 'Show the rule');
+  res.addEventListener('input', update);
+  stake.addEventListener('input', update);
+  readout();
+  E.fit(chart, buildChart, { min: 290, max: 620 });
+  E.fit(barBox, buildBar, { min: 290, max: 620 });
+})();
+
+/* ---------- slide 3: reason grows with the stake, power arrives above half (p. 347, note 2, p. 349, 357) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('stake-chart'), slider = document.getElementById('stake');
+  var read = document.getElementById('stake-read'), out = document.getElementById('stake-v');
+  var geo = null;
+  function k() { return +slider.value; }
+  function cents(p) { return p === 100 ? 'a full euro' : p + (p === 1 ? ' cent' : ' cents'); }
+  function readout() {
+    var p = k(), worth = 'each euro of loss that vanishes from the accounts frees ' + cents(p) + ' of the city’s spending';
+    out.textContent = p + '%';
+    slider.setAttribute('aria-valuetext', p + ' percent');
+    if (p < 50) read.innerHTML = '<strong>A ' + p + '% owner:</strong> ' + worth + '. Below 50%, the city has no formal say in how the company is run. The paper’s group: up to 50%.';
+    else if (p === 50) read.innerHTML = '<strong>A 50% owner:</strong> ' + worth + '. Half is not a majority, and the mayor’s full power over the board comes only above half. The paper’s group: up to 50%.';
+    else if (p < 100) read.innerHTML = '<strong>A ' + p + '% owner:</strong> ' + worth + '. Owning more than half, the mayor names and removes the directors, with very wide discretion. The paper’s group: over 50%.';
+    else read.innerHTML = '<strong>The only owner:</strong> each euro of loss that vanishes frees a full euro of spending, and the mayor names and removes the directors. The paper’s groups: over 50%, and within it, 100% owned.';
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 480, H = 276, L = 46, R = 14, Y1 = 30, Y0 = 136, SY = 192, SH = 26, GY = 232;
+    function X(v) { return L + (W - L - R) * v / 100; }
+    function Y(v) { return Y0 - (Y0 - Y1) * v; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two readings of the city’s stake. Above: the spending freed when one euro of loss vanishes, a straight line from nothing at 0% to one euro at 100%. Below: who names the board, nobody formally below 50%, the mayor above 50%. The paper’s groups are up to 50%, over 50%, and 100%.' }, box);
+    /* reason: a ramp */
+    T(root, L, 14, narrow ? 'Spending freed per €1 of loss avoided' : 'What the city gets back when €1 of loss vanishes', { 'class': 'label' });
+    [0, 0.5, 1].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, v === 1 ? '€1.00' : v ? '€0.50' : '€0', { 'text-anchor': 'end' });
+    });
+    [0, 25, 50, 75, 100].forEach(function (v) { T(root, X(v), Y0 + 16, v + '%', { 'text-anchor': v === 0 ? 'start' : v === 100 ? 'end' : 'middle' }); });
+    S('line', { x1: X(0), y1: Y(0), x2: X(100), y2: Y(1), 'class': 'far' }, root);
+    /* power: a step at half */
+    T(root, L, SY - 15, 'Who names the board', { 'class': 'label' });
+    S('rect', { x: X(0), y: SY, width: X(50) - X(0) - 1, height: SH, 'class': 'surface' }, root);
+    S('rect', { x: X(50) + 1, y: SY, width: X(100) - X(50) - 1, height: SH, 'class': 'far-fill' }, root);
+    T(root, X(25), SY + 17, narrow ? 'no formal say' : 'no formal say below 50%', { 'text-anchor': 'middle' });
+    T(root, X(75), SY + 17, narrow ? 'the mayor' : 'the mayor, above 50%', { 'text-anchor': 'middle', 'class': 'on-blue' });
+    /* the paper's groups */
+    S('path', { d: 'M' + (X(0) + 1) + ',' + GY + ' v6 H' + (X(50) - 2) + ' v-6', 'class': 'bracket' }, root);
+    S('path', { d: 'M' + (X(50) + 2) + ',' + GY + ' v6 H' + (X(100) - 1) + ' v-6', 'class': 'bracket' }, root);
+    geo = { X: X, Y: Y, Y0: Y0, SY: SY, SH: SH, GY: GY, W: W, R: R, narrow: narrow,
+      groups: [T(root, X(25), GY + 22, 'group: up to 50%', { 'text-anchor': 'middle' }),
+               T(root, X(75), GY + 22, 'group: over 50%', { 'text-anchor': 'middle' }),
+               T(root, X(100), GY + 38, narrow ? 'and, within it, 100%' : 'and, within it, 100% owned', { 'text-anchor': 'end' })],
+      dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    readout();
+    if (!geo) return;
+    var p = k(), g = geo.dyn, x = geo.X(p), y = geo.Y(p / 100);
+    g.innerHTML = '';
+    /* the stake: a dashed drop to the axis, and a pointer on the board strip */
+    S('line', { x1: x, x2: x, y1: y, y2: geo.Y0, 'class': 'ghost' }, g);
+    S('path', { d: 'M' + (x - 5.5).toFixed(1) + ',' + (geo.SY - 10) + ' h11 l-5.5,8 z', 'class': 'text-fill' }, g);
+    S('line', { x1: geo.X(0), x2: x, y1: y, y2: y, 'class': 'ghost' }, g);
+    S('circle', { cx: x, cy: y, r: 6.5, 'class': 'far-fill' }, g);
+    var lbl = p === 100 ? '€1.00' : '€0.' + (p < 10 ? '0' : '') + p, right = x < geo.W * 0.6;
+    T(g, x + (right ? 10 : -10), y - 9, lbl, { 'text-anchor': right ? 'start' : 'end', 'class': 'strong halo' });
+    var cls = ['', '', ''];
+    if (p <= 50) cls[0] = 'strong'; else cls[1] = 'strong';
+    if (p === 100) cls[2] = 'strong';
+    geo.groups.forEach(function (t, i) { t.setAttribute('class', cls[i] || ''); });
+  }
+  slider.addEventListener('input', draw);
+  readout();
+  E.fit(box, build, { min: 290, max: 620 });
+})();
+
+/* ---------- slide 4: a bet on the share of companies reporting a loss (p. 349–351) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var BEFORE = 30.4, AFTER = 22, YMAX = 40;
+  var betBox = document.getElementById('bet'), box = document.getElementById('loss-chart');
+  var verdict = document.getElementById('loss-verdict'), nextBox = document.getElementById('loss-next'), note = document.getElementById('loss-note');
+  var st = { bet: null, shown: 0 }, geo = null, raf = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 250, L = 40, R = 16, TOP = 16, B = 40;
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v / YMAX); }
+    var cw = Math.min(110, (W - L - R) / 4), x1 = L + (W - L - R) * 0.3 - cw / 2, x2 = L + (W - L - R) * 0.72 - cw / 2;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Share of the 835 majority-owned companies reporting a loss: 30.4% in 2010–2014; in 2015–2019 the bar appears after the bet and reaches 22%.' }, box);
+    [0, 10, 20, 30, 40].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, v + '%', { 'text-anchor': 'end' });
+    });
+    T(root, x1 + cw / 2, H - B + 17, '2010–2014', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, x2 + cw / 2, H - B + 17, '2015–2019', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, x1 + cw / 2, H - 6, 'before the rule', { 'text-anchor': 'middle' });
+    T(root, x2 + cw / 2, H - 6, 'under the rule', { 'text-anchor': 'middle' });
+    S('rect', { x: x1, y: Y(BEFORE), width: cw, height: Y(0) - Y(BEFORE), 'class': 'far-fill' }, root);
+    T(root, x1 + cw / 2, Y(BEFORE) - 7, '30.4%', { 'text-anchor': 'middle', 'class': 'strong' });
+    geo = { Y: Y, x2: x2, cw: cw, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, x2 = geo.x2, cw = geo.cw;
+    g.innerHTML = '';
+    if (!st.shown) {
+      S('rect', { x: x2 + 0.5, y: Y(YMAX * 0.75), width: cw - 1, height: Y(0) - Y(YMAX * 0.75), 'class': 'was' }, g);
+      T(g, x2 + cw / 2, Y(YMAX * 0.4), '?', { 'text-anchor': 'middle', 'class': 'big placeholder' });
+    } else {
+      S('rect', { x: x2, y: Y(st.shown), width: cw, height: Y(0) - Y(st.shown), 'class': 'near-fill' }, g);
+      if (st.shown >= AFTER - 0.01) T(g, x2 + cw / 2, Y(AFTER) - 7, '22%', { 'text-anchor': 'middle', 'class': 'strong halo' });
+    }
+    if (st.bet) {
+      var yb = Y(+st.bet);
+      S('line', { x1: x2 - 8, x2: x2 + cw + 8, y1: yb, y2: yb, 'class': 'bracket', 'stroke-dasharray': '5 4' }, g);
+      T(g, x2 + cw + 12, yb + 4, 'your bet', { 'class': 'label' });
+    }
+  }
+  var LEAD = { '30': 'Fewer than that. ', '22': 'You called it. ', '10': 'Not that few. ' };
+  var TAIL = 'From 2015 to 2019, 22% of these companies reported a loss, against 30.4% before. The typical result almost tripled: the median rose from €9,900 to €28,500, and the average swung from a loss of €45,600 to a profit of €466,400. Better-run companies, or better-looking books? A count cannot tell, because a stronger economy also turns losses into profits. The paper needs a test that a good year cannot fool.';
+  function finish() { st.shown = AFTER; draw(); verdict.textContent = LEAD[st.bet] + TAIL; nextBox.hidden = false; note.hidden = false; }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-loss', bet);
+    if (!animate || E.still || !geo) { finish(); return; }
+    if (raf) cancelAnimationFrame(raf);
+    var t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 700), e = 1 - Math.pow(1 - p, 3);
+      st.shown = Math.max(0.01, AFTER * e); draw();
+      if (p < 1) raf = requestAnimationFrame(step); else { raf = null; finish(); }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-loss');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 290, max: 560 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From 262,315 entities to 2,120 · Proportional Appropriation and Financial Statement Quality</title>
+<meta name="description" content="Side path of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2024): how 262,315 entities with public owners became a balanced sample of 2,120 city-owned companies, and how they split by the city's stake.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .ledger { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: .84rem; margin: .4rem 0 .2rem; }
+  .ledger td { padding: .42em 0; border-bottom: 1px solid var(--border); vertical-align: baseline; }
+  .ledger td.n { text-align: right; white-space: nowrap; font-weight: 500; padding-left: 1em; }
+  .ledger td.s { color: var(--muted); font-size: .9em; }
+  .ledger tr.total td { border-bottom: 3px double var(--text); }
+  .ledger .op { display: inline-block; width: 1.3em; color: var(--muted); }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="06-sample.html">
+<lg-sitebar><noscript><a href="../../publication/proportional-appropriation-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Where do the 2,120 companies come from?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · The sample</p>
+      <h2>From 262,315 entities to 2,120</h2>
+      <p>Italy’s Finance Ministry publishes an open database of every entity in which a public body holds shares. The authors keep those owned by a municipality, match them to company accounts in the AIDA database, and then keep only companies present in both five-year periods with a net income for all ten years, so the same companies are compared before and under the rule.</p>
+      <p>Where several cities own the same company, the stake that counts is that of the largest one, which holds the most formal power. That stake sorts each company into a group.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="02-digits.html#s3" data-primary-when="02-digits.html">← Return to the main path</a>
+        <a class="btn" href="03-verdict.html#s1">Go on to the bet&nbsp;→</a>
+      </div>
+      <p class="note">The database, the selection steps and the largest owner: Section 3, p. 349. The final sample: 2,120 companies in the abstract, 21,200 results in Table 1. Companies per group: Table 1’s observations ÷ 10 years, computed; results per period: Table 2.</p>
+    </div>
+    <div class="stage">
+      <table class="ledger" aria-label="From the Finance Ministry database to the balanced sample">
+        <tbody>
+          <tr><td>Entities with a public shareholder, Finance Ministry database</td><td class="n">262,315</td></tr>
+          <tr><td><span class="op">→</span>owned by a municipality</td><td class="n">9,091</td></tr>
+          <tr><td><span class="op">→</span>with complete accounts in AIDA <span class="s">· 64,950 yearly results</span></td><td class="n">6,495</td></tr>
+          <tr class="total"><td><span class="op">→</span>in both periods, net income all ten years <span class="s">· 21,200 results</span></td><td class="n">2,120</td></tr>
+        </tbody>
+      </table>
+      <p class="stage-title" style="margin-top:1.2rem">The 2,120 by the largest city’s stake</p>
+      <div class="fig" id="split"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/proportional-appropriation-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- the split of the 2,120 companies (Table 1 observations ÷ 10) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('split');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 112, TOT = 2120;
+    function X(v) { return W * v / TOT; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The 2,120 companies: 1,285 with a largest city stake up to 50% and 835 above 50%, of which 464 are wholly owned.' }, box);
+    /* no gold here: gold means only "under the rule" on these pages */
+    S('rect', { x: 0.75, y: 24.75, width: X(1285) - 2.5, height: 24.5, 'class': 'out-far' }, root);
+    S('rect', { x: X(1285) + 1, y: 24, width: X(835) - 1, height: 26, 'class': 'far-fill' }, root);
+    T(root, 0, 16, '1,285 up to 50%', { 'class': 'strong' });
+    T(root, W, 16, '835 over 50%', { 'text-anchor': 'end', 'class': 'strong' });
+    var a = X(TOT - 464);
+    S('path', { d: 'M' + a.toFixed(1) + ',60 V66 H' + W + ' V60', 'class': 'bracket' }, root);
+    T(root, W, 84, 'of which 464 owned 100%', { 'text-anchor': 'end', 'class': 'label' });
+    T(root, W, 102, '2,320 results per period', { 'text-anchor': 'end' });
+    T(root, 0, 84, '6,425 results per period', {});
+  }, { min: 290, max: 600 });
+})();
+</script>
+</body>
+</html>

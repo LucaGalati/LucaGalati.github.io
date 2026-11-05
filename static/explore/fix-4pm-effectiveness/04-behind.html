@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Behind the numbers · To Fix or not to Fix, the Fix</title>
+<meta name="description" content="Side path of an explorable explanation of Benenchia, Galati and Lepone, To Fix or not to Fix, the Fix: how the fix was rebuilt from Refinitiv's order book data, and what it means that the study was pre-registered.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .fig .pipe-box { fill: var(--surface); stroke: var(--border); }
+  .fig .pipe-box.last { stroke: var(--base); stroke-width: 1.5; }
+  .fig .arrow-line { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+  .fig .arrow-head { fill: var(--muted); }
+  .score { max-width: 60rem; }
+  .score td { font-size: .8rem; padding-top: .35em; padding-bottom: .35em; }
+  .score td:first-child { font-size: .92rem; }
+</style>
+</head>
+<body data-deck="04-behind.html">
+<lg-sitebar><noscript><a href="../../publication/fix-4pm-effectiveness/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How do you rebuild a fix nobody published?">
+  <div class="inner">
+    <p class="kicker">Side path · Behind the numbers · 1 of 2</p>
+    <h2>Six fixes a day, rebuilt from the order book</h2>
+    <div class="fig" id="pipe"></div>
+    <div class="two" style="margin-top:1.2rem">
+      <div>
+        <p>Nobody ever published a ten- or twenty-minute fix, so the authors had to build them. To compare like with like, they rebuilt the five-minute fix too, the same way, rather than taking the published one. Each window gets a second version that keeps every print, skipping the checks that throw out outliers.</p>
+        <p>Each day then gives three gaps per window, and each pair and year a root mean square of them, the typical size of the gap. The tests compare windows on those daily gaps.</p>
+      </div>
+      <div>
+        <p>Refinitiv runs the fix, and its data cover every new order, cancellation and amendment on the platforms the fix draws on, with the best bid and ask on each. The data cannot be shared; the code can, except the part that rebuilds the fix, which the agreement with Refinitiv keeps private.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>Why “pre-registered”?&nbsp;→</button>
+          <a class="btn return-link" href="01-fix.html#s4">← Return to the main path</a>
+        </div>
+      </div>
+    </div>
+    <p class="note">Data: p.&nbsp;4; macro news from the Eikon Economic Monitor, p.&nbsp;4; CNH/USD left out for low liquidity, footnote 11; no order book depth in the data, footnote 12. Rebuilt five-minute fix and the private rebuilding code: footnote 10. The unchecked version: equation (4). Code: Mendeley Data, doi 10.17632/zbdgtt8mmt.1 (Data availability, p.&nbsp;21).</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does “pre-registered” mean?">
+  <div class="inner">
+    <p class="kicker">Side path · Behind the numbers · 2 of 2</p>
+    <h2>The tests were promised in advance</h2>
+    <p>Most studies are judged once the results are in. This one was not: its questions, data and tests were reviewed and published in the same journal in 2024, before any results existed. This article reports what came out and where it departed from the plan.</p>
+    <p>Tests fixed before anyone has seen the data cannot have been chosen because they worked; that is why the paper keeps its registered, “confirmatory” analysis apart from the rest.</p>
+    <table class="score stack">
+      <thead><tr><th>Registered</th><th>In this article</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>One model predicting the fix from liquidity at every horizon at once</td><td>One regression per five-minute slot: the measures at different horizons were too correlated to go together</td><td class="n">p.&nbsp;3</td></tr>
+        <tr><td>An event study around a shock</td><td>Dropped: no major event or rule change in the sample could serve as the shock</td><td class="n">footnote 5</td></tr>
+        <tr><td>Did the method minimise market impact around the fix?</td><td>Reworded: how has the market affected the fix? The data could answer only that</td><td class="n">footnote 4, §3.3.1</td></tr>
+        <tr><td>Window comparisons by pair</td><td>Kept. The year-by-year tests are reported apart, as exploratory analysis</td><td class="n">§3.2, §3.3</td></tr>
+      </tbody>
+    </table>
+    <div class="actions">
+      <a class="btn primary return-link" href="01-fix.html#s4">← Return to the main path</a>
+      <a class="btn" href="02-stretch.html#s1">Skip to the bets&nbsp;→</a>
+    </div>
+    <p class="note">The registered report: Benenchia, Galati and Lepone (2024), Pacific-Basin Finance Journal 84, 102311; the journal’s pre-registration initiative: Faff (2023), cited p.&nbsp;2.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/fix-4pm-effectiveness/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the pipeline, left to right on wide screens, top to bottom on phones ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('pipe');
+  var STEPS = [
+    ['Every order book event', ['three platforms, to the millisecond,', 'six pairs, Feb 2015 to Dec 2023']],
+    ['Six fixes a day', ['over 5, 10 and 20 minutes, each', 'with and without outlier checks']],
+    ['Three daily gaps, in pips', ['to the day’s average, the window’s', 'average and the unchecked fix']],
+    ['Compared across windows', ['a root mean square per pair', 'and year; t-tests on the daily gaps']]
+  ];
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var wide = W >= 720, n = STEPS.length, gap = wide ? 22 : 0, bw = wide ? (W - gap * (n - 1)) / n : W, bh = 74, vgap = 18;
+    var H = wide ? bh + 4 : n * bh + (n - 1) * vgap + 4;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Pipeline: every order book event on three platforms; six fixes a day, over 5, 10 and 20 minutes, each with and without outlier checks; three daily gaps in pips; compared across windows with a root mean square per pair and year and t-tests on the daily gaps.' }, box);
+    STEPS.forEach(function (st, i) {
+      var x = wide ? i * (bw + gap) : 0, y = wide ? 2 : 2 + i * (bh + vgap);
+      S('rect', { x: x + 0.5, y: y, width: bw - 1, height: bh, rx: 3, 'class': 'pipe-box' + (i === n - 1 ? ' last' : '') }, root);
+      T(root, x + 12, y + 22, st[0], { 'class': 'strong' });
+      st[1].forEach(function (ln, k) { T(root, x + 12, y + 42 + 15 * k, ln); });
+      if (i < n - 1) {
+        if (wide) { var ax = x + bw + 2, ay = y + bh / 2; S('line', { x1: ax, x2: ax + gap - 8, y1: ay, y2: ay, 'class': 'arrow-line' }, root); S('path', { d: 'M' + (ax + gap - 4) + ',' + ay + ' l-6,-4 v8 z', 'class': 'arrow-head' }, root); }
+        else { var bx = 24, by = y + bh + 1; S('line', { x1: bx, x2: bx, y1: by, y2: by + vgap - 6, 'class': 'arrow-line' }, root); S('path', { d: 'M' + bx + ',' + (by + vgap - 2) + ' l-4,-6 h8 z', 'class': 'arrow-head' }, root); }
+      }
+    });
+  }, { min: 300, max: 1060 });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Before the vote · Local Elections and the Quality of Financial Statements</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Capalbo, Galati, Lupi and Smarra (2023): the two piles of accounts, which one fails Benford’s law, why a smaller pile is not the reason, what full ownership adds, and what a misfit does not prove.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-elections.html">
+<lg-sitebar><noscript><a href="../../publication/local-elections-benford-moe/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What did the authors compare?">
+  <div class="inner two" style="align-items:center">
+    <div>
+      <p class="kicker">Deck 2 · Before the vote · 1 of 6</p>
+      <h2>Two piles of accounts</h2>
+      <p>The authors merged a database of Italian company accounts with the Treasury’s open data on who owns what. They kept companies more than half owned by a town and working in five utility industries: public transport, gas, water, electricity and waste collection. Over a decade that leaves 5,021 positive pre-tax profits, about two election cycles per company.</p>
+      <p>Then they split the profits by the calendar. A statement is <strong>pre-election</strong> when it covers the year before the town’s election and comes out just before the vote. That gives 1,057 pre-election statements and 3,964 ordinary ones.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>Place your bet&nbsp;→</button>
+        <a class="door" href="03-setting.html#s2">How 9,091 entities became 5,021 numbers&nbsp;→</a>
+      </div>
+      <p class="note">Sections 2 and 4, Table 1 (pp. 2, 4). Only positive profits are kept: Benford’s law applies to positive numbers, and losses may follow different incentives (p. 4, footnote 2). The company accounts come from Bureau van Dijk’s AIDA; the ownership data are the Ministry of Economics and Finance’s open data on public shareholdings.</p>
+    </div>
+    <div>
+      <div class="fig" id="units"></div>
+      <p class="legend"><span><i class="sq near"></i>pre-election statements</span><span><i class="sq far"></i>ordinary-year statements</span><span>one square: 10 statements</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Which pile fails the test?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 2 of 6</p>
+    <h2>Place a bet: which pile fails the test?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Both piles go through the detector of the previous deck: the chi-square and the adjusted MAD, with 0.05 as the line. Remember: the ordinary pile is nearly four times bigger.</p>
+        <p><strong>Which pile stops following Benford’s law?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="ord" aria-pressed="false">Only the big ordinary pile</button>
+          <button class="btn" type="button" data-bet="pre" aria-pressed="false">Only the pre-election pile</button>
+          <button class="btn" type="button" data-bet="both" aria-pressed="false">Both</button>
+          <button class="btn" type="button" data-bet="neither" aria-pressed="false">Neither</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="chart-pair">
+          <div><div class="fig" id="fail-pre"></div><p class="pv" id="pv-pre"></p></div>
+          <div><div class="fig" id="fail-ord"></div><p class="pv" id="pv-ord"></p></div>
+        </div>
+        <p class="legend" id="fail-legend" style="visibility:hidden"><span><i class="sq near"></i>pre-election, 1,057</span><span><i class="sq far"></i>ordinary years, 3,964</span><span><i class="ln law"></i>Benford’s law</span></p>
+        <p class="note" id="fail-note">Figure 2, panels A and B, and p. 4: companies more than half owned by a town; “nearly four times” is the paper’s, 3,964 against 1,057 (Table 1). Bars reconstructed from the figure; p values as printed in it.</p>
+      </div>
+      <div class="t">
+        <p id="fail-verdict" aria-live="polite"></p>
+        <div class="actions" id="fail-next" hidden>
+          <button class="btn primary" type="button" data-next>Isn’t the small pile just noisier?&nbsp;→</button>
+          <a class="door" href="01-digits.html?pile=pre#s4">Run the pre-election pile through the detector&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide text-first" data-title="Is the small pile just noisier?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 3 of 6</p>
+    <h2>A smaller pile is not why it fails</h2>
+    <div class="two">
+      <div>
+        <p>An obvious objection: the pre-election pile is smaller, so maybe it is just noisier. But a smaller pile makes these tests less sensitive, not more. The ordinary pile, nearly four times bigger, had the better chance of being flagged, and it passed.</p>
+        <p>The authors also check directly. They draw 1,057 statements from the ordinary pile, the size of the pre-election one, run the test, and repeat 10,000 times. That shows how far an ordinary pile of that size strays by chance. Draw them yourself.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What if the town owns all of it?&nbsp;→</button>
+          <a class="door" href="04-tests.html#s1">Why does the size of a pile matter so much?&nbsp;→</a>
+        </div>
+        <p class="note">Figure 2, panels C and D, and pp. 3–4. Subsamples are drawn by this page, with a fixed seed, from the 3,964 first digits reconstructed from Figure 2B; the paper drew its 10,000 from the statements themselves. The gold line is computed from the reconstructed pre-election bars and sits where the paper’s vertical line does; the dashed curve is what the law predicts. In the paper the subsampled curves and the law’s curves nearly coincide, and the authors find the pre-election values very unlikely under them (p. 4). The count in the readout is this page’s own.</p>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Subsamples of 1,057 from the ordinary pile <span class="tag">drawn by this page</span></p>
+        <div class="ctl"><span>Test</span><div class="seg" id="sub-test"></div></div>
+        <div class="fig" id="sub-chart"></div>
+        <p class="legend"><span><i class="sq far"></i>subsamples</span><span><i class="ln theory"></i>what the law predicts</span><span><i class="vl"></i>the pre-election pile</span></p>
+        <div class="actions" style="margin-top:.5rem">
+          <button class="btn" type="button" id="sub-100">Draw 100</button>
+          <button class="btn" type="button" id="sub-all">Draw up to 10,000</button>
+          <button class="btn" type="button" id="sub-clear">Start again</button>
+        </div>
+        <p class="readout h2l" id="sub-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Does full ownership matter?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 4 of 6</p>
+    <h2>Place a bet: what if the town owns all of it?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Some companies are owned outright by their town. They account for 2,983 of the statements: 630 pre-election and 2,353 ordinary, about three in five of each pile.</p>
+        <p><strong>If the town owns all of the company, what should its pre-election pile show?</strong></p>
+        <div class="actions bet" id="own-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="weaker" aria-pressed="false">A weaker anomaly</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">About the same</button>
+          <button class="btn" type="button" data-bet="stronger" aria-pressed="false">A stronger anomaly</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="ctl" id="own-toggle" style="visibility:hidden"><span>Compare</span><div class="seg" id="own-seg"></div></div>
+        <div class="chart-pair">
+          <div><div class="fig" id="own-pre"></div><p class="pv" id="opv-pre"></p></div>
+          <div><div class="fig" id="own-ord"></div><p class="pv" id="opv-ord"></p></div>
+        </div>
+        <p class="note" id="own-note">Figure 3 (fully owned) and Figure 2 (more than half owned), panels A and B, with the p values printed in them; pp. 4–5. Head to head, the fully owned pre-election and ordinary piles differ with p = 0.008 (p. 4). Footnote 3 applies the same test across the two ownership levels and finds their digit distributions compatible with one distribution: p = 0.965 before elections, 0.907 in ordinary years. Bars reconstructed from the figures. Three in five: 630 of 1,057 and 2,353 of 3,964, computed from Table 1.</p>
+      </div>
+      <div class="t">
+        <p id="own-verdict" aria-live="polite"></p>
+        <div class="actions" id="own-next" hidden>
+          <button class="btn primary" type="button" data-next>What does a misfit prove?&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What does a misfit prove?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 5 of 6</p>
+    <h2>A misfit is a warning light, not a verdict</h2>
+    <p class="lead">The tests say that pre-election profits stop looking like untouched numbers. They cannot say more, and the authors are careful about it.</p>
+    <ul class="facts">
+      <li><b>Not necessarily illegal</b>For the paper, manipulation includes judgement calls inside the accounting rules, made to hit a goal rather than to give a fair view (p. 5).</li>
+      <li><b>No direction</b>The paper does not try to tell whether profits were pushed up or down, only whether they look touched (p. 4).</li>
+      <li><b>Whose motive</b>A manager may adjust the accounts for personal reasons, with no pressure from the mayor; the paper leaves that to future research (p. 6).</li>
+      <li><b>Head to head</b>Compared directly, without the law, the two piles give p&nbsp;=&nbsp;0.064, just above the 0.05 line: a rejection only at a level “just above the conventional 5%” (p. 4). Fully owned companies: p&nbsp;=&nbsp;0.008.</li>
+      <li><b>What was tested</b>First digits of positive pre-tax profits of Italian utility companies more than half owned by a town, over a decade (pp. 2, 4).</li>
+    </ul>
+    <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Before the vote · 6 of 6</p>
+    <h2>What to take away</h2>
+    <p class="closer">Over a decade of accounts, the profits of Italian town-owned utilities fail two tests of Benford’s law just before local elections; in ordinary years they pass.</p>
+    <ol class="takeaways">
+      <li>Ordinary-year profits conform; pre-election profits do not (p&nbsp;=&nbsp;0.016 and 0.033, companies more than half owned by a town).</li>
+      <li>A smaller pile is not the reason: the bigger ordinary pile passes, and subsamples of the pre-election size rarely stray as far.</li>
+      <li>Fully owned companies show a clearer misfit (p&nbsp;=&nbsp;0.0003 and 0.0054).</li>
+      <li>It signals lower data quality around elections, not proof of fraud: auditors should look harder then, and voters and media should not read these results as the mayor’s report card.</li>
+    </ol>
+    <p class="caveat">Compared directly, the two piles land just above the 0.05 line (p&nbsp;=&nbsp;0.064); the fully owned piles differ clearly (p&nbsp;=&nbsp;0.008). The tests cannot say which way profits moved, or who moved them.</p>
+    <p class="prompt">Left to further research: was it the mayor’s pressure or the manager’s own motives (p. 6)? The authors’ advice: shield managers from politicians through more transparent appointments, as the OECD guidelines recommend (p. 6).</p>
+    <div class="actions">
+      <a class="btn primary" href="01-digits.html#s4">Find the smallest flagged touch-up&nbsp;→</a>
+      <a class="btn" href="../../publication/local-elections-benford-moe/">Read the paper</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Side paths you may have skipped: <a href="03-setting.html#s1">the mayor’s companies and the election calendar</a> · <a href="03-setting.html#s2">how the sample was built</a> · <a href="04-tests.html#s1">why the size of a pile matters</a>. Sources: Figures 2 and 3, Table 1, pp. 4–6.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/local-elections-benford-moe/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the two piles as units of ten statements (Table 1) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('units');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var cols = 20, gap = W < 420 ? 18 : 30, cell = Math.floor(Math.min(11, (W - gap) / (2 * cols))), sq = cell - 2;
+    var rowsPre = Math.ceil(106 / cols), rowsOrd = Math.ceil(396 / cols), top = 36;
+    var H = top + rowsOrd * cell + 4, xo = cols * cell + gap;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two piles drawn as squares of ten statements: 1,057 pre-election statements (106 squares) beside 3,964 ordinary-year statements (396 squares), nearly four times as many.' }, box);
+    function block(n, x0, cls) { for (var i = 0; i < n; i++) S('rect', { x: x0 + (i % cols) * cell, y: top + Math.floor(i / cols) * cell, width: sq, height: sq, rx: 1, 'class': cls }, root); }
+    T(root, 0, 12, 'Pre-election', { 'class': 'strong' });
+    T(root, 0, 27, '1,057 statements', { 'class': 'label' });
+    T(root, xo, 12, 'Ordinary years', { 'class': 'strong' });
+    T(root, xo, 27, '3,964 statements', { 'class': 'label' });
+    block(106, 0, 'unit-near');
+    block(396, xo, 'unit-far');
+    T(root, 0, top + rowsPre * cell + 18, 'about a quarter as', { 'class': 'label' });
+    T(root, 0, top + rowsPre * cell + 33, 'many as the', { 'class': 'label' });
+    T(root, 0, top + rowsPre * cell + 48, 'ordinary pile', { 'class': 'label' });
+  }, { min: 300, max: 520 });
+})();
+
+/* ---------- shared: a pair of first-digit charts with their p values ---------- */
+function drawPair(boxA, boxB, pvA, pvB, data) {
+  var E = Explore;
+  function render(box, d, cls, W) {
+    var D = data();
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.72, 200, 240));
+    var c = E.digitChart(box, { W: W, H: H, shares: D ? D[d].shares : null, cls: cls, yMax: 0.35, noLaw: !D,
+      title: D ? D[d].title : (d === 'pre' ? 'Pre-election' : 'Ordinary years'),
+      aria: D ? D[d].aria : 'An empty chart of first-digit shares, waiting for your bet.' });
+    if (!D) E.text(c.root, (c.L + W - c.R) / 2, c.Y(0.18), 'Bet to draw', { 'text-anchor': 'middle', 'class': 'placeholder' });
+  }
+  var ra = E.fit(boxA, function (W) { render(boxA, 'pre', 'near', W); }, { min: 260, max: 420 });
+  var rb = E.fit(boxB, function (W) { render(boxB, 'ord', 'far', W); }, { min: 260, max: 420 });
+  return function () {
+    var D = data();
+    pvA.innerHTML = D ? D.pre.pv : '&nbsp;'; pvB.innerHTML = D ? D.ord.pv : '&nbsp;';
+    ra(); rb();
+  };
+}
+function pileData(pre, ord, nPre, nOrd, pPre, pOrd, which) {
+  var E = Explore;
+  function aria(name, n, s) { return name + ', ' + n + ' statements, first-digit shares against Benford’s law: ' + s.map(function (v, i) { return (i + 1) + ': ' + E.pct(v, 1) + ' (law ' + E.pct(E.B[i], 1) + ')'; }).join(', ') + '.'; }
+  /* three short lines, in the detector's own verbs, so the two panels wrap alike and nothing dangles */
+  function line(p) {
+    var f = (+p[0] < 0.05) + (+p[1] < 0.05);
+    return '<span class="nw">adjusted MAD p&nbsp;=&nbsp;<strong>' + p[0] + '</strong></span><br><span class="nw">chi-square p&nbsp;=&nbsp;<strong>' + p[1] + '</strong></span><br>' +
+      (f === 2 ? 'flagged by both tests' : f === 1 ? 'flagged by one test' : 'passes both tests');
+  }
+  var sp = E.shares(pre), so = E.shares(ord);
+  return {
+    pre: { shares: sp, title: 'Pre-election, ' + nPre + (which ? ', ' + which : ''), aria: aria('Pre-election' + (which ? ', ' + which : ''), nPre, sp), pv: line(pPre) },
+    ord: { shares: so, title: 'Ordinary years, ' + nOrd + (which ? ', ' + which : ''), aria: aria('Ordinary years' + (which ? ', ' + which : ''), nOrd, so), pv: line(pOrd) }
+  };
+}
+
+/* ---------- slide 2: which pile fails (Figure 2A, 2B) ---------- */
+(function () {
+  var E = Explore;
+  var DATA = pileData(E.PILES.pre50, E.PILES.ord50, '1,057', '3,964', ['0.016', '0.033'], ['0.11', '0.24']);
+  var bet = null, betBox = document.getElementById('bet');
+  var redraw = drawPair(document.getElementById('fail-pre'), document.getElementById('fail-ord'), document.getElementById('pv-pre'), document.getElementById('pv-ord'), function () { return bet ? DATA : null; });
+  var LEAD = {
+    pre: 'You called it. ',
+    ord: 'The other way round. ',
+    both: 'Only one of them fails. ',
+    neither: 'One of them fails. '
+  };
+  var TAIL = 'The big ordinary pile passes both tests: p&nbsp;=&nbsp;0.11 for the adjusted MAD and 0.24 for the chi-square, above 0.05. The pre-election pile is flagged by both: p&nbsp;=&nbsp;0.016 and 0.033. Look where its biggest gaps sit: too few 3s, too many 2s and 8s. The paper reads no direction into them; it asks only whether the pile still looks like untouched numbers.';
+  function place(b) {
+    bet = b;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-fail', b);
+    document.getElementById('fail-verdict').innerHTML = LEAD[b] + TAIL;
+    document.getElementById('fail-next').hidden = false;
+    document.getElementById('fail-legend').style.visibility = 'visible';
+    redraw();
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet')); });
+  var prior = E.load('bet-fail');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior); else redraw();
+})();
+
+/* ---------- slide 3: subsampling from the ordinary pile (Figure 2C, 2D) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var M = 1057, MAXN = 10000, SEED = 20230710;
+  var POP = []; E.PILES.ord50.forEach(function (c, d) { for (var k = 0; k < c; k++) POP.push(d); });
+  var PRE = E.tests(E.shares(E.PILES.pre50), M); /* z = 2.14, chi-square = 16.7 */
+  var CFG = {
+    mad: { key: 'z', line: PRE.z, lo: -3, hi: 4.5, bin: 0.25, yMax: 0.12, pdf: function (x) { return Math.exp(-x * x / 2) / Math.sqrt(2 * Math.PI); },
+      axis: 'Adjusted MAD, standardized', ticks: [-2, 0, 2, 4], name: 'adjusted MAD' },
+    chi: { key: 'chi', line: PRE.chi, lo: 0, hi: 32, bin: 1, yMax: 0.13, pdf: E.chi2pdf, axis: 'Chi-square', ticks: [0, 8, 16, 24, 32], name: 'chi-square' }
+  };
+  var box = document.getElementById('sub-chart'), read = document.getElementById('sub-read');
+  var test = 'mad', vals = { z: [], chi: [] }, rng = null, geo = null;
+  function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function reset() { rng = mulberry(SEED); vals = { z: [], chi: [] }; }
+  function drawSome(k) {
+    var pool = POP.slice(), n = pool.length;
+    for (var s = 0; s < k && vals.z.length < MAXN; s++) {
+      var cnt = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      for (var i = 0; i < M; i++) { var j = i + Math.floor(rng() * (n - i)), t = pool[i]; pool[i] = pool[j]; pool[j] = t; cnt[pool[i]]++; }
+      var r = E.tests(cnt.map(function (c) { return c / M; }), M);
+      vals.z.push(r.z); vals.chi.push(r.chi);
+    }
+    E.save('subsamples', vals.z.length);
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var c = CFG[test], H = Math.round(E.clamp(W * 0.52, 210, 250)), L = 36, R = 10, TOP = 22, BOT = 36;
+    function X(v) { return L + (W - L - R) * (v - c.lo) / (c.hi - c.lo); }
+    function Y(v) { return TOP + (H - TOP - BOT) * (1 - Math.min(v, c.yMax) / c.yMax); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': '' }, box);
+    [0, 0.05, 0.1].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis' }, root);
+      T(root, L - 6, Y(v) + 4, Math.round(v * 100) + '%', { 'text-anchor': 'end' });
+    });
+    c.ticks.forEach(function (v) { S('line', { x1: X(v), x2: X(v), y1: H - BOT, y2: H - BOT + 5, 'class': 'axis' }, root); T(root, X(v), H - BOT + 17, String(v).replace('-', '−'), { 'text-anchor': 'middle' }); });
+    T(root, (L + W - R) / 2, H - 4, c.axis, { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, L - 32, 12, 'Share of subsamples', { 'class': 'label' });
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, BOT: BOT, root: root, dyn: S('g', {}, root) };
+    render();
+  }
+  function render() {
+    var c = CFG[test], v = vals[c.key], n = v.length;
+    var beyond = v.filter(function (x) { return x >= c.line; }).length;
+    read.innerHTML = n ? '<strong>' + th(n) + ' subsamples drawn.</strong> As far out as the pre-election pile, or further: <strong>' + th(beyond) + ' (' + (100 * beyond / n).toFixed(1) + '%)</strong>. The pre-election pile’s ' + c.name + ': ' + c.line.toFixed(c.key === 'z' ? 2 : 1) + '.'
+      : 'No subsamples yet. Draw some and watch where they pile up, against the gold line of the pre-election pile.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y; g.innerHTML = '';
+    var nb = Math.round((c.hi - c.lo) / c.bin), hist = new Array(nb).fill(0);
+    v.forEach(function (x) { var b = Math.floor((x - c.lo) / c.bin); if (b >= 0 && b < nb) hist[b]++; });
+    var bw = X(c.lo + c.bin) - X(c.lo);
+    if (n) hist.forEach(function (h, b) { var y = Y(h / n); S('rect', { x: X(c.lo + b * c.bin) + 0.5, y: y, width: Math.max(0.5, bw - 1), height: Y(0) - y, 'class': 'far-fill', 'fill-opacity': 0.75 }, g); });
+    var pts = [];
+    for (var x = c.lo; x <= c.hi + 1e-9; x += (c.hi - c.lo) / 160) pts.push(X(x).toFixed(1) + ',' + Y(c.pdf(x) * c.bin).toFixed(1));
+    S('polyline', { points: pts.join(' '), 'class': 'theory' }, g);
+    var lx = X(c.line);
+    S('line', { x1: lx, x2: lx, y1: geo.TOP, y2: geo.H - geo.BOT, 'class': 'gold-line' }, g);
+    T(g, lx + 6, geo.TOP + 12, 'pre-election: ' + c.line.toFixed(c.key === 'z' ? 2 : 1), { 'class': 'strong halo' });
+    geo.root.setAttribute('aria-label', 'Histogram of the ' + c.name + ' in ' + n + ' subsamples of 1,057 drawn from the ordinary pile, the curve the law predicts, and the pre-election value ' + c.line.toFixed(2) + '; ' + (n ? (100 * beyond / n).toFixed(1) + '% of subsamples reach it.' : 'no subsamples drawn yet.'));
+  }
+  E.seg(document.getElementById('sub-test'), [['mad', 'Adjusted MAD'], ['chi', 'Chi-square']], 'mad', function (k) { test = k; if (redraw) redraw(); }, 'Test');
+  document.getElementById('sub-100').addEventListener('click', function () { drawSome(100); render(); });
+  document.getElementById('sub-all').addEventListener('click', function () { drawSome(MAXN); render(); });
+  document.getElementById('sub-clear').addEventListener('click', function () { reset(); E.save('subsamples', 0); render(); });
+  reset();
+  var prior = +E.load('subsamples');
+  if (prior > 0 && prior <= MAXN) drawSome(prior);
+  var redraw = E.fit(box, build, { min: 300, max: 640 });
+  render();
+})();
+
+/* ---------- slide 4: full ownership (Figure 3A, 3B; footnote 3) ---------- */
+(function () {
+  var E = Explore;
+  var D = {
+    full: pileData(E.PILES.pre100, E.PILES.ord100, '630', '2,353', ['0.0003', '0.0054'], ['0.57', '0.43'], 'fully owned'),
+    half: pileData(E.PILES.pre50, E.PILES.ord50, '1,057', '3,964', ['0.016', '0.033'], ['0.11', '0.24'], 'more than half owned')
+  };
+  var bet = null, show = 'full', betBox = document.getElementById('own-bet');
+  var redraw = drawPair(document.getElementById('own-pre'), document.getElementById('own-ord'), document.getElementById('opv-pre'), document.getElementById('opv-ord'), function () { return bet ? D[show] : null; });
+  var LEAD = {
+    weaker: 'The other way. ',
+    same: 'Stronger, in fact. ',
+    stronger: 'You called it. '
+  };
+  var TAIL = 'On even fewer statements, the evidence against the law is stronger for the fully owned companies before elections: p&nbsp;=&nbsp;0.0003 for the adjusted MAD and 0.0054 for the chi-square; in ordinary years they pass both tests. The authors read this as signs of manipulation around elections, especially where the town owns the company outright (p.&nbsp;5).';
+  E.seg(document.getElementById('own-seg'), [['full', 'Fully owned'], ['half', 'More than half owned']], 'full', function (k) { show = k; redraw(); }, 'Companies');
+  function place(b) {
+    bet = b;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    E.save('bet-own', b);
+    document.getElementById('own-verdict').innerHTML = LEAD[b] + TAIL;
+    document.getElementById('own-next').hidden = false;
+    document.getElementById('own-toggle').style.visibility = 'visible';
+    redraw();
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet')); });
+  var prior = E.load('bet-own');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior); else redraw();
+})();
+</script>
+</body>
+</html>

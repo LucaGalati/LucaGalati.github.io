@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The experiment · The Information Content of Delayed Block Trades</title>
+<meta name="description" content="Deck 3 of an explorable explanation of Galati and De Blasis, The information content of delayed block trades in cryptocurrency markets: a bet on what a ten-minute delay did to 5 to 10 bitcoin trades, the result under different controls and windows, the blocks' total price impact, and what to take away.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .versus { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 2.4rem; margin: .4rem 0 1.1rem; }
+  @media (min-width: 760px) { .versus { grid-template-columns: 1fr 1fr; } }
+  .versus > div { border-top: 1px solid var(--border); padding-top: .7rem; }
+  .versus h3 { font-family: var(--sans); font-size: .74rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin: 0 0 .4rem; }
+  .versus p { font-size: .98rem; margin: 0; }
+  .versus .gem { border-top: 2px solid var(--gold); }
+  .readings { padding-left: 1.3em; margin: 0 0 .8rem; max-width: 40em; }
+  .readings li { margin-bottom: .4em; }
+  .readings li::marker { font-family: var(--sans); color: var(--muted); font-size: .8em; }
+  .takeaways { font-size: 1rem; }
+  .closer { margin-bottom: .7em; }
+</style>
+</head>
+<body data-deck="03-experiment.html">
+<lg-sitebar><noscript><a href="../../publication/delayed-block-trades-crypto/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="Did the delay draw in informed traders?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The experiment · 1 of 5</p>
+    <h2>Place a bet: did the delay draw in traders who know something?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>In futures markets, a delay gives a trader with private information time to use it before anyone sees the trade, so delayed blocks tend to be the informed ones (Frino, Galati and Gerace, 2022). The authors expected the same here: once 5 to 10 BTC trades could be printed ten minutes late, their permanent footprint should grow.</p>
+        <p><strong>Compared with the control group, what happened to how far 5 to 10 BTC trades moved the price for good?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="grew" aria-pressed="false">It grew</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">No change</button>
+          <button class="btn" type="button" data-bet="shrank" aria-pressed="false">It shrank</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="did"></div>
+        <p class="legend"><span><i class="ln ink"></i>5–10 BTC trades minus control, buys</span><span><i class="ln ink dash"></i>sells</span><span><i class="ln nochange"></i>had nothing changed</span><span><i class="ln zero"></i>control group</span></p>
+        <p class="note pending" id="did-note">Table 5, column 1. Plotted: the 5–10 BTC trades’ permanent footprint minus the control group’s, in percent, in the direction of the trade. Before: the coefficient on Treatment, the 5–10 BTC trades’ extra footprint before the change. After: Treatment plus Event × Treatment, which measures how much that extra footprint changed after it; computed from Table 5, 0.101 − 0.174 = −0.073 for buys and −0.133 + 0.259 = 0.126 for sells. The table gives sells’ footprints their own negative sign, so its +0.259 for sells is the −0.259 drawn here.</p>
+      </div>
+      <div class="t">
+        <p id="did-verdict" aria-live="polite"></p>
+        <div class="actions" id="did-next" hidden><button class="btn primary" type="button" data-next>Hold it up to the light&nbsp;→</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Does the answer survive scrutiny?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The experiment · 2 of 5</p>
+    <h2>Does the drop survive other controls, and another window?</h2>
+    <div class="two">
+      <div>
+        <p>The paper runs the regression again in two ways. Watch the gap.</p>
+        <p><strong>Controls.</strong> Does the drop survive when the regression also accounts for trading volume, volatility, a marker for COVID-19 and the 2020 bitcoin bubble, and bitcoin’s own return?</p>
+        <p><strong>Window.</strong> Table 5 measures each trade around its print. Table 6 repeats the regressions on the window of the whole footprint in deck 2, from twenty trades before execution to twenty after the print, so it takes in the ten unseen minutes. Does the drop survive there?</p>
+        <p class="door-row"><a class="door" href="06-doubts.html#s1" data-return="next">What else do the authors check?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Did blocks get cheaper for the market?&nbsp;→</button></div>
+        <p class="note">Tables 5 and 6, coefficients in percent, standard errors in parentheses. Points computed from the tables: before = Treatment, after = Treatment + Event × Treatment, sells’ signs flipped; the whisker spans 1.96 standard errors of Event × Treatment either side of the after point. Table 6’s window: footnote 18. Around both moments the paper finds less evidence for buys (page 13).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span class="pair"><span>Side</span><span class="seg" id="rob-side"></span></span><span class="pair"><span>Window</span><span class="seg" id="rob-win"></span></span></div>
+        <div class="ctl"><span class="pair"><span>Controls</span><span class="seg" id="rob-spec"></span></span></div>
+        <div class="fig" id="rob"></div>
+        <p class="legend"><span><i class="ln ink"></i>5–10 BTC trades minus control</span><span><i class="ln nochange"></i>had nothing changed</span><span><i class="whisker"></i>95% range of the change</span></p>
+        <p class="readout r4" id="rob-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did blocks get cheaper for the market?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The experiment · 3 of 5</p>
+    <h2>After the change, the average block moved the price more</h2>
+    <div class="two">
+      <div>
+        <p>A block facility exists to let large trades through without jolting the price. The <strong>total</strong> price impact is the whole move from twenty trades before to the block’s own price. After the change it grew: from 0.121% to 0.158% for block buys, from 0.085% to 0.123% for block sells.</p>
+        <p>For book trades, the total fell for buys and held steady for sells. The paper concludes that the lower threshold raised the blocks’ total market impact, the opposite of what the facility was introduced for.</p>
+        <p class="caveat">Table 3 tests blocks before against after: t = 1.642, p = 0.101 for buys; t = −1.841, p = 0.066 for sells.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Why would a delay keep traders away?&nbsp;→</button></div>
+        <p class="note">Tables 2 and 3, page 11 and the abstract; means in percent, sells’ signs flipped so both read in the direction of the trade; Table 3’s t and p as printed.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="bill"></div>
+        <p class="legend"><span><i class="ln blk"></i>blocks, buys</span><span><i class="ln blk dash"></i>blocks, sells</span><span><i class="ln book"></i>book trades, buys</span><span><i class="ln book dash"></i>book trades, sells</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why would a delay keep them away?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The experiment · 4 of 5</p>
+    <h2>Why might a delay keep informed traders away?</h2>
+    <p class="lead">The authors read the drop as the delay discouraging informed trading. In futures markets a delay did the opposite: why would Gemini differ?</p>
+    <div class="versus">
+      <div><h3>Upstairs in stocks and futures</h3><p>Two parties strike a deal, often through a broker who screens clients. Where reporting can be delayed, the informed traders who do trade upstairs get time to use what they know (Frino et al., 2022).</p></div>
+      <div class="gem"><h3>Upstairs on Gemini</h3><p>An order goes to every authorised market maker at once. The makers see a midpoint and a minimum, nothing else, and answer blind, as you did. Anyone with an account can send one.</p></div>
+    </div>
+    <p>The authors offer three readings:</p>
+    <ol class="readings">
+      <li>Blocks here work like a dark auction for market makers rather than a private deal.</li>
+      <li>Traders whose information lasts may not need speed, and may prefer to work patiently through limit orders on the book (Collin-Dufresne and Fos, 2015).</li>
+      <li>The lower threshold opened blocks to smaller, perhaps less sophisticated traders. With no data on who trades, the authors call this speculative.</li>
+    </ol>
+    <p>Why have an upstairs market at all, if its trades carry less information? Madhavan and Cheng (1997) argued that in stock markets it mainly serves those who supply liquidity, not those who start the trade; the paper suggests the same may hold here.</p>
+    <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+    <p class="note">Pages 3 and 12–15 of the paper.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 3 · The experiment · 5 of 5</p>
+    <h2>What to take away</h2>
+    <p class="closer">On Gemini, a ten-minute delay did not draw informed traders upstairs; the authors read the evidence as the delay discouraging them.</p>
+    <ol class="takeaways">
+      <li>Large trades on the order book move bitcoin’s price for good more than blocks do once these are printed, as theory for upstairs markets predicts; the paper “largely” confirms it.</li>
+      <li>Once 5 to 10 BTC trades could be delayed, their lasting price impact fell relative to the control group, the reverse of the futures evidence: delay discouraged informed trading, the authors conclude, potentially making the market less informative.</li>
+      <li>The average block’s total price impact rose after the change, which the authors read as running against the purpose of a block facility (Table 3: p = 0.101 for buys, 0.066 for sells).</li>
+    </ol>
+    <p class="caveat">Around execution and print together the drop is significant for sells but not for buys, where the paper finds less evidence. The data do not say who traded, so the reasons are the authors’ reading. The evidence comes from one coin, one exchange and one rule change. The authors leave open whether the information in a trade rises or falls as trades get smaller, and whether crypto markets need theory of their own.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-go="2">Play with the experiment again&nbsp;→</button>
+      <a class="btn" href="../../publication/delayed-block-trades-crypto/">Read the paper</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Abstract, Tables 3 and 6, pages 12–16; the open questions: page 16.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/delayed-block-trades-crypto/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- the gap chart shared by slides 1 and 2: treated minus control, before and after, in the trade's direction.
+   Drawn in ink, not gold or blue: those mean block and book trade everywhere else, and neither group here is simply one of them. ---------- */
+var Gap = (function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var LO = -0.25, HI = 0.2;
+  function f3(v) { return (v < 0 ? '−' : v > 0 ? '+' : '') + Math.abs(v).toFixed(3); }
+  /* lines: [{ before, after, dash, half }], half = 1.96 standard errors of the change (optional) */
+  function frame(box, W, aria) {
+    box.innerHTML = '';
+    var H = 266, L = 48, TOP = 38, B = 30, xa = L + 54, xb = W - (W < 470 ? 104 : 150);
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': aria }, box);
+    [-0.2, -0.1, 0, 0.1, 0.2].forEach(function (v) {
+      S('line', { x1: L, x2: W - 4, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, E.pct(v, 1, true), { 'text-anchor': 'end' });
+    });
+    if (W >= 470) T(root, L + 4, Y(0) + 15, 'control group', {});
+    T(root, L, 14, W < 470 ? 'Extra lasting move over the control, %' : 'Extra lasting move over the control, in the direction of the trade, %', { 'class': 'label' });
+    T(root, xa, H - 8, W < 470 ? 'before' : 'before 6 Dec 2019', { 'text-anchor': 'middle' });
+    T(root, xb, H - 8, 'after', { 'text-anchor': 'middle' });
+    return { Y: Y, xa: xa, xb: xb, W: W, dyn: S('g', {}, root) };
+  }
+  function draw(geo, lines, opt) {
+    var g = geo.dyn, Y = geo.Y, xa = geo.xa, xb = geo.xb;
+    g.innerHTML = '';
+    if (!lines) { T(g, (xa + xb) / 2, Y(0.12), opt && opt.empty || '', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    var la = E.spread(lines.map(function (l) { return Y(l.before) + 4; }), 15);
+    var lb = E.spread(lines.map(function (l) { return Y(l.after) + 4; }), 15);
+    lines.forEach(function (l, i) {
+      var bx = xb + 14 + i * 14;
+      S('line', { x1: xa, x2: bx, y1: Y(l.before), y2: Y(l.before), 'class': 'nochange' }, g);
+      S('line', { x1: xa, x2: xb, y1: Y(l.before), y2: Y(l.after), 'class': l.dash ? 'ink-dash' : 'ink' }, g);
+      if (l.half != null) { /* under the dots, over a paper halo so it reads across the zero line */
+        var d = 'M' + (xb - 5) + ',' + Y(l.after - l.half).toFixed(1) + ' H' + (xb + 5) + ' M' + xb + ',' + Y(l.after - l.half).toFixed(1) + ' V' + Y(l.after + l.half).toFixed(1) + ' M' + (xb - 5) + ',' + Y(l.after + l.half).toFixed(1) + ' H' + (xb + 5);
+        S('path', { d: d, 'class': 'halo-line' }, g);
+        S('path', { d: d, 'class': 'bracket' }, g);
+      }
+      S('circle', { cx: xa, cy: Y(l.before), r: 5, 'class': 'text-fill' }, g);
+      S('circle', { cx: xb, cy: Y(l.after), r: 5, 'class': 'text-fill' }, g);
+      S('path', { d: 'M' + (bx - 4) + ',' + Y(l.before).toFixed(1) + ' H' + bx + ' V' + Y(l.after).toFixed(1) + ' H' + (bx - 4), 'class': 'bracket' }, g);
+      T(g, xa - 10, la[i], f3(l.before), { 'text-anchor': 'end', 'class': 'label halo' });
+    });
+    /* change labels at the right of the brackets, level with where each line ends, kept apart */
+    var lc = E.spread(lines.map(function (l) { return Y(l.after) + 4; }), 15);
+    lines.forEach(function (l, i) {
+      var bx = xb + 14 + (lines.length - 1) * 14;
+      T(g, bx + 8, lc[i], (lines.length > 1 ? (l.dash ? 'sells ' : 'buys ') : 'change ') + f3(l.after - l.before), { 'class': 'strong halo' });
+      T(g, xb - 10, lb[i], f3(l.after), { 'text-anchor': 'end', 'class': 'label halo' });
+    });
+  }
+  return { frame: frame, draw: draw, f3: f3 };
+})();
+
+/* ---------- slide 1: the bet, then Table 5, column 1 ---------- */
+(function () {
+  var E = Explore;
+  var TARGET = [0.101, -0.073, 0.133, -0.126]; /* buys before, after; sells before, after (sells' signs flipped) */
+  var betBox = document.getElementById('bet'), box = document.getElementById('did'), verdict = document.getElementById('did-verdict');
+  var nextBox = document.getElementById('did-next'), note = document.getElementById('did-note');
+  var st = { bet: null }, geo = null, shown = null, own = {};
+  function lines(v) { return v ? [{ before: v[0], after: v[1] }, { before: v[2], after: v[3], dash: true }] : null; }
+  function build(W) {
+    geo = Gap.frame(box, W, 'Permanent price impact of 5 to 10 bitcoin trades minus the control group, in the direction of the trade, before and after 6 December 2019. Buys: 0.101 percent above the control before, 0.073 below after. Sells: 0.133 above before, 0.126 below after.');
+    Gap.draw(geo, lines(shown), { empty: 'Place your bet to draw the data' });
+  }
+  var LEAD = { grew: 'The opposite. ', same: 'It moved, and a lot. ', shrank: 'Yes. ' };
+  var TAIL = 'Before the change, 5 to 10 BTC trades moved the price for good about 0.10% (buys) and 0.13% (sells) more than the control blocks; after it, about 0.07% and 0.13% less, a change significant at 1% on both sides. So the delay did not bring more information upstairs: that is the answer to the question the closing gap raised.';
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-delay', bet);
+    verdict.textContent = LEAD[bet] + TAIL;
+    nextBox.hidden = false; note.classList.remove('pending');
+    E.tween(own, animate ? [0, 0, 0, 0] : null, TARGET, function (v) { shown = v; if (geo) Gap.draw(geo, lines(v)); }, 800);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet-delay');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: the same gap under each specification and window (Tables 5 and 6) ---------- */
+(function () {
+  var E = Explore, f3 = Gap.f3;
+  /* per table and side: Treatment, Event × Treatment, its standard error and stars, for specifications 1, 2, 3 */
+  var D = {
+    t5: { buy:  { tr: [0.101, 0.107, 0.108], ix: [-0.174, -0.183, -0.189], se: [0.042, 0.043, 0.043], st: ['***', '***', '***'] },
+          sell: { tr: [-0.133, -0.140, -0.142], ix: [0.259, 0.268, 0.270], se: [0.047, 0.048, 0.048], st: ['***', '***', '***'] } },
+    t6: { buy:  { tr: [0.013, 0.042, 0.042], ix: [0.005, -0.047, -0.026], se: [0.044, 0.045, 0.044], st: ['', '', ''] },
+          sell: { tr: [-0.120, -0.094, -0.087], ix: [0.171, 0.134, 0.124], se: [0.049, 0.050, 0.050], st: ['***', '***', '**'] } }
+  };
+  var SPEC = ['no controls', 'with volume and volatility', 'with these plus a COVID-19 marker and bitcoin returns'];
+  var box = document.getElementById('rob'), read = document.getElementById('rob-read');
+  var st = { side: 'buy', win: 't5', spec: 0 }, geo = null, shown = null, own = {};
+  function target() {
+    var d = D[st.win][st.side], s = st.side === 'buy' ? 1 : -1, k = st.spec;
+    return [s * d.tr[k], s * (d.tr[k] + d.ix[k]), 1.96 * d.se[k]];
+  }
+  /* one line at a time, always solid: the only dotted line on this chart is "had nothing changed" */
+  function lines(v) { return [{ before: v[0], after: v[1], half: v[2] }]; }
+  function build(W) {
+    geo = Gap.frame(box, W, 'The 5 to 10 bitcoin trades’ permanent price impact minus the control group’s, before and after the change, for the chosen side, window and controls, with a whisker of 1.96 standard errors around the change.');
+    Gap.draw(geo, lines(shown || target()));
+  }
+  function readout() {
+    var d = D[st.win][st.side], k = st.spec, sig = d.st[k], s = st.side === 'buy' ? 1 : -1;
+    var where = st.win === 't5' ? 'at the print' : 'around execution and print';
+    var txt = '<strong>' + (st.side === 'buy' ? 'Buys' : 'Sells') + ', ' + where + ', ' + SPEC[k] + ':</strong> the change is ' + f3(s * d.ix[k]) +
+      (st.side === 'sell' ? ' in the trade’s direction (the table prints ' + f3(d.ix[k]) + ')' : '') + ', with a 95% range of ±' + (1.96 * d.se[k]).toFixed(3) + '. ';
+    txt += sig ? 'The whisker stays clear of the dotted “had nothing changed” line: significant at ' + (sig === '***' ? '1%' : sig === '**' ? '5%' : '10%') + '.'
+      : 'The whisker reaches the dotted “had nothing changed” line: the change cannot be told apart from zero.';
+    read.innerHTML = txt;
+  }
+  function update() { readout(); E.tween(own, shown, target(), function (v) { shown = v; if (geo) Gap.draw(geo, lines(v)); }); }
+  E.seg(document.getElementById('rob-side'), [['buy', 'Buys'], ['sell', 'Sells']], st.side, function (k) { st.side = k; update(); }, 'Side');
+  E.seg(document.getElementById('rob-win'), [['t5', 'At the print'], ['t6', 'Execution and print']], st.win, function (k) { st.win = k; update(); }, 'Window');
+  E.seg(document.getElementById('rob-spec'), [['0', 'None'], ['1', '+ volume, volatility'], ['2', '+ COVID, returns']], '0', function (k) { st.spec = +k; update(); }, 'Controls');
+  readout();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: total price impact before and after (Table 2, Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* in the direction of the trade: [before, after, class, dashed, label] */
+  var ROWS = [[0.121, 0.158, 'blk', false, 'block buys'], [0.085, 0.123, 'blk', true, 'block sells'], [0.149, 0.081, 'book', false, 'book buys'], [0.099, 0.102, 'book', true, 'book sells']];
+  var box = document.getElementById('bill'), LO = 0, HI = 0.18;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 280, L = 48, TOP = 34, B = 30, xa = L + 70, xb = W - (W < 470 ? 112 : 130);
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Total price impact in percent, in the direction of the trade, before and after the change. Block buys 0.121 to 0.158; block sells 0.085 to 0.123; book buys 0.149 to 0.081; book sells 0.099 to 0.102.' }, box);
+    [0, 0.05, 0.1, 0.15].forEach(function (v) {
+      S('line', { x1: L, x2: W - 4, y1: Y(v), y2: Y(v), 'class': v ? 'grid' : 'axis zero' }, root);
+      T(root, L - 6, Y(v) + 4, E.pct(v, 2), { 'text-anchor': 'end' });
+    });
+    T(root, L, 14, W < 470 ? 'Total price impact, %' : 'Total price impact, in the direction of the trade, %', { 'class': 'label' });
+    T(root, xa, H - 8, W < 470 ? 'before' : 'before 6 Dec 2019', { 'text-anchor': 'middle' });
+    T(root, xb, H - 8, 'after', { 'text-anchor': 'middle' });
+    var la = E.spread(ROWS.map(function (r) { return Y(r[0]) + 4; }), 15), lb = E.spread(ROWS.map(function (r) { return Y(r[1]) + 4; }), 15);
+    ROWS.forEach(function (r, i) {
+      var cls = r[3] ? (r[2] === 'blk' ? 'blk-dash' : 'book') : r[2];
+      var ln = S('line', { x1: xa, x2: xb, y1: Y(r[0]), y2: Y(r[1]), 'class': cls }, root);
+      if (r[3] && r[2] === 'book') ln.setAttribute('stroke-dasharray', '6 4');
+      S('circle', { cx: xa, cy: Y(r[0]), r: 4.5, 'class': r[2] + '-fill' }, root);
+      S('circle', { cx: xb, cy: Y(r[1]), r: 4.5, 'class': r[2] + '-fill' }, root);
+      T(root, xa - 10, la[i], r[0].toFixed(3), { 'text-anchor': 'end', 'class': r[2] === 'blk' ? 'strong' : 'label' });
+      T(root, xb + 10, lb[i], r[1].toFixed(3) + (W < 470 ? '' : '  ' + r[4]), { 'class': r[2] === 'blk' ? 'strong' : 'label' });
+    });
+  }, { min: 300, max: 600 });
+})();
+</script>
+</body>
+</html>
