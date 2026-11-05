@@ -94,19 +94,24 @@
               "venue" $venue
               "bib" (htmlUnescape (partial "bibtex_entry.html" .))) -}}
         <article class="pub-item" data-tab="{{ $tab }}" data-group="{{ $group }}" data-year="{{ $year }}" data-slug="{{ $slug }}" data-areas="{{ delimit (.Params.areas | default slice) " " }}" data-title="{{ lower .Title }}" data-authors="{{ lower (delimit (.Params.authors | default slice) ", ") }}" data-venue="{{ lower $venue }}" data-abstract="{{ lower (plainify (.Params.abstract | default "")) }}">
-          <p class="pub-item__cite">
-            <span class="pub-item__authors">{{ partial "authors.html" (dict "authors" .Params.authors "owner" $owner) }}</span>
-            ({{ $year }}).
-            <a class="pub-item__title" href="{{ .RelPermalink }}">{{ .Title }}</a>.
+          {{- /* The title first, then the co-authors ("with …": the owner's name is not repeated on
+                 every row), then the venue. The paper page keeps the full author list in order. */}}
+          <p class="pub-item__head">
+            <a class="pub-item__title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            {{ partial "jmp_badge.html" . }}
+          </p>
+          {{- with partial "authors.html" (dict "authors" .Params.authors "owner" $owner "without_owner" true) }}
+          <p class="pub-item__meta pub-item__by">{{ i18n "with" | default "with" }} {{ . }}</p>
+          {{- end }}
+          <p class="pub-item__meta pub-item__where">
             {{- /* Bold is for journal names; a working paper's "Working paper" stays plain, as on its page. */}}
-            {{ with $venue }}{{ if eq $tab "working-papers" }}{{ . }}{{ else }}<b class="pub-item__venue">{{ . }}</b>{{ end }}.{{ end }}
+            {{- with $venue }}{{ if eq $tab "working-papers" }}{{ . }}{{ else }}<b class="pub-item__venue">{{ . }}</b>{{ end }}, {{ end }}{{ $year }}
             {{- if .Params.letter }}
             <span class="badge-status">{{ i18n "letter" | default "Letter" }}</span>
             {{- end }}
             {{- if eq .Params.status "forthcoming" }}
             <span class="badge-status">{{ i18n "forthcoming" | default "Forthcoming" }}</span>
             {{- end }}
-            {{ partial "jmp_badge.html" . }}
           </p>
           {{- with .Params.award }}
           <p class="award-line">{{ partial "award_badge.html" . }}</p>
@@ -114,6 +119,9 @@
           <p class="pub-item__meta pub-item__links">
             {{- if and $slug (fileExists (printf "static/explore/%s/index.html" $slug)) }}
             <a class="mini-btn mini-btn--explore" href="{{ printf "explore/%s/" $slug | relURL }}">{{ i18n "btn_explore" | default "Explore" }}</a>
+            {{- end }}
+            {{- with .Params.url_presentation }}
+            <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_presentation" | default "Presentation" }}</a>
             {{- end }}
             {{- with .Params.abstract }}
             <a class="mini-btn" href="{{ $p.RelPermalink }}#abstract">{{ i18n "abstract" | default "Abstract" }}</a>

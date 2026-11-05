@@ -22,6 +22,7 @@ url_pdf: "files/options-trading-floors.pdf"
 url_ssrn: "https://www.ssrn.com/abstract=6850360"
 url_slides: "https://drive.google.com/file/d/1B80IPAkQkZalm5YpIQqnYrzPe7BFH7f5/view"
 url_podcast: "https://drive.google.com/file/d/1Wfq4as0cyB339VKWbGxSTwfw0EHLJds6/view"
+url_presentation: "https://microstructure.exchange/talks/2026-10-13"
 abstract: "Over 20% of U.S. options dollar volume trades on physical floors, almost exclusively in S&P 500 index options. We study the COVID-19 closure of the Cboe floor, when Cboe activated SPX complex auctions, to identify the impact of floor trading. The floor attracts complex trades, particularly the largest. Floor trades cost 36% more than comparable electronic trades during the closure. Smaller trades are more expensive on the floor, while the largest are cheaper. Without the floor, the largest and most complex trades become half as prevalent. The floor facilitates the most difficult trades, but raises the cost of less difficult ones."
 events:
   - name: "The 2026 EUROFIDAI-ESSEC Paris December Finance Meeting"

@@ -95,6 +95,8 @@ btn_podcast: "Podcast"
 btn_cite: "Cite"
 explore: "Explore the paper"
 btn_explore: "Explore"
+btn_presentation: "Presentation"
+with: "with"
 
 # Presentations (paper pages and the Bio "Other presentations" section)
 presented_at: "Presented at"

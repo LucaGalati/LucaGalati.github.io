@@ -1063,9 +1063,18 @@ details.area[open] > summary:not(:has(svg, .area__chevron))::after {
   max-width: none; /* rows span the whole results column */
 }
 
+/* A row reads title first, then "with" the co-authors, then the venue and the buttons. */
 .pub-item {
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
   border-bottom: 1px solid var(--color-border);
+}
+
+.pub-item__head {
+  margin: 0;
+}
+
+.pub-item__links {
+  margin-top: 0.45rem;
 }
 
 /* Research-area headings between the article rows: a small Geist label with

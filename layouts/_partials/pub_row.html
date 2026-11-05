@@ -8,13 +8,20 @@
     {{- if eq .Params.status "forthcoming" }} <span class="badge-status">{{ i18n "forthcoming" | default "Forthcoming" }}</span>{{ end }}
     {{ partial "jmp_badge.html" . }}
   </p>
-  <p class="area-pub__meta">{{ partial "authors.html" (dict "authors" .Params.authors "owner" site.Params.author_name) }}. {{ with .Params.publication }}{{ if eq ($p.Params.tab | default "articles") "working-papers" }}{{ . }}{{ else }}<b>{{ . }}</b>{{ end }}, {{ end }}{{ $year }}.{{ if .Params.letter }} <span class="badge-status">{{ i18n "letter" | default "Letter" }}</span>{{ end }}</p>
+  {{- /* As on the Research page: the co-authors after "with", then the venue; the owner's name is not repeated. */}}
+  {{- with partial "authors.html" (dict "authors" .Params.authors "owner" site.Params.author_name "without_owner" true) }}
+  <p class="area-pub__meta">{{ i18n "with" | default "with" }} {{ . }}</p>
+  {{- end }}
+  <p class="area-pub__meta">{{ with .Params.publication }}{{ if eq ($p.Params.tab | default "articles") "working-papers" }}{{ . }}{{ else }}<b>{{ . }}</b>{{ end }}, {{ end }}{{ $year }}{{ if .Params.letter }} <span class="badge-status">{{ i18n "letter" | default "Letter" }}</span>{{ end }}</p>
   {{- with .Params.award }}
   <p class="award-line">{{ partial "award_badge.html" . }}</p>
   {{- end }}
   <p class="area-pub__links">
     {{- if and $slug (fileExists (printf "static/explore/%s/index.html" $slug)) }}
     <a class="mini-btn mini-btn--explore" href="{{ printf "explore/%s/" $slug | relURL }}">{{ i18n "btn_explore" | default "Explore" }}</a>
+    {{- end }}
+    {{- with .Params.url_presentation }}
+    <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_presentation" | default "Presentation" }}</a>
     {{- end }}
     {{- with .Params.abstract }}
     <a class="mini-btn" href="{{ $p.RelPermalink }}#abstract">{{ i18n "abstract" | default "Abstract" }}</a>

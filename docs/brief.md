@@ -97,6 +97,8 @@ Terza serie di note, stesso giorno:
 - Più aria tra il bottone "Download CV (PDF)" e il testo della Bio.
 - Intro di Home: una frase in prima persona, essenziale, "I am an economist…"; via la frase sui dottorati. Supera la regola della Spec King (intro in terza persona, 2–4 frasi).
 - Foto di Home più piccola (160×213), alta quanto il blocco di testo accanto.
+- Righe degli elenchi (Research e Home): prima il titolo, poi "with" i coautori senza il nome di Luca (meno oro, e il nome non serve), poi sede e anno. Nella pagina del paper resta l'elenco completo degli autori in ordine, con il nome evidenziato.
+- Bottone "Presentation" accanto a "Explore the paper" quando un paper ha la pagina di un talk (`url_presentation`); il primo è il seminario TME sul paper del floor.
 - Pubblicazione: le note private restano fuori dal repo, che è pubblico, e la storia pubblica parte da un solo commit. Vedi ADR 0004.
 
 ## Da scrivere in fase di build

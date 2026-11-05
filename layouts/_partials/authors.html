@@ -1,7 +1,10 @@
-{{- /* Citation author list. Context: dict "authors" (slice of names) "owner" (site owner's name, optional).
+{{- /* Citation author list. Context: dict "authors" (slice of names) "owner" (site owner's name, optional)
+       "without_owner" (optional: true lists the co-authors only, for the "with …" line of a list row,
+       and yields nothing for a single-authored paper).
        The owner is marked; co-authors link to their page when data/coauthors.json knows a url. */ -}}
 {{- $authors := .authors | default slice -}}
 {{- $owner := .owner | default site.Params.author_name -}}
+{{- if .without_owner -}}{{- $authors = complement (slice $owner) $authors -}}{{- end -}}
 {{- $links := site.Data.coauthors | default dict -}}
 {{- $n := len $authors -}}
 {{- range $i, $a := $authors -}}

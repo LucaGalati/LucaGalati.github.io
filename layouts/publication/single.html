@@ -37,6 +37,9 @@
       {{- if $explore }}
       <a class="btn btn--explore" href="{{ printf "explore/%s/" $slug | relURL }}">{{ i18n "explore" | default "Explore the paper" }}</a>
       {{- end }}
+      {{- with .Params.url_presentation }}
+      <a class="btn btn--outline" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_presentation" | default "Presentation" }}</a>
+      {{- end }}
       {{- with .Params.url_full }}
       <a class="btn btn--outline" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_full_text" | default "Full text" }}</a>
       {{- end }}
