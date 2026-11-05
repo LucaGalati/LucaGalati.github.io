@@ -83,6 +83,11 @@
         {{- $lastGroup = $group }}
         <div class="pub-group" data-group="{{ $group }}"><h2>{{ index $groupNames $group | default $group }}</h2></div>
         {{- end }}
+        {{- /* In "All" the theses come right after the last article group: their own heading keeps them apart. */ -}}
+        {{- if and $thesis (ne $lastGroup "theses") }}
+        {{- $lastGroup = "theses" }}
+        <div class="pub-group" data-group="theses"><h2>{{ i18n "theses_tab" | default "Theses" }}</h2></div>
+        {{- end }}
         {{- $entries = $entries | append (dict
               "slug" $slug
               "url" .RelPermalink
@@ -205,6 +210,7 @@
       it.style.display = ok ? '' : 'none';
       if (ok) shown++;
       if (ok && d.tab === 'articles') liveGroups[d.group] = true;
+      if (ok && d.tab === 'theses' && tab === 'all') liveGroups.theses = true; // the Theses tab needs no heading
     });
     // Headings exist only in server order and only above a visible article of their group.
     var grouped = sortMode() === 'newest';
