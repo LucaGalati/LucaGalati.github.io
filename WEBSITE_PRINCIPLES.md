@@ -18,6 +18,8 @@ The repository root is the Hugo root. `baseURL` is fixed in `hugo.yaml` and deli
 ## Toolchain gotchas
 
 - Hugo's `css.TailwindCSS` requires the npm `@tailwindcss/cli` package; the standalone Tailwind binary is rejected. CI must run `setup-node` + `npm ci` before `hugo`. Keep Node at 22 or newer (CI uses 24; local development has been done on 26).
+- CI installs with `npm ci`, which refuses a `package-lock.json` that is not exactly in sync with `package.json`, optional platform packages included (the first deploy failed on a missing `@tailwindcss/oxide-wasm32-wasi` entry that a local `npm install` never noticed). After any change to `package.json`, run `npm install --package-lock-only` and check with `npm ci --dry-run` before pushing.
+- GitHub Pages was switched on once through the API with GitHub Actions as its source (`gh api -X POST repos/LucaGalati/LucaGalati.github.io/pages -f build_type=workflow`). The workflow's `enablement: true` cannot create the Pages site with the default token; it only finds it.
 - `build.buildStats.enable: true` emits `hugo_stats.json` so Tailwind sees the classes used in templates; the file is gitignored and regenerated on every build.
 - `_vendor/` is committed, so CI needs no Go toolchain. `go.mod` and `go.sum` are committed alongside; `_vendor/modules.txt` pins the module versions.
 - Blox uses `layouts/_partials/`, never `layouts/partials/`. A partial placed under the old path is silently ignored.

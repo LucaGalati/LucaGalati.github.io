@@ -319,6 +319,8 @@ hugo --gc --minify && npx pagefind --site public && cd public && python3 -m http
 
 then open http://localhost:8787/. `public/`, `resources/_gen/`, `hugo_stats.json` and `node_modules/` are build output and are ignored by git.
 
+To publish from the computer instead of editing on GitHub: commit, then `git push` from this folder. Git needs your GitHub login once: `gh auth login` (already done on this Mac on 5 November 2026) and then `gh auth setup-git`, which lets git use that login. Push the `main` branch only; the local branch `local-history` holds the commits from before publication, with private notes in them, and must never be pushed (`docs/adr/0004`).
+
 ## Things to check after a change
 
 - The Actions tab of the repository: the latest "Deploy Hugo site to Pages" run must be green. A red run usually means a YAML error in a front matter (an unescaped `"` inside a string, a missing closing `---`, bad indentation of the `events` list) or a missing comma in `data/other_presentations.json`. Open the run, read the Hugo error line, fix the file.

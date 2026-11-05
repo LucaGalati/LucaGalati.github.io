@@ -101,7 +101,6 @@ Terza serie di note, stesso giorno:
 - Bottone "Presentation" accanto a "Explore the paper" quando un paper ha la pagina di un talk (`url_presentation`); il primo è il seminario TME sul paper del floor.
 - Pubblicazione: le note private restano fuori dal repo, che è pubblico, e la storia pubblica parte da un solo commit. Vedi ADR 0004.
 
-## Da scrivere in fase di build
+## Pubblicazione
 
-- Intro di Home (2–4 frasi, terza persona) e bio lunga, testi distinti come esige la Spec King; bozze dal Sito Google, revisione di Luca.
-- Repo `LucaGalati/LucaGalati.github.io` da creare; dominio da comprare su Cloudflare; DNS e `CNAME` dopo il primo deploy.
+Il Sito è online dal 5 novembre 2026 a https://lucagalati.github.io/, dal repo pubblico `LucaGalati/LucaGalati.github.io` (ramo `main`, deploy GitHub Actions). Resta da fare il dominio: comprare `lucagalati.com` su Cloudflare (lo fa Luca), poi `static/CNAME`, `baseURL` e i record DNS (procedura in `UPDATING.md`); l'indirizzo github.io rimanderà al dominio.
