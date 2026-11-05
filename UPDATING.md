@@ -206,7 +206,7 @@ Each folder is a small site of its own: `index.html` is the hub, the numbered pa
 
 The bar at the top of every explore page ("Luca Galati" for the home page, "Research", "This paper") is one shared file, `static/explore/sitebar.js`: change a label or a colour there and every explorable follows. A page gets the bar from two lines, `<script src="../sitebar.js"></script>` in its `<head>` and `<lg-sitebar></lg-sitebar>` as the first thing in its `<body>`. After touching an explorable, `node tools/explore-probe.mjs static/explore/<slug>` opens all its pages in a hidden Chrome at four screen sizes and must end in "0 ERROR".
 
-Seven papers have one (the six visible working papers and "No-fee trading"), each at version 2.0 after a judged pass of 5 November 2026. They were built with the explorable-explanations skill from the manuscripts; new ones for the published articles follow the same recipe once the format is approved.
+Twenty-five papers have one: the six visible working papers and the nineteen published articles (5 November 2026). They were built with the explorable-explanations skill from the manuscripts and the published PDFs, each through a judged pass. A page explains the paper and nothing else: remarks on the paper itself (a number in the text that disagrees with a table, a doubt about a result) belong in the private `plan.md`, never on the page.
 
 ## Edit the bio, intro, teaching and CV
 
