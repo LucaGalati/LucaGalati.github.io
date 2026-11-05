@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: Intelligent Design, Stablecoins (In)stability and Collateral During Market Turbulence</title>
+<meta name="description" content="An explorable explanation of De Blasis, Galati, Webb and Webb, Intelligent Design: Stablecoins (In)stability and Collateral During Market Turbulence: how five dollar coins are built, what a run does to each design, and how they moved when TerraUSD collapsed in May 2022.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .hub-line { max-width: 40rem; margin: 0 0 1.6rem; }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/stablecoins-intelligent-design/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <p class="kicker">An explorable explanation</p>
+  <h1>Intelligent Design: Stablecoins (In)stability and Collateral During Market Turbulence</h1>
+  <p class="byline">Riccardo De Blasis, Luca Galati, Alexander Webb and Robert I. Webb · Financial Innovation, 2023</p>
+  <div class="fig hub-line" id="hub-line"></div>
+  <p class="lede">A stablecoin is a crypto token built to be worth exactly one dollar. In May 2022 one of the largest, TerraUSD, fell to a few cents, and the others moved too: some below a dollar, some above it. This short explorable shows how five coins hold up the same promise in five different ways, lets you stress each design, and then follows the paper through the week of the collapse. Two decks on the main path, three side paths, a few things to play with, about fifteen minutes.</p>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-promise.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-promise.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/stablecoins-intelligent-design/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site. The drawing above is schematic.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the one-dollar line: four coins resting on it, UST fallen below (schematic) */
+(function () {
+  var E = Explore, S = E.svg, box = document.getElementById('hub-line');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 132, y = 46, root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Schematic: the one-dollar line, with USDT, USDC, BUSD and DAI resting on it and UST fallen far below.' }, box);
+    E.pegLine(root, 0, W, y);
+    var xs = [0.22, 0.38, 0.54, 0.70].map(function (f) { return Math.round(W * f); });
+    ['USDT', 'USDC', 'BUSD', 'DAI'].forEach(function (c, i) { E.token(root, xs[i], y - 22, c); });
+    var xu = Math.round(W * 0.88);
+    S('path', { d: 'M' + xu + ',' + (y - 22) + ' L' + xu + ',' + (H - 24), 'class': 'trail' }, root);
+    S('circle', { cx: xu, cy: y - 22, r: 21, 'class': 'tok ghost' }, root);
+    E.token(root, xu, H - 24, 'UST', 'shock');
+  }, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

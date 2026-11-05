@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading the evidence · Intelligent Design: Stablecoins (In)stability</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati, Webb and Webb, Intelligent Design: how a cumulative log return can fall 1,500 per cent, and the limits the authors set on their findings.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .limits { list-style: none; padding: 0; margin: .4rem 0 1rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: .2rem 2.4rem; max-width: none; }
+  @media (min-width: 820px) { .limits { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .limits li { padding: .55em 0; border-top: 1px solid var(--border); font-size: .95rem; line-height: 1.45; }
+  .limits b { display: block; font-family: var(--sans); font-size: .8rem; font-weight: 500; margin-bottom: .15em; }
+  .limits .src { font-family: var(--sans); font-size: .72rem; color: var(--muted); }
+  /* the slider runs exactly under the ruler: its thumb centre spans the plot (L = 12, R = 16) */
+  #log-x { max-width: none; width: calc(100% - 12px); margin-left: 4px; }
+  @media (min-width: 820px) { .two.even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-evidence.html">
+<lg-sitebar><noscript><a href="../../publication/stablecoins-intelligent-design/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How can a price fall 1,500 per cent?">
+  <div class="inner two even">
+    <div>
+      <p class="kicker">Side path · Reading the evidence · 1 of 2</p>
+      <h2>How a price can fall 1,500 per cent</h2>
+      <p>A price cannot fall more than 100%. But the paper adds up minute-by-minute <strong>log returns</strong>, the natural log of each price ratio, and that sum has no floor: −300% means the price ended at e<sup>−3</sup>, about a twentieth of where it began, and each further −300% divides by about twenty again.</p>
+      <p><strong>Abnormal</strong> means against what was expected: no change for a stablecoin, and for bitcoin its average return over the sample’s first two days.</p>
+      <p>LUNA’s CAR of about −1,500% is five such steps of −300%. A CAR is not a price, though: it adds up abnormal returns on minute prices averaged across exchanges.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>Where do the findings stop?&nbsp;→</button>
+        <a class="btn return-link" href="02-run.html#s2" data-primary-when="02-run.html">← Return to the main path</a>
+      </div>
+      <p class="note">Returns and CARs: pp.7–8; −50%, −300%, −1,500%: p.10; averaged prices: p.7. Dollar values: 1,000 × e<sup>x</sup>, computed.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="log-chart"></div>
+      <label class="ctl" for="log-x">Cumulative log return</label>
+      <input type="range" id="log-x" min="-1500" max="10" step="5" value="-300">
+      <p class="readout" id="log-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Where do the findings stop?">
+  <div class="inner">
+    <p class="kicker">Side path · Reading the evidence · 2 of 2</p>
+    <h2>Where the findings stop</h2>
+    <p class="lead">The authors set out the limits of what one episode, measured this way, can show.</p>
+    <ul class="limits">
+      <li><b>Averaged prices</b>Prices are a weighted average across exchanges. The authors note that this smooths the size of the moves, and prefer it because small venues then carry less weight. <span class="src">p.7</span></li>
+      <li><b>The start of the collapse</b>The collapse period starts at midnight on 10 May, the day of the first news of a possible crash. The authors note that the start of a crisis is not always easy to date. <span class="src">pp.7–8</span></li>
+      <li><b>One event</b>Forty days around one collapse. The authors say their findings cannot be extended to calmer, more normal markets. <span class="src">p.15</span></li>
+      <li><b>Herding, a likely partial cause</b>The authors offer herding as a likely part of the cause, suggested by how differently the coins behaved and by the cascade in the event study. <span class="src">abstract, pp.2, 10</span></li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-run.html#s6" data-primary-when="02-run.html">← Return to the main path</a>
+      <a class="btn" href="02-run.html#s6">Skip to the takeaways&nbsp;→</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/stablecoins-intelligent-design/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: two rulers, log return above, what $1,000 becomes below ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var slider = document.getElementById('log-x'), read = document.getElementById('log-read'), box = document.getElementById('log-chart'), geo = null;
+  /* [CAR in %, label, kind], as p.10 gives them */
+  var MARKS = [[-50, 'BTC', 'btc'], [-300, 'UST', 'shock'], [-1500, 'LUNA', 'shock']];
+  function money(v) {
+    if (v >= 100) return '$' + th(v);
+    if (v >= 0.01) return '$' + v.toFixed(2);
+    return '$' + v.toPrecision(2);
+  }
+  function pc(x) { return (x > 0 ? '+' : x < 0 ? '−' : '') + th(Math.abs(x)) + '%'; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 170, L = 12, R = 16, yTop = 70, yBot = 128;
+    function X(x) { return L + (W - L - R) * (x + 1500) / 1510; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Two rulers. Above, cumulative log return from −1,500% to 0. Below, what $1,000 becomes: $1,000 at 0, $49.79 at −300%, $2.48 at −600%, $0.12 at −900%, $0.0061 at −1,200%, $0.00031 at −1,500%. Marks: the cumulative abnormal returns of bitcoin, −50%, UST, −300%, and LUNA, −1,500%.' }, box);
+    T(root, L, 14, W < 420 ? 'Cumulative log return' : 'Cumulative log return, as the paper adds it up', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: yTop, y2: yTop, 'class': 'axis zero' }, root);
+    S('line', { x1: L, x2: W - R, y1: yBot, y2: yBot, 'class': 'axis zero' }, root);
+    var step = W < 460 ? 500 : 300; /* both divide 1,500, so the −1,500% end, where LUNA sits, is always labelled */
+    for (var x = 0; x >= -1500; x -= step) {
+      S('line', { x1: X(x), x2: X(x), y1: yTop, y2: yTop + 6, 'class': 'axis' }, root);
+      S('line', { x1: X(x), x2: X(x), y1: yBot - 6, y2: yBot, 'class': 'axis' }, root);
+      S('line', { x1: X(x), x2: X(x), y1: yTop + 8, y2: yBot - 8, 'class': 'grid' }, root);
+      var a = x === 0 ? 'end' : x === -1500 ? 'start' : 'middle';
+      T(root, X(x), yTop + 20, pc(x), { 'text-anchor': a, 'class': 'halo' });
+      T(root, X(x), yBot + 18, money(1000 * Math.exp(x / 100)), { 'text-anchor': a, 'class': 'strong' });
+    }
+    T(root, L, H - 4, W < 420 ? 'What $1,000 becomes' : 'What $1,000 becomes: each equal step divides by the same factor', { 'class': 'label' });
+    MARKS.forEach(function (m) {
+      var x = X(m[0]);
+      S('line', { x1: x, x2: x, y1: yTop - 22, y2: yTop, 'class': 'axis zero' }, root);
+      T(root, x, yTop - 28, m[1], { 'text-anchor': m[0] === -1500 ? 'start' : m[0] === -50 ? 'end' : 'middle', 'class': 'strong' });
+      S('circle', { cx: x, cy: yTop, r: 4.5, 'class': m[2] === 'btc' ? 'muted-fill' : 'near-fill' }, root);
+    });
+    geo = { X: X, yTop: yTop, yBot: yBot, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var x = +slider.value, v = 1000 * Math.exp(x / 100), simple = (Math.exp(x / 100) - 1) * 100;
+    slider.setAttribute('aria-valuetext', pc(x));
+    var size = simple < -99.99 ? 'more than 99.99' : Math.abs(simple).toFixed(2);
+    read.innerHTML = '<strong>A cumulative log return of ' + pc(x) + ':</strong> $1,000 becomes <strong>' + money(v) + '</strong>, a simple ' + (simple < 0 ? 'fall' : 'rise') + ' of ' + size + '%.';
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    S('line', { x1: geo.X(x), x2: geo.X(x), y1: geo.yTop, y2: geo.yBot, 'class': 'cursor' }, g);
+    S('circle', { cx: geo.X(x), cy: geo.yTop, r: 6, 'class': 'hollow', 'stroke-width': 2 }, g);
+    S('circle', { cx: geo.X(x), cy: geo.yBot, r: 6, 'class': 'hollow', 'stroke-width': 2 }, g);
+  }
+  slider.addEventListener('input', draw);
+  E.fit(box, build, { min: 290, max: 900 });
+  draw();
+})();
+</script>
+</body>
+</html>

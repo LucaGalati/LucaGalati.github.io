@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the test · Silicon Valley Bank Bankruptcy and Stablecoins Stability</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and Capalbo, Silicon Valley Bank Bankruptcy and Stablecoins Stability: how the BEKK model follows co-movement minute by minute, and what the before-and-after comparison covers.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<script src="../sitebar.js"></script>
+<link rel="stylesheet" href="explore.css">
+</head>
+<body data-deck="04-test.html">
+<lg-sitebar><noscript><a href="../../publication/svb-stablecoins/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How does the model follow co-movement?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside the test · 1 of 2</p>
+    <h2>A co-movement meter with a memory</h2>
+    <div class="two">
+      <div>
+        <p>The BEKK model keeps, for every pair of coins, a running estimate of how they move together, and updates it every minute. Each new estimate blends three things:</p>
+        <p class="eq"><span class="nw">estimate now =</span> <span class="nw">(1 − <span class="beta">a</span> − <span class="beta">b</span>) × long-run level</span> <span class="nw">+ <span class="beta">a</span> × (last move of A × last move of B)</span> <span class="nw">+ <span class="beta">b</span> × estimate a minute ago</span></p>
+        <p>The weight <span class="num">a</span> sets how much the latest minute counts; the weight <span class="num">b</span> sets how much of the old estimate survives, the meter’s memory. The paper keeps both positive with <span class="num">a + b &lt; 1</span>, so the meter always drifts back to its long-run level.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What does the comparison cover?&nbsp;→</button>
+          <a class="btn return-link" href="02-contagion.html#s2" data-primary-when="02-contagion.html">← Return to the main path</a>
+        </div>
+        <p class="note">Toy: two invented coins, invented moves, a long-run level of 0.2; a and b are illustrative values, not the paper’s estimates. The rule is the scalar BEKK with variance targeting, Section 3 (p.&nbsp;4).</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="bk-chart"></div>
+        <p class="legend"><span><i class="sq ink"></i>coin A</span><span><i class="sq far"></i>coin B</span><span>toy values</span></p>
+        <div class="actions" id="bk-btns" style="margin-top:.2rem">
+          <button class="btn" type="button" data-add="quiet">A quiet minute</button>
+          <button class="btn" type="button" data-add="same">Both jolt down</button>
+          <button class="btn" type="button" data-add="opp">They jolt apart</button>
+          <button class="btn" type="button" data-add="reset">Start again</button>
+        </div>
+        <label class="ctl" for="bk-a">a, weight on the latest minute: <span id="bk-a-v" class="num"></span></label>
+        <input type="range" id="bk-a" min="0.01" max="0.3" step="0.01" value="0.1">
+        <label class="ctl" for="bk-b">b, memory: <span id="bk-b-v" class="num"></span></label>
+        <input type="range" id="bk-b" min="0" max="0.98" step="0.01" value="0.85">
+        <p class="readout" id="bk-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What does the comparison cover?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside the test · 2 of 2</p>
+    <h2>What the comparison covers</h2>
+    <table class="score">
+      <thead><tr><th>The design</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>Six assets, the most liquid</td><td>Bitcoin and the five most liquid stablecoins (Section 4). The authors name this focus as the study’s limitation and leave other coins and other digital assets to future work (p.&nbsp;7).</td></tr>
+        <tr><td>One event, two weeks</td><td>4 to 18 March 2023, split at Circle’s message at 03:11 UTC on 11 March (Section 4).</td></tr>
+        <tr><td>What the week before held</td><td>Silvergate said on 8 March that it would close, and SVB failed on 10 March (p.&nbsp;2). In Fig. 2(a) Bitcoin is about 12% below its 4 March level by 10 March and 7 to 9% below at Circle’s message (traced, approximate).</td></tr>
+        <tr><td>What the week after held</td><td>Signature Bank was seized on 12 March, and the FDIC said depositors would be paid in full (p.&nbsp;2). A comparison of two weeks takes in everything that happened in each.</td></tr>
+        <tr><td>Averaged prices</td><td>Prices are a weighted average across exchanges, which the authors note lowers the volatility and the size of the moves they observe (p.&nbsp;5).</td></tr>
+        <tr><td>Two coins, one conversion</td><td>Binance does not trade BUSD against dollars, so its price against Tether is converted into dollars (footnote 14). That ties BUSD’s dollar price to Tether’s, the pair whose correlation is 0.96 in the week before and 0.99 after (Table 2).</td></tr>
+      </tbody>
+    </table>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-contagion.html#s2">← Return to the main path</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Sample, assets and split: Section 4. Limitation and future work: p.&nbsp;7. Events: p.&nbsp;2. Averaged prices: p.&nbsp;5. BUSD’s conversion: footnote 14. Correlations: Table 2. Bitcoin’s path: traced from Fig. 2(a), approximate.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/svb-stablecoins/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: a toy BEKK meter for one pair of invented coins (the rule of p. 4, toy values) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var HBAR = 0.2, WIN = 60, JA = -3, JB = -2.8; /* a jolt: both coins fall hard in the same minute (toy) */
+  var box = document.getElementById('bk-chart'), aS = document.getElementById('bk-a'), bS = document.getElementById('bk-b');
+  var aV = document.getElementById('bk-a-v'), bV = document.getElementById('bk-b-v'), read = document.getElementById('bk-read');
+  var seed = 7, moves = [], geo = null;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647 - 0.5; } /* deterministic, so every visit starts the same */
+  /* quiet minutes share a common part, so their product averages about 0.19, close to the long-run level of 0.2 */
+  function quiet() { var z = rnd(); return [1.5 * (z + 0.4 * rnd()), 1.5 * (z + 0.4 * rnd())]; }
+  function reset() {
+    seed = 7; moves = [];
+    for (var i = 0; i < WIN; i++) moves.push(i === 30 ? [JA, JB] : quiet());
+  }
+  /* one estimate per minute shown: estimate i already includes move i, so the newest button press reaches the meter at once */
+  function path() {
+    var a = +aS.value, b = +bS.value, h = [], prev = HBAR;
+    moves.forEach(function (m) { prev = (1 - a - b) * HBAR + a * m[0] * m[1] + b * prev; h.push(prev); });
+    return h;
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 262, L = 40, R = 8, mTop = 22, mH = 80, hTop = 140, hH = 96;
+    function X(i) { return L + (W - L - R) * (i + 0.5) / WIN; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy illustration: the last sixty minutes of two invented coins, their one-minute moves above, and below the meter’s running estimate of their co-movement, which jumps when both jolt together, dips when they jolt apart, and decays back to its long-run level at a speed set by b.' }, box);
+    T(root, 0, 12, W < 480 ? 'Toy: coins A and B, last 60 minutes' : 'Toy: two invented coins, A and B, over the last 60 minutes', { 'class': 'label' });
+    S('line', { x1: L, x2: W - R, y1: mTop + mH / 2, y2: mTop + mH / 2, 'class': 'axis' }, root);
+    T(root, L - 6, mTop + mH / 2 + 4, 'moves', { 'text-anchor': 'end' });
+    T(root, 0, hTop - 8, 'The meter: estimated co-movement', { 'class': 'label' });
+    geo = { X: X, W: W, L: L, R: R, mTop: mTop, mH: mH, hTop: hTop, hH: hH, H: H, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var a = +aS.value, b = +bS.value;
+    aV.textContent = a.toFixed(2); bV.textContent = b.toFixed(2);
+    aS.setAttribute('aria-valuetext', a.toFixed(2)); bS.setAttribute('aria-valuetext', b.toFixed(2));
+    var h = path(), last = h[h.length - 1];
+    var half = b > 0 ? Math.log(0.5) / Math.log(b) : 0;
+    read.innerHTML = 'With <span class="num">b = ' + b.toFixed(2) + '</span> a jolt’s mark on the meter halves ' + (b > 0 ? 'about every <strong>' + (half < 10 ? half.toFixed(1) : Math.round(half)) + ' minutes</strong>' : 'at once') +
+      '. Latest estimate: <strong>' + last.toFixed(2) + '</strong>, long-run level 0.2.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    var mid = geo.mTop + geo.mH / 2, k = (geo.mH / 2) / 3.2, step = (geo.W - geo.L - geo.R) / WIN, bw = Math.max(1.5, step * 0.36);
+    moves.forEach(function (m, i) {
+      var x = X(i);
+      [[m[0], -bw / 2 - 0.5, 'text-fill'], [m[1], bw / 2 + 0.5, 'far-fill']].forEach(function (q) {
+        var y1 = mid, y2 = mid - q[0] * k;
+        S('rect', { x: x + q[1] - bw / 2, y: Math.min(y1, y2), width: bw, height: Math.max(1, Math.abs(y2 - y1)), 'class': q[2] }, g);
+      });
+    });
+    var lo = Math.min(-0.1, Math.min.apply(null, h) - 0.1), hi = Math.max(1, Math.max.apply(null, h) + 0.1);
+    var top = hi > 1.15 ? Math.floor(hi * 2) / 2 : 1;   /* a labelled tick near the top, so any readout can be read against the axis */
+    function Y(v) { return geo.hTop + geo.hH * (hi - v) / (hi - lo); }
+    S('line', { x1: geo.L, x2: geo.W - geo.R, y1: Y(top), y2: Y(top), 'class': 'grid' }, g);
+    T(g, geo.L - 6, Y(top) + 4, top.toFixed(1), { 'text-anchor': 'end' });
+    S('line', { x1: geo.L, x2: geo.W - geo.R, y1: Y(0), y2: Y(0), 'class': 'axis zero' }, g);
+    T(g, geo.L - 6, Y(0) + 4, '0', { 'text-anchor': 'end' });
+    S('line', { x1: geo.L, x2: geo.W - geo.R, y1: Y(HBAR), y2: Y(HBAR), 'class': 'ghost' }, g);
+    T(g, geo.L - 6, Y(HBAR) - 2, '0.2', { 'text-anchor': 'end' });
+    S('polyline', { points: h.map(function (v, i) { return X(i).toFixed(1) + ',' + Y(v).toFixed(1); }).join(' '), 'class': 'curve0' }, g);
+    S('circle', { cx: X(h.length - 1), cy: Y(last), r: 4, 'class': 'text-fill' }, g);
+    T(g, geo.W - geo.R, geo.H - 4, 'now →', { 'text-anchor': 'end' });
+    T(g, geo.L, geo.H - 4, '60 minutes ago', {});
+  }
+  document.getElementById('bk-btns').addEventListener('click', function (e) {
+    var t = e.target.closest('[data-add]'); if (!t) return;
+    var k = t.getAttribute('data-add');
+    if (k === 'reset') reset();
+    else { moves.push(k === 'quiet' ? quiet() : k === 'same' ? [JA, JB] : [JA, -JB]); if (moves.length > WIN) moves.shift(); }
+    draw();
+  });
+  function keepStable(changed) {
+    var a = +aS.value, b = +bS.value;
+    if (a + b > 0.99) { if (changed === 'a') bS.value = (0.99 - a).toFixed(2); else aS.value = Math.max(0.01, 0.99 - b).toFixed(2); }
+    draw();
+  }
+  aS.addEventListener('input', function () { keepStable('a'); });
+  bS.addEventListener('input', function () { keepStable('b'); });
+  reset();
+  E.fit(box, build, { min: 300, max: 620 });
+})();
+</script>
+</body>
+</html>

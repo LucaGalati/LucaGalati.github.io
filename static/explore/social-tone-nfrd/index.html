@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: Beyond NFRD Compliance</title>
+<meta name="description" content="An explorable explanation of Monaco, Galati and Merlo, Beyond NFRD Compliance: how the share of social words in Italian firms’ sustainability reports relates to their social scores, before and after the EU Non-Financial Reporting Directive made those reports compulsory.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body class="hub">
+<lg-sitebar><noscript><a href="../../publication/social-tone-nfrd/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="hub-main">
+  <div class="hub-top">
+    <div>
+      <p class="kicker">An explorable explanation</p>
+      <h1>Beyond NFRD Compliance:<br>Is Social&nbsp;Tone Associated with Better Corporate Social Performance?</h1>
+      <p class="byline">Eleonora Monaco, Luca Galati and Matteo Merlo · Financial Reporting, 2026</p>
+      <p class="lede">Since 2017, large listed firms in the European Union have had to report on how they treat their workers, customers and communities. This explorable counts the words in those reports the way the paper does, and asks whether writing more about social matters went with better social ratings, before the rule and after it. Two short decks on the main path, three side paths, a word counter and a bet: about fifteen minutes.</p>
+    </div>
+    <figure class="hub-page">
+      <div id="page-motif" class="fig"></div>
+      <figcaption>Illustrative: a report as the script reads it, a hundred words with two of them on the social list, about the average report (Table 3’s 1.937, read per hundred words).</figcaption>
+    </figure>
+  </div>
+  <div class="actions">
+    <a class="btn primary" id="begin" href="01-talk.html#s1">Begin&nbsp;→</a>
+    <a class="btn" id="restart" href="01-talk.html#s1" hidden>Start from the beginning</a>
+    <a class="btn" href="../../publication/social-tone-nfrd/">← Back to the paper</a>
+  </div>
+  <section class="hub-map" aria-label="Map of the explorable">
+    <h2>The map</h2>
+    <div id="map"></div>
+  </section>
+  <p class="note">Inside a deck, ← and → move between slides and m opens this map. Progress is kept in this browser only. No cookies, no tracking, nothing loaded from outside this site.</p>
+</main>
+<script src="explore.js"></script>
+<script>
+/* the motif: a page of a hundred word-bars in ten lines, two of them marked (Table 3: average social tone 1.937) */
+(function () {
+  var S = Explore.svg, box = document.getElementById('page-motif');
+  var W = 240, H = 214, x0 = 16, x1 = W - 16, y0 = 22, gap = 18;
+  var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, 'aria-hidden': 'true', focusable: 'false' }, box);
+  S('rect', { x: 0.5, y: 0.5, width: W - 1, height: H - 1, rx: 3, 'class': 'surface' }, root);
+  var widths = Explore.normals(100, 7).map(function (z) { return Math.max(9, Math.min(30, 17 + 6 * z)); });
+  var k = 0, MARK = { 23: true, 68: true };
+  for (var line = 0; line < 10; line++) {
+    var ws = widths.slice(k, k + 10), sum = ws.reduce(function (s, v) { return s + v; }, 0);
+    var room = (line === 9 ? 0.62 : 1) * (x1 - x0), scale = (room - 9 * 5) / sum, x = x0, y = y0 + line * gap;
+    ws.forEach(function (w, i) {
+      var ww = w * scale, marked = MARK[k + i];
+      if (marked) S('rect', { x: x - 1.5, y: y - 6, width: ww + 3, height: 12, rx: 1.5, 'class': 'mark-fill', 'fill-opacity': 0.55 }, root);
+      S('rect', { x: x, y: y - 1.25, width: ww, height: 2.5, rx: 1, 'class': marked ? 'text-fill' : 'muted-fill', 'fill-opacity': marked ? 1 : 0.35 }, root);
+      x += ww + 5;
+    });
+    k += 10;
+  }
+})();
+</script>
+</body>
+</html>

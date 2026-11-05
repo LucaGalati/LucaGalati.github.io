@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the sample · Beyond NFRD Compliance</title>
+<meta name="description" content="Side path of an explorable explanation of Monaco, Galati and Merlo, Beyond NFRD Compliance: how 750 hand-collected sustainability reports became a sample of 329, and which industries give most of their words to social matters.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-sample.html">
+<lg-sitebar><noscript><a href="../../publication/social-tone-nfrd/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why 329 of 750 reports?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside the sample · 1 of 2</p>
+    <h2>From 750 reports to 329</h2>
+    <div class="two" style="align-items:center">
+    <div>
+      <p>The authors collected 750 sustainability reports by hand, from company websites and the Corporate Register database, covering 2002 to 2022. Financial data and social scores come from Refinitiv Eikon, governance data and industry codes from NRG Metrics.</p>
+      <p>Three cuts follow. Firms with fewer than 500 employees go, because the directive does not cover them; then the years outside the ten-year window; then, the largest cut, reports without a social score or financial data. What remains is 329 reports from 83 firms, about four per firm.</p>
+      <div class="actions">
+        <a class="btn return-link" href="01-talk.html#s2" data-primary-when="01-talk.html">← Return to the main path</a>
+        <button class="btn primary" type="button" data-next>Which industries talk most?&nbsp;→</button>
+      </div>
+      <p class="note">Table 1; p.61 and p.66. The running totals 703 and 593 are computed. About four per firm: 329 ÷ 83 ≈ 4.0, computed. The split of the final 329 is computed from Table 3, as in deck 1.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="funnel"></div>
+      <p class="legend"><span><i class="sq before"></i>reports from 2012–2016</span><span><i class="sq after"></i>from 2017–2021</span></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Which industries talk most?">
+  <div class="inner">
+    <p class="kicker">Side path · Inside the sample · 2 of 2</p>
+    <h2>The longest reports are not the most social</h2>
+    <div class="two">
+    <div>
+      <p>The average report, industry by industry. Energy and health-care firms give the largest share of their words to social matters. Utilities give the smallest, although their reports are by far the longest, about 117,000 words on average; the paper reads that as volume over social content.</p>
+      <p>Sort by either column and watch the order change. Because social tone is a share, a long report does not score higher by being long.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="01-talk.html#s3">← Return to the main path</a>
+      </div>
+      <p class="note">Table 2. Social tone in social words per hundred (see deck 1); length in thousands of words. Dashed lines: all industries together, about 1.94 and 61.7 thousand.</p>
+    </div>
+    <div class="stage">
+      <div class="ctl"><span>Sort by</span><span class="seg" id="ind-sort"></span></div>
+      <div class="fig" id="ind-chart"></div>
+      <p class="legend"><span><i class="dt"></i>social tone</span><span><i class="sq" style="background:var(--muted);opacity:.55"></i>report length</span><span><i class="ln ghost"></i>all industries</span></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/social-tone-nfrd/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the funnel (Table 1), the final bar split by period (Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('funnel');
+  var items = [
+    { bar: 750, label: 'Reports collected by hand, 2002–2022', short: 'Reports collected, 2002–2022' },
+    { drop: 47, label: 'from firms with fewer than 500 employees', short: 'from firms under 500 employees' },
+    { bar: 703 },
+    { drop: 110, label: 'from years outside 2012–2021', short: 'from years outside 2012–2021' },
+    { bar: 593 },
+    { drop: 264, label: 'missing a social score or financial data', short: 'missing score or financial data' },
+    { bar: 329, pre: 60, label: 'Final sample: 329 reports, 83 firms', short: 'Final: 329 reports, 83 firms' }
+  ];
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var root = S('svg', { role: 'img', 'aria-label': 'From 750 hand-collected reports: minus 47 from firms with fewer than 500 employees, leaving 703; minus 110 outside 2012 to 2021, leaving 593; minus 264 missing a social score or financial data, leaving 329 reports from 83 firms, 60 of them from before 2017 and 269 from after.' }, box);
+    var y = 4, narrow = W < 480;
+    items.forEach(function (it) {
+      if (it.bar != null) {
+        var w = (W - 44) * it.bar / 750;
+        if (it.label) T(root, 0, y + 12, narrow ? it.short : it.label, { 'class': 'label' });
+        var top = it.label ? y + 18 : y + 2;
+        T(root, W, top + 12, E.thousands(it.bar), { 'text-anchor': 'end', 'class': 'strong' });
+        if (it.pre) {
+          var wp = w * it.pre / it.bar;
+          S('rect', { x: 0, y: top, width: wp, height: 16, 'class': 'before-fill' }, root);
+          S('rect', { x: wp + 1, y: top, width: w - wp - 1, height: 16, 'class': 'after-fill' }, root);
+        } else S('rect', { x: 0, y: top, width: w, height: 16, 'class': 'border-fill' }, root);
+        y = top + 16 + (it.pre ? 6 : 10);
+      } else {
+        T(root, 14, y + 10, '− ' + E.thousands(it.drop) + '  ' + (narrow ? it.short : it.label));
+        y += 20;
+      }
+    });
+    T(root, 0, y + 12, '60 from before 2017 · 269 from after', { 'class': 'label' });
+    root.setAttribute('viewBox', '0 0 ' + W + ' ' + (y + 18));
+  }, { min: 300, max: 620 });
+})();
+
+/* ---------- slide 2: industries (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [industry, short name, social tone, words in thousands] */
+  var ROWS = [
+    ['Basic Materials', 'Basic Materials', 2.029, 17.036],
+    ['Consumer Discretionary', 'Cons. Discretionary', 1.744, 40.644],
+    ['Consumer Staples', 'Consumer Staples', 2.026, 53.802],
+    ['Energy', 'Energy', 2.382, 50.363],
+    ['Financials', 'Financials', 1.863, 57.117],
+    ['Health Care', 'Health Care', 2.182, 43.185],
+    ['Industrials', 'Industrials', 1.922, 41.108],
+    ['Technology', 'Technology', 2.099, 41.106],
+    ['Telecommunications', 'Telecoms', 1.754, 87.023],
+    ['Utilities', 'Utilities', 1.735, 117.443]
+  ];
+  var TOT = [1.94, 61.712], TLO = 1.6, THI = 2.5, LMAX = 120;
+  var box = document.getElementById('ind-chart'), key = 2, shown = null, raf = null, geo = null;
+  function order() { var idx = ROWS.map(function (r, i) { return i; }); idx.sort(function (a, b) { return ROWS[b][key] - ROWS[a][key]; }); var pos = []; idx.forEach(function (r, k) { pos[r] = k; }); return pos; }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 540, lab = narrow ? 112 : 160, gap = 18, pw = (W - lab - gap) / 2, rowH = 24, TOP = 34, H = TOP + ROWS.length * rowH + 22;
+    var xa = lab, xb = lab + pw + gap;
+    function XT(v) { return xa + pw * (v - TLO) / (THI - TLO); }
+    function XL(v) { return xb + pw * v / LMAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Average report by industry, social tone and length. Energy 2.38 social words per hundred, 50 thousand words; Health Care 2.18, 43 thousand; Technology 2.10, 41 thousand; Basic Materials 2.03, 17 thousand; Consumer Staples 2.03, 54 thousand; Industrials 1.92, 41 thousand; Financials 1.86, 57 thousand; Telecommunications 1.75, 87 thousand; Consumer Discretionary 1.74, 41 thousand; Utilities 1.74, 117 thousand. All industries: 1.94 and 62 thousand.' }, box);
+    T(root, xa, 12, narrow ? 'Social tone' : 'Social tone, per hundred words', { 'class': key === 2 ? 'strong' : 'label' });
+    T(root, xb, 12, narrow ? 'Length, ’000 words' : 'Report length, thousand words', { 'class': key === 3 ? 'strong' : 'label' });
+    [1.6, 2.0, 2.4].forEach(function (v) { S('line', { x1: XT(v), x2: XT(v), y1: TOP - 8, y2: H - 22, 'class': 'grid' }, root); T(root, XT(v), H - 6, v.toFixed(1), { 'text-anchor': 'middle' }); });
+    [0, 60, 120].forEach(function (v) { S('line', { x1: XL(v), x2: XL(v), y1: TOP - 8, y2: H - 22, 'class': v ? 'grid' : 'axis' }, root); T(root, XL(v), H - 6, String(v), { 'text-anchor': v === 120 ? 'end' : v ? 'middle' : 'start' }); });
+    S('line', { x1: XT(TOT[0]), x2: XT(TOT[0]), y1: TOP - 8, y2: H - 22, 'class': 'ghost' }, root);
+    S('line', { x1: XL(TOT[1]), x2: XL(TOT[1]), y1: TOP - 8, y2: H - 22, 'class': 'ghost' }, root);
+    geo = { XT: XT, XL: XL, lab: lab, narrow: narrow, rowH: rowH, TOP: TOP, dyn: S('g', {}, root) };
+    render(shown);
+  }
+  function render(pos) {
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    ROWS.forEach(function (r, i) {
+      var y = geo.TOP + pos[i] * geo.rowH + geo.rowH / 2;
+      T(g, 0, y + 4, geo.narrow ? r[1] : r[0], { 'class': 'label' });
+      S('rect', { x: geo.XL(0), y: y - 5, width: geo.XL(r[3]) - geo.XL(0), height: 10, 'class': 'muted-fill', 'fill-opacity': 0.55 }, g);
+      S('circle', { cx: geo.XT(r[2]), cy: y, r: 5, 'class': 'text-fill' }, g);
+    });
+  }
+  function update() {
+    var to = order();
+    if (E.still || !geo) { shown = to; render(shown); return; }
+    var from = shown.slice(), t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 420), e = 1 - Math.pow(1 - p, 3);
+      shown = from.map(function (f, i) { return f + (to[i] - f) * e; });
+      render(shown);
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  shown = order();
+  var redraw = E.fit(box, build, { min: 300, max: 640 });
+  E.seg(document.getElementById('ind-sort'), [['tone', 'Social tone'], ['len', 'Report length']], 'tone', function (k) {
+    key = k === 'tone' ? 2 : 3; redraw(); update();
+  }, 'Sort by');
+})();
+</script>
+</body>
+</html>

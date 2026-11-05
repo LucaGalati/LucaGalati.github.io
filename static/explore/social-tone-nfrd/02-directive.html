@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The directive · Beyond NFRD Compliance</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Monaco, Galati and Merlo, Beyond NFRD Compliance: the link between social tone and social score before 2017, a bet on what the directive did to it, three readings of what changed, and what to take away.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  #bet { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; max-width: 26rem; }
+  #bet .btn { text-align: left; }
+  #lines-verdict { min-height: 6em; }
+  @media (max-width: 819px) { #lines-verdict { min-height: 0; } }
+  .readings { list-style: none; padding: 0; margin: .2rem 0 .9rem; max-width: 36em; }
+  .readings li { padding: .35em 0; border-bottom: 1px solid var(--border); font-size: .98rem; }
+  .readings li:last-child { border-bottom: 0; }
+  .readings b { font-weight: 500; }
+  .readings .tag { font-family: var(--sans); font-size: .76rem; margin-left: .2em; }
+</style>
+</head>
+<body data-deck="02-directive.html">
+<lg-sitebar><noscript><a href="../../publication/social-tone-nfrd/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="Did talk go with better scores before the rule?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The directive · 1 of 4</p>
+    <h2>Before 2017, more social words went with a higher score</h2>
+    <div class="two">
+    <div>
+      <p>Now compare like with like. The paper fits a <strong>regression</strong>: a line drawn through the data while other things are held fixed, here each firm’s size, profitability, debt, cash and tangible assets, whether its report was audited and how upbeat its prose is. It also compares firms only with others in the same industry.</p>
+      <p>In the years before the rule, a report one point higher in social tone, about one more listed word in every hundred, came with a social score about 0.10 higher. Across the middle half of reports, from a tone of 1.72 to 2.17, the line rises by about 0.04: a fifth of the width of the middle half of scores, 0.59 to 0.81.</p>
+      <p class="door-row"><a class="door" href="04-model.html#s1">What goes wrong if nothing is held fixed?&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Then came 2017&nbsp;→</button></div>
+      <p class="note">Table 5, column (3): Social Tone 0.097 (t = 4.53), the slope for 2012–2016; the controls also include the market-to-book ratio. Middle half (first to third quartile) of tone 1.718 to 2.166, of the score 0.586 to 0.814 (Table 3). Computed: 0.097 × 0.448 ≈ 0.043; the middle half of scores is 0.814 − 0.586 = 0.228 wide.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="pre-chart"></div>
+      <p class="legend"><span><i class="ln before"></i>2012–2016, before the rule</span><span><i class="sq normal"></i>middle half of reports</span></p>
+      <label class="ctl" for="pre-x">Move a report along the tone axis</label>
+      <input type="range" id="pre-x" min="36" max="314" step="1" value="217">
+      <p class="readout h3" id="pre-read" aria-live="polite"></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="What did the rule do to that link?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The directive · 2 of 4</p>
+    <h2>Place your bet: what did the rule do to the line?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>From 2017 every firm in the sample had to publish. Same comparison, same controls, now among the reports from 2017 to 2021.</p>
+        <p><strong>As social tone rises, what does the social score do after the rule?</strong></p>
+        <div class="bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="faster" aria-pressed="false">Rises faster</button>
+          <button class="btn" type="button" data-bet="same" aria-pressed="false">Rises as before</button>
+          <button class="btn" type="button" data-bet="slower" aria-pressed="false">Rises more slowly</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="lines-chart"></div>
+        <p class="legend"><span><i class="ln before"></i>2012–2016, before the rule</span><span><i class="ln after"></i>2017–2021, after it</span></p>
+        <label class="ctl" for="lines-x">Compare a report before and after, at any tone</label>
+        <input type="range" id="lines-x" min="36" max="314" step="1" value="194" disabled>
+        <p class="readout h3" id="lines-read" aria-live="polite">The line after 2017 draws once you have placed your bet.</p>
+        <p class="note" id="lines-note" hidden>Table 5, column (3): Social Tone 0.097, NFRD 0.148, Social Tone × NFRD −0.060 (t = −2.00, 5% level); columns (4) and (5) give −0.065 and −0.059. Computed from Tables 3 and 5: slope after 0.097 − 0.060 = 0.037; gap at the average tone 0.148 − 0.060 × 1.937 ≈ 0.03, close to column (2)’s 0.031; lines cross near 0.148 ÷ 0.060 ≈ 2.5.</p>
+      </div>
+      <div class="t">
+        <p id="lines-verdict" aria-live="polite"></p>
+        <div class="actions" id="lines-next" hidden>
+          <button class="btn primary" type="button" data-next>Why would talk count for less?&nbsp;→</button>
+          <a class="door" href="05-checks.html#s1" data-return="next">Does the −0.060 hold in other models?&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why might the rule change the link?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The directive · 3 of 4</p>
+    <h2>Why talk might count for less: three readings</h2>
+    <div class="two">
+    <div>
+      <p>The paper suggests three possible readings of the flatter line:</p>
+      <ul class="readings">
+        <li><b>A ceiling.</b> The rule lifted scores across the board, leaving less room for words to add.</li>
+        <li><b>A lost signal.</b> Once every firm must cover the same topics, writing more no longer sets a firm apart. <span class="tag">the toy</span></li>
+        <li><b>Cheap talk.</b> Wording that firms choose freely and nobody verifies may simply be discounted.</li>
+      </ul>
+      <p>Drag the slider left. Each firm keeps its score, but its report stops sorting it from the others, and the line flattens.</p>
+      <p>In this toy, words follow deeds. The paper puts it the other way round, with talk that sets a firm apart lifting its score, and notes that the link may run both ways.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+      <p class="note">The three readings: p.73 (ceiling), p.61 (signal), p.61 and p.65–66 (cheap talk, symbolic compliance). The direction: p.61 for the paper’s wording; p.75 and footnote 10 for the link running both ways.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Talk that stops sorting firms <span class="tag">toy, not the paper’s model</span></p>
+      <div class="fig" id="toy-chart"></div>
+      <p class="legend"><span><i class="dt ink"></i>invented firms</span><span><i class="ln"></i>their fitted line</span><span><i class="ln before dash"></i>paper, before the rule: 0.097</span><span><i class="ln after dash"></i>after it: about 0.037</span></p>
+      <label class="ctl" for="toy-w">Share of a report’s social wording that follows what the firm does</label>
+      <input type="range" id="toy-w" min="0" max="100" step="1" value="100">
+      <p class="readout h3" id="toy-read" aria-live="polite"></p>
+      <p class="note">Forty-eight invented firms. Each has a hidden practice level that sets its score, plus noise; the slider sets how much of its social tone follows that level, the rest being template wording unrelated to practice. Average tone and its spread stay at the sample’s 1.94 and 0.45 (Table 3), since the average tone did not move with the rule (correlation −0.02, Table 4). Dashed slopes: Table 5, column (3), 0.097 and 0.097 − 0.060 = 0.037, computed. The share is invented for the toy.</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The directive · 4 of 4</p>
+    <h2>What to take away</h2>
+    <p class="closer">In 329 reports from 83 Italian firms, more social words went with better social scores; once the reports were compulsory, the link was weaker.</p>
+    <ol class="takeaways">
+      <li>Social tone is a count: the share of a report’s words on a list of social words, about two in every hundred, blind to whether the news is good or bad.</li>
+      <li>Before 2017, comparing similar firms in the same industry, a point more of social tone went with about 0.10 more social score.</li>
+      <li>After the directive the slope was about 0.06 smaller, significant at the 5% level; the paper suggests a ceiling or a lost signal.</li>
+    </ol>
+    <p class="caveat">An association, not a cause. Firms that do well may simply write more (footnote 10); the result does not hold when each firm is <a href="05-checks.html#s2">compared only with itself</a> (footnote 8); and it rests on one country, 83 firms and about 60 reports from before the rule.</p>
+    <p>Open: the NFRD set no specific disclosure requirements. Would its successor, the Corporate Sustainability Reporting Directive, make social talk informative again, and would the quality of the words tell raters more than their number?</p>
+    <p class="prompt">Before you go: in the toy, how far must the slider travel to match the paper’s flatter line?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-go="3">Play with the toy again&nbsp;→</button>
+      <a class="btn" href="../../publication/social-tone-nfrd/">Read the paper</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Tables 1, 3, 5, 6; footnotes 8, 10; the abstract; p.61, p.73, p.78. Computed from Table 3: about 60 reports (0.182 × 329); two in a hundred (1.937, read per hundred words).</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/social-tone-nfrd/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- the shared frame for slides 1 and 2: fitted score against social tone (Table 5, column 3) ---------- */
+var LINES = (function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var B1 = 0.097, B2 = 0.148, B3 = -0.060, MEAN = 1.937, Q1 = 1.718, Q3 = 2.166, LO = 0.359, HI = 3.139;
+  var X0 = 0.25, X1 = 3.25, Y0 = -0.18, Y1 = 0.14;
+  function pre(x) { return B1 * (x - MEAN); }
+  function post(x) { return B2 + (B1 + B3) * x - B1 * MEAN; }
+  function sgn(v) { return Math.abs(v) < 0.0005 ? '0.000' : (v < 0 ? '−' : '+') + Math.abs(v).toFixed(3); }
+  function frame(box, W, label) {
+    var H = Math.round(E.clamp(W * 0.6, 240, 300)), L = 44, R = 12, TOP = 24, B = 40;
+    function X(v) { return L + (W - L - R) * (v - X0) / (X1 - X0); }
+    function Y(v) { return TOP + (H - TOP - B) * (Y1 - v) / (Y1 - Y0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label }, box);
+    S('rect', { x: X(Q1), y: TOP, width: X(Q3) - X(Q1), height: H - TOP - B, 'class': 'band-normal' }, root);
+    [-0.15, -0.1, -0.05, 0, 0.05, 0.1].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': Math.abs(v) < 1e-9 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(2), { 'text-anchor': 'end' });
+    });
+    [0.5, 1, 1.5, 2, 2.5, 3].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      if (W >= 420 || v % 1 === 0) T(root, X(v), H - B + 17, String(v), { 'text-anchor': 'middle' });
+    });
+    T(root, (L + W - R) / 2, H - 6, 'Social tone, social words per hundred', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, 0, TOP - 10, W < 520 ? 'Fitted score vs. an average report before 2017' : 'Fitted social score, against a pre-2017 report of average tone', { 'class': 'label' });
+    return { X: X, Y: Y, W: W, H: H, L: L, R: R, TOP: TOP, B: B, root: root };
+  }
+  function line(g, geo, f, x1, cls) {
+    var pts = [];
+    for (var i = 0; i <= 40; i++) { var x = LO + (x1 - LO) * i / 40; pts.push(geo.X(x).toFixed(1) + ',' + geo.Y(f(x)).toFixed(1)); }
+    S('polyline', { points: pts.join(' '), 'class': cls }, g);
+  }
+  function marker(g, geo, x) {
+    S('line', { x1: geo.X(x), x2: geo.X(x), y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    var right = geo.X(x) > geo.W * 0.62;
+    T(g, geo.X(x) + (right ? -7 : 7), geo.TOP + 12, 'tone ' + x.toFixed(2), { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+  }
+  return { pre: pre, post: post, sgn: sgn, frame: frame, line: line, marker: marker, LO: LO, HI: HI, MEAN: MEAN, Q1: Q1, Q3: Q3, CROSS: B2 / -B3 };
+})();
+
+/* ---------- slide 1: the line before the rule ---------- */
+(function () {
+  var E = Explore, S = E.svg, L = LINES;
+  var box = document.getElementById('pre-chart'), slider = document.getElementById('pre-x'), read = document.getElementById('pre-read'), geo = null;
+  function x() { return +slider.value / 100; }
+  function build(W) {
+    box.innerHTML = '';
+    geo = L.frame(box, W, 'Fitted social score before 2017 against social tone, from 0.36 to 3.14 social words per hundred: a rising line with slope 0.097, from about −0.15 at the lowest tone to about +0.12 at the highest, relative to a report of average tone. The middle half of reports, tone 1.72 to 2.17, is shaded.');
+    L.line(geo.root, geo, L.pre, L.HI, 'before');
+    geo.dyn = S('g', {}, geo.root);
+    draw();
+  }
+  function draw() {
+    var v = x(), d = L.pre(v);
+    slider.setAttribute('aria-valuetext', 'tone ' + v.toFixed(2));
+    var where = v < L.Q1 ? 'in the bottom quarter of reports' : v > L.Q3 ? 'in the top quarter of reports' : 'in the middle half of reports';
+    var share = Math.round(100 * Math.abs(d) / 0.228);
+    read.innerHTML = '<strong>A report from before 2017 at tone ' + v.toFixed(2) + '</strong>, ' + where + ': its fitted social score is <strong class="nw">' + L.sgn(d) + '</strong> against a report of average tone (1.94), all else equal' +
+      (share >= 1 ? ', about ' + share + '% of the width of the middle half of scores.' : '.');
+    if (!geo) return;
+    geo.dyn.innerHTML = '';
+    L.marker(geo.dyn, geo, v);
+    S('circle', { cx: geo.X(v), cy: geo.Y(d), r: 6, 'class': 'before-fill' }, geo.dyn);
+  }
+  slider.setAttribute('aria-label', 'Social tone of a report, from 0.36 to 3.14 social words per hundred');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: the bet, then the line after the rule ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, L = LINES;
+  var box = document.getElementById('lines-chart'), slider = document.getElementById('lines-x'), read = document.getElementById('lines-read');
+  var verdict = document.getElementById('lines-verdict'), nextBox = document.getElementById('lines-next'), note = document.getElementById('lines-note'), betBox = document.getElementById('bet');
+  var st = { bet: null, k: -1 }, geo = null, timer = null, STEPS = 24;
+  function x() { return +slider.value / 100; }
+  function build(W) {
+    box.innerHTML = '';
+    geo = L.frame(box, W, 'Fitted social score against social tone. Before 2017: slope 0.097. After 2017: the line starts higher and is flatter, slope about 0.037; the two are about 0.03 apart at the average tone and cross near a tone of 2.5. Relative to a pre-2017 report of average tone.');
+    L.line(geo.root, geo, L.pre, L.HI, 'before');
+    geo.dyn = S('g', {}, geo.root);
+    drawDyn();
+  }
+  function drawDyn() {
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    if (st.k < 0) { T(g, (geo.L + geo.W - geo.R) / 2, geo.Y(0.105), 'Place your bet to draw the line after 2017', { 'text-anchor': 'middle', 'class': 'placeholder halo' }); return; }
+    var x1 = L.LO + (L.HI - L.LO) * st.k / STEPS;
+    L.line(g, geo, L.post, x1, 'after');
+    if (st.k < STEPS) return;
+    var v = x();
+    L.marker(g, geo, v);
+    S('circle', { cx: geo.X(v), cy: geo.Y(L.pre(v)), r: 5.5, 'class': 'before-fill' }, g);
+    S('circle', { cx: geo.X(v), cy: geo.Y(L.post(v)), r: 5.5, 'class': 'after-fill' }, g);
+  }
+  function readout() {
+    var v = x(), a = L.pre(v), b = L.post(v), d = b - a;
+    slider.setAttribute('aria-valuetext', 'tone ' + v.toFixed(2));
+    read.innerHTML = '<strong>At tone ' + v.toFixed(2) + ':</strong> before the rule <span class="nw">' + L.sgn(a) + '</span>, after it <span class="nw">' + L.sgn(b) + '</span>; after minus before <strong class="nw">' + L.sgn(d) + '</strong>.' +
+      (v > L.CROSS ? ' Up here the line after the rule sits below the one before; few reports are this social, and this gap is arithmetic on Table 5, not an estimate the paper reports.' : '');
+  }
+  var LEAD = {
+    slower: 'You read it right: after 2017 the slope is 0.060 smaller, about 0.037 more score per point of tone, instead of 0.097. ',
+    same: 'It changed. After 2017 the slope is 0.060 smaller, a drop significant at the 5% level: about 0.037 instead of 0.097. ',
+    faster: 'The opposite. After 2017 the slope is 0.060 smaller: about 0.037 more score per point of tone, not more than 0.097. '
+  };
+  var TAIL = 'The 0.037 is computed from Table 5; the 5% significance belongs to the change, −0.060. At the average tone the gold line sits about 0.03 higher: comparable firms scored a little more after the rule, and talk added less on top.';
+  function finish() {
+    if (timer) { clearInterval(timer); timer = null; }
+    st.k = STEPS; slider.disabled = false;
+    drawDyn(); readout();
+    verdict.innerHTML = '<strong>Table 5’s answer: rises more slowly.</strong> ' + LEAD[st.bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+  }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet', bet);
+    if (!animate || E.still) { finish(); return; }
+    if (timer) clearInterval(timer);
+    verdict.textContent = ''; nextBox.hidden = true; note.hidden = true; slider.disabled = true;
+    st.k = 0; drawDyn();
+    timer = setInterval(function () { if (st.k >= STEPS) { finish(); return; } st.k++; drawDyn(); }, 25);
+  }
+  slider.setAttribute('aria-label', 'Social tone of a report, from 0.36 to 3.14 social words per hundred');
+  slider.addEventListener('input', function () { drawDyn(); readout(); });
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: the toy: talk that stops sorting firms ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 48, P = E.standardize(E.normals(N, 5)), Bz = E.standardize(E.normals(N, 17), [P]), Ez = E.standardize(E.normals(N, 41), [P, Bz]);
+  var SLOPE0 = 0.097, BETA = SLOPE0 * 0.446, NOISE = 0.07, PAPER = 0.037; /* Table 5 col. (3): 0.097 and 0.097 − 0.060 */
+  var SC = P.map(function (p, i) { return 0.695 + BETA * p + NOISE * Ez[i]; });
+  var box = document.getElementById('toy-chart'), slider = document.getElementById('toy-w'), read = document.getElementById('toy-read');
+  var X0 = 0.5, X1 = 3.4, Y0 = 0.45, Y1 = 0.95, geo = null;
+  function tones(w) { var c = Math.sqrt(Math.max(0, 1 - w * w)); return P.map(function (p, i) { return 1.937 + 0.446 * (w * p + c * Bz[i]); }); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.52, 220, 270)), L = 40, R = 10, TOP = 22, B = 40;
+    function X(v) { return L + (W - L - R) * (v - X0) / (X1 - X0); }
+    function Y(v) { return TOP + (H - TOP - B) * (Y1 - v) / (Y1 - Y0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy scatter of 48 invented firms: social tone across, social score up, with the fitted line of the current setting and two dashed reference slopes, the paper’s 0.097 before the rule and about 0.037 after it. As less of the wording follows practice, the firms shuffle sideways and the fitted line flattens.' }, box);
+    [0.5, 0.6, 0.7, 0.8, 0.9].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, v.toFixed(1), { 'text-anchor': 'end' });
+    });
+    [1, 2, 3].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      T(root, X(v), H - B + 17, String(v), { 'text-anchor': 'middle' });
+    });
+    S('line', { x1: L, x2: W - R, y1: H - B, y2: H - B, 'class': 'axis' }, root);
+    T(root, (L + W - R) / 2, H - 6, 'Social tone, social words per hundred', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, 0, TOP - 9, 'Social score (invented firms)', { 'class': 'label' });
+    var dyn = S('g', {}, root);
+    /* the paper's two slopes, drawn over the toy so a match shows as dashes on the ink line */
+    [[SLOPE0, 'before dash'], [PAPER, 'after dash']].forEach(function (r) {
+      var a0 = 0.695 - r[0] * 1.937;
+      S('line', { x1: X(X0), y1: Y(a0 + r[0] * X0), x2: X(X1), y2: Y(a0 + r[0] * X1), 'class': r[1] }, root);
+    });
+    geo = { X: X, Y: Y, dyn: dyn };
+    draw();
+  }
+  function draw() {
+    var w = +slider.value / 100, xs = tones(w), fit = E.ols(xs, SC), b = fit[1];
+    slider.setAttribute('aria-valuetext', Math.round(w * 100) + ' percent');
+    var near = Math.abs(b - PAPER) < 0.004;
+    read.innerHTML = w > 0.995
+      ? '<strong>100% follows practice: slope ' + b.toFixed(3) + '</strong>, the paper’s estimate before the rule. Drag left to let template wording in.'
+      : '<strong>' + Math.round(w * 100) + '% follows practice: slope ' + b.toFixed(3) + '</strong> score per point of tone, against ' + SLOPE0.toFixed(3) + ' when wording follows practice fully.' +
+        (near ? ' Level with the gold dashed line, the slope after 2017 computed from Table 5; the share itself is invented.' : w < 0.05 ? ' Tone now says nothing about practice.' : '');
+    if (!geo) return;
+    var g = geo.dyn; g.innerHTML = '';
+    xs.forEach(function (x, i) { S('circle', { cx: geo.X(E.clamp(x, X0 + 0.02, X1 - 0.02)).toFixed(1), cy: geo.Y(SC[i]).toFixed(1), r: 4, 'class': 'dot-ink' }, g); });
+    S('line', { x1: geo.X(X0), y1: geo.Y(fit[0] + b * X0), x2: geo.X(X1), y2: geo.Y(fit[0] + b * X1), 'class': 'ink-line' }, g);
+  }
+  slider.setAttribute('aria-label', 'Share of a report’s social wording that follows what the firm does, from 0 to 100 percent');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

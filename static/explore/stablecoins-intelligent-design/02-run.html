@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The run · Intelligent Design: Stablecoins (In)stability</title>
+<meta name="description" content="Deck 2 of an explorable explanation of De Blasis, Galati, Webb and Webb, Intelligent Design: which way the other stablecoins moved when TerraUSD collapsed, in what order, for how long, why Tether's discount was not arbitraged away, and the paper's contagion test.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .cas .inner > p { max-width: 58em; }
+  .cas .inner > p.note { max-width: 62em; }
+  /* the time slider runs exactly under the chart's time axis: its thumb centre spans the plot (L = 52, R = 10) */
+  #cas-t { max-width: none; width: calc(100% - 46px); margin: -.3rem 2px .1rem 44px; }
+  /* the slider's label and the narration share one row under the slider */
+  .cas-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: .3rem 1.2rem; align-items: start; margin-bottom: 1rem; }
+  .cas-row label.ctl { margin: 0; }
+  .cas-row .readout { margin: 0; max-width: none; }
+  @media (min-width: 820px) { .cas-row { grid-template-columns: 11.5rem minmax(0, 1fr); padding-left: 52px; } #cas-read { min-height: 3.1em; } }
+  @media (min-width: 820px) { .end-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 1rem 3rem; align-items: start; } }
+  .end-grid .actions { margin-top: .8rem; }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-run.html">
+<lg-sitebar><noscript><a href="../../publication/stablecoins-intelligent-design/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide play" data-title="Which way did the other coins move?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The run · 1 of 6</p>
+    <h2>Place your bet: which way did the others move?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>As UST sank, the four other coins in the paper were tested too. For each one, guess where it was quoted in the days around the crash, as the paper reports it.</p>
+        <div class="betrows" id="bet1">
+          <span class="coin">USDT<br><span class="ok">mixed pool</span></span><span class="seg" data-coin="USDT"></span>
+          <span class="coin">USDC<br><span class="ok">Treasuries, cash</span></span><span class="seg" data-coin="USDC"></span>
+          <span class="coin">BUSD<br><span class="ok">cash in banks</span></span><span class="seg" data-coin="BUSD"></span>
+          <span class="coin">DAI<br><span class="ok">crypto collateral</span></span><span class="seg" data-coin="DAI"></span>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="bet1-chart"></div>
+        <p class="note" id="bet1-note" hidden>Prices as quoted in the paper’s text: USDT 97¢ at about 16:00 UTC on 12 May (p.2) and as low as 95¢ on some exchanges (p.12); USDC $1.01 (p.2; “on at least some exchanges”, p.12); BUSD $1.0149 (p.2); DAI “small fluctuations around $1” (p.2). Quoted prices are a different measure from the averaged minute prices behind the paper’s charts and tests (p.7).</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="bet1-verdict" aria-live="polite"></p>
+        <div class="actions" id="bet1-next" hidden><button class="btn primary" type="button" data-next>Who moved first?&nbsp;→</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide cas" data-title="Who moved first?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The run · 2 of 6</p>
+    <h2>UST and LUNA first, Tether two days later, then everyone</h2>
+    <p class="lead">Each line is a coin’s <strong>cumulative abnormal return</strong> (CAR): how far, in per cent, it has drifted since 20 April, the start of the sample, from where it should be (for a stablecoin, nowhere). It is built from minute prices averaged across exchanges, so it measures something different from the quotes you just bet on.</p>
+    <div class="fig" id="cas-chart"></div>
+    <input type="range" id="cas-t" min="0" max="120" step="0.5" value="0">
+    <div class="cas-row">
+      <label class="ctl" for="cas-t">Drag through the week (UTC)</label>
+      <p class="readout" id="cas-read" aria-live="polite"></p>
+    </div>
+    <p>The paper reads this order as an <strong>information cascade</strong>, traders in market after market reacting to what they had just seen, with some signs of <strong>herding</strong>, many making the same move at once.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>How long did it last?&nbsp;→</button>
+      <a class="door" href="05-evidence.html#s1">How can a price fall 1,500 per cent?&nbsp;→</a>
+    </div>
+    <p class="note">Times as marked in Fig. 3, UTC; sizes as p.10 gives them; UST’s start and its 79¢, a price rather than a CAR: p.2; cascade and herding: pp.2, 8, 10.</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How long did it last?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The run · 3 of 6</p>
+    <h2>Place your bet: how long did it last?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Tether sold for 97 cents on 12 May. Shocks in crypto can pass in minutes.</p>
+        <p><strong>How long, by the paper’s count, did Tether keep deviating from $1, even slightly?</strong></p>
+        <div class="actions bet" id="bet2" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="hours" aria-pressed="false">A few hours</button>
+          <button class="btn" type="button" data-bet="week" aria-pressed="false">About a week</button>
+          <button class="btn" type="button" data-bet="months" aria-pressed="false">More than two months</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="dur-chart"></div>
+        <p class="note" id="dur-note" hidden>Tether and BUSD: p.10. UST: p.18. 68 days is computed from 12 May to 19 July. The paper’s minute data end on 29 May; the later dates come from its text. That most of Tether’s gap closed within days is read from Fig. 2.</p>
+      </div>
+      <div class="t">
+        <p class="verdict" id="dur-verdict" aria-live="polite"></p>
+        <div class="actions" id="dur-next" hidden><button class="btn primary" type="button" data-next>Why didn’t anyone buy at 97¢?&nbsp;→</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why was a 95-cent dollar left on the table?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · The run · 4 of 6</p>
+      <h2>A dollar for 95 cents, and few takers</h2>
+      <p>If Tether sells for 95 cents and Tether itself takes coins back for a dollar, why not buy every coin on offer and hand them in? That <strong>redemption</strong> trade should drag the price back to $1.</p>
+      <p>Try it on the terms the paper reports: no less than $100,000 at a time, $1,000 per withdrawal at these sizes, 150 USDT to verify an account, and for most US persons no dollars at all.</p>
+      <p>The paper reads the fact that the discount was not closed at once as a sign that many traders feared a wider collapse.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Did the collapse spread?&nbsp;→</button></div>
+      <p class="note">Terms as reported for July 2022 (p.17, fns. 14–15); the fee is “.01% or $1000 (whichever is greater)”, so $1,000 at every size here. The paper’s reading: p.12. Your doubt is your own guess, not the paper’s; the calculator assumes a failed redemption pays nothing and ignores how long payment takes.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Buy USDT in the market, hand it in to Tether: profit, % of the amount</p>
+      <div class="fig" id="arb-chart"></div>
+      <p class="legend"><span><i class="ln blue"></i>profit if Tether pays</span><span id="arb-leg-q"><i class="ln dash"></i>expected, with your doubt</span></p>
+      <label class="ctl" for="arb-p">Market price of one USDT: <span id="arb-pv"></span></label>
+      <input type="range" id="arb-p" min="950" max="1000" step="1" value="970">
+      <label class="ctl" for="arb-a">How much you redeem: <span id="arb-av"></span></label>
+      <input type="range" id="arb-a" min="100" max="1000" step="50" value="100">
+      <label class="ctl" for="arb-q">Your doubt, the chance Tether never pays: <span id="arb-qv"></span></label>
+      <input type="range" id="arb-q" min="0" max="100" step="5" value="0">
+      <div class="ctl"><label class="toggle"><input type="checkbox" id="arb-us"> I am a US person</label></div>
+      <p class="readout" id="arb-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did the collapse spread?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 2 · The run · 5 of 6</p>
+      <h2>The shock reached every coin</h2>
+      <p>The paper’s formal test asks whether the way UST moved with each other asset changed after 10 May.</p>
+      <p>The measure is the <strong>covariance</strong>: positive when two coins’ returns tend to move the same way in the same minute, negative when they move opposite ways, near zero when they ignore each other. The test counts a shift either way, up or down, as a sign that the shock spread.</p>
+      <p>All six shifts clear the 1% bar: each <strong>t-statistic</strong>, the shift set against its noise, is beyond about 2.6. The paper reads this as contagion from UST’s collapse to every asset it studies, likely due in part to herding.</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>What to take away&nbsp;→</button></div>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Average covariance of UST with each asset</p>
+      <div class="fig" id="cov-chart"></div>
+      <p class="legend"><span><i class="dt hollow"></i>before: 20 April–9 May</span><span><i class="dt near"></i>after, the collapse period: 10–29 May</span></p>
+      <p class="note">Table 4; the paper, p.10. Covariances are estimated minute by minute with a BEKK model (p.6) and the test compares their averages before and after 10 May (p.7, Table 4). In Table 4 a rise in covariance carries a negative t, a fall a positive one. 2.6 is the usual two-sided 1% critical value, 2.58.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The run · 6 of 6</p>
+    <h2>What to take away</h2>
+    <div class="end-grid">
+      <div>
+        <p class="closer">Five coins made the same promise. When UST failed, traders treated them very differently, and the paper links the difference to how each was built.</p>
+        <ol class="takeaways">
+          <li>UST’s collapse spread: its co-movement with bitcoin and with every stablecoin studied shifted, significant at 1%. The paper reads this as contagion, likely due in part to herding.</li>
+          <li>Design shaped the direction, the paper finds. Traders paid more than a dollar for the coins backed by cash and US government debt, sold Tether for less, and left DAI near a dollar: a flight to safety.</li>
+          <li>It shaped the duration too. BUSD’s move faded; Tether stayed off its peg until 19 July; UST never recovered.</li>
+        </ol>
+      </div>
+      <div>
+        <p class="caveat">One event and forty days of minute prices averaged across exchanges, with herding offered as a likely part of the cause. The authors say their findings cannot be extended to calmer markets.</p>
+        <p class="door-row"><a class="door" href="05-evidence.html#s2">Where do the findings stop?&nbsp;→</a></p>
+        <p>Open questions the paper raises: could the pools of decentralised exchanges have warned of the crash two days early? Why do traders keep using the largest coins in calm times, when a crash shows they can tell which are safer?</p>
+        <p class="prompt">To take with you: in the toy, crypto collateral breaks beyond a 31% fall, yet DAI held near $1 in a week when bitcoin’s CAR touched −50%. A CAR is not a price fall, but what might the toy leave out? And which of its designs is Tether closest to?</p>
+        <div class="actions">
+          <a class="btn primary" href="01-promise.html#s3">Stress the designs again&nbsp;→</a>
+          <a class="btn" href="../../publication/stablecoins-intelligent-design/">Read the paper</a>
+          <button class="btn" type="button" data-map>Map</button>
+        </div>
+      </div>
+    </div>
+    <p class="note">Takeaways: abstract, pp.10, 12; durations: pp.10, 18; the limit: p.15; open questions: pp.10, 15; the toy: deck 1, slide 3. Side paths you may have skipped: <a href="03-why.html#s1">why hold a dollar coin</a> · <a href="04-terra.html#s1">inside TerraUSD</a> · <a href="05-evidence.html#s1">reading the evidence</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/stablecoins-intelligent-design/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: bet on the direction, then the paper's prices (pp.2, 12) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var COINS = ['USDT', 'USDC', 'BUSD', 'DAI'];
+  var ANSWER = { USDT: 'below', USDC: 'above', BUSD: 'above', DAI: 'about' };
+  var WORD = { below: 'below $1', about: 'about $1', above: 'above $1' };
+  /* price, label; USDT also its low on some exchanges */
+  var PRICE = { USDT: [0.97, '97¢', 0.95, '95¢ on some exchanges'], USDC: [1.01, '$1.01'], BUSD: [1.0149, '$1.0149'], DAI: [1.0, 'around $1, no figure given'] };
+  var bets = E.load('bet1') || {}, box = document.getElementById('bet1-chart');
+  var verdict = document.getElementById('bet1-verdict'), next = document.getElementById('bet1-next'), note = document.getElementById('bet1-note');
+  var geo = null;
+  [].forEach.call(document.querySelectorAll('#bet1 .seg'), function (el) {
+    var c = el.getAttribute('data-coin');
+    E.seg(el, [['below', 'Below $1'], ['about', 'About $1'], ['above', 'Above $1']], bets[c] || null, function (k) {
+      bets[c] = k; E.save('bet1', bets); render();
+    }, 'Your bet for ' + c);
+  });
+  function done() { return COINS.every(function (c) { return !!WORD[bets[c]]; }); }
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 48, TOP = 26, H = TOP + COINS.length * rowH + 26, L = 50, R = 10;
+    function X(p) { return L + (W - L - R) * (p - 0.94) / 0.08; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Prices quoted in the paper: USDT 97 cents, as low as 95 cents on some exchanges; USDC 1.01 dollars; BUSD 1.0149 dollars; DAI small fluctuations around one dollar.' }, box);
+    [0.94, 0.96, 0.98, 1.0, 1.02].forEach(function (p) {
+      if (p !== 1) S('line', { x1: X(p), x2: X(p), y1: TOP - 4, y2: H - 22, 'class': 'grid' }, root);
+      T(root, X(p), H - 6, p === 1 ? '$1.00' : p > 1 ? '$' + p.toFixed(2) : Math.round(p * 100) + '¢', { 'text-anchor': p === 0.94 ? 'start' : p === 1.02 ? 'end' : 'middle', 'class': p === 1 ? 'peg-label' : null });
+    });
+    S('line', { x1: X(1), x2: X(1), y1: TOP - 10, y2: H - 22, 'class': 'peg' }, root);
+    S('line', { x1: X(1), x2: X(1), y1: TOP - 10, y2: TOP + 4, 'class': 'peg-tick' }, root);
+    COINS.forEach(function (c, i) { T(root, 0, TOP + i * rowH + 22, c, { 'class': 'strong' }); });
+    geo = { X: X, W: W, H: H, TOP: TOP, rowH: rowH, L: L, dyn: S('g', {}, root) };
+    render();
+  }
+  function render() {
+    var ok = done();
+    verdict.innerHTML = '';
+    next.hidden = !ok; note.hidden = !ok;
+    if (geo) {
+      var g = geo.dyn, X = geo.X; g.innerHTML = '';
+      if (!ok) T(g, (geo.L + geo.W) / 2, geo.TOP + 2 * geo.rowH - 2, 'Bet on all four to draw the paper’s prices', { 'text-anchor': 'middle', 'class': 'placeholder halo' });
+      else COINS.forEach(function (c, i) {
+        var y = geo.TOP + i * geo.rowH + 18, p = PRICE[c], gg = S('g', { 'class': 'drop', style: 'animation-delay:' + (i * 0.15) + 's' }, g);
+        if (p[2]) {
+          S('line', { x1: X(p[2]), x2: X(p[0]), y1: y, y2: y, 'class': 'muted-line' }, gg);
+          S('circle', { cx: X(p[2]), cy: y, r: 5, 'class': 'hollow-far' }, gg);
+          T(gg, X(p[2]), y + 20, p[3], { 'class': 'label' });
+        }
+        S('circle', { cx: X(p[0]), cy: y, r: 7, 'class': c === 'DAI' ? 'hollow' : 'far-fill' }, gg);
+        var left = c === 'DAI' || X(p[0]) > geo.W - 90;
+        T(gg, X(p[0]) + (left ? -12 : 12), y - 10, p[1], { 'class': 'strong halo', 'text-anchor': left ? 'end' : 'start' });
+      });
+    }
+    if (!ok) return;
+    var right = COINS.filter(function (c) { return bets[c] === ANSWER[c]; }).length;
+    var miss = COINS.filter(function (c) { return bets[c] !== ANSWER[c]; }).map(function (c) { return c + ' was ' + WORD[ANSWER[c]] + ', not ' + WORD[bets[c]]; });
+    verdict.innerHTML = '<strong>You called ' + right + ' of 4' + (miss.length ? ':</strong> ' + miss.join('; ') + '.' : '.</strong>') + ' USDC and BUSD, backed by cash and US government debt, sold for more than a dollar; Tether, whose commercial paper had been questioned, for less; DAI, backed by crypto, stayed close. The paper calls paying $1.01 for a dollar uneconomic, a sign of fear and a flight to safety, while noting it also reflects the cost of switching from crypto into real dollars (p.12).';
+  }
+  E.fit(box, build, { min: 290, max: 640 });
+  render();
+})();
+
+/* ---------- slide 2: the cascade, extremes as marked in Figure 3 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var LANES = [['UST', 'shock'], ['LUNA', 'shock'], ['USDT', ''], ['USDC', ''], ['DAI', ''], ['BTC', 'btc'], ['BUSD', '']];
+  /* [lane, hour from 9 May 00:00 UTC, label, narration] */
+  var EV = [
+    ['UST', 0, 'starts to slip', 'Around midnight on 9 May, UST starts to slip, and LUNA with it (pp.2, 8).'],
+    ['LUNA', 0, 'slides with it', 'Around midnight on 9 May, UST starts to slip, and LUNA with it (pp.2, 8).'],
+    ['UST', 33, 'price 79¢', '10 May, 09:00: UST is quoted at 79 cents, a price rather than a CAR (p.2).'],
+    ['USDC', 72 + 6 + 46 / 60, '+6%', '12 May, 06:46: Tether’s slide sets off a sharp rise in USDC’s CAR, about +6% within a couple of hours.'],
+    ['BTC', 72 + 7 + 17 / 60, '−50%', '12 May, 07:17: bitcoin’s CAR, counted since 20 April against its pace in the sample’s first two days, bottoms at about −50%. That is not a 50% fall in price that week.'],
+    ['USDT', 72 + 7 + 23 / 60, '−5%', '12 May, 07:23: Tether’s CAR hits its low, about −5%, about two days after UST lost its peg on 10 May.'],
+    ['DAI', 72 + 7 + 42 / 60, '+3%', '12 May, 07:42: DAI’s CAR spikes to about +3%, almost at the same moment.'],
+    ['UST', 96 + 1 + 41 / 60, '−300%', '13 May, 01:41: a day later UST collapses to a handful of cents; its CAR reaches about −300%.'],
+    ['BUSD', 96 + 4 + 5 / 60, '−0.1%', '13 May, 04:05: even BUSD’s CAR slips slightly, to about −0.1%.'],
+    ['LUNA', 96 + 6 + 39 / 60, '−1,500%', '13 May, 06:39: LUNA’s CAR touches about −1,500%.']
+  ];
+  var box = document.getElementById('cas-chart'), slider = document.getElementById('cas-t'), read = document.getElementById('cas-read');
+  var geo = null, timer = null, played = false;
+  function build(W) {
+    box.innerHTML = '';
+    var laneH = 26, TOP = 6, B = 24, H = TOP + LANES.length * laneH + B, L = 52, R = 10;
+    function X(h) { return L + (W - L - R) * h / 120; }
+    function Y(i) { return TOP + i * laneH + laneH / 2; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Most extreme cumulative abnormal returns marked in Figure 3, 9 to 14 May 2022, UTC. UST and LUNA start to slide around midnight on 9 May; UST is quoted at 79 cents at 09:00 on 10 May. On 12 May: USDC +6% at 06:46, bitcoin −50% at 07:17, Tether −5% at 07:23, DAI +3% at 07:42. On 13 May: UST −300% at 01:41, BUSD −0.1% at 04:05, LUNA −1,500% at 06:39.' }, box);
+    for (var d = 0; d <= 5; d++) {
+      S('line', { x1: X(d * 24), x2: X(d * 24), y1: TOP, y2: H - B, 'class': d ? 'grid' : 'axis' }, root);
+      T(root, X(d * 24), H - 8, W < 520 && d ? String(9 + d) : (9 + d) + ' May', { 'text-anchor': d === 0 ? 'start' : d === 5 ? 'end' : 'middle' });
+    }
+    LANES.forEach(function (l, i) {
+      S('line', { x1: L, x2: W - R, y1: Y(i), y2: Y(i), 'class': 'axis' }, root);
+      T(root, 0, Y(i) + 4, l[0], { 'class': 'strong' });
+    });
+    /* the hour on 12 May when four coins hit their extremes */
+    var x0 = X(78.6), x1 = X(79.8);
+    S('rect', { x: x0 - 3, y: Y(2) - 11, width: x1 - x0 + 6, height: Y(5) - Y(2) + 22, 'class': 'shade' }, root);
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, B: B, L: L, dyn: S('g', {}, root) };
+    draw();
+  }
+  function lane(name) { for (var i = 0; i < LANES.length; i++) if (LANES[i][0] === name) return i; return 0; }
+  function draw() {
+    var t = +slider.value, last = null;
+    EV.forEach(function (e) { if (e[1] <= t + 1e-9) last = e; });
+    var day = Math.floor(t / 24), hh = t - day * 24;
+    slider.setAttribute('aria-valuetext', (9 + day) + ' May, ' + (hh < 10 ? '0' : '') + Math.floor(hh) + ':' + (hh % 1 ? '30' : '00') + ' UTC');
+    read.innerHTML = last ? last[3] : '';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    S('line', { x1: X(t), x2: X(t), y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    EV.forEach(function (e) {
+      var i = lane(e[0]), kind = LANES[i][1], on = e[1] <= t + 1e-9, x = X(e[1]), y = geo.Y(i);
+      var cls = !on ? 'hollow-far' : kind === 'shock' ? 'near-fill' : kind === 'btc' ? 'muted-fill' : 'far-fill';
+      var c = S('circle', { cx: x, cy: y, r: e === last ? 7 : 5, 'class': cls, style: 'cursor:pointer' }, g);
+      c.addEventListener('click', function () { stop(); slider.value = e[1]; draw(); });
+      if (!on) return; /* a size is shown only once the cursor has reached it */
+      var left = e[1] > 90, lab = geo.W < 520 && e[1] === 0 ? (e[0] === 'UST' ? 'slips' : 'slides') : e[2];
+      T(g, x + (left ? -10 : 10), y + 4, lab, { 'text-anchor': left ? 'end' : 'start', 'class': 'strong halo' });
+    });
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function play() {
+    if (played) return; played = true;
+    if (E.still || +slider.value > 0) { if (E.still) { slider.value = 120; draw(); } return; }
+    timer = setInterval(function () {
+      var v = +slider.value + 1.5;
+      if (v >= 120) { v = 120; stop(); }
+      slider.value = v; draw();
+    }, 45);
+  }
+  slider.addEventListener('input', function () { stop(); draw(); });
+  E.onShow(2, play);
+  E.fit(box, build, { min: 300, max: 1400 });
+  draw();
+})();
+
+/* ---------- slide 3: bet on the duration, then the three durations (pp.10, 18) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var betBox = document.getElementById('bet2'), box = document.getElementById('dur-chart');
+  var verdict = document.getElementById('dur-verdict'), next = document.getElementById('dur-next'), note = document.getElementById('dur-note');
+  var LEAD = { hours: 'Much longer than that. ', week: 'Close for most of the gap, which in the paper’s Figure 2 closes within days, but not for all of it. ', months: 'You called it. ' };
+  var bet = null, geo = null;
+  /* days from 1 May 2022 */
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 54, TOP = 30, H = TOP + 3 * rowH + 24, L = 0, R = 10;
+    function X(d) { return L + (W - L - R) * d / 91; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'How long each coin stayed off its peg, May to July 2022. BUSD: its move did not persist. Tether: off its peg from 12 May until 19 July, by far less after the first days. UST: never recovered, under one cent in June and about six cents on 5 July. The paper’s minute data end on 29 May.' }, box);
+    S('rect', { x: X(0), y: TOP - 6, width: X(28) - X(0), height: 3 * rowH + 2, 'class': 'shade' }, root);
+    T(root, X(0) + 4, TOP - 12, W < 460 ? 'paper’s data end 29 May' : 'the paper’s minute data end on 29 May', { 'class': 'label' });
+    [[0, '1 May'], [31, '1 June'], [61, '1 July'], [91, '31 July']].forEach(function (m, i) {
+      S('line', { x1: X(m[0]), x2: X(m[0]), y1: H - 24, y2: H - 19, 'class': 'axis' }, root);
+      T(root, X(m[0]), H - 6, m[1], { 'text-anchor': i === 0 ? 'start' : i === 3 ? 'end' : 'middle' });
+    });
+    S('line', { x1: 0, x2: W - R, y1: H - 24, y2: H - 24, 'class': 'axis' }, root);
+    geo = { X: X, W: W, H: H, TOP: TOP, rowH: rowH, R: R, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    var y0 = geo.TOP, rh = geo.rowH;
+    ['BUSD', 'USDT', 'UST'].forEach(function (c, i) { T(g, 0, y0 + i * rh + 12, c, { 'class': 'strong' }); });
+    if (!bet) { T(g, geo.W / 2, y0 + rh * 1.6, 'Place your bet to draw the durations', { 'text-anchor': 'middle', 'class': 'placeholder halo' }); return; }
+    var yb = y0 + 26, yt = y0 + rh + 26, yu = y0 + 2 * rh + 26;
+    S('circle', { cx: X(12), cy: yb, r: 5, 'class': 'far-fill' }, g);
+    T(g, X(12) + 10, yb + 4, 'brief: did not persist', { 'class': 'label halo' });
+    S('rect', { x: X(11), y: yt - 6, width: X(13) - X(11), height: 12, 'class': 'far-fill' }, g);
+    S('rect', { x: X(13), y: yt - 1.5, width: X(79) - X(13), height: 3, 'class': 'far-fill' }, g);
+    S('line', { x1: X(79), x2: X(79), y1: yt - 8, y2: yt + 8, 'class': 'bracket' }, g);
+    T(g, X(11), yt - 12, '12 May to 19 July: 68 days', { 'class': 'strong halo' });
+    S('rect', { x: X(8), y: yu - 6, width: X(91) - X(8), height: 12, 'class': 'near-fill' }, g);
+    S('circle', { cx: X(65), cy: yu, r: 4, 'class': 'paper-fill' }, g);
+    T(g, X(8), yu - 12, geo.W < 460 ? 'never recovered: about 6¢ on 5 July' : 'never recovered: under 1¢ in June, about 6¢ on 5 July', { 'class': 'strong halo' });
+  }
+  function place(b, save) {
+    bet = b;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bet') === b ? 'true' : 'false'); });
+    if (save) E.save('bet2', b);
+    verdict.innerHTML = LEAD[b] + '<strong>More than two months.</strong> By the paper’s count Tether kept deviating from its peg until 19 July 2022, though by far less than in the first days. BUSD’s move did not last. UST never came back. One shock, three durations: the paper counts how long a coin stays off its peg, with which way and how far it moves, among the things its design shapes.';
+    next.hidden = false; note.hidden = false;
+    draw();
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  var prior = E.load('bet2');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(box, build, { min: 290, max: 640 });
+})();
+
+/* ---------- slide 4: the redemption trade on Tether's own terms (p.17) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var FEE = 1000, VERIFY = 150, PMIN = 0.95, YLO = -11, YHI = 5;
+  var pS = document.getElementById('arb-p'), aS = document.getElementById('arb-a'), qS = document.getElementById('arb-q'), us = document.getElementById('arb-us');
+  var box = document.getElementById('arb-chart'), read = document.getElementById('arb-read'), geo = null;
+  function paid(p, A) { return A - FEE - VERIFY - p * A; }
+  function expd(p, A, q) { return (1 - q) * (A - FEE) - p * A - VERIFY; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.42, 196, 226)), L = 40, R = 12, TOP = 10, B = 40;
+    function X(p) { return L + (W - L - R) * (p - PMIN) / (1 - PMIN); }
+    function Y(v) { return TOP + (H - TOP - B) * (YHI - v) / (YHI - YLO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Profit from buying USDT in the market and redeeming it with Tether, as a percentage of the amount, against the market price from 95 cents to one dollar, with and without the reader’s doubt that Tether pays.' }, box);
+    [-10, -5, 0, 5].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '%', { 'text-anchor': 'end' });
+    });
+    [0.95, 0.96, 0.97, 0.98, 0.99].forEach(function (p) { T(root, X(p), H - B + 17, Math.round(p * 100) + '¢', { 'text-anchor': p === 0.95 ? 'start' : 'middle' }); });
+    T(root, (L + W - R) / 2, H - 3, 'market price of one USDT', { 'text-anchor': 'middle' });
+    S('line', { x1: X(1), x2: X(1), y1: TOP - 6, y2: H - B, 'class': 'peg' }, root);
+    S('line', { x1: X(1), x2: X(1), y1: H - B - 12, y2: H - B, 'class': 'peg-tick' }, root);
+    T(root, X(1), H - B + 17, '$1.00', { 'text-anchor': 'end', 'class': 'peg-label' });
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, B: B, L: L, R: R, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var p = +pS.value / 1000, A = +aS.value * 1000, q = +qS.value / 1000, isUS = us.checked;
+    pS.setAttribute('aria-valuetext', (p * 100).toFixed(1) + ' cents');
+    aS.setAttribute('aria-valuetext', '$' + th(A));
+    qS.setAttribute('aria-valuetext', (q * 100).toFixed(1) + ' percent');
+    document.getElementById('arb-pv').textContent = (p * 100).toFixed(1) + '¢';
+    document.getElementById('arb-av').textContent = '$' + th(A);
+    document.getElementById('arb-qv').textContent = (q * 100).toFixed(1) + '%';
+    var win = paid(p, A), ev = expd(p, A, q), be = 1 - (FEE + VERIFY) / A, qStar = 1 - (p * A + VERIFY) / (A - FEE);
+    var sgn = function (v) { return (v < 0 ? '−$' : '+$') + th(Math.abs(v)); };
+    if (isUS) read.innerHTML = '<strong>Closed to you.</strong> Most US persons cannot withdraw dollars from Tether (p.17), so the trade cannot be done; you could only sell the coins back in the market, at the same discount.';
+    else read.innerHTML = 'Buy $' + th(A) + ' of USDT at ' + (p * 100).toFixed(1) + '¢ for $' + th(p * A) + ', hand it in for $' + th(A) + ' less the $1,000 fee, and pay $150 to verify. <strong>If Tether pays: ' + sgn(win) + '</strong> (' + (win / A * 100).toFixed(2) + '%). ' +
+      (q > 0 ? 'With your ' + (q * 100).toFixed(1) + '% doubt: <strong>' + sgn(ev) + ' expected</strong>. ' : '') +
+      (qStar > 0 ? 'The trade stops paying for anyone whose doubt exceeds ' + (qStar * 100).toFixed(1) + '%.' : 'At this price it loses money even if Tether pays: break-even is ' + (be * 100).toFixed(2) + '¢.');
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y; g.innerHTML = '';
+    function line(f, cls) {
+      var pts = [];
+      for (var k = 0; k <= 50; k++) { var pp = PMIN + (1 - PMIN) * k / 50; pts.push(X(pp).toFixed(1) + ',' + Y(E.clamp(f(pp) / A * 100, YLO - 1, YHI + 1)).toFixed(1)); }
+      S('polyline', { points: pts.join(' '), 'class': cls }, g);
+    }
+    document.getElementById('arb-leg-q').hidden = !(q > 0);
+    line(function (pp) { return paid(pp, A); }, isUS ? 'muted-line' : 'blue-line');
+    if (q > 0) line(function (pp) { return expd(pp, A, q); }, 'ghost');
+    if (!isUS) {
+      S('line', { x1: X(be), x2: X(be), y1: Y(0) - 5, y2: Y(0) + 5, 'class': 'bracket' }, g);
+      T(g, X(be) - 4, Y(0) + 17, geo.W < 520 ? 'break-even' : 'break-even ' + (be * 100).toFixed(2) + '¢', { 'text-anchor': 'end', 'class': 'label halo' });
+    }
+    S('line', { x1: X(p), x2: X(p), y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    S('circle', { cx: X(p), cy: Y(E.clamp(win / A * 100, YLO, YHI)), r: 5.5, 'class': isUS ? 'muted-fill' : 'far-fill' }, g);
+    if (q > 0) S('circle', { cx: X(p), cy: Y(E.clamp(ev / A * 100, YLO, YHI)), r: 5, 'class': isUS ? 'muted-fill' : 'text-fill' }, g);
+    if (isUS) T(g, (geo.L + geo.W) / 2, Y(-8.6), 'Closed to most US persons', { 'text-anchor': 'middle', 'class': 'strong halo' });
+  }
+  [pS, aS, qS].forEach(function (s) { s.addEventListener('input', draw); });
+  us.addEventListener('change', draw);
+  E.fit(box, build, { min: 290, max: 600 });
+  draw();
+})();
+
+/* ---------- slide 5: the contagion test, Table 4 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [asset, mean before, mean after, t as printed] */
+  var ROWS = [['BTC', 0.0013, -0.0084, 24.64], ['BUSD', -0.0009, 0.0087, -24.71], ['DAI', 0.0052, 0.0141, -23.96],
+    ['LUNA', -0.0038, 0.0091, -44.15], ['USDT', 0.0009, 0.0072, -14.78], ['USDC', -0.0004, 0.0011, -3.84]];
+  var LO = -0.010, HI = 0.016;
+  var box = document.getElementById('cov-chart');
+  function f4(v) { return (v < 0 ? '−' : '+') + Math.abs(v).toFixed(4); }
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 42, TOP = 20, H = TOP + ROWS.length * rowH + 22, L = 70, R = W < 420 ? 50 : 64;
+    function X(v) { return L + (W - L - R) * (v - LO) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Mean covariance of UST with each asset before and after 10 May 2022, Table 4. BTC: +0.0013 to −0.0084, t 24.64. BUSD: −0.0009 to +0.0087, t −24.71. DAI: +0.0052 to +0.0141, t −23.96. LUNA: −0.0038 to +0.0091, t −44.15. USDT: +0.0009 to +0.0072, t −14.78. USDC: −0.0004 to +0.0011, t −3.84. All significant at 1%.' }, box);
+    [-0.01, 0, 0.01].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 22, 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, X(v), H - 6, v === 0 ? '0' : (v < 0 ? '−' : '+') + '0.01', { 'text-anchor': 'middle' });
+    });
+    T(root, W, TOP - 6, 't-statistic', { 'text-anchor': 'end' });
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH + rowH / 2 + 6, g = S('g', {}, root);
+      T(g, 0, y + 4, 'UST–' + r[0], { 'class': 'label' });
+      S('line', { x1: X(r[1]), x2: X(r[2]), y1: y, y2: y, 'class': 'muted-line' }, g);
+      S('circle', { cx: X(r[1]), cy: y, r: 5.5, 'class': 'hollow-far' }, g);
+      S('circle', { cx: X(r[2]), cy: y, r: 6, 'class': 'near-fill' }, g);
+      /* the two averages, before → after, above the dumbbell and kept inside the plot */
+      var lab = f4(r[1]) + ' → ' + f4(r[2]), tw = E.textW(lab), mid = (X(r[1]) + X(r[2])) / 2;
+      T(g, E.clamp(mid - tw / 2, L, W - R - tw), y - 11, lab, { 'class': 'halo' });
+      T(g, W, y + 4, (r[3] < 0 ? '−' : '') + Math.abs(r[3]).toFixed(2), { 'text-anchor': 'end', 'class': 'strong' });
+    });
+  }
+  E.fit(box, build, { min: 290, max: 560 });
+})();
+</script>
+</body>
+</html>

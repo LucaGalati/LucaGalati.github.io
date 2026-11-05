@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All else equal · Beyond NFRD Compliance</title>
+<meta name="description" content="Side path of an explorable explanation of Monaco, Galati and Merlo, Beyond NFRD Compliance: the paper’s regression in words, what it holds fixed, and why the raw numbers mislead.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-model.html">
+<lg-sitebar><noscript><a href="../../publication/social-tone-nfrd/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="What does the comparison hold fixed?">
+  <div class="inner">
+    <p class="kicker">Side path · All else equal · 1 of 1</p>
+    <h2>One equation, one switch, one change of slope</h2>
+    <p>Do big firms simply write more about people? No: size and social tone barely move together (correlation 0.05, not significant). Big firms do score higher, though (0.49), so the comparison holds size fixed.</p>
+    <p class="eq">Social score = <span class="beta">β<sub>1</sub></span> × tone + β<sub>2</sub> × after + <span class="beta">β<sub>3</sub></span> × tone × after + controls + industry effect + noise</p>
+    <p><em>After</em> switches on from 2017. β<sub>1</sub> is the slope before the rule; β<sub>3</sub>, the paper’s variable of interest, is the change in slope after it; β<sub>2</sub> shifts the line at zero tone.</p>
+    <ul class="facts">
+      <li><b>Held fixed</b>size, profitability, debt, cash, tangible assets, market-to-book, an audited report, net tone, the firm’s industry; Covid-19 and year effects in later columns.</li>
+    </ul>
+    <p>What goes wrong without them? Raw scores were lower after 2017 (correlation −0.17), yet with controls the after switch is positive, +0.031, though only at the 10% level. Post-2017 reports come from smaller firms (−0.29 with size), with less upbeat prose (−0.25) and fewer tangible assets (−0.22): all traits that go with lower scores, size most strongly.</p>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-directive.html#s1">← Return to the main path</a>
+    </div>
+    <p class="note">Equation (1), Section 3.2, Appendix A. Correlations: Table 4 (size with tone 0.053, not significant; with score 0.491; score with net tone 0.242, with tangibility 0.210). After switch +0.031 (t = 1.72, column 2); column (5)’s year effects absorb it; robust standard errors; R² 0.430 to 0.461: Table 5.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/social-tone-nfrd/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+</body>
+</html>

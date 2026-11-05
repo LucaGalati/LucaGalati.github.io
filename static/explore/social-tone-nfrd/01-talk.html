@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talk · Beyond NFRD Compliance</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Monaco, Galati and Merlo, Beyond NFRD Compliance: the question, the 2017 directive, how a computer turns a report into a social tone, and what a social score is.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .hook { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.6rem 3.5rem; align-items: center; }
+  @media (min-width: 900px) { .hook { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } }
+  .hook .caption { margin-top: .5rem; }
+  .hook h1 { font-size: 2.2rem; }
+</style>
+</head>
+<body data-deck="01-talk.html">
+<lg-sitebar><noscript><a href="../../publication/social-tone-nfrd/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Does writing about people mean treating them well?">
+  <div class="inner hook">
+    <div>
+      <p class="kicker">An explorable explanation · Monaco, Galati &amp; Merlo</p>
+      <h1>If a firm writes more about its people, does it treat them better?</h1>
+      <p>Every year, large companies in the European Union publish a report that is not about money: how they treat their employees, their customers, the towns they work in. Until 2017 writing one was a choice. Since then, for large listed firms, it has been the law.</p>
+      <p>Rating agencies, meanwhile, give each firm a social score meant to judge its practices, not its prose. This paper sets the two side by side for Italian listed firms: the words in the reports, and the ratings.</p>
+      <p class="question">Do firms that write more about social matters score better on them? And once every firm has to write, does writing more still mean anything?</p>
+      <div class="actions"><button class="btn primary" type="button" data-next>See what changed in 2017&nbsp;→</button></div>
+      <p class="note">The directive and whom it covers: p.58 and p.66. The rating: footnote 7.</p>
+    </div>
+    <div>
+      <div class="page" role="img" aria-label="An invented excerpt from a sustainability report, with six words marked as social words: people, health, children, harassment, workplace, welfare.">
+        <span class="rule">Sustainability report · an invented page</span>
+        <p>Our <mark>people</mark> are the heart of the company. This year we extended <mark>health</mark> cover to every employee and their <mark>children</mark>, opened two nurseries beside our plants and trained our managers to prevent <mark>harassment</mark> in the <mark>workplace</mark>.</p>
+        <p>Our foundation supports <mark>welfare</mark> and education projects in the towns where we work.</p>
+      </div>
+      <p class="caption">Illustrative, invented text. Marked: words on the paper’s list of social words.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What changed in 2017?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Talk · 2 of 4</p>
+    <h2>In 2017, writing about people became compulsory</h2>
+    <div class="two" style="align-items:center">
+    <div>
+      <p>The EU’s Non-Financial Reporting Directive took effect in 2017. Listed firms with at least 500 employees must now report on social matters such as gender equality, working conditions and community development, with wide latitude over what to say and how.</p>
+      <p>The study takes Italian firms in the FTSE Italia All-Share, the broad index of the Milan stock exchange, with at least 500 employees and a published report, five years either side of the rule: 329 reports from 83 firms.</p>
+      <p>The halves are not the same size: about 60 reports from before 2017, 269 from after. The paper reads this as fewer firms publishing a report before it was compulsory.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>How do you measure talk?&nbsp;→</button>
+        <a class="door" href="03-sample.html#s1">Why 329 out of 750 collected reports?&nbsp;→</a>
+      </div>
+      <p class="note">Directive 2014/95/EU: p.58, p.61, p.66. Sample: Table 1. The split is computed from Table 3: the after-2017 switch averages 0.818, and 0.818 × 329 ≈ 269. The paper’s reading of the imbalance: p.70.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="years"></div>
+      <p class="legend"><span><i class="sq before"></i>2012–2016: reports were voluntary</span><span><i class="sq after"></i>2017–2021: reports were mandatory</span></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How does a computer read a report?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Talk · 3 of 4</p>
+    <h2>A computer counts the social words</h2>
+    <div class="two">
+    <div>
+      <p>Nobody in the study reads the reports for meaning. A script counts. It carries a published list of social words in four groups, public health, human rights, labour standards and society (Baier, Berninger and Kiesel, 2020). A report’s <strong>social tone</strong> is the number of listed words divided by the number of all its words.</p>
+      <p>Switch between a good year and a bad year, or type your own paragraph. The good year and the bad year score exactly the same: the count sees how much a report talks about people, not whether the news is good. The paper measures the mood of the prose separately, as net tone.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>And the rating it is compared with?&nbsp;→</button>
+        <a class="door" href="03-sample.html#s2">Which industries talk most?&nbsp;→</a>
+      </div>
+      <p class="note">Equation (2) and Section 3.3. This list holds only the 38 examples the paper prints (p.68–69); the full dictionary is longer. A whole report averages about 62,000 words (Table 2) and a social tone of 1.937 (Table 3). Tone is shown here per hundred words, the scale on which Table 3’s values near 2 read naturally. The paragraphs are invented: a toy.</p>
+    </div>
+    <div class="stage">
+      <div class="ctl"><span>Paragraph</span><span class="seg" id="tone-preset"></span></div>
+      <div class="editor">
+        <div class="backdrop" id="tone-back" aria-hidden="true"></div>
+        <textarea id="tone-text" spellcheck="false" aria-label="Paragraph to score; social words are highlighted"></textarea>
+      </div>
+      <p class="cats" id="tone-cats"></p>
+      <div class="hundreds">
+        <figure><div id="tone-mine"></div><figcaption id="tone-mine-cap"></figcaption></figure>
+        <figure><div id="tone-avg"></div><figcaption><b>Average report: 1.94</b> per hundred words (Table 3)</figcaption></figure>
+      </div>
+      <p class="readout h2" id="tone-read" aria-live="polite"></p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What is a social score?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · Talk · 4 of 4</p>
+    <h2>On the other side: a&nbsp;rating of what firms do</h2>
+    <div class="two">
+    <div>
+      <p>The other number is a social score from Refinitiv Eikon, a financial data service. It rates a firm’s labour practices, human rights, community engagement and customer satisfaction, and is meant to judge what the firm does rather than how its report reads.</p>
+      <p>In the sample, the middle half of reports score between 0.59 and 0.81. Set tone beside score and the two move together, but loosely: their correlation is 0.23.</p>
+      <p>Loose, and not yet fair: big firms and small, banks and utilities, 2013 and 2020 are all mixed up. The next deck compares like with like.</p>
+      <div class="actions">
+        <a class="btn primary" href="02-directive.html#s1">Compare like with like&nbsp;→</a>
+        <a class="door" href="04-model.html#s1">Isn’t it just that big firms write more?&nbsp;→</a>
+      </div>
+      <p class="note">The score and what it is meant to judge: footnote 7 and Appendix A. Score: mean 0.695, first and third quartiles 0.586 and 0.814 (Table 3). Correlation of score and tone: 0.226, significant at 1% (Table 4).</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">What a correlation of 0.23 looks like <span class="tag">illustrative</span></p>
+      <div class="fig" id="cloud"></div>
+      <label class="ctl" for="cloud-r">Change the correlation</label>
+      <input type="range" id="cloud-r" min="0" max="900" step="1" value="226">
+      <p class="readout h2" id="cloud-read" aria-live="polite"></p>
+      <p class="note">Invented points: 329 imaginary reports with the sample’s averages and spreads of tone and score (Table 3) and, at 0.23, its correlation (Table 4). Not the paper’s data.</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/social-tone-nfrd/">← Back to the paper</a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: ten years in two equal halves, 329 reports in two unequal blocks (Tables 1 and 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('years'), PRE = 60, POST = 269, ROWS = 10;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var cols = Math.ceil(PRE / ROWS) + Math.ceil(POST / ROWS), gapB = 14;
+    var cell = Math.floor((W - gapB) / cols), sq = Math.max(5, cell - (cell > 10 ? 3 : 2));
+    var yT = 2, bandH = 16, yU = yT + bandH + 74, H = yU + ROWS * cell + 40;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Above, the ten years 2012 to 2021: five before the directive, when reports were voluntary, and five after, when they were mandatory. Below, the 329 reports as squares: 60 from before 2017, 269 from after.' }, box);
+    /* the years: two equal halves */
+    var half = W / 2;
+    S('rect', { x: 0, y: yT, width: half - 1, height: bandH, 'class': 'before-fill' }, root);
+    S('rect', { x: half + 1, y: yT, width: half - 1, height: bandH, 'class': 'after-fill' }, root);
+    for (var yr = 0; yr < 10; yr++) {
+      var x = (yr + 0.5) * W / 10;
+      if (W >= 420 || yr === 0 || yr === 4 || yr === 5 || yr === 9) T(root, x, yT + bandH + 15, W >= 420 ? String(2012 + yr) : '’' + String(12 + yr), { 'text-anchor': 'middle' });
+    }
+    T(root, half / 2, yT + bandH + 32, '5 years, voluntary', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, half * 1.5, yT + bandH + 32, '5 years, mandatory', { 'text-anchor': 'middle', 'class': 'label' });
+    /* the reports: one square each, ten to a column */
+    T(root, 0, yU - 8, '329 reports', { 'class': 'strong' });
+    function block(n, x0, cls) {
+      for (var i = 0; i < n; i++) S('rect', { x: x0 + Math.floor(i / ROWS) * cell, y: yU + (i % ROWS) * cell, width: sq, height: sq, rx: 1, 'class': cls }, root);
+      return x0 + Math.ceil(n / ROWS) * cell;
+    }
+    var endA = block(PRE, 0, 'before-fill'), startB = endA + gapB;
+    block(POST, startB, 'after-fill');
+    T(root, 0, yU + ROWS * cell + 18, '60 before', { 'class': 'label' });
+    T(root, startB, yU + ROWS * cell + 18, '269 after', { 'class': 'label' });
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 3: the word counter, with the 38 example entries the paper prints (p.68–69) ---------- */
+(function () {
+  var E = Explore, S = E.svg;
+  var GROUPS = [
+    ['public health', ['children', 'epidemic', 'health', 'healthy', 'ill', 'illness', 'pandemic']],
+    ['human rights', ['dignity', 'discriminate', 'discriminated', 'discriminating', 'discrimination', 'equality', 'freedom', 'humanity', 'nondiscrimination', 'sexual']],
+    ['labour standards', ['bargaining', 'employment opportunities', 'fairness', 'fla', 'harassment', 'injury', 'overtime', 'ruggie', 'sick', 'wage', 'wages', 'workplace']],
+    ['society', ['endowment', 'endowments', 'people', 'philanthropic', 'philanthropy', 'socially', 'societal', 'society', 'welfare']]
+  ];
+  var DICT = {}, PAIRS = {};
+  GROUPS.forEach(function (g, k) { g[1].forEach(function (w) { var p = w.split(' '); if (p.length === 2) PAIRS[p[0]] = [p[1], k]; else DICT[w] = k; }); });
+  var PRESETS = {
+    good: 'This year our people came first. We raised wages at every plant, extended health cover to staff and their children, and kept workplace injury at zero. Our foundation doubled its welfare projects in the towns around our sites.',
+    bad: 'This year our people fared badly. We froze wages at every plant, withdrew health cover from staff and their children, and saw workplace injury rates rise. Our foundation halved its welfare projects in the towns around our sites.',
+    chair: 'Revenue rose by four per cent and the operating margin improved for a third year. We reduced net debt, renewed our credit lines and propose a higher dividend. On behalf of the board, I thank our shareholders, our customers and our people.'
+  };
+  var ta = document.getElementById('tone-text'), back = document.getElementById('tone-back');
+  var cats = document.getElementById('tone-cats'), read = document.getElementById('tone-read');
+  var mine = document.getElementById('tone-mine'), avg = document.getElementById('tone-avg'), mineCap = document.getElementById('tone-mine-cap');
+  var WORD = /[A-Za-zÀ-ɏ0-9]+(?:['’\-][A-Za-zÀ-ɏ0-9]+)*/g;
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function score(text) {
+    var toks = [], m; WORD.lastIndex = 0;
+    while ((m = WORD.exec(text))) if (/[A-Za-zÀ-ɏ]/.test(m[0])) toks.push({ w: m[0].toLowerCase(), a: m.index, b: m.index + m[0].length });
+    var spans = [], per = [0, 0, 0, 0], hits = 0;
+    for (var i = 0; i < toks.length; i++) {
+      var t = toks[i], pair = PAIRS[t.w];
+      if (pair && toks[i + 1] && toks[i + 1].w === pair[0]) { spans.push([t.a, toks[i + 1].b]); per[pair[1]]++; hits++; i++; continue; }
+      if (Object.prototype.hasOwnProperty.call(DICT, t.w)) { spans.push([t.a, t.b]); per[DICT[t.w]]++; hits++; }
+    }
+    return { words: toks.length, hits: hits, per: per, spans: spans };
+  }
+  /* a page of a hundred cells; `rate` of them filled with the highlighter, the last one in part */
+  function hundred(box, rate, label) {
+    box.innerHTML = '';
+    var c = 12, g = 2.5, W = 10 * c + 9 * g;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + W, width: W, height: W, role: 'img', 'aria-label': label }, box);
+    var full = Math.floor(Math.min(100, rate)), part = Math.min(100, rate) - full;
+    for (var i = 0; i < 100; i++) {
+      var x = (i % 10) * (c + g), y = Math.floor(i / 10) * (c + g);
+      S('rect', { x: x + 0.5, y: y + 0.5, width: c - 1, height: c - 1, rx: 1.5, 'class': 'cell' }, root);
+      if (i < full) S('rect', { x: x, y: y, width: c, height: c, rx: 1.5, 'class': 'on' }, root);
+      else if (i === full && part > 0.04) S('rect', { x: x, y: y, width: c * part, height: c, rx: 1.5, 'class': 'on' }, root);
+    }
+  }
+  hundred(avg, 1.937, 'The average report in the sample: 1.94 social words in every hundred, about two cells of a hundred marked.');
+  function update() {
+    var text = ta.value, r = score(text), html = '', at = 0;
+    r.spans.forEach(function (s) { html += esc(text.slice(at, s[0])) + '<mark>' + esc(text.slice(s[0], s[1])) + '</mark>'; at = s[1]; });
+    html += esc(text.slice(at));
+    back.innerHTML = html + (/\n$/.test(text) ? ' ' : '');
+    back.scrollTop = ta.scrollTop;
+    cats.innerHTML = GROUPS.map(function (g, k) { return '<span>' + g[0] + ' <b>' + r.per[k] + '</b></span>'; }).join('');
+    var rate = r.words ? 100 * r.hits / r.words : 0, rs = rate.toFixed(1);
+    hundred(mine, rate, 'This paragraph: ' + rs + ' social words in every hundred.');
+    mineCap.innerHTML = '<b>This paragraph: ' + rs + '</b> per hundred words';
+    if (!r.words) { read.innerHTML = 'Type a paragraph to count its words.'; return; }
+    /* Table 3: tone's first quartile 1.718, 99th percentile 3.139 */
+    var tail = rate > 3.139 ? ' Above 99 in every 100 reports in the sample: a whole report spends most of its pages on other things.'
+      : rate >= 1.718 ? ' Within the range of whole reports in the sample (Table 3).'
+      : ' Lower than three quarters of the reports in the sample (Table 3).';
+    read.innerHTML = '<strong>' + r.hits + ' social word' + (r.hits === 1 ? '' : 's') + ' ÷ ' + r.words + ' words = ' + rs + ' per hundred.</strong>' + tail;
+  }
+  var setPreset = E.seg(document.getElementById('tone-preset'), [['good', 'A good year'], ['bad', 'A bad year'], ['chair', 'The chair’s letter']], 'good', function (k) {
+    ta.value = PRESETS[k]; update();
+  }, 'Paragraph');
+  ta.addEventListener('input', function () { setPreset(null); update(); });
+  ta.addEventListener('scroll', function () { back.scrollTop = ta.scrollTop; });
+  ta.value = PRESETS.good;
+  update();
+})();
+
+/* ---------- slide 4: what a correlation of 0.226 looks like (illustrative cloud, Tables 3 and 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var N = 329, z1 = E.standardize(E.normals(N, 11)), z2 = E.standardize(E.normals(N, 29), [z1]);
+  var box = document.getElementById('cloud'), slider = document.getElementById('cloud-r'), read = document.getElementById('cloud-read');
+  var X0 = 0.4, X1 = 3.4, Y0 = 0.2, Y1 = 1.0, geo = null;
+  function r() { return +slider.value / 1000; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.58, 230, 300)), L = 40, R = 10, TOP = 24, B = 40;
+    function X(v) { return L + (W - L - R) * (v - X0) / (X1 - X0); }
+    function Y(v) { return TOP + (H - TOP - B) * (Y1 - v) / (Y1 - Y0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Illustrative scatter of 329 invented reports: social tone across, from 0.4 to 3.4 social words per hundred; social score up, from 0.2 to 1.0; with a fitted line whose tilt follows the chosen correlation.' }, box);
+    [0.2, 0.4, 0.6, 0.8, 1.0].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, v.toFixed(1), { 'text-anchor': 'end' });
+    });
+    [1, 2, 3].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      T(root, X(v), H - B + 17, String(v), { 'text-anchor': 'middle' });
+    });
+    S('line', { x1: L, x2: W - R, y1: H - B, y2: H - B, 'class': 'axis' }, root);
+    T(root, (L + W - R) / 2, H - 6, 'Social tone, social words per hundred', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, 0, TOP - 10, 'Social score', { 'class': 'label' });
+    geo = { X: X, Y: Y, L: L, R: R, W: W, dots: S('g', {}, root), line: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var rr = r(), c = Math.sqrt(1 - rr * rr);
+    /* values beyond the frame are folded back inside it rather than piled on its edge */
+    function fold(v, lo, hi) { return v > hi ? Math.max(lo, 2 * hi - v) : v < lo ? Math.min(hi, 2 * lo - v) : v; }
+    var xs = z1.map(function (a) { return fold(1.937 + 0.446 * a, X0 + 0.03, X1 - 0.03); });
+    var ys = z1.map(function (a, i) { return fold(0.695 + 0.160 * (rr * a + c * z2[i]), Y0 + 0.02, 0.985); });
+    var pct = Math.round(rr * rr * 100), paper = Math.abs(rr - 0.226) < 0.0005;
+    slider.setAttribute('aria-valuetext', 'correlation ' + rr.toFixed(2));
+    read.innerHTML = '<strong>Correlation ' + rr.toFixed(2) + (paper ? ', the paper’s' : '') + ':</strong> tone accounts for about ' + pct + '% of the spread in scores' +
+      (paper ? ' (0.23² ≈ 0.05). The rest is everything else.' : rr < 0.226 ? ', less than in the paper.' : rr < 0.7 ? '. The paper’s is 0.23.' : ': a tight line, far from the paper’s 0.23.');
+    if (!geo) return;
+    geo.dots.innerHTML = ''; geo.line.innerHTML = '';
+    xs.forEach(function (x, i) { S('circle', { cx: geo.X(x).toFixed(1), cy: geo.Y(ys[i]).toFixed(1), r: 2.6, 'class': 'dot-ink' }, geo.dots); });
+    var b = rr * 0.160 / 0.446, a = 0.695 - b * 1.937;
+    S('line', { x1: geo.X(X0), y1: geo.Y(a + b * X0), x2: geo.X(X1), y2: geo.Y(a + b * X1), 'class': 'ink-line' }, geo.line);
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

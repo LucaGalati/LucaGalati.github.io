@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contagion · Silicon Valley Bank Bankruptcy and Stablecoins Stability</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Galati and Capalbo, Silicon Valley Bank Bankruptcy and Stablecoins Stability: how much jumpier the coins got, how little they move together, the paper's test of contagion and what the authors read in it.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<script src="../sitebar.js"></script>
+<link rel="stylesheet" href="explore.css">
+</head>
+<body data-deck="02-contagion.html">
+<lg-sitebar><noscript><a href="../../publication/svb-stablecoins/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Did the coins get jumpier?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Contagion · 1 of 4</p>
+    <h2>Every coin got jumpier</h2>
+    <p class="lead">Contagion, in this paper, is about how coins move from one minute to the next. Start with how much they moved.</p>
+    <div class="two">
+      <div>
+        <p>The size of a typical one-minute move is its <strong>standard deviation</strong>. In the week after Circle’s message it grew for all six assets: almost twelvefold for USDC, whose week after includes a few extreme minutes, and about threefold for Bitcoin. The paper reads the spikes as roughly simultaneous across coins and calls it volatility spilling over.</p>
+        <p>Getting jumpy in the same week is a first sign. The paper’s test asks something sharper: did the way the coins move <em>together</em> change?</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Do they move together?&nbsp;→</button></div>
+        <p class="note">Computed from Table 1: the standard deviation of one-minute log returns in the collapse period (11–18 March) divided by the same in the pre-collapse period (4–10 March). Ratios, which do not depend on the units of the returns. USDC’s extreme minutes: Table 1, maximum and minimum. Spikes after the event: p.&nbsp;6 and Fig. 1(a).</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="sd-chart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Do stablecoins move together?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Contagion · 2 of 4</p>
+    <h2>Minute by minute, they barely move together. Except two.</h2>
+    <div class="two">
+      <div>
+        <p><strong>Correlation</strong> measures how far two coins move the same way in the same minute: <span class="num">+1</span> always together, <span class="num">0</span> unrelated, <span class="num">−1</span> always opposite. The paper gets it from the BEKK model, a standard tool that re-estimates every pair’s co-movement each minute; the grid shows each week’s average.</p>
+        <p>Almost every pair sits near zero. One reading: a coin pegged to a dollar wiggles around it, and different coins’ wiggles are mostly unrelated. One pair is the exception: Tether and the Binance dollar, at 0.96 in the week before and 0.99 after.</p>
+        <p class="door-row"><a class="door" href="04-test.html#s1">How does the model follow co-movement? Try&nbsp;it&nbsp;→</a></p>
+        <p class="door-row"><a class="door" href="04-test.html#s2">Why do USDT and BUSD move as one?&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Did USDC’s links change?&nbsp;→</button></div>
+        <p class="note">Table 2: mean BEKK dynamic conditional correlations, pre-collapse (4–10 March) and collapse (11–18 March). Cells show two decimals; the readout gives the table’s four. Model: Section 3.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Show</span><div class="seg" id="cg-week"></div></div>
+        <div class="fig" id="cg-chart"></div>
+        <p class="readout" id="cg-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Did the shock spread?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Contagion · 3 of 4</p>
+    <h2>Place a bet: did the shock spread?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>The paper’s test pairs USDC, the coin with the stuck reserves, with each of the other five assets, and compares the pair’s average <strong>covariance</strong>, co-movement that also grows with the size of the moves, in the week before and the week after.</p>
+        <p><strong>Of the five pairs, how many changed by more than chance would explain, at the strict <span class="num">1%</span> level?</strong></p>
+        <div class="actions bet short" id="ct-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="none" aria-pressed="false">None</button>
+          <button class="btn" type="button" data-bet="some" aria-pressed="false">One or two</button>
+          <button class="btn" type="button" data-bet="all" aria-pressed="false">All five</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="ct-chart"></div>
+        <p class="legend"><span><i class="dt far"></i>week before, 4–10 March</span><span><i class="dt near"></i>week after, 11–18 March</span></p>
+        <p class="def">A <strong><span class="nw">t-statistic</span></strong> is the change divided by how uncertain the two averages are. Beyond about 2.6 in size, chance alone would produce one less than 1% of the time.</p>
+        <div class="ctl"><span>Numbers for USDC and</span><div class="seg" id="ct-pair"></div></div>
+        <p class="readout" id="ct-read" aria-live="polite"></p>
+        <p class="note" id="ct-note">Table 3: mean BEKK conditional covariances, their variances and t-statistics, in the units the paper reports; the test: p.&nbsp;4–5. The 1% threshold, 2.58 in a large sample, is a standard value, not from the paper. The sign of t follows the table: positive where the covariance fell.</p>
+      </div>
+      <div class="t">
+        <p id="ct-verdict" aria-live="polite"></p>
+        <div class="actions" id="ct-next" hidden>
+          <button class="btn primary" type="button" data-next>What it adds up to&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · Contagion · 4 of 4</p>
+    <h2>What to take away</h2>
+    <p class="closer">A bank failed, and the trouble did not stay in banking.</p>
+    <ol class="takeaways">
+      <li>A “flight to safety”, in the paper’s reading: USDC and DAI sank, Tether rose.</li>
+      <li>Panic, in the paper’s reading: trading surged in the coins in doubt, fell in BUSD.</li>
+      <li>Contagion, in the paper’s reading: all five USDC links changed, each significant at the <span class="num">1%</span> level.</li>
+    </ol>
+    <p class="caveat">One event, two weeks, the six most liquid assets, prices averaged across exchanges, and a week before that already held two bank failures. A before-and-after comparison also takes in everything else that happened that week, including the rescue of depositors on 12 March.</p>
+    <p class="prompt">Still open, as the paper notes: how far do these links between centralised and decentralised finance reach, beyond the most liquid coins?</p>
+    <div class="actions">
+      <a class="btn primary" href="../../publication/svb-stablecoins/">Read the paper</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Takeaways: p.&nbsp;6–7 and Tables 1 and 3; limitation and future work: p.&nbsp;7; the FDIC’s rescue of depositors: p.&nbsp;2.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/svb-stablecoins/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: how much jumpier, computed from Table 1 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* standard deviation of one-minute returns: [pre-collapse, collapse] (Table 1, panels A and B) */
+  var SD = [['USDC', 0.0691, 0.8132], ['BUSD', 0.0257, 0.0976], ['BTC', 0.0596, 0.1842], ['USDT', 0.0247, 0.0694], ['DAI', 0.1593, 0.4167], ['TUSD', 0.0779, 0.1404]];
+  var box = document.getElementById('sd-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 38, TOP = 26, LG = 48, RG = 52, H = TOP + SD.length * rowH + 30, MAX = 12.5;
+    function X(v) { return LG + (W - LG - RG) * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Typical one-minute move in the week after Circle’s message relative to the week before: USDC 11.8 times, BUSD 3.8, Bitcoin 3.1, Tether 2.8, DAI 2.6, TUSD 1.8; all above one, which would mean no change.' }, box);
+    T(root, LG, 12, W < 480 ? 'Typical move, week after ÷ week before' : 'Typical one-minute move, week after ÷ week before', { 'class': 'label' });
+    var bottom = TOP + SD.length * rowH;
+    [0, 2, 4, 6, 8, 10, 12].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP - 4, y2: bottom, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), bottom + 17, v + '×', { 'text-anchor': 'middle' });
+    });
+    SD.forEach(function (r, i) {
+      var y = TOP + i * rowH, ratio = r[2] / r[1];
+      T(root, 0, y + rowH / 2 + 4, r[0], { 'class': 'strong' });
+      S('rect', { x: X(0), y: y + 9, width: X(ratio) - X(0), height: rowH - 18, 'class': r[0] === 'USDC' ? 'near-fill' : 'far-fill' }, root);
+      T(root, X(ratio) + 6, y + rowH / 2 + 4, ratio.toFixed(1) + '×', { 'class': 'strong' });
+    });
+    /* the wire: one times means no change */
+    S('line', { x1: X(1), x2: X(1), y1: TOP - 10, y2: bottom + 4, 'class': 'wire' }, root);
+    T(root, X(1) + 4, bottom + 32, '1× = no change', { 'class': 'label' });
+  }, { min: 300, max: 620 });
+})();
+
+/* ---------- slide 2: the correlation grid (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var K = ['BTC', 'USDT', 'BUSD', 'DAI', 'TUSD', 'USDC'];
+  var NAME = { BTC: 'Bitcoin', USDT: 'Tether', BUSD: 'the Binance dollar', DAI: 'DAI', TUSD: 'TrueUSD', USDC: 'USDC' };
+  /* lower triangles of Table 2, row by row in the order of K: panel A (week before) and panel B (week after) */
+  var C = {
+    pre: [[], [0.0088], [0.0079, 0.9596], [0.0008, 0.0716, 0.0813], [0.0357, -0.0069, -0.0098, 0.0013], [0.0159, -0.0235, -0.0353, -0.0218, 0.0021]],
+    post: [[], [0.0177], [0.0195, 0.9913], [-0.0081, -0.0338, -0.0352], [0.0149, 0.0030, 0.0027, 0.0050], [0.0179, -0.0295, -0.0271, 0.0121, 0.0271]]
+  };
+  var box = document.getElementById('cg-chart'), read = document.getElementById('cg-read');
+  var week = 'pre', sel = [5, 1], geo = null;
+  function f4(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(4); }
+  function f2(v) { var s = Math.abs(v).toFixed(2); return (v < 0 && s !== '0.00' ? '−' : '') + s; }
+  function readout() {
+    var i = sel[0], j = sel[1];
+    read.innerHTML = '<strong>' + K[i] + ' and ' + K[j] + '</strong>: ' + f4(C.pre[i][j]) + ' in the week before, ' + f4(C.post[i][j]) + ' in the week after.' +
+      (i === 2 && j === 1 ? ' The one pair that moves almost as one.' : i === 5 ? ' One of USDC’s links, which the next slide tests.' : '');
+  }
+  function build(W) {
+    box.innerHTML = '';
+    var n = K.length, cs = Math.floor(Math.min(62, (W - 4) / n)), H = cs * n + 4;
+    /* role group, not img: the cells inside are buttons that assistive technology must reach */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group',
+      'aria-label': 'Mean correlations between Bitcoin, Tether, the Binance dollar, DAI, TrueUSD and USDC in the ' + (week === 'pre' ? 'week before' : 'week after') + ' Circle’s message: every pair between minus 0.04 and plus 0.09 except Tether and the Binance dollar, ' + (week === 'pre' ? '0.96' : '0.99') + '.' }, box);
+    root.style.maxWidth = (cs * n + 4) + 'px';
+    geo = { cs: cs, root: root, cells: S('g', {}, root), over: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    if (!geo) return;
+    var cs = geo.cs, g = geo.cells, o = geo.over, M = C[week];
+    g.innerHTML = ''; o.innerHTML = '';
+    K.forEach(function (ki, i) {
+      for (var j = 0; j <= i; j++) {
+        var x = j * cs + 2, y = i * cs + 2;
+        if (i === j) { T(g, x + cs / 2, y + cs / 2 + 4, ki, { 'text-anchor': 'middle', 'class': 'strong' }); continue; }
+        var v = M[i][j], a = Math.abs(v);
+        var cell = S('rect', { x: x, y: y, width: cs, height: cs, 'class': 'cell far-fill', 'fill-opacity': (0.06 + 0.8 * a).toFixed(3),
+          tabindex: 0, role: 'button', 'aria-label': ki + ' and ' + K[j] + ': ' + f4(v), 'aria-pressed': sel[0] === i && sel[1] === j ? 'true' : 'false' }, g);
+        T(g, x + cs / 2, y + cs / 2 + 4, f2(v), { 'text-anchor': 'middle', 'class': a > 0.5 ? 'on-dark' : 'label', 'pointer-events': 'none' });
+        (function (ii, jj) {
+          cell.addEventListener('click', function () { pick(ii, jj); });
+          cell.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(ii, jj); } });
+          cell.addEventListener('focus', function () { if (sel[0] !== ii || sel[1] !== jj) pick(ii, jj, true); });
+        })(i, j);
+      }
+    });
+    /* USDC's links, outlined in gold; the selected pair in the focus colour */
+    S('rect', { x: 2, y: 5 * cs + 2, width: 5 * cs, height: cs, 'class': 'cell-usdc' }, o);
+    S('rect', { x: sel[1] * cs + 3, y: sel[0] * cs + 3, width: cs - 2, height: cs - 2, 'class': 'cell-sel' }, o);
+  }
+  function pick(i, j, keepFocus) {
+    sel = [i, j]; readout();
+    var active = document.activeElement;
+    draw();
+    if (keepFocus || (active && box.contains(active))) {
+      var c = box.querySelector('[aria-label^="' + K[i] + ' and ' + K[j] + ':"]'); if (c) c.focus();
+    }
+  }
+  E.seg(document.getElementById('cg-week'), [['pre', 'Week before'], ['post', 'Week after']], 'pre', function (k) {
+    week = k; draw();
+    if (geo) geo.root.setAttribute('aria-label', geo.root.getAttribute('aria-label').replace(/week (before|after)/, k === 'pre' ? 'week before' : 'week after').replace(/0\.9[69]\./, k === 'pre' ? '0.96.' : '0.99.'));
+  }, 'Which week');
+  readout();
+  E.fit(box, build, { min: 280, max: 400 });
+})();
+
+/* ---------- slide 3: a bet, then the contagion test (Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* USDC with each asset: mean covariance before, after, and the t-statistic as printed (Table 3) */
+  var P = [['BTC', 'Bitcoin', 0.0081, -0.0022, 15.61], ['USDT', 'Tether', -0.0028, 0.0071, -11.85],
+           ['BUSD', 'the Binance dollar', 0.0002, 0.0088, -10.54],
+           ['DAI', 'DAI', 0.0069, -0.0001, 11.71], ['TUSD', 'TrueUSD', -0.0013, 0.0093, -17.12]];
+  var LO = -0.004, HI = 0.0115;
+  var betBox = document.getElementById('ct-bet'), box = document.getElementById('ct-chart'), read = document.getElementById('ct-read');
+  var verdict = document.getElementById('ct-verdict'), nextBox = document.getElementById('ct-next');
+  var st = { bet: null, p: 0, shown: 0 }, geo = null, raf = null;
+  function f4(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(4); }
+  function ft(v) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(2); }
+  function build(W) {
+    box.innerHTML = '';
+    var narrow = W < 520, rowH = 40, TOP = 24, LG = narrow ? 84 : 96, RG = narrow ? 64 : 74, H = TOP + P.length * rowH + 34;
+    function X(v) { return LG + (W - LG - RG) * (v - LO) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Mean covariance of USDC with five assets, week before and week after Circle’s message: Bitcoin 0.0081 to minus 0.0022, t 15.61; Tether minus 0.0028 to 0.0071, t minus 11.85; Binance dollar 0.0002 to 0.0088, t minus 10.54; DAI 0.0069 to minus 0.0001, t 11.71; TrueUSD minus 0.0013 to 0.0093, t minus 17.12. All significant at 1%.' }, box);
+    var bottom = TOP + P.length * rowH;
+    T(root, LG, 12, narrow ? 'Mean covariance with USDC' : 'Mean covariance with USDC (Table 3)', { 'class': 'label' });
+    T(root, W, 12, 't-statistic', { 'text-anchor': 'end', 'class': 'label' });
+    geo = { X: X, W: W, TOP: TOP, rowH: rowH, LG: LG, RG: RG, sel: S('g', {}, root) };
+    [-0.004, 0, 0.004, 0.008].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: bottom, 'class': v ? 'grid' : 'axis zero' }, root);
+      T(root, X(v), bottom + 17, v ? (v < 0 ? '−' : '') + Math.abs(v).toFixed(3) : '0', { 'text-anchor': 'middle' });
+    });
+    T(root, (X(LO) + X(HI)) / 2, bottom + 32, narrow ? 'covariance, as reported' : 'average co-movement (covariance), as reported', { 'text-anchor': 'middle' });
+    P.forEach(function (p, i) { T(root, 0, TOP + i * rowH + rowH / 2 + 4, 'USDC & ' + p[0], { 'class': 'strong' }); });
+    geo.dyn = S('g', {}, root);
+    render();
+  }
+  function render() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, s = geo.sel;
+    g.innerHTML = ''; s.innerHTML = '';
+    S('rect', { x: geo.LG - 6, y: geo.TOP + st.p * geo.rowH + 2, width: geo.W - geo.LG + 6, height: geo.rowH - 4, 'class': 'row-sel' }, s);
+    P.forEach(function (p, i) {
+      var y = geo.TOP + i * geo.rowH + geo.rowH / 2, a = X(p[2]);
+      if (st.bet) {
+        var b = X(p[2] + (p[3] - p[2]) * st.shown);
+        S('line', { x1: a, x2: b, y1: y, y2: y, 'class': 'dumb' }, g);
+        S('circle', { cx: b, cy: y, r: 6, 'class': 'near-fill' }, g);
+        if (st.shown > 0.99) T(g, geo.W, y + 4, 't = ' + ft(p[4]), { 'text-anchor': 'end', 'class': 'strong' });
+      } else T(g, geo.W, y + 4, '?', { 'text-anchor': 'end', 'class': 'placeholder' });
+      S('circle', { cx: a, cy: y, r: 6, 'class': 'far-fill' }, g);
+    });
+  }
+  function readout() {
+    var p = P[st.p];
+    if (!st.bet) { read.innerHTML = '<strong>USDC and ' + p[1] + '</strong>: covariance ' + f4(p[2]) + ' on average in the week before. The week after draws once you have placed your bet.'; return; }
+    read.innerHTML = '<strong>USDC and ' + p[1] + '</strong>: covariance ' + f4(p[2]) + ' in the week before, ' + f4(p[3]) + ' after; t = ' + ft(p[4]) + '. It ' + (p[3] > p[2] ? 'rose' : 'fell') + '.';
+  }
+  var LEAD = { none: 'More than none: all five changed. ', some: 'More than that: all five changed. ', all: 'All five. ' };
+  var TAIL = 'Every <span class="nw">t-statistic</span> is <span class="num">10.5</span> to <span class="num">17.1</span> in size, far beyond the <span class="num">1%</span> bar. With Tether, the Binance dollar and TrueUSD the covariance rose; with Bitcoin and DAI it fell, to just below zero. The test’s null hypothesis is that the two weeks’ averages are equal, so a change in either direction counts. The paper reads the result as contagion from a traditional bank into crypto markets.';
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-test', bet);
+    verdict.innerHTML = LEAD[bet] + TAIL;
+    nextBox.hidden = false; readout();
+    if (!animate || E.still || !geo) { st.shown = 1; render(); return; }
+    if (raf) cancelAnimationFrame(raf);
+    var t0 = null; st.shown = 0;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var q = Math.min(1, (ts - t0) / 700); st.shown = 1 - Math.pow(1 - q, 3);
+      if (q >= 1) st.shown = 1;
+      render();
+      raf = q < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  betBox.addEventListener('click', function (e) { var b = e.target.closest('[data-bet]'); if (b) place(b.getAttribute('data-bet'), true); });
+  E.seg(document.getElementById('ct-pair'), P.map(function (p, i) { return [String(i), p[0]]; }), '0', function (k) { st.p = +k; readout(); render(); }, 'Pair');
+  var prior = E.load('bet-test');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  readout();
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+</script>
+</body>
+</html>

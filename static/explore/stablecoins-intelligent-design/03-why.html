@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why a dollar coin · Intelligent Design: Stablecoins (In)stability</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati, Webb and Webb, Intelligent Design: why traders hold coins that are just a dollar, and how much they trade them.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-why.html">
+<lg-sitebar><noscript><a href="../../publication/stablecoins-intelligent-design/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why hold a coin that is just a dollar?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Why a dollar coin · 1 of 1</p>
+      <h2>The plumbing of crypto trading</h2>
+      <p>On a crypto exchange, getting out of bitcoin into real dollars can be costly, awkward and slow. A stablecoin lets a trader step out of bitcoin’s swings and hold a dollar without leaving the exchange, and it moves from one exchange to another quickly. Bitcoin investors may use one as a safe haven, and at times stablecoins have even traded at a premium to the dollar for exactly these conveniences.</p>
+      <p>So dollar coins became the plumbing of the market. Three of the five most traded cryptocurrencies are stablecoins, and on a single June day Tether changed hands for nearly twice as much as bitcoin.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="01-promise.html#s2" data-primary-when="01-promise.html">← Return to the main path</a>
+        <a class="btn" href="01-promise.html#s1">Back to the first slide</a>
+      </div>
+      <p class="note">Reasons for holding stablecoins: pp.1, 5, citing Lyons and Viswanath-Natraj (2020) and Baur and Hoang (2021). Volumes and market values: Table 1, at 07:50 UTC on 28 June 2022, after the collapse; “nearly twice” and “about six times” are computed from it.</p>
+    </div>
+    <div class="stage">
+      <div class="ctl"><span>Show</span><span class="seg" id="vol-mode"></span></div>
+      <div class="fig" id="vol-chart"></div>
+      <p class="readout" id="vol-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/stablecoins-intelligent-design/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- Table 1: market value and 24-hour volume, 28 June 2022 ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* [coin, market value, 24-hour volume] in dollars; kind for colour */
+  var ROWS = [['USDT', 66759936925, 41133272015, ''], ['BTC', 398452637815, 21643828415, 'btc'], ['USDC', 55826655034, 4330623305, ''],
+    ['BUSD', 17439109190, 5255903027, ''], ['DAI', 6780302604, 250145391, ''], ['UST', 476000027, 97740154, 'shock']];
+  var TEXT = {
+    vol: '<strong>Traded in 24 hours:</strong> Tether $41.1 billion, bitcoin $21.6 billion, nearly half as much. BUSD $5.3 billion, USDC $4.3 billion, DAI $0.25 billion, UST $0.10 billion.',
+    cap: '<strong>Market value:</strong> bitcoin $398.5 billion, about six times Tether’s $66.8 billion. USDC $55.8 billion, BUSD $17.4 billion, DAI $6.8 billion, and UST, seven weeks after its collapse, $0.48 billion.'
+  };
+  var mode = 'vol', box = document.getElementById('vol-chart'), read = document.getElementById('vol-read'), lastW = 0;
+  E.seg(document.getElementById('vol-mode'), [['vol', 'Traded in 24 hours'], ['cap', 'Market value']], mode, function (k) { mode = k; build(lastW); }, 'Show');
+  function bn(v) { var b = v / 1e9; return '$' + (b >= 1 ? b.toFixed(1) : b.toFixed(2)) + 'bn'; }
+  function build(W) {
+    if (!W) return; lastW = W;
+    box.innerHTML = '';
+    var col = mode === 'vol' ? 2 : 1, rows = ROWS.slice().sort(function (a, b) { return b[col] - a[col]; });
+    var max = rows[0][col], rowH = 34, L = 50, R = 70, H = rows.length * rowH + 4;
+    function X(v) { return L + (W - L - R) * v / max; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': (mode === 'vol' ? '24-hour trading volume' : 'Market value') + ' on 28 June 2022: ' + rows.map(function (r) { return r[0] + ' ' + bn(r[col]); }).join(', ') + '.' }, box);
+    rows.forEach(function (r, i) {
+      var y = i * rowH;
+      T(root, 0, y + 20, r[0], { 'class': 'strong' });
+      S('rect', { x: L, y: y + 8, width: Math.max(1.5, X(r[col]) - L), height: 16, 'class': r[3] === 'btc' ? 'muted-fill' : r[3] === 'shock' ? 'near-fill' : 'far-fill' }, root);
+      T(root, X(r[col]) + 6, y + 20, bn(r[col]), { 'class': 'label' });
+    });
+    read.innerHTML = TEXT[mode];
+  }
+  read.innerHTML = TEXT[mode];
+  E.fit(box, build, { min: 290, max: 560 });
+})();
+</script>
+</body>
+</html>

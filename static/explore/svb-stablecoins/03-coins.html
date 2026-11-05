@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six coins · Silicon Valley Bank Bankruptcy and Stablecoins Stability</title>
+<meta name="description" content="Side path of an explorable explanation of Galati and Capalbo, Silicon Valley Bank Bankruptcy and Stablecoins Stability: what a stablecoin is, why traders hold one, and the six assets in the study.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<script src="../sitebar.js"></script>
+<link rel="stylesheet" href="explore.css">
+<style>
+  .lineup { list-style: none; padding: 0; margin: .4rem 0 1rem; max-width: 40em; }
+  .lineup li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: .8rem; align-items: baseline; padding: .42em 0; border-bottom: 1px solid var(--border); font-size: .96rem; line-height: 1.45; }
+  .lineup li:last-child { border-bottom: 0; }
+  .tick { font-family: var(--sans); font-size: .76rem; font-weight: 500; letter-spacing: .04em; text-align: center; border: 1.5px solid var(--far); border-radius: 999px; padding: .12em 0; }
+  .tick.usdc { background: var(--near); border-color: var(--near); color: var(--on-gold); }
+  .tick.btc { border-color: var(--muted); border-style: dashed; }
+</style>
+</head>
+<body data-deck="03-coins.html">
+<lg-sitebar><noscript><a href="../../publication/svb-stablecoins/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="What is a stablecoin, and who are the six?">
+  <div class="inner">
+    <p class="kicker">Side path · Six coins · 1 of 1</p>
+    <h2>Five dollars and a Bitcoin</h2>
+    <p>A stablecoin is a crypto token built to hold a steady one-to-one peg to the US dollar, so traders can park money in crypto in a form worth a dollar, even on exchanges such as Binance that do not trade against dollars at all. Because they move between exchanges quickly, stablecoins sometimes trade a little above a dollar.</p>
+    <ul class="lineup">
+      <li><span class="tick usdc">USDC</span><span>USD Coin, run by Circle: in March 2023 the second-largest stablecoin and the <span class="nw">fifth-largest</span> cryptocurrency by market value, with about $40&nbsp;billion behind it, $3.3&nbsp;billion of that at SVB.</span></li>
+      <li><span class="tick">USDT</span><span>Tether: the third-largest cryptocurrency by market value, and the most traded.</span></li>
+      <li><span class="tick">BUSD</span><span>The Binance dollar, the exchange’s own stablecoin. Binance does not trade it against dollars, so the paper converts its price against Tether into dollars.</span></li>
+      <li><span class="tick">DAI</span><span>A stablecoin the paper counts among the less authoritative ones.</span></li>
+      <li><span class="tick">TUSD</span><span>TrueUSD, which completes the study’s five most liquid stablecoins.</span></li>
+      <li><span class="tick btc">BTC</span><span>Bitcoin, the most liquid cryptocurrency, with no peg at all.</span></li>
+    </ul>
+    <div class="actions">
+      <a class="btn primary return-link" href="01-weekend.html#s2">← Return to the main path</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">What a stablecoin is for: p.&nbsp;1 and footnote 1. USDC: p.&nbsp;1–2 and footnote 8. Tether: p.&nbsp;3. BUSD: footnotes 1 and 14. DAI: p.&nbsp;7. The six assets and their data: Section 4.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/svb-stablecoins/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside TerraUSD · Intelligent Design: Stablecoins (In)stability</title>
+<meta name="description" content="Side path of an explorable explanation of De Blasis, Galati, Webb and Webb, Intelligent Design: how TerraUSD's burn-and-mint swap was meant to hold its peg, why it fails when LUNA falls, and what kept people holding UST.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-terra.html">
+<lg-sitebar><noscript><a href="../../publication/stablecoins-intelligent-design/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="How was UST meant to hold its peg?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Inside TerraUSD · 1 of 2</p>
+      <h2>Burn one, mint the other</h2>
+      <p>UST had no vault of dollars. Its protocol would always swap 1 UST for $1 of newly created LUNA, burning (destroying) the UST, and $1 of LUNA for one new UST.</p>
+      <p>That handed a trade to anyone who spotted a gap. Below a dollar: buy UST cheap, swap it for $1 of LUNA, sell the LUNA. Each swap burns a UST, and fewer coins should lift the price. Above a dollar, the reverse.</p>
+      <p>The catch is the word “sell”. In a run, every UST handed in mints LUNA that someone then sells, so the run itself drags LUNA down: that is your second slider, and the extra loss the toy on deck 1 builds in. Once LUNA falls faster than UST’s discount, the swap loses money and the loop turns against the peg.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>What kept people holding UST?&nbsp;→</button>
+        <a class="btn return-link" href="01-promise.html#s2" data-primary-when="01-promise.html">← Return to the main path</a>
+      </div>
+      <p class="note">Swap rule: pp.18, 20. That a run drags LUNA down through the LUNA it mints is an illustration built on pp.18–20; the paper says weakness in one token could hurt the other and cites Vitalik Buterin calling such designs “extremely fragile” (25 May 2022, p.19). Toy: price and fall are yours to set, illustrative; fees and delays are left out.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Profit from one swap <span class="tag">toy</span></p>
+      <div class="fig" id="bm-chart"></div>
+      <label class="ctl" for="bm-p">Market price of one UST</label>
+      <input type="range" id="bm-p" min="900" max="1100" step="10" value="960">
+      <label class="ctl" for="bm-f">How far LUNA falls before you can sell it</label>
+      <input type="range" id="bm-f" min="0" max="20" step="1" value="0">
+      <p class="readout" id="bm-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What kept people holding UST?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Side path · Inside TerraUSD · 2 of 2</p>
+      <h2>What kept people holding UST</h2>
+      <p>A peg that rests on a swap needs people who want to hold the coin. UST’s draw was yield: lenders of UST were offered nearly 20% a year, when deposits of USDC earned 3.5–5.5% and dollar deposits at major American banks less than 1%.</p>
+      <p>The interest came out of UST’s reserves. The paper judges that the high rate was probably needed to keep demand for UST up, and that the peg depended on that demand.</p>
+      <p>The peg had slipped before, and come back. Most of the time UST traded just over a dollar, which the paper reads as a sign of some faith in the project.</p>
+      <div class="actions">
+        <a class="btn primary return-link" href="01-promise.html#s3" data-primary-when="01-promise.html">← Return to the main path</a>
+        <a class="btn" href="01-promise.html#s4">Continue: it happened for real&nbsp;→</a>
+      </div>
+      <p class="note">Rates: p.18 (19.63% as advertised by Binance, 19.45% earned by lenders on the Anchor protocol, fn. 22) and p.19. Earlier slips: p.19 (prices from CoinMarketCap, as cited): 85¢ on 30 December 2020, back to 99.73¢ the next day, so close to the line that only its dot is drawn; UST “generally traded at just over $1”.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Interest a year, as the paper reports it</p>
+      <div class="fig" id="yield-chart"></div>
+      <p class="stage-title" style="margin-top:1rem">UST’s earlier slips</p>
+      <div class="fig" id="slip-chart"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/stablecoins-intelligent-design/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the burn-and-mint swap, as a toy ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var pS = document.getElementById('bm-p'), fS = document.getElementById('bm-f'), read = document.getElementById('bm-read');
+  var box = document.getElementById('bm-chart'), geo = null, YLO = -20, YHI = 10;
+  function profit(p, f) { return p < 1 ? (1 - f) - p : p - 1; } /* dollars per coin */
+  function c1(v) { return (v < 0 ? '−' : '+') + Math.abs(v * 100).toFixed(1) + '¢'; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.46, 200, 230)), L = 44, R = 12, TOP = 14, B = 34;
+    function X(f) { return L + (W - L - R) * f / 0.2; }
+    function Y(v) { return TOP + (H - TOP - B) * (YHI - v) / (YHI - YLO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy: profit in cents from one burn-and-mint swap against how far LUNA falls before it can be sold, from 0 to 20 per cent, at the chosen UST price.' }, box);
+    [-20, -10, 0, 10].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '¢', { 'text-anchor': 'end' });
+    });
+    [0, 0.05, 0.1, 0.15, 0.2].forEach(function (f) { T(root, X(f), H - 18, Math.round(f * 100) + '%', { 'text-anchor': f ? (f === 0.2 ? 'end' : 'middle') : 'start' }); });
+    T(root, (L + W - R) / 2, H - 2, 'LUNA’s fall before you sell', { 'text-anchor': 'middle', 'class': 'label' });
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, B: B, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var p = +pS.value / 1000, f = +fS.value / 100, v = profit(p, f);
+    pS.setAttribute('aria-valuetext', (p * 100).toFixed(0) + ' cents');
+    fS.setAttribute('aria-valuetext', Math.round(f * 100) + ' percent');
+    if (Math.abs(p - 1) < 1e-9) read.innerHTML = '<strong>UST at $1.00:</strong> no gap, so nothing to gain. The swap only matters when the price strays.';
+    else if (p < 1) read.innerHTML = '<strong>UST at ' + (p * 100).toFixed(0) + '¢.</strong> Buy one for ' + (p * 100).toFixed(0) + '¢, swap it for $1.00 of new LUNA (the UST is burned), sell the LUNA ' + (f ? 'after a ' + Math.round(f * 100) + '% fall, for ' + ((1 - f) * 100).toFixed(0) + '¢' : 'at once, for $1.00') + '. <strong>' + c1(v) + ' a coin.</strong> ' +
+      (v >= 0 ? 'One UST fewer, $1 of LUNA more.' : 'A loss: the trade that should lift UST stops, while the LUNA already minted keeps weighing on its price.');
+    else read.innerHTML = '<strong>UST at $' + p.toFixed(2) + '.</strong> Buy $1.00 of LUNA, swap it for one new UST (the LUNA is burned), sell the UST. <strong>' + c1(v) + ' a coin.</strong> One UST more, $1 of LUNA fewer. LUNA’s fall does not matter here: it is burned as soon as it is bought.';
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y; g.innerHTML = '';
+    var pts = [];
+    for (var k = 0; k <= 40; k++) { var ff = 0.2 * k / 40; pts.push(X(ff).toFixed(1) + ',' + Y(E.clamp(profit(p, ff) * 100, YLO, YHI)).toFixed(1)); }
+    S('polyline', { points: pts.join(' '), 'class': 'gold-line' }, g);
+    if (p < 1 && 1 - p <= 0.2) {
+      S('line', { x1: X(1 - p), x2: X(1 - p), y1: Y(0) - 6, y2: Y(0) + 6, 'class': 'bracket' }, g);
+      T(g, X(1 - p) + (X(1 - p) > geo.W * 0.7 ? -6 : 6), Y(0) - 9, 'breaks even at a ' + Math.round((1 - p) * 1000) / 10 + '% fall', { 'text-anchor': X(1 - p) > geo.W * 0.7 ? 'end' : 'start', 'class': 'label halo' });
+    }
+    S('circle', { cx: X(f), cy: Y(E.clamp(v * 100, YLO, YHI)), r: 6, 'class': v < 0 ? 'hollow' : 'near-fill' }, g);
+  }
+  pS.addEventListener('input', draw);
+  fS.addEventListener('input', draw);
+  E.fit(box, build, { min: 290, max: 560 });
+  draw();
+})();
+
+/* ---------- slide 2: yields (pp.18–19) and earlier slips (p.19) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var yb = document.getElementById('yield-chart'), sb = document.getElementById('slip-chart');
+  E.fit(yb, function (W) {
+    yb.innerHTML = '';
+    var ROWS = [['Lending UST', 19.45, 19.63, 'near-fill', '19.45–19.63%'], ['Deposits of USDC', 3.5, 5.5, 'far-fill', '3.5–5.5%'], ['Dollars at a major US bank', 0, 1, 'muted-fill', 'under 1%']];
+    var rowH = 40, H = ROWS.length * rowH + 20, R = 96;
+    function X(v) { return (W - R) * v / 20; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Interest a year: lending UST 19.45 to 19.63 per cent; deposits of USDC 3.5 to 5.5 per cent; dollar deposits at major US banks under 1 per cent.' }, yb);
+    [0, 10, 20].forEach(function (v) { S('line', { x1: X(v), x2: X(v), y1: 0, y2: H - 18, 'class': v ? 'grid' : 'axis' }, root); T(root, X(v), H - 4, v + '%', { 'text-anchor': v ? (v === 20 ? 'end' : 'middle') : 'start' }); });
+    ROWS.forEach(function (r, i) {
+      var y = i * rowH;
+      T(root, 4, y + 12, r[0], { 'class': 'label' });
+      if (r[1] > 0) S('rect', { x: X(0), y: y + 17, width: X(r[1]), height: 12, 'class': r[3] }, root);
+      S('rect', { x: X(r[1]), y: y + 17, width: Math.max(2, X(r[2]) - X(r[1])), height: 12, 'class': r[3], 'fill-opacity': 0.4 }, root);
+      T(root, X(r[2]) + 6, y + 27, r[4], { 'class': 'strong' });
+    });
+  }, { min: 290, max: 560 });
+  E.fit(sb, function (W) {
+    sb.innerHTML = '';
+    /* months from 1 December 2020 */
+    var P = [[0.97, 0.85, '85¢', '30 Dec 2020'], [1.0, 0.9973, '99.73¢', 'next day'], [2.0, 1.04, '$1.04', '31 Jan 2021'], [5.73, 0.94, '94¢', '23 May 2021']];
+    var H = 150, L = 46, R = 14, TOP = 16, B = 26;
+    function X(m) { return L + (W - L - R) * m / 6.5; }
+    function Y(p) { return TOP + (H - TOP - B) * (1.06 - p) / 0.24; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Earlier UST prices away from the peg: 85 cents on 30 December 2020, 99.73 cents the next day, 1.04 dollars on 31 January 2021, 94 cents on 23 May 2021.' }, sb);
+    [0.9].forEach(function (v) { S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': 'grid' }, root); T(root, L - 6, Y(v) + 4, '90¢', { 'text-anchor': 'end' }); });
+    E.pegLine(root, L, W - R, Y(1), false);
+    T(root, L - 6, Y(1) + 4, '$1.00', { 'text-anchor': 'end', 'class': 'peg-label' });
+    [[1, 'Jan 2021'], [3, 'Mar'], [5, 'May']].forEach(function (m) { T(root, X(m[0]), H - 6, m[1], { 'text-anchor': 'middle' }); });
+    P.forEach(function (p, i) {
+      S('circle', { cx: X(p[0]), cy: Y(p[1]), r: 4.5, 'class': 'near-fill' }, root);
+      if (i === 1) return; /* 99.73¢ the next day sits on the line beside the 85¢ point: dot only, value in the note */
+      var left = X(p[0]) > W * 0.62;
+      T(root, X(p[0]) + (left ? -8 : 8), Y(p[1]) + 4, p[2] + ', ' + p[3], { 'class': 'label halo', 'text-anchor': left ? 'end' : 'start' });
+    });
+  }, { min: 290, max: 560 });
+})();
+</script>
+</body>
+</html>

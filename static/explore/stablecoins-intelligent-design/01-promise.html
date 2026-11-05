@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One promise, five designs · Intelligent Design: Stablecoins (In)stability</title>
+<meta name="description" content="Deck 1 of an explorable explanation of De Blasis, Galati, Webb and Webb, Intelligent Design: what stands behind five dollar stablecoins, a toy run on three designs, and the collapse of TerraUSD in May 2022.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  #hook-fig { max-width: 26rem; margin-left: auto; margin-right: auto; }
+  @media (min-width: 820px) { .two.hook { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; } }
+  #toy-map { margin-bottom: .2rem; }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-promise.html">
+<lg-sitebar><noscript><a href="../../publication/stablecoins-intelligent-design/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why would anyone pay more than a dollar for a dollar?">
+  <div class="inner two hook">
+    <div>
+      <p class="kicker">An explorable explanation · De Blasis, Galati, Webb &amp; Webb</p>
+      <h1>A dollar is not always a dollar</h1>
+      <p>A <strong>stablecoin</strong> is a crypto token built to be worth exactly one US dollar, always. Traders call that promise the <strong>peg</strong>.</p>
+      <p>TerraUSD, or UST, was one of the biggest, with about $18 billion of coins outstanding. Around midnight on 9 May 2022 it began to slip. By nine the next morning it sold for 79 cents.</p>
+      <p>Over the following days the other big dollar coins moved too. Some sold for less than a dollar. Others, stranger still, sold for more. They all make the same promise. So why would anyone pay more than a dollar for a dollar, and why would anyone sell one for less?</p>
+      <div class="actions">
+        <button class="btn primary" type="button" data-next>See what stands behind each coin&nbsp;→</button>
+        <a class="door" href="03-why.html#s1" data-return="next">Why hold a coin that is just a dollar?&nbsp;→</a>
+      </div>
+      <p class="note">UST’s size around the crash and its prices on 10 May (98¢ at 02:00, 90¢ at 08:00, 79¢ at 09:00, UTC): p.2. The four coins on the line are schematic; UST’s three prices are drawn to scale.</p>
+    </div>
+    <div class="stage">
+      <div class="fig" id="hook-fig"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What stands behind each coin?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · One promise, five designs · 2 of 4</p>
+      <h2>Same promise, five designs</h2>
+      <p>A coin can only promise a dollar if something stands behind it, so that a holder who hands one back gets a dollar out. What that something is differs sharply from coin to coin.</p>
+      <p>Cash in a bank. Short-dated US Treasuries. A mixed pool that includes <strong>commercial paper</strong>, short-term company debt. Crypto deposited as <strong>collateral</strong>, worth more than the coins issued against it. Or, for UST, mostly an algorithm and a sister token.</p>
+      <p class="door-row"><a class="door" href="04-terra.html#s1">How could an algorithm hold a peg?&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Put the designs under stress&nbsp;→</button></div>
+      <p class="note">What each issuer said stood behind its coin, as the paper reports it: Table 1, pp.8, 17–20. Computed: USDT’s 8.34% (100 − 85.64 − 6.02, what remains after the two shares the paper quotes); DAI’s $1.45 (30,000 ÷ 20,689); UST’s 14¢, from about $2.48 billion of reserves (about $2.4 billion of bitcoin on 7 May plus $65 million of Avalanche and $12 million of “Binance tokens”, p.19) against about $18 billion of UST (p.2), rough because the sources and dates differ.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">What stood behind one coin</p>
+      <div class="fig" id="bk-chart"></div>
+      <p class="legend"><span><i class="sq blue"></i>cash</span><span><i class="sq blue2"></i>US Treasuries</span><span><i class="sq blue3"></i>cash equivalents, deposits, commercial paper</span><span><i class="sq mut"></i>crypto and other investments</span><span><i class="sq open"></i>not itemised</span><span><i class="sq golddash"></i>UST’s promise: $1 of new LUNA</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Which design survives a run?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · One promise, five designs · 3 of 4</p>
+      <h2>A run hurts each design differently</h2>
+      <p>A <strong>run</strong> is many holders asking for their dollar at once. Set the size of the run and how far crypto prices fall that day, and watch three designs take it: cash in a vault, crypto collateral of $1.45 per coin, and an algorithm that pays out in a sister token.</p>
+      <p>Past a design’s line, the holders no longer covered run too, and the coin slides away from the dollar.</p>
+      <p class="prompt">Try a run of 60% with no fall in crypto. Then a 40% fall with no run.</p>
+      <p class="door-row"><a class="door" href="04-terra.html#s1">Why does the algorithm break on a run alone?&nbsp;→</a></p>
+      <div class="actions"><button class="btn primary" type="button" data-next>Then it happened for real&nbsp;→</button></div>
+      <p class="note">Toy model, illustrative numbers, not from the paper. 100 coins; a redemption pays $1 while backing lasts, then the uncovered share runs, for up to 12 rounds. Cash: $100. Collateral: $145 (MakerDAO’s ratio, p.18), falling with crypto. Algorithmic: a sister token worth $150, more than all the coins, so it starts with the largest cushion; it falls with crypto and loses another $1 for every $1 paid out. Fees and real defences of a peg are left out.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">Where each design breaks <span class="tag">toy</span></p>
+      <div class="fig" id="toy-map"></div>
+      <p class="legend"><span><i class="sq band"></i>the algorithmic coin breaks</span><span><i class="sq hatch"><svg viewBox="0 0 16 10" aria-hidden="true"><line x1="-2" y1="10" x2="8" y2="0"/><line x1="4" y1="10" x2="14" y2="0"/><line x1="10" y1="10" x2="20" y2="0"/></svg></i>crypto collateral breaks</span></p>
+      <div class="fig" id="toy-strip"></div>
+      <label class="ctl" for="toy-run">Holders asking for their dollar back</label>
+      <input type="range" id="toy-run" min="0" max="100" step="5" value="40">
+      <label class="ctl" for="toy-fall">Fall in crypto prices that day</label>
+      <input type="range" id="toy-fall" min="0" max="80" step="5" value="0">
+      <p class="readout" id="toy-read" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What happened in May 2022?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · One promise, five designs · 4 of 4</p>
+      <h2>Then it happened for real</h2>
+      <p>In May 2022 the toy’s ingredients arrived together. UST’s holders ran. LUNA, the sister token meant to absorb them, collapsed: $1,000 of LUNA at its price a month earlier was worth about five cents on 15 May.</p>
+      <p>UST did have a reserve: about 80,000 bitcoin, worth some $2.4 billion on 7 May, held by the Luna Foundation Guard. Nearly all of it was spent, apparently in an effort to hold the peg. The paper puts the ecosystem that came down at $60 billion.</p>
+      <p>UST was one coin of five, and the other four were built differently. What did they do while it sank?</p>
+      <div class="actions"><a class="btn primary" href="02-run.html#s1">Place your bet&nbsp;→</a></div>
+      <p class="note">UST prices on 10 May and the $60 billion: p.2. LUNA at $84.5 a month before and $0.004173 on 15 May, the bitcoin reserve and its use: p.19; the five cents is computed (1,000 × 0.004173 ÷ 84.5). Between UST’s three reported prices the path is not reported, so it is dashed.</p>
+    </div>
+    <div class="stage">
+      <p class="stage-title">UST on 10 May 2022, hours UTC</p>
+      <div class="fig" id="ust-chart"></div>
+      <p class="stage-title" style="margin-top:1rem">$1,000 of LUNA</p>
+      <div class="fig" id="luna-chart"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/stablecoins-intelligent-design/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: four coins on the one-dollar line, UST falling through its reported prices (p.2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, box = document.getElementById('hook-fig');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var H = 340, top = 60, L = 6;
+    function Y(p) { return top + (1.0 - p) * 1200; } /* 12 px per cent, to scale below the line */
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The one-dollar line with USDT, USDC, BUSD and DAI resting on it. UST falls below it on 10 May 2022: 98 cents at 02:00, 90 cents at 08:00 and 79 cents at 09:00 UTC.' }, box);
+    E.pegLine(root, L, W - 4, Y(1));
+    var xu = W - 46, xs = [0.12, 0.30, 0.48, 0.66].map(function (f) { return Math.round(L + 22 + (xu - 70 - L) * f / 0.66); });
+    ['USDT', 'USDC', 'BUSD', 'DAI'].forEach(function (c, i) { E.token(root, xs[i], Y(1) - 22, c); });
+    var pts = [[0.98, '98¢ · 02:00'], [0.90, '90¢ · 08:00'], [0.79, '79¢ · 09:00']];
+    S('circle', { cx: xu, cy: Y(1) - 22, r: 21, 'class': 'tok ghost' }, root);
+    S('path', { d: 'M' + xu + ',' + Y(1) + ' L' + xu + ',' + (Y(0.79) - 21), 'class': 'trail' }, root);
+    pts.forEach(function (p, i) {
+      var g = S('g', { 'class': 'drop', style: 'animation-delay:' + (0.3 + i * 0.5) + 's' }, root);
+      S('line', { x1: xu - 26, x2: xu - 6, y1: Y(p[0]), y2: Y(p[0]), 'class': 'axis zero' }, g);
+      T(g, xu - 32, Y(p[0]) + 4, p[1], { 'text-anchor': 'end', 'class': 'label halo' });
+    });
+    E.token(root, xu, Y(0.79), 'UST', 'shock'); /* centred on its 79-cent mark */
+    T(root, xu - 32, Y(0.79) + 20, 'UTC, 10 May', { 'text-anchor': 'end' });
+  }, { min: 280, max: 420 });
+})();
+
+/* ---------- slide 2: what stood behind one coin (Table 1, pp.8, 17–20); every fact drawn, nothing behind a click ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  /* segments: [value in $, class]; fact: one short line under the bar, with its page */
+  var COINS = [
+    { k: 'BUSD', name: 'cash in US banks', segs: [[1, 'far-fill']], end: '$1.00', fact: 'regulated in New York (p.8)' },
+    { k: 'USDC', name: 'Treasuries and cash', segs: [[0.8, 'blue2'], [0.2, 'far-fill']], end: '$1.00', fact: 'its issuer’s split, June 2022 (p.20)' },
+    { k: 'USDT', name: 'a mixed pool', segs: [[0.8564, 'blue3'], [0.0602, 'muted-fill'], [0.0834, 'hollow-far']], end: '$0.92 itemised', fact: 'press doubts; $18.5m NY settlement, 2021 (p.17)' },
+    { k: 'DAI', name: 'crypto collateral', segs: [[1.45, 'muted-fill']], end: '$1.45', fact: '$30,000 locked for at most 20,689 DAI (p.18)' },
+    { k: 'UST', name: 'an algorithm', segs: [[0.14, 'muted-fill'], [0.86, 'promise']], end: '$0.14 + a promise', fact: 'about $2.48bn of crypto for $18bn of UST' }
+  ];
+  var box = document.getElementById('bk-chart');
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 62, TOP = 24, H = TOP + COINS.length * rowH + 14, R = W < 420 ? 8 : 12;
+    function X(v) { return (W - R) * v / 1.5; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'What stood behind one coin. BUSD: $1 of cash in US banks, regulated in New York. USDC: about 80 cents of US Treasuries and 20 of cash, its issuer’s split in June 2022. USDT: 85.64 cents of cash, equivalents, deposits and commercial paper, 6.02 of other investments, 8.34 not itemised; its commercial paper was questioned in the press and it paid $18.5 million to settle a New York lawsuit in 2021. DAI: $1.45 of crypto collateral, from $30,000 locked for at most 20,689 DAI. UST: about 14 cents of crypto reserves and a promise of $1 of newly minted LUNA.' }, box);
+    [0, 0.5, 1.5].forEach(function (v) { T(root, X(v), H - 4, '$' + v.toFixed(2), { 'text-anchor': v ? (v === 1.5 ? 'end' : 'middle') : 'start' }); });
+    S('line', { x1: X(1), x2: X(1), y1: TOP - 6, y2: H - 18, 'class': 'peg' }, root);
+    S('line', { x1: X(1), x2: X(1), y1: TOP - 6, y2: TOP + 6, 'class': 'peg-tick' }, root);
+    T(root, X(1), TOP - 11, '$1.00', { 'text-anchor': 'middle', 'class': 'peg-label' });
+    COINS.forEach(function (c, i) {
+      var y = TOP + i * rowH, g = S('g', {}, root), x = 0;
+      var t = T(g, 0, y + 15, '', {}); var a = S('tspan', { 'class': 'strong' }, t); a.textContent = c.k + '  '; var b = S('tspan', { 'class': 'label' }, t); b.textContent = c.name;
+      c.segs.forEach(function (s) {
+        var w = X(s[0]);
+        if (s[1] === 'promise') S('rect', { x: x + 0.75, y: y + 21.75, width: Math.max(0, w - 1.5), height: 14.5, 'class': 'gold-dash' }, g);
+        else S('rect', { x: x, y: y + 21, width: w, height: 16, 'class': s[1] }, g);
+        x += w;
+      });
+      var endX = X(Math.max(1, c.segs.reduce(function (a, s) { return a + s[0]; }, 0)));
+      var lab = c.end, tw = E.textW(lab);
+      if (endX + 6 + tw <= W) T(g, endX + 6, y + 33, lab, { 'class': 'strong' });
+      else T(g, W, y + 15, lab, { 'class': 'strong', 'text-anchor': 'end' });
+      T(g, 0, y + 52, c.fact, { 'class': 'halo' });
+    });
+  }
+  E.fit(box, build, { min: 290, max: 560 });
+})();
+
+/* ---------- slide 3: a toy run on three designs ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var run = document.getElementById('toy-run'), fall = document.getElementById('toy-fall'), read = document.getElementById('toy-read');
+  var mapBox = document.getElementById('toy-map'), stripBox = document.getElementById('toy-strip');
+  var DES = [
+    { k: 'cash', name: 'Cash vault', kind: '' },
+    { k: 'coll', name: 'Crypto collateral', kind: '' },
+    { k: 'algo', name: 'Algorithmic', kind: 'shock' }
+  ];
+  var COLL = 145, ALGO = 150, CUT = 1 - 100 / COLL; /* collateral breaks beyond a 31% fall */
+  /* toy rules: see the note on the slide. Returns the coin's price after each round. */
+  function sim(k, r, f) {
+    var S0 = 100, Sx = S0, B = k === 'cash' ? 100 : k === 'coll' ? COLL * (1 - f) : ALGO * (1 - f);
+    var cost = k === 'algo' ? 2 : 1, path = [Math.min(1, B / Sx)], D = r * Sx;
+    for (var i = 0; i < 12; i++) {
+      var paid = Math.min(D, B / cost);
+      B = Math.max(0, B - cost * paid); Sx -= paid;
+      var c = Sx > 0.01 ? B / Sx : 1;
+      path.push(Math.min(1, c));
+      D = Sx * Math.max(0, 1 - c);
+      if (D < 1e-6 || B <= 1e-9) break;
+    }
+    return { path: path, cover: Sx > 0.01 ? B / Sx : 1 };
+  }
+  var mapGeo = null, stripGeo = null;
+  function buildMap(W) {
+    mapBox.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.5, 200, 236)), L = 56, R = 8, TOP = 8, B = 36;
+    function X(r) { return L + (W - L - R) * r; }
+    function Y(f) { return TOP + (H - TOP - B) * (1 - f / 0.8); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Toy model. Horizontal axis: share of holders running, 0 to 100%. Vertical axis: fall in crypto prices, 0 to 80%. The crypto-collateral design breaks above a 31% fall whatever the run. The algorithmic design breaks beyond a diagonal from a 50% run with no fall to a 33% fall with no run. The cash vault never breaks.' }, mapBox);
+    S('rect', { x: X(0), y: Y(0.8), width: X(1) - X(0), height: Y(0) - Y(0.8), 'class': 'surface' }, root);
+    /* gold tint: past the diagonal the algorithmic coin breaks */
+    S('path', { d: 'M' + X(0.5) + ',' + Y(0) + ' L' + X(1) + ',' + Y(0) + ' L' + X(1) + ',' + Y(0.8) + ' L' + X(0) + ',' + Y(0.8) + ' L' + X(0) + ',' + Y(1 / 3) + ' Z', 'class': 'band' }, root);
+    /* blue hatching: above the horizontal line crypto collateral breaks */
+    var hatch = S('g', {}, root), y0h = Y(0.8), y1h = Y(CUT);
+    for (var hx = X(0) - (y1h - y0h); hx < X(1); hx += 9) {
+      var ax = Math.max(hx, X(0)), bx = Math.min(hx + (y1h - y0h), X(1));
+      if (bx > ax) S('line', { x1: ax, y1: y1h - (ax - hx), x2: bx, y2: y1h - (bx - hx), 'class': 'hatch-line' }, hatch);
+    }
+    S('line', { x1: X(0), x2: X(1), y1: Y(CUT), y2: Y(CUT), 'class': 'blue-line' }, root);
+    S('line', { x1: X(0.5), x2: X(0), y1: Y(0), y2: Y(1 / 3), 'class': 'gold-line' }, root);
+    [0, 0.5, 1].forEach(function (r) { T(root, X(r), H - B + 15, Math.round(r * 100) + '%', { 'text-anchor': r ? (r === 1 ? 'end' : 'middle') : 'start' }); });
+    [0, 0.4, 0.8].forEach(function (f) { T(root, L - 6, Y(f) + 4, Math.round(f * 100) + '%', { 'text-anchor': 'end' }); });
+    T(root, (L + W - R) / 2, H - 4, 'Share of holders running', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, 0, 0, 'Crypto fall', { 'class': 'label', 'text-anchor': 'middle', transform: 'translate(10,' + ((TOP + H - B) / 2) + ') rotate(-90)' });
+    T(root, X(1) - 6, Y(CUT) - 7, W < 420 ? 'collateral breaks above' : 'crypto collateral breaks above this line', { 'text-anchor': 'end', 'class': 'label halo' });
+    T(root, X(0.5) + 8, Y(0) - 8, W < 420 ? 'algorithmic breaks past' : 'algorithmic breaks past this line', { 'class': 'label halo' });
+    T(root, X(0) + 6, Y(0) - 8, 'cash: never', { 'class': 'halo' });
+    mapGeo = { X: X, Y: Y, L: L, R: R, TOP: TOP, B: B, W: W, H: H, dyn: S('g', {}, root) };
+    var hit = S('rect', { x: X(0), y: Y(0.8), width: X(1) - X(0), height: Y(0) - Y(0.8), 'class': 'hit' }, root);
+    hit.addEventListener('click', function (e) {
+      var pt = root.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+      var p = pt.matrixTransform(root.getScreenCTM().inverse());
+      run.value = Math.round(E.clamp((p.x - X(0)) / (X(1) - X(0)), 0, 1) * 20) * 5;
+      fall.value = Math.round(E.clamp((Y(0) - p.y) / (Y(0) - Y(0.8)) * 0.8, 0, 0.8) * 20) * 5;
+      draw();
+    });
+    draw();
+  }
+  function buildStrip(W) {
+    stripBox.innerHTML = '';
+    var H = 128, G = 40, gap = 14, pw = (W - G - 2 * gap) / 3, TOP = 18, B = 36;
+    function PY(v) { return TOP + 12 + (H - B - TOP - 12) * (1 - v); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Price of one coin of each design, round by round for up to 12 rounds, between $0 and the one-dollar line.' }, stripBox);
+    stripGeo = { W: W, H: H, G: G, pw: pw, gap: gap, PY: PY, root: root, dyn: S('g', {}, root) };
+    T(root, G - 6, PY(1) + 4, '$1.00', { 'text-anchor': 'end', 'class': 'peg-label' });
+    T(root, G - 6, PY(0) + 4, '$0', { 'text-anchor': 'end' });
+    DES.forEach(function (d, i) {
+      var x0 = G + i * (pw + gap);
+      S('line', { x1: x0, x2: x0 + pw, y1: PY(0), y2: PY(0), 'class': 'axis zero' }, root);
+      E.pegLine(root, x0, x0 + pw, PY(1), false);
+      T(root, x0, H - 4, d.name, { 'class': 'label' });
+    });
+    T(root, G + 4, PY(0) + 14, 'rounds →', {});
+    T(root, 0, 10, 'Price of one coin, round by round');
+    draw();
+  }
+  function draw() {
+    var r = +run.value / 100, f = +fall.value / 100;
+    run.setAttribute('aria-valuetext', Math.round(r * 100) + ' percent of holders');
+    fall.setAttribute('aria-valuetext', Math.round(f * 100) + ' percent fall');
+    var res = DES.map(function (d) { return sim(d.k, r, f); });
+    var bits = DES.map(function (d, i) {
+      var p = res[i].path, end = p[p.length - 1], held = end > 0.999;
+      if (held) return '<strong>' + d.name + ':</strong> holds at $1.00' + (d.k === 'cash' ? '' : ' ($' + res[i].cover.toFixed(2) + ' still behind each coin)');
+      var k = 1; while (k < p.length && p[k] > 0.999) k++;
+      return '<strong>' + d.name + ': breaks</strong>' + (p[0] < 0.999 ? ' at once' : ' in round ' + k) + ', and ends at $' + end.toFixed(2);
+    });
+    read.innerHTML = 'Run ' + Math.round(r * 100) + '%, crypto down ' + Math.round(f * 100) + '%. ' + bits.join('. ') + '.';
+    if (mapGeo) {
+      var g = mapGeo.dyn; g.innerHTML = '';
+      var x = mapGeo.X(r), y = mapGeo.Y(f);
+      S('line', { x1: x, x2: x, y1: mapGeo.Y(0.8), y2: mapGeo.Y(0), 'class': 'grid' }, g);
+      S('line', { x1: mapGeo.X(0), x2: mapGeo.X(1), y1: y, y2: y, 'class': 'grid' }, g);
+      S('circle', { cx: x, cy: y, r: 6.5, 'class': 'hollow', 'stroke-width': 2.5 }, g);
+    }
+    if (stripGeo) {
+      var s = stripGeo, g2 = s.dyn, PY = s.PY; g2.innerHTML = '';
+      DES.forEach(function (d, i) {
+        var p = res[i].path, x0 = s.G + i * (s.pw + s.gap), n = 12; /* every round the toy runs, so line and end dot agree */
+        function PX(k) { return x0 + 4 + (s.pw - 44) * k / n; }
+        var pts = [];
+        for (var k = 0; k <= n; k++) pts.push(PX(k).toFixed(1) + ',' + PY(p[Math.min(k, p.length - 1)]).toFixed(1));
+        S('polyline', { points: pts.join(' '), 'class': d.kind === 'shock' ? 'gold-line' : 'blue-line' }, g2);
+        var end = p[p.length - 1];
+        S('circle', { cx: PX(n), cy: PY(end), r: 4.5, 'class': d.kind === 'shock' ? 'near-fill' : 'far-fill' }, g2);
+        T(g2, PX(n) + 6, PY(end) - 7, '$' + end.toFixed(2), { 'class': 'strong halo' });
+      });
+    }
+  }
+  run.addEventListener('input', draw);
+  fall.addEventListener('input', draw);
+  E.fit(mapBox, buildMap, { min: 290, max: 560 });
+  E.fit(stripBox, buildStrip, { min: 290, max: 560 });
+  draw();
+})();
+
+/* ---------- slide 4: UST's first hours (p.2) and $1,000 of LUNA (p.19) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var ub = document.getElementById('ust-chart'), lb = document.getElementById('luna-chart');
+  E.fit(ub, function (W) {
+    ub.innerHTML = '';
+    var H = 196, L = 44, R = 14, TOP = 14, B = 30;
+    function X(h) { return L + (W - L - R) * h / 10; }
+    function Y(p) { return TOP + (H - TOP - B) * (1.02 - p) / 0.26; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'UST price on 10 May 2022, UTC: 98 cents at 02:00, 90 cents at 08:00, 79 cents at 09:00, against the one-dollar line.' }, ub);
+    [0.8, 0.9].forEach(function (v) { S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': 'grid' }, root); T(root, L - 6, Y(v) + 4, Math.round(v * 100) + '¢', { 'text-anchor': 'end' }); });
+    E.pegLine(root, L, W - R, Y(1), false);
+    T(root, L - 6, Y(1) + 4, '$1.00', { 'text-anchor': 'end', 'class': 'peg-label' });
+    for (var h = 0; h <= 10; h += 2) T(root, X(h), H - 10, (h < 10 ? '0' : '') + h + ':00', { 'text-anchor': h === 0 ? 'start' : h === 10 ? 'end' : 'middle' });
+    var P = [[2, 0.98, '98¢'], [8, 0.90, '90¢'], [9, 0.79, '79¢']];
+    S('polyline', { points: P.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' '), 'class': 'gold-dash' }, root);
+    P.forEach(function (p) {
+      S('circle', { cx: X(p[0]), cy: Y(p[1]), r: 5, 'class': 'near-fill' }, root);
+      T(root, X(p[0]) - 9, Y(p[1]) + (p[0] === 2 ? 16 : 4), p[2], { 'text-anchor': 'end', 'class': 'strong halo' });
+    });
+  }, { min: 280, max: 560 });
+  E.fit(lb, function (W) {
+    lb.innerHTML = '';
+    var H = 84, L = 0, xMax = W - 150;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': '$1,000 of LUNA at its price a month before the collapse, $84.5, was worth about 5 cents at its price on 15 May, $0.004173.' }, lb);
+    T(root, 0, 12, 'a month before, at $84.5', { 'class': 'label' });
+    S('rect', { x: 0, y: 18, width: xMax, height: 16, 'class': 'near-fill' }, root);
+    T(root, xMax + 8, 31, '$1,000', { 'class': 'strong' });
+    T(root, 0, 56, '15 May, at $0.004173', { 'class': 'label' });
+    S('rect', { x: 0, y: 62, width: 1.5, height: 16, 'class': 'near-fill' }, root);
+    T(root, 10, 75, 'about 5¢, too small to draw', { 'class': 'strong' });
+  }, { min: 280, max: 560 });
+})();
+</script>
+</body>
+</html>

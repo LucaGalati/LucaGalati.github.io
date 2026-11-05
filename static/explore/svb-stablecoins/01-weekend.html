@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The weekend · Silicon Valley Bank Bankruptcy and Stablecoins Stability</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Galati and Capalbo, Silicon Valley Bank Bankruptcy and Stablecoins Stability: the stuck reserve, the fortnight around 11 March 2023, where the money ran and what happened to trading.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<script src="../sitebar.js"></script>
+<link rel="stylesheet" href="explore.css">
+</head>
+<body data-deck="01-weekend.html">
+<lg-sitebar><noscript><a href="../../publication/svb-stablecoins/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="Can a bank failure reach a coin pegged to the dollar?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Galati &amp; Capalbo</p>
+    <h1>When a bank fails, does the trouble stay in banking?</h1>
+    <div class="fig beads" id="hook-beads"></div>
+    <p>A stablecoin is a crypto token built to be boring: one coin, worth one US dollar, always. At about 03:11 UTC on Saturday 11 March 2023, Circle, the company behind USD Coin (USDC), the second-largest stablecoin, said that 8% of the coin’s reserves were stuck at Silicon Valley Bank, which regulators had taken over the day before. Within hours one USDC traded below 87 cents.</p>
+    <p>SVB was a commercial bank, banker to nearly half of Silicon Valley’s venture-backed tech start-ups. Did its failure spread into crypto markets? And when USDC holders took fright, where did their money go?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>What was one USDC worth?&nbsp;→</button>
+      <a class="door" href="03-coins.html#s1" data-return="next">What is a stablecoin, and who are the six assets in the study?&nbsp;→</a>
+    </div>
+    <p class="note">Pages 1–2 of the paper; the time of Circle’s message is given in Section 4. The price below 87 cents is from the news reports the paper cites (p.&nbsp;2). 11 March 2023 was a Saturday.</p>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What was one USDC worth?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The weekend · 2 of 5</p>
+    <h2>The arithmetic of a stuck reserve</h2>
+    <div class="two">
+      <div>
+        <p>Each USDC is meant to be backed by a dollar in reserve. About $40&nbsp;billion stood behind the coin, and $3.3&nbsp;billion of it sat at SVB, where withdrawals had been halted. Nobody knew that weekend how much would come back.</p>
+        <p>News reports had USDC below 87 cents. <strong>If a coin were worth just the reserves behind it, how much of the stuck money would have to be lost to justify that price?</strong> Try it.</p>
+        <p>The paper’s own prices, a weighted average across exchanges that the authors note smooths the moves, fell less far: in USDC’s worst three hours they sat around 91.6 cents, dipping to about 88. And a price carries more than arithmetic: holders feared they could not get their money out, and the paper reads prices this far from a dollar as worry about the stability, even the survival, of stablecoins.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>What else was happening that week?&nbsp;→</button></div>
+        <p class="note">$3.3 billion of $40 billion: p.&nbsp;1; 8% of the reserves: p.&nbsp;2. Reserves per coin = (36.7 + 3.3 × share recovered) ÷ 40, computed. Reported low: the news the paper cites (p.&nbsp;2). The paper’s prices: traced from Fig. 2(a), approximate, assuming a start at $1.00; averaging: p.&nbsp;5. Fear of not getting money out: p.&nbsp;7. Worry about stability: p.&nbsp;3. FDIC exception: p.&nbsp;2.</p>
+      </div>
+      <div class="stage">
+        <p class="caption">Illustrative arithmetic: one dollar of reserve behind each coin.</p>
+        <p class="legend"><span><i class="sq far"></i>reserves that are safe or come back</span><span><i class="sq near"></i>still stuck at SVB</span></p>
+        <div class="fig" id="rv-chart"></div>
+        <label class="ctl" for="rv-share">Share of the stuck $3.3 billion that comes back</label>
+        <input type="range" id="rv-share" min="0" max="100" step="1" value="50">
+        <p class="readout" id="rv-read" aria-live="polite"></p>
+        <div class="actions" style="margin-top:.7rem"><button class="btn" type="button" id="rv-fdic">Apply what regulators decided on 12 March</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What else happened that week?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The weekend · 3 of 5</p>
+    <h2>The paper’s clock starts at Circle’s message</h2>
+    <div class="fig" id="timeline"></div>
+    <p>The study follows Bitcoin and the five most liquid (most traded) stablecoins minute by minute from 4 to 18 March 2023, about 10,000 minutes a week, and compares the week before Circle’s message with the week after. Everything that follows rests on that comparison.</p>
+    <p>The week before held shocks of its own: Silvergate said it would close and SVB failed, and Bitcoin stood about 12% below its 4 March level by 10 March, still 7 to 9% below when Circle’s message came.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Where did the money run?&nbsp;→</button>
+    </div>
+    <p class="note">Events: p.&nbsp;2; 03:11 UTC: Section 4. Sample and data: Section 4. A week holds 10,080 minutes (computed). Bitcoin: traced from Fig. 2(a), approximate.</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="Where did the money run?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The weekend · 4 of 5</p>
+    <h2>Place a bet: where did the money run?</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Holders of USDC who wanted out had to sell it for something. Four other big stablecoins were trading: Tether (USDT), the most traded of all; the Binance dollar (BUSD); DAI; and TrueUSD (TUSD). Each row on the right shows how far a coin’s price had moved since 4 March, in percent.</p>
+        <p><strong>In the days after Circle’s message, which of them traded above a dollar?</strong></p>
+        <div class="actions bet short" id="fl-bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="usdt" aria-pressed="false">Tether</button>
+          <button class="btn" type="button" data-bet="busd" aria-pressed="false">Binance dollar</button>
+          <button class="btn" type="button" data-bet="dai" aria-pressed="false">DAI</button>
+          <button class="btn" type="button" data-bet="tusd" aria-pressed="false">TrueUSD</button>
+          <button class="btn" type="button" data-bet="none" aria-pressed="false">None of them</button>
+        </div>
+        <p class="door-row tight"><a class="door" href="03-coins.html#s1">Who are these coins?&nbsp;→</a></p>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="fl-chart"></div>
+        <p class="legend"><span><i class="ln near"></i>USDC</span><span><i class="ln far"></i>other stablecoins</span><span><i class="sq band"></i>shaded: range of the plotted line</span><span>rows have their own scales</span></p>
+        <label class="ctl" for="fl-t">Walk through the fortnight</label>
+        <input type="range" id="fl-t" min="0" max="113" value="65" step="1" disabled aria-label="Three-hour stretch of the fortnight from 4 to 18 March 2023">
+        <p class="readout" id="fl-read" aria-live="polite">The other four rows draw once you have placed your bet.</p>
+        <p class="note" id="fl-note">Traced from Fig. 2(a), approximate: middle and range of the plotted line per three hours; cumulative log return since 4 March, cents assuming a $1.00 start. Text: p.&nbsp;6–7.</p>
+      </div>
+      <div class="t">
+        <p id="fl-verdict" aria-live="polite"></p>
+        <div class="actions" id="fl-next" hidden>
+          <button class="btn primary" type="button" data-next>Did trading change too?&nbsp;→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did trading change too?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The weekend · 5 of 5</p>
+    <h2>Trading jumped in the coins in doubt, and dried up in one</h2>
+    <div class="two">
+      <div>
+        <p>The paper’s second view of the panic is trading volume. After Circle’s message, the paper reports, trading in USDC, DAI and TUSD surged: panic, in its reading, from holders afraid they could not get their money out. Bitcoin and Tether, the most liquid already, kept trading much as before.</p>
+        <p>The odd one out is the Binance dollar. Its volume fell away abruptly, which the paper reads as a preference for higher-quality coins; New York’s financial regulator had already ordered its issuer, Paxos, to stop issuing it.</p>
+        <div class="actions"><a class="btn primary" href="02-contagion.html#s1">Deck 2: did the shock spread?&nbsp;→</a></div>
+        <p class="note">Traced from the paper’s Fig. 2(b) in six-hour steps; approximate. Each row has its own scale, in thousands of lots of that coin, so heights compare within a row, not across rows. Interpretation: p.&nbsp;7 and footnote 16.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="vol-chart"></div>
+        <p class="legend"><span><i class="sq near"></i>USDC</span><span><i class="sq far"></i>the other assets</span><span>gold line: Circle’s message</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/svb-stablecoins/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script src="fig2.js"></script>
+<script>
+/* ---------- shared: the fortnight's time axis, in days after 4 March 2023 00:00 UTC ---------- */
+var TWEET = 7 + 191 / 1440;   /* Circle's message, 03:11 UTC on 11 March (Section 4) */
+var TEND = 14.5;              /* the plotted fortnight ends on 18 March */
+var WEEKDAY = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']; /* 4 March 2023 was a Saturday */
+function dayAxis(root, X, y) {
+  var S = Explore.svg, T = Explore.text;
+  for (var d = 0; d <= 14; d++) {
+    S('line', { x1: X(d), x2: X(d), y1: y, y2: y + 4, 'class': 'axis' }, root);
+    if (d % 2 === 0) T(root, X(d), y + 17, String(4 + d), { 'text-anchor': 'middle' });
+  }
+  T(root, X(TEND), y + 33, 'March 2023 (UTC)', { 'text-anchor': 'end' });
+}
+
+/* ---------- slide 1: beads on a wire ---------- */
+Explore.beads(document.getElementById('hook-beads'), { caption: true, max: 560 });
+
+/* ---------- slide 2: the arithmetic of a stuck reserve (p. 1-2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var TOTAL = 40, STUCK = 3.3, LOW = 87;   /* $ billions; market low in cents (p. 2) */
+  var box = document.getElementById('rv-chart'), slider = document.getElementById('rv-share'), read = document.getElementById('rv-read');
+  var fdicBtn = document.getElementById('rv-fdic'), geo = null, fdic = false;
+  function cents(share) { return 100 * (TOTAL - STUCK + STUCK * share) / TOTAL; }
+  function build(W) {
+    box.innerHTML = '';
+    var H = 214, barY = 24, barH = 26, rY = 150, C0 = 85, C1 = 100, pad = 12;
+    function BX(b) { return W * b / TOTAL; }
+    function RX(c) { return pad + (W - 2 * pad) * (c - C0) / (C1 - C0); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Illustrative: Circle’s $40 billion of reserves, of which $3.3 billion stuck at SVB, and a ruler from 85 cents to one dollar showing the reserves behind each coin for the share of the stuck money you choose, next to the low of below 87 cents reported in the news.' }, box);
+    T(root, 0, 13, W < 480 ? 'Circle’s reserves: $40 billion' : 'Circle’s reserves: $40 billion, one cell per billion', { 'class': 'label' });
+    var bar = S('g', {}, root);
+    for (var b = 1; b < TOTAL; b++) S('line', { x1: BX(b), x2: BX(b), y1: barY, y2: barY + barH, stroke: 'var(--paper)', 'stroke-width': 1 }, root);
+    S('path', { d: 'M' + BX(TOTAL - STUCK) + ',' + (barY + barH + 5) + ' v5 H' + BX(TOTAL) + ' v-5', 'class': 'bracket' }, root);
+    T(root, BX(TOTAL), barY + barH + 25, '$3.3 billion at SVB', { 'text-anchor': 'end', 'class': 'label' });
+    T(root, 0, barY + barH + 25, '$36.7 billion elsewhere', {});
+    /* the ruler: cents of reserve behind each coin */
+    T(root, pad, rY - 44, W < 480 ? 'Reserves per coin' : 'Reserves behind each coin', { 'class': 'label' });
+    S('line', { x1: RX(C0), x2: RX(C1), y1: rY, y2: rY, 'class': 'wire' }, root);
+    for (var c = C0; c <= C1; c++) {
+      S('line', { x1: RX(c), x2: RX(c), y1: rY, y2: rY + (c % 5 ? 4 : 8), 'class': 'axis' }, root);
+      if (c % 5 === 0) T(root, RX(c), rY + 22, c === 100 ? '$1.00' : c + '¢', { 'text-anchor': c === 100 ? 'end' : c === C0 ? 'start' : 'middle' });
+    }
+    /* the low reported in the news (p. 2); the floor is left for the reader to find */
+    S('circle', { cx: RX(LOW), cy: rY, r: 6, 'class': 'bead-usdc' }, root);
+    T(root, RX(LOW), rY + 40, W < 480 ? 'reported low' : 'reported low, 11 March', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, RX(LOW), rY + 54, 'below 87¢', { 'text-anchor': 'middle' });
+    geo ={ BX: BX, RX: RX, barY: barY, barH: barH, rY: rY, bar: bar, dyn: S('g', {}, root), W: W };
+    draw();
+  }
+  function draw() {
+    var share = +slider.value / 100, c = cents(share);
+    slider.setAttribute('aria-valuetext', Math.round(share * 100) + '% comes back');
+    var pct = Math.round(share * 100), bn = (TOTAL - STUCK + STUCK * share).toFixed(2).replace(/0$/, '');
+    var txt;
+    if (pct === 100) txt = '<strong>If all of it comes back</strong>, every coin is backed by a full dollar.';
+    else if (pct === 0) txt = '<strong>If none of it comes back</strong>, $36.7 billion remains for $40 billion of coins: <strong>91.75&nbsp;cents</strong> per coin. No share of the loss gets down to 87 cents.';
+    else txt = '<strong>If ' + pct + '% comes back</strong>, the reserves come to $' + bn + ' billion for $40 billion of coins: <strong>' + c.toFixed(2) + '&nbsp;cents</strong> per coin.';
+    if (fdic && pct === 100) txt += ' On 12 March the FDIC said depositors would be paid back in full, even above the $250,000 insured limit.';
+    read.innerHTML = txt;
+    if (!geo) return;
+    var g = geo.bar, d = geo.dyn, BX = geo.BX;
+    g.innerHTML = ''; d.innerHTML = '';
+    var safe = TOTAL - STUCK + STUCK * share;
+    S('rect', { x: 0, y: geo.barY, width: BX(safe), height: geo.barH, 'class': 'far-fill' }, g);
+    if (safe < TOTAL) S('rect', { x: BX(safe), y: geo.barY, width: BX(TOTAL) - BX(safe), height: geo.barH, 'class': 'near-fill' }, g);
+    var x = geo.RX(c);
+    S('circle', { cx: x, cy: geo.rY, r: 8, 'class': 'bead', 'stroke-width': 2.5 }, d);
+    T(d, E.clamp(x, 40, geo.W - 40), geo.rY - 16, pct === 100 ? '$1.00' : c.toFixed(2) + '¢', { 'text-anchor': 'middle', 'class': 'strong halo' });
+  }
+  slider.addEventListener('input', function () { fdic = false; draw(); });
+  fdicBtn.addEventListener('click', function () { fdic = true; slider.value = 100; draw(); });
+  E.fit(box, build, { min: 300, max: 620 });
+})();
+
+/* ---------- slide 3: the fortnight as a timeline (p. 2, Section 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('timeline');
+  /* [day after 4 March 00:00, date, description, side in the horizontal layout, level, gold] */
+  var EV = [
+    [4.5, '8 March', 'Silvergate, a crypto-focused bank, says it will close', 'up', 2, false],
+    [6.5, '10 March', 'SVB fails; US regulators take it over', 'down', 1, false],
+    [TWEET, '11 March, 03:11', 'Circle: 8% of USDC’s reserves stuck at SVB', 'up', 1, true],
+    [8.5, '12 March', 'Signature Bank seized; FDIC: depositors to be paid in full', 'down', 2, false],
+    [15.5, '19 March', 'UBS to take over Credit Suisse', 'up', 2, false]
+  ];
+  var ARIA = 'Timeline, March 2023: Silvergate says it will close on 8 March; SVB fails on 10 March; Circle says 8% of USDC’s reserves are stuck at SVB at 03:11 UTC on 11 March, which splits the sample into a week before and a week after; Signature Bank is seized and the FDIC says depositors will be paid in full on 12 March; UBS agrees to take over Credit Suisse on 19 March, after the sample, which runs from 4 to 18 March.';
+  function horizontal(W) {
+    var H = 234, x0 = 10, x1 = W - 10, yA = 100, D = 16.5;
+    function X(d) { return x0 + (x1 - x0) * d / D; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': ARIA }, box);
+    S('rect', { x: X(0), y: yA - 9, width: X(14) - X(0), height: 18, 'class': 'tl-sample' }, root);
+    T(root, X(0) + 6, yA + 4, 'the week before', {});
+    T(root, X(TWEET) + 8, yA + 4, 'the week after', {});
+    S('line', { x1: X(TWEET), x2: X(TWEET), y1: yA - 9, y2: yA + 9, 'class': 'split' }, root);
+    for (var d = 0; d <= 16; d++) {
+      S('line', { x1: X(d), x2: X(d), y1: yA + 9, y2: yA + 14, 'class': 'axis' }, root);
+      T(root, X(d), yA + 29, String(4 + d), { 'text-anchor': 'middle' });
+    }
+    T(root, X(0), yA + 48, 'Sample: 4 to 18 March 2023', {});
+    T(root, x1, yA + 48, 'March 2023', { 'text-anchor': 'end' });
+    EV.forEach(function (e, i) {
+      var g = S('g', { 'class': 'tl-ev' + (e[5] ? ' gold' : ''), style: 'animation-delay:' + (0.2 + i * 0.35) + 's' }, root);
+      var x = X(e[0]), up = e[3] === 'up';
+      var yText = up ? (e[4] === 1 ? yA - 40 : yA - 82) : (e[4] === 1 ? yA + 74 : yA + 106);
+      if (up) S('line', { x1: x, x2: x, y1: yA - 9, y2: yText + 22 }, g);
+      else { S('line', { x1: x, x2: x, y1: yA + 9, y2: yA + 14 }, g); S('line', { x1: x, x2: x, y1: yA + 54, y2: yText - 14 }, g); }
+      var w = Math.max(E.textW(e[1]), E.textW(e[2])), anchor = 'middle', tx = E.clamp(x, w / 2 + 2, W - w / 2 - 2);
+      T(g, tx, yText, e[1], { 'text-anchor': anchor, 'class': 'strong' });
+      T(g, tx, yText + 15, e[2], { 'text-anchor': anchor, 'class': 'label' });
+    });
+  }
+  function wrap(str, maxW) {
+    var words = str.split(' '), lines = [], line = '';
+    words.forEach(function (wd) { var t = line ? line + ' ' + wd : wd; if (E.textW(t) > maxW && line) { lines.push(line); line = wd; } else line = t; });
+    if (line) lines.push(line);
+    return lines;
+  }
+  function vertical(W) {
+    var top = 30, per = 23, barX = 34, barW = 18, lx = barX + barW + 22;
+    function Y(d) { return top + d * per; }
+    var H = Y(16.5) + 16;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': ARIA }, box);
+    T(root, 0, 14, 'March 2023; sample 4 to 18 March');
+    S('rect', { x: barX, y: Y(0), width: barW, height: Y(14) - Y(0), 'class': 'tl-sample' }, root);
+    S('line', { x1: barX - 4, x2: barX + barW + 4, y1: Y(TWEET), y2: Y(TWEET), 'class': 'split' }, root);
+    /* the two halves, written along the bar so the comparison survives on a phone */
+    [['the week before', Y(0) + 6], ['the week after', Y(TWEET) + 6]].forEach(function (w) {
+      var cx = barX + barW / 2 - 4;
+      T(root, cx, w[1], w[0], { transform: 'rotate(90 ' + cx + ' ' + w[1] + ')', 'class': 'label' });
+    });
+    for (var d = 0; d <= 16; d++) {
+      S('line', { x1: barX - 4, x2: barX, y1: Y(d), y2: Y(d), 'class': 'axis' }, root);
+      if (d % 2 === 0) T(root, barX - 8, Y(d) + 4, String(4 + d), { 'text-anchor': 'end' });
+    }
+    var maxW = W - lx - 4, items = EV.map(function (e) {
+      var lines = wrap(e[2], maxW);
+      return { e: e, y: Y(e[0]), lines: lines, h: 15 * (lines.length + 1) };
+    });
+    var next = -Infinity;
+    items.forEach(function (it) { it.top = Math.max(it.y - 8, next); next = it.top + it.h + 8; });
+    items.forEach(function (it, i) {
+      var g = S('g', { 'class': 'tl-ev' + (it.e[5] ? ' gold' : ''), style: 'animation-delay:' + (0.2 + i * 0.35) + 's' }, root);
+      S('polyline', { points: [barX + barW, it.y, barX + barW + 8, it.y, lx - 5, it.top + 4].join(' ') }, g);
+      T(g, lx, it.top + 8, it.e[1], { 'class': 'strong' });
+      it.lines.forEach(function (ln, k) { T(g, lx, it.top + 23 + 15 * k, ln, { 'class': 'label' }); });
+    });
+  }
+  E.fit(box, function (W) { box.innerHTML = ''; (W >= 700 ? horizontal : vertical)(W); }, { min: 300, max: 1060 });
+})();
+
+/* ---------- slide 4: a bet, then the fortnight row by row (Fig. 2(a), traced) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, CUM = FIG2.CUM;
+  var ROWS = [
+    { k: 'USDC', lo: -15, hi: 1.5, tick: -10, gold: true },
+    { k: 'DAI', lo: -15, hi: 1.5, tick: -10 },
+    { k: 'TUSD', lo: -3.2, hi: 1.5, tick: -2 },
+    { k: 'BUSD', lo: -0.7, hi: 2.3, tick: 2 },
+    { k: 'USDT', lo: -0.7, hi: 2.3, tick: 2 }
+  ];
+  var N = CUM.USDC.length;
+  var betBox = document.getElementById('fl-bet'), chart = document.getElementById('fl-chart'), slider = document.getElementById('fl-t');
+  var read = document.getElementById('fl-read'), verdict = document.getElementById('fl-verdict'), nextBox = document.getElementById('fl-next');
+  var PARK = 65, st = { bet: null, k: -1, cur: PARK }, geo = null, timer = null;   /* 12 March, 03:00-06:00 UTC: USDC, DAI and TUSD below their start, BUSD and USDT above */
+  function pct(v) { v = Math.round(v * 10) / 10; return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%'; }
+  function build(W) {
+    chart.innerHTML = '';
+    var narrow = W < 520, RH = narrow ? 48 : 50, GAP = 14, TOP = 20, LG = narrow ? 76 : 84, RG = narrow ? 52 : 60;
+    var H = TOP + ROWS.length * (RH + GAP) - GAP + 40;
+    function X(t) { return LG + (W - LG - RG) * t / TEND; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Cumulative returns from 4 to 18 March 2023, traced from the paper’s Figure 2(a), one row per stablecoin. USDC and DAI fall after Circle’s message on 11 March, to troughs near minus 13 and minus 15 percent, and recover within days; TUSD dips by up to about 3 percent; BUSD and Tether trade above their starting level, Tether by about one to two percent at the peak and still above it at the end.' }, chart);
+    var rowsG = [];
+    ROWS.forEach(function (r, i) {
+      var y0 = TOP + i * (RH + GAP);
+      function Y(v) { return y0 + RH * (r.hi - v) / (r.hi - r.lo); }
+      S('line', { x1: LG, x2: W - RG, y1: Y(r.tick), y2: Y(r.tick), 'class': 'grid' }, root);
+      S('line', { x1: LG, x2: W - RG, y1: Y(0), y2: Y(0), 'class': 'peg' }, root);
+      T(root, LG - 6, Y(0) + 4, '0', { 'text-anchor': 'end' });
+      T(root, LG - 6, Y(r.tick) + 4, (r.tick > 0 ? '+' : '−') + Math.abs(r.tick) + '%', { 'text-anchor': 'end' });
+      T(root, 0, y0 + RH / 2 + 4, r.k, { 'class': 'strong' });
+      rowsG.push({ r: r, Y: Y, y0: y0, g: S('g', {}, root) });
+    });
+    var bottom = TOP + ROWS.length * (RH + GAP) - GAP;
+    S('line', { x1: X(TWEET), x2: X(TWEET), y1: TOP - 4, y2: bottom, 'class': 'split' }, root);
+    T(root, X(TWEET), TOP - 8, narrow ? 'Circle’s message' : 'Circle’s message, 11 March', { 'text-anchor': 'middle', 'class': 'label' });
+    dayAxis(root, X, bottom + 2);
+    geo = { X: X, W: W, LG: LG, RG: RG, TOP: TOP, bottom: bottom, rows: rowsG, cur: S('g', {}, root) };
+    drawDyn();
+  }
+  function drawDyn() {
+    if (!geo) return;
+    var X = geo.X;
+    geo.rows.forEach(function (row, ri) {
+      var g = row.g, r = row.r, Y = row.Y, data = CUM[r.k];
+      g.innerHTML = '';
+      var k = ri === 0 ? N - 1 : st.k;
+      if (k < 0) {
+        T(g, (geo.LG + geo.W - geo.RG) / 2, row.Y(0) + (r.hi > 2 ? -10 : 18), 'draws after your bet', { 'text-anchor': 'middle', 'class': 'placeholder' });
+        return;
+      }
+      var up = [], dn = [], mid = [];
+      for (var i = 0; i <= k; i++) {
+        var x = X((i + 0.5) / 8).toFixed(1);
+        mid.push(x + ',' + Y(data[i][0]).toFixed(1));
+        up.push(x + ',' + Y(data[i][2]).toFixed(1));
+        dn.push(x + ',' + Y(data[i][1]).toFixed(1));
+      }
+      S('path', { d: 'M' + up.join(' L') + ' L' + dn.reverse().join(' L') + ' Z', 'class': r.gold ? 'band-near' : 'band-far' }, g);
+      S('polyline', { points: mid.join(' '), 'class': r.gold ? 'near' : 'far', 'stroke-width': 2 }, g);
+    });
+    var c = geo.cur; c.innerHTML = '';
+    var showAll = st.k >= 0;
+    var x = X((st.cur + 0.5) / 8);
+    S('line', { x1: x, x2: x, y1: geo.TOP, y2: geo.bottom, 'class': 'cursor-ink' }, c);
+    geo.rows.forEach(function (row, ri) {
+      if (ri > 0 && (!showAll || st.cur > st.k)) return;
+      var v = CUM[row.r.k][st.cur][0];
+      S('circle', { cx: x, cy: row.Y(v), r: 4.5, 'class': row.r.gold ? 'bead-usdc' : 'bead', 'stroke-width': 2 }, c);
+      T(c, geo.W, row.Y(0) + 4, pct(v), { 'text-anchor': 'end', 'class': 'strong' });
+    });
+  }
+  function hh(h) { return (h < 10 ? '0' : '') + h + ':00'; }
+  function readout(i) {
+    var h = 3 * i, d = Math.floor(h / 24), hr = h % 24, mid = (i + 0.5) / 8;
+    var when = WEEKDAY[d % 7] + ' ' + (4 + d) + ' March, ' + hh(hr) + '–' + hh(hr + 3) + ' UTC';
+    var rel, dh = (mid - TWEET) * 24;
+    if (h <= TWEET * 24 && TWEET * 24 < h + 3) rel = 'Circle’s message falls in these three hours.';
+    else if (dh < 0) rel = Math.abs(dh) < 48 ? 'About ' + Math.round(-dh) + ' hours before Circle’s message.' : 'About ' + Math.round(-dh / 24) + ' days before Circle’s message.';
+    else rel = dh < 48 ? 'About ' + Math.round(dh) + ' hours after Circle’s message.' : 'About ' + Math.round(dh / 24) + ' days after Circle’s message.';
+    var u = CUM.USDC[i][0], cents = Math.round(100 * Math.exp(u / 100));
+    read.innerHTML = '<strong>' + when + '.</strong> ' + rel + ' The middle of USDC’s plotted line: ' + pct(u) + ', roughly ' + cents + ' cents.';
+    slider.setAttribute('aria-valuetext', when);
+  }
+  var LEAD = {
+    usdt: 'Yes. Tether traded above a dollar from hours before Circle’s message to the end of the sample; the Binance dollar did too, a little. ',
+    busd: 'Yes, though only a little; Tether traded above a dollar more clearly, from hours before Circle’s message to the end of the sample. ',
+    dai: 'Not DAI: it sank with USDC. Tether, and a little the Binance dollar, traded above a dollar. ',
+    tusd: 'Not TrueUSD: the paper says it lost nearly 3%. Tether, and a little the Binance dollar, traded above a dollar. ',
+    none: 'Not quite: Tether, and a little the Binance dollar, traded above a dollar. '
+  };
+  var TAIL = 'USDC and DAI fell together, to lows near −13% and −15%: a “flight to safety” to more trusted coins, in the paper’s reading.';
+  function finish() {
+    if (timer) { clearInterval(timer); timer = null; }
+    st.k = N - 1; st.cur = PARK; slider.value = PARK; slider.disabled = false;
+    drawDyn(); readout(st.cur);
+    verdict.textContent = LEAD[st.bet] + TAIL;
+    nextBox.hidden = false;
+  }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet-flight', bet);
+    if (!animate || E.still) { finish(); return; }
+    if (timer) clearInterval(timer);
+    verdict.textContent = ''; nextBox.hidden = true; slider.disabled = true;
+    st.k = 0; st.cur = 0; drawDyn(); readout(0);
+    timer = setInterval(function () {
+      if (st.k >= N - 1) { finish(); return; }
+      st.k = Math.min(N - 1, st.k + 3); st.cur = st.k; drawDyn(); readout(st.k);
+    }, 40);
+    if (chart.getBoundingClientRect().bottom > window.innerHeight) chart.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  slider.addEventListener('input', function () { st.cur = +slider.value; drawDyn(); readout(st.cur); });
+  betBox.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-bet]'); if (!b) return;
+    place(b.getAttribute('data-bet'), true);
+  });
+  var prior = E.load('bet-flight');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(chart, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 5: traded volumes, row by row (Fig. 2(b), traced) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, VOL = FIG2.VOL;
+  var ROWS = ['USDC', 'DAI', 'TUSD', 'BUSD', 'USDT', 'BTC'];
+  var box = document.getElementById('vol-chart');
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var narrow = W < 520, RH = narrow ? 38 : 42, GAP = 8, TOP = 34, LG = 50, RG = 6;
+    var H = TOP + ROWS.length * (RH + GAP) - GAP + 40;
+    function X(t) { return LG + (W - LG - RG) * t / TEND; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Traded volume from 4 to 18 March 2023, traced from the paper’s Figure 2(b), each asset on its own scale. After Circle’s message on 11 March, USDC, DAI and TUSD trade more than before, DAI’s tallest bars on 13 March; Bitcoin and Tether trade much as before; the Binance dollar’s volume falls away.' }, box);
+    T(root, 0, 12, narrow ? 'Traded volume, own scale per row' : 'Traded volume, each row on its own scale', { 'class': 'label' });
+    var bottom = TOP + ROWS.length * (RH + GAP) - GAP;
+    ROWS.forEach(function (k, i) {
+      var y0 = TOP + i * (RH + GAP), vals = VOL[k], max = Math.max.apply(null, vals) * 1.06;
+      function Y(v) { return y0 + RH * (1 - v / max); }
+      var d = 'M' + X(0).toFixed(1) + ',' + Y(0).toFixed(1);
+      vals.forEach(function (v, j) { d += ' L' + X(j / 4).toFixed(1) + ',' + Y(v).toFixed(1) + ' L' + X((j + 1) / 4).toFixed(1) + ',' + Y(v).toFixed(1); });
+      d += ' L' + X(vals.length / 4).toFixed(1) + ',' + Y(0).toFixed(1) + ' Z';
+      S('path', { d: d, 'class': k === 'USDC' ? 'near-area' : 'far-area' }, root);
+      S('line', { x1: LG, x2: W - RG, y1: Y(0), y2: Y(0), 'class': 'axis' }, root);
+      T(root, 0, y0 + RH / 2 + 4, k, { 'class': 'strong' });
+    });
+    /* a paper halo keeps the gold line visible where it crosses USDC's gold row */
+    S('line', { x1: X(TWEET), x2: X(TWEET), y1: TOP - 10, y2: bottom, 'class': 'split-halo' }, root);
+    S('line', { x1: X(TWEET), x2: X(TWEET), y1: TOP - 10, y2: bottom, 'class': 'split' }, root);
+    dayAxis(root, X, bottom + 2);
+  }, { min: 300, max: 680 });
+})();
+</script>
+</body>
+</html>
