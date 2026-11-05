@@ -1,0 +1,20 @@
+{{- /* Breadcrumb trail: Home / <Section> / <Page>. Context: the page.
+       A term page (tags/<term>) hangs off its taxonomy page, not off itself. */ -}}
+{{- $parent := .CurrentSection }}
+{{- if eq .Kind "term" }}{{ $parent = .Parent }}{{ end }}
+{{- $label := "" }}
+{{- with .Section }}{{ $label = i18n (printf "section_%s" .) }}{{ end }}
+{{- if not $label }}{{ with $parent }}{{ $label = .Title }}{{ end }}{{ end }}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ site.Home.RelPermalink }}">{{ i18n "home" }}</a></li>
+    {{- if in (slice "section" "taxonomy") .Kind }}
+    <li aria-current="page"><span class="sep" aria-hidden="true">/</span>{{ $label | default .Title }}</li>
+    {{- else }}
+      {{- with $parent }}{{ if not .IsHome }}
+    <li><span class="sep" aria-hidden="true">/</span><a href="{{ .RelPermalink }}">{{ $label | default .Title }}</a></li>
+      {{- end }}{{ end }}
+    <li aria-current="page"><span class="sep" aria-hidden="true">/</span>{{ .Title }}</li>
+    {{- end }}
+  </ol>
+</nav>

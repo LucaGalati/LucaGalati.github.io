@@ -1,0 +1,261 @@
+{{ define "main" }}
+{{- $owner := site.Params.author_name -}}
+{{- $pages := where site.RegularPages "Section" "publication" -}}
+{{- /* Server order = front matter `weight` (working papers, then articles by group, then theses). */ -}}
+{{- $ordered := $pages.ByWeight -}}
+{{- $years := slice -}}
+{{- range $pages -}}{{- $years = $years | append (.Date.Format "2006") -}}{{- end -}}
+{{- $years = sort ($years | uniq) "value" "desc" -}}
+{{- $areas := slice -}}
+{{- with site.Data.research_areas -}}{{- $areas = .areas | default slice -}}{{- end -}}
+{{- $groupNames := dict -}}
+{{- range $areas -}}{{- $groupNames = merge $groupNames (dict .id .name) -}}{{- end -}}
+{{- $lastGroup := "" -}}
+{{- $resultsWord := i18n "results" | default "results" -}}
+{{- $entries := slice -}}
+<div class="wrap research" id="research">
+  {{ if templates.Exists "_partials/breadcrumbs.html" }}{{ partial "breadcrumbs.html" . }}{{ end }}
+  <header class="section-head">
+    <h1>{{ i18n "research" | default "Research" }}</h1>
+    {{ with .Content }}<div class="section-sub prose">{{ . }}</div>{{ end }}
+  </header>
+
+  <nav class="pub-tabs" role="tablist" aria-label="Type of work">
+    <button class="tab-btn active" type="button" role="tab" data-tab="all" aria-selected="true" aria-controls="pub-list">{{ i18n "all" | default "All" }}</button>
+    <button class="tab-btn" type="button" role="tab" data-tab="working-papers" aria-selected="false" aria-controls="pub-list">{{ i18n "working_papers" | default "Working papers" }}</button>
+    <button class="tab-btn" type="button" role="tab" data-tab="articles" aria-selected="false" aria-controls="pub-list">{{ i18n "articles_tab" | default "Articles" }}</button>
+    <button class="tab-btn" type="button" role="tab" data-tab="theses" aria-selected="false" aria-controls="pub-list">{{ i18n "theses_tab" | default "Theses" }}</button>
+  </nav>
+
+  <div class="pub-layout">
+    <aside class="pub-filters" aria-label="Filters">
+      <div class="filter-group">
+        <label for="flt-search">{{ i18n "search" | default "Search" }}</label>
+        <input id="flt-search" type="search" autocomplete="off" placeholder="Title, author, venue, abstract">
+      </div>
+      {{- with $areas }}
+      <div class="filter-group">
+        <label for="flt-area">{{ i18n "research_area" | default "Research area" }}</label>
+        <select id="flt-area">
+          <option value="">{{ i18n "all_areas" | default "All areas" }}</option>
+          {{- range . }}
+          <option value="{{ .id }}">{{ .name }}</option>
+          {{- end }}
+        </select>
+      </div>
+      {{- end }}
+      <fieldset class="filter-group">
+        <legend>{{ i18n "year" | default "Year" }}</legend>
+        <div class="year-list">
+          {{- range $years }}
+          <label><input type="checkbox" class="flt-year" value="{{ . }}"> <span>{{ . }}</span></label>
+          {{- end }}
+        </div>
+      </fieldset>
+      <div class="filter-group">
+        <label for="flt-sort">{{ i18n "sort" | default "Sort" }}</label>
+        <select id="flt-sort">
+          <option value="newest">{{ i18n "newest_first" | default "Newest first" }}</option>
+          <option value="oldest">{{ i18n "oldest_first" | default "Oldest first" }}</option>
+          <option value="az">{{ i18n "title_az" | default "Title A–Z" }}</option>
+          <option value="za">{{ i18n "title_za" | default "Title Z–A" }}</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <button id="flt-reset" class="btn btn--outline" type="button">{{ i18n "reset" | default "Reset" }}</button>
+        <button id="flt-cite" class="btn btn--outline" type="button">{{ i18n "download_citations" | default "Download citations" }}</button>
+      </div>
+    </aside>
+
+    <div class="pub-results">
+      <p class="result-count" aria-live="polite">{{ len $pages }} of {{ len $pages }} {{ $resultsWord }}</p>
+      <div class="pub-list" id="pub-list">
+        {{- range $ordered }}
+        {{- $p := . -}}
+        {{- $tab := .Params.tab | default "articles" -}}
+        {{- $thesis := eq $tab "theses" -}}
+        {{- $year := .Date.Format "2006" -}}
+        {{- $venue := .Params.publication | default "" -}}
+        {{- $group := .Params.group | default "" -}}
+        {{- $slug := "" -}}{{- with .File -}}{{- $slug = .ContentBaseName -}}{{- end -}}
+        {{- /* Group headings only between article rows; the JS shows one only while an article of that group is visible. */ -}}
+        {{- if and (eq $tab "articles") (ne $group $lastGroup) }}
+        {{- $lastGroup = $group }}
+        <div class="pub-group" data-group="{{ $group }}"><h2>{{ index $groupNames $group | default $group }}</h2></div>
+        {{- end }}
+        {{- $entries = $entries | append (dict
+              "slug" $slug
+              "url" .RelPermalink
+              "title" .Title
+              "year" $year
+              "tab" $tab
+              "areas" (.Params.areas | default slice)
+              "authors" (.Params.authors | default slice)
+              "venue" $venue
+              "bib" (htmlUnescape (partial "bibtex_entry.html" .))) -}}
+        <article class="pub-item" data-tab="{{ $tab }}" data-group="{{ $group }}" data-year="{{ $year }}" data-slug="{{ $slug }}" data-areas="{{ delimit (.Params.areas | default slice) " " }}" data-title="{{ lower .Title }}" data-authors="{{ lower (delimit (.Params.authors | default slice) ", ") }}" data-venue="{{ lower $venue }}" data-abstract="{{ lower (plainify (.Params.abstract | default "")) }}">
+          <p class="pub-item__cite">
+            <span class="pub-item__authors">{{ partial "authors.html" (dict "authors" .Params.authors "owner" $owner) }}</span>
+            ({{ $year }}).
+            <a class="pub-item__title" href="{{ .RelPermalink }}">{{ .Title }}</a>.
+            {{- /* Bold is for journal names; a working paper's "Working paper" stays plain, as on its page. */}}
+            {{ with $venue }}{{ if eq $tab "working-papers" }}{{ . }}{{ else }}<b class="pub-item__venue">{{ . }}</b>{{ end }}.{{ end }}
+            {{- if .Params.letter }}
+            <span class="badge-status">{{ i18n "letter" | default "Letter" }}</span>
+            {{- end }}
+            {{- if eq .Params.status "forthcoming" }}
+            <span class="badge-status">{{ i18n "forthcoming" | default "Forthcoming" }}</span>
+            {{- end }}
+            {{ partial "jmp_badge.html" . }}
+          </p>
+          {{- with .Params.award }}
+          <p class="award-line">{{ partial "award_badge.html" . }}</p>
+          {{- end }}
+          <p class="pub-item__meta pub-item__links">
+            {{- if and $slug (fileExists (printf "static/explore/%s/index.html" $slug)) }}
+            <a class="mini-btn mini-btn--explore" href="{{ printf "explore/%s/" $slug | relURL }}">{{ i18n "btn_explore" | default "Explore" }}</a>
+            {{- end }}
+            {{- with .Params.abstract }}
+            <a class="mini-btn" href="{{ $p.RelPermalink }}#abstract">{{ i18n "abstract" | default "Abstract" }}</a>
+            {{- end }}
+            {{- with .Params.url_full }}
+            <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_full_text" | default "Full text" }}</a>
+            {{- end }}
+            {{- with .Params.url_pdf }}
+            <a class="mini-btn" href="{{ . | relURL }}"{{ if hasPrefix . "http" }} target="_blank" rel="noopener"{{ end }}>{{ i18n "btn_pdf" | default "PDF" }}</a>
+            {{- end }}
+            {{- with .Params.url_ssrn }}
+            <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_ssrn" | default "SSRN" }}</a>
+            {{- end }}
+            {{- /* A thesis DOI is its repository record, already covered by "Full text". */ -}}
+            {{- with .Params.doi }}{{ if not (or $thesis (hasPrefix . "10.2139/ssrn")) }}
+            <a class="mini-btn" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_article" | default "Article" }}</a>
+            {{- end }}{{ end }}
+            {{- with .Params.url_code }}
+            <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_code" | default "Code" }}</a>
+            {{- end }}
+            {{- with .Params.url_slides }}
+            <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_slides" | default "Slides" }}</a>
+            {{- end }}
+            {{- with .Params.url_podcast }}
+            <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_podcast" | default "Podcast" }}</a>
+            {{- end }}
+          </p>
+        </article>
+        {{- end }}
+      </div>
+      <p class="pub-empty" hidden>{{ i18n "no_results" | default "No papers match the current filters." }}</p>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="pub-data">{{ $entries | jsonify | safeJS }}</script>
+<script>
+(function () {
+  var root = document.getElementById('research');
+  if (!root) return;
+  var items = [].slice.call(root.querySelectorAll('.pub-item'));
+  var groups = [].slice.call(root.querySelectorAll('.pub-group'));
+  var tabs = [].slice.call(root.querySelectorAll('.tab-btn'));
+  var tabIds = tabs.map(function (t) { return t.dataset.tab; });
+  var list = document.getElementById('pub-list');
+  var search = document.getElementById('flt-search');
+  var area = document.getElementById('flt-area');
+  var years = [].slice.call(root.querySelectorAll('.flt-year'));
+  var sortSel = document.getElementById('flt-sort');
+  var reset = document.getElementById('flt-reset');
+  var cite = document.getElementById('flt-cite');
+  var count = root.querySelector('.result-count');
+  var empty = root.querySelector('.pub-empty');
+  var resultsWord = {{ $resultsWord }};
+  var bibName = {{ printf "%s-citations.bib" ($owner | urlize) }};
+  var data = [];
+  try { data = JSON.parse(document.getElementById('pub-data').textContent) || []; } catch (e) {}
+  var bib = {};
+  data.forEach(function (d) { bib[d.slug] = d.bib; });
+  items.forEach(function (it, i) { it.dataset.order = i; });
+  var serverOrder = [].slice.call(list.children); // rows and group headings as rendered
+  var tab = 'all';
+
+  function sortMode() { return sortSel ? sortSel.value : 'newest'; }
+
+  function apply() {
+    var words = (search ? search.value : '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var a = area ? area.value : '';
+    var ys = years.filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
+    var shown = 0;
+    var liveGroups = {};
+    items.forEach(function (it) {
+      var d = it.dataset;
+      var ok = tab === 'all' || d.tab === tab;
+      if (ok && words.length) {
+        var hay = [d.title, d.authors, d.venue, d.abstract, d.year].join(' ');
+        ok = words.every(function (w) { return hay.indexOf(w) > -1; });
+      }
+      if (ok && a) ok = (' ' + d.areas + ' ').indexOf(' ' + a + ' ') > -1;
+      if (ok && ys.length) ok = ys.indexOf(d.year) > -1;
+      it.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+      if (ok && d.tab === 'articles') liveGroups[d.group] = true;
+    });
+    // Headings exist only in server order and only above a visible article of their group.
+    var grouped = sortMode() === 'newest';
+    groups.forEach(function (g) { g.style.display = grouped && liveGroups[g.dataset.group] ? '' : 'none'; });
+    if (count) count.textContent = shown + ' of ' + items.length + ' ' + resultsWord;
+    if (empty) empty.hidden = shown > 0;
+    tabs.forEach(function (t) {
+      var on = t.dataset.tab === tab;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  function resort() {
+    var mode = sortMode();
+    var ordered = mode === 'newest' ? serverOrder : items.slice().sort(function (x, y) {
+      var a = x.dataset, b = y.dataset;
+      if (mode === 'oldest') return (a.year - b.year) || (b.order - a.order);
+      if (mode === 'az') return a.title.localeCompare(b.title);
+      return b.title.localeCompare(a.title);
+    });
+    ordered.forEach(function (n) { list.appendChild(n); });
+    apply();
+  }
+
+  function setTab(id, push) {
+    tab = tabIds.indexOf(id) > -1 ? id : 'all';
+    if (push && location.hash !== '#' + tab) history.pushState(null, '', '#' + tab);
+    apply();
+  }
+
+  tabs.forEach(function (t) { t.addEventListener('click', function () { setTab(t.dataset.tab, true); }); });
+  window.addEventListener('hashchange', function () { setTab(location.hash.slice(1), false); });
+  if (search) search.addEventListener('input', apply);
+  if (area) area.addEventListener('change', apply);
+  years.forEach(function (b) { b.addEventListener('change', apply); });
+  if (sortSel) sortSel.addEventListener('change', resort);
+  if (reset) reset.addEventListener('click', function () {
+    if (search) search.value = '';
+    if (area) area.value = '';
+    years.forEach(function (b) { b.checked = false; });
+    if (sortSel) sortSel.value = 'newest';
+    resort();
+    setTab('all', true);
+  });
+  if (cite) cite.addEventListener('click', function () {
+    var out = items.filter(function (it) { return it.style.display !== 'none' && bib[it.dataset.slug]; })
+      .map(function (it) { return bib[it.dataset.slug]; });
+    var blob = new Blob([out.join('\n\n') + '\n'], { type: 'application/x-bibtex;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = bibName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  setTab(location.hash.slice(1), false);
+})();
+</script>
+{{ end }}

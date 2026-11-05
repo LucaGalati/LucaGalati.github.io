@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Murky — Free, an explorable of “No-fee trading” (Galati, 2024)</title>
+<meta name="description" content="What the exchange got from zero fees, why it might have given its revenue away, what the theory got wrong, what a rule would say, and what the paper leaves open.">
+<link rel="stylesheet" href="style.css">
+<script src="../sitebar.js"></script>
+<noscript><style>.slide { display: block; padding: 36px 24px 40px; } lg-sitebar > :not(noscript) { display: none; } lg-sitebar a { display: block; padding: 14px 24px 0; font-family: var(--sans); font-size: 13px; }</style></noscript>
+<style>
+  .panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; width: 100%; }
+  @media (max-width: 640px) { .panels { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .panels .chart { height: 206px; }
+  .credits { font-family: var(--sans); font-size: 13px; color: var(--muted); line-height: 1.6; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 26px; }
+  .credits summary { cursor: pointer; font-weight: 500; color: var(--text); }
+  .credits p { margin: 10px 0 0; }
+  .credits b { color: var(--text); font-weight: 500; }
+  .pull { font-size: 1.15em; line-height: 1.4; border-left: 2px solid var(--gold); padding-left: 16px; margin: 0 0 1em; }
+</style>
+</head>
+<body data-deck="04-murky">
+<lg-sitebar>
+  <noscript><a href="../../publication/no-fee-trading/">← Back to the paper</a></noscript>
+  <span class="deck-title">Free · <b>Murky</b></span>
+  <button type="button" data-map-open aria-haspopup="dialog">Map <span class="muted">(m)</span></button>
+</lg-sitebar>
+
+<!-- 1. What the exchange got -->
+<section class="slide" id="s1">
+  <div class="two">
+    <div class="stage">
+      <div class="panels" id="panels"></div>
+      <p class="small" style="margin-top:10px">Bitcoin–Tether on Binance, means per one-minute interval, week before and week after (Table 2).</p>
+    </div>
+    <div class="text">
+      <p class="kicker">Murky</p>
+      <h1 class="t2">What the exchange got.</h1>
+      <p>Binance gave up its fee, its main source of revenue, on thirteen pairs. In return, on Bitcoin–Tether: 3.8 times as many trades a minute and 2.8 times the volume, with an all-time high on launch day. Trading in Ether on Binance rose too, though nothing had changed for it.</p>
+      <p>The average trade shrank by a third. The paper reads this as who arrived: smaller, likely retail traders, drawn by the fee they could see; the paper argues they missed the spread they could not. Citing Kaiko, it reports Binance’s market share surging past its rivals’ by more than 20%, and reverting once the programme was halted.</p>
+      <p class="small">Market share and the launch-day record: Kaiko Research, as cited in the paper. <a class="inline-door" href="02-experiment.html#3">Every measure against the controls →</a></p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#2" data-go="2"><span class="arrow">→</span> Why give away your main revenue?</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. What zero fees bought -->
+<section class="slide" id="s2">
+  <div class="col wide">
+    <p class="kicker">Why give it away</p>
+    <h2>What zero fees bought the exchange.</h2>
+    <p>The paper offers the explanation it can support: a customer-attraction strategy, launched after the stablecoin collapse of May 2022 and extended, perhaps, as FTX neared insolvency. Market share rose while the fee was zero and reverted when it came back; the paper calls it “a customer attraction strategy that went wrong”. Binance explained neither the choice of the thirteen pairs nor the extension.</p>
+    <p>Then it names the question it cannot answer. Zero fees created “a favorable environment for market makers”, whose quoting revenues rose; the exchange’s own gain was market share. Whether the exchange and the market-making firms were connected, the paper does not know. It says so plainly, it has no evidence of collusion, and it leaves the question to future work.</p>
+    <p class="pull">The word in the title is murky, not guilty.</p>
+    <p class="small">Context the paper gives, not evidence: in 2023 the SEC filed thirteen charges against Binance and its chief executive, on other matters; the paper notes the exchange appears to have settled.</p>
+    <div class="doors">
+      <a class="door primary" href="#3" data-go="3"><span class="arrow">→</span> What the theory got wrong</a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. What theory got wrong -->
+<section class="slide" id="s3">
+  <div class="two">
+    <div class="stage">
+      <table class="score">
+        <thead><tr><th scope="col">H</th><th scope="col">Prediction from theory</th><th scope="col">Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>1a</td><td>Tighter quoted spread</td><td class="no">rejected</td></tr>
+          <tr><td>1b</td><td>More posted quotes</td><td class="yes">supported</td></tr>
+          <tr><td>1c</td><td>Higher fill rate</td><td class="yes">supported</td></tr>
+          <tr><td>1d</td><td>More trades</td><td class="yes">supported</td></tr>
+          <tr><td>2</td><td>More volume</td><td class="yes">against other exchanges</td></tr>
+          <tr><td>3</td><td>Lower effective spread</td><td class="no">rejected</td></tr>
+          <tr><td>4a</td><td>Larger trades</td><td class="no">rejected</td></tr>
+          <tr><td>4b</td><td>More depth</td><td class="no">rejected</td></tr>
+        </tbody>
+      </table>
+      <p class="small" style="margin-top:12px">Hypotheses from Colliard and Foucault (2012) and the maker–taker literature (Section 2); verdicts from Table 3 and the single-pair regressions (Table B.1).</p>
+    </div>
+    <div class="text">
+      <p class="kicker">The scorecard</p>
+      <h2>What the theory got wrong.</h2>
+      <p>The paper drew its hypotheses from the standard model of a limit-order market in which fees are paid straight to the exchange. The predictions about how much people would trade held: more quotes, more trades, more fills, and more volume against other exchanges.</p>
+      <p>The predictions about the price of trading and the quantity on offer failed, and so did the one about trade size. This was the cleanest setting the models ask for: no broker in between, a tick size close to nothing. The paper’s conclusion is that mainstream theory “might need to be reexamined” for crypto-asset markets.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#4" data-go="4"><span class="arrow">→</span> Was any rule broken?</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. No rule to break -->
+<section class="slide" id="s4">
+  <div class="col">
+    <p class="kicker">Rules</p>
+    <h2>There was no rule for this to break.</h2>
+    <p>Crypto exchanges in 2022 were self-regulated. In a more regulated market, the paper notes, such behaviour “might already be scrutinized under fair trading practices”. Here it can be called “potentially unethical”, the paper’s phrase, or read the other way, as “a strategic adaptation to changing market conditions”.</p>
+    <p>Its suggestions: isolate market makers from the influence of the exchanges they trade on; treat an exchange’s unilateral fee-setting as a competition question; and build computerised surveillance that can see what this paper saw, in line with IOSCO’s 2023 recommendations.</p>
+    <div class="doors">
+      <a class="door primary" href="#5" data-go="5"><span class="arrow">→</span> What is left to ask</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Open questions -->
+<section class="slide" id="s5">
+  <div class="col wide">
+    <p class="kicker">Open questions</p>
+    <h2>What you can now say in one breath.</h2>
+    <p class="lead">Zero fees brought nearly four times the trades and smaller traders; market makers widened the quoted spread six-fold and kept the saving the fee cut created, so what takers paid in spread did not fall, while the exchange’s market share rose.</p>
+    <p>What the paper leaves open:</p>
+    <ul class="plain">
+      <li>What happened when the fees came back? Binance later ended the programme; the paper names the reintroduction as the next experiment.</li>
+      <li>Were the makers and the exchange connected? The paper has no evidence either way.</li>
+      <li>Do retail traders notice the second bill? The paper calls the apparent discount a cognitive bias and leaves it for future research.</li>
+    </ul>
+    <p>Go back to the sandbox and find the charge at which the saving would have been shared. Or read the paper.</p>
+    <div class="doors">
+      <a class="door primary" href="03-maker.html#4"><span class="arrow">→</span> Set the quote, again</a>
+      <a class="door" href="02-experiment.html#3"><span class="arrow">→</span> Ten measures, four markets</a>
+      <a class="door" href="../../publication/no-fee-trading/"><span class="arrow">←</span> Back to the paper</a>
+    </div>
+    <details class="credits">
+      <summary>About the paper</summary>
+      <p><b>Luca Galati</b>, “Exchange market share, market makers, and murky behavior: the impact of no-fee trading on cryptocurrency market quality”, <b>Journal of Banking &amp; Finance</b> 165 (2024) 107222, open access. Job market paper. AMASES Doctoral Award for the best single-authored published paper from a doctoral dissertation; best paper award at the Cryptocurrency Research Conference 2023, sponsored by Elsevier’s Research in International Business and Finance.</p>
+      <p>Presented at the 36th Australasian Finance and Banking Conference (Sydney), the 6th Sydney Market Microstructure and Digital Finance Meeting, the International Fintech Research Conference (Naples), the Cryptocurrency Research Conference 2023 (Monaco), the EFiC Conference on Banking and Finance 2023 (Gaeta) and the 2nd Spring Workshop on Fintech 2023 (Ghent). Data: Refinitiv Tick History.</p>
+    </details>
+  </div>
+</section>
+
+<script src="charts.js"></script>
+<script src="nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  // Table 2, Panel B: Bitcoin–Tether on Binance, week before and week after
+  var P = document.getElementById('panels');
+  [
+    { title: 'Trades', sub: 'per minute', pre: 664.2939, post: 2523.486, d: 0 },
+    { title: 'Volume', sub: 'lots per minute', pre: 50.1768, post: 141.3288, d: 1 },
+    { title: 'Trade size', sub: 'lots', pre: 0.0719, post: 0.0478, d: 3 }
+  ].forEach(function (m) {
+    var c = document.createElement('div'); c.className = 'chart'; P.appendChild(c);
+    Charts.mount(c, function (w) {
+      return Charts.barPair(w, { title: m.title, sub: m.sub, pre: m.pre, post: m.post, color: 'var(--gold)', edge: 'var(--gold-edge)', decimals: m.d, pct: true,
+        label: m.title + ' ' + m.sub + ': ' + Charts.fmt(m.pre, m.d) + ' before, ' + Charts.fmt(m.post, m.d) + ' after' });
+    });
+  });
+})();
+</script>
+</body>
+</html>

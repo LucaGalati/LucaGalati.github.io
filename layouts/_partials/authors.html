@@ -1,0 +1,15 @@
+{{- /* Citation author list. Context: dict "authors" (slice of names) "owner" (site owner's name, optional).
+       The owner is marked; co-authors link to their page when data/coauthors.json knows a url. */ -}}
+{{- $authors := .authors | default slice -}}
+{{- $owner := .owner | default site.Params.author_name -}}
+{{- $links := site.Data.coauthors | default dict -}}
+{{- $n := len $authors -}}
+{{- range $i, $a := $authors -}}
+  {{- if gt $i 0 -}}
+    {{- if eq $i (sub $n 1) -}}{{- if gt $n 2 }}, and {{ else }} and {{ end -}}{{- else }}, {{ end -}}
+  {{- end -}}
+  {{- $entry := index $links $a -}}
+  {{- if eq $a $owner -}}<span class="author--owner">{{ $a }}</span>
+  {{- else if and $entry $entry.url -}}<a href="{{ $entry.url }}" target="_blank" rel="noopener">{{ $a }}</a>
+  {{- else -}}<span>{{ $a }}</span>{{- end -}}
+{{- end -}}

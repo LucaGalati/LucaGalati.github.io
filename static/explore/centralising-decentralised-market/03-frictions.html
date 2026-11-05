@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Costs and open questions · Centralising a Decentralised Market</title>
+<meta name="description" content="Deck III of the explorable: what a trade cost while liquidity moved, what the data cannot see, a sandbox, and the answer.">
+<link rel="stylesheet" href="explore.css">
+<script src="explore.js" defer></script>
+<script src="../sitebar.js"></script>
+</head>
+<body>
+<lg-sitebar><noscript><a href="../../publication/centralising-decentralised-market/">← Back to the paper</a></noscript><button class="bar__btn" type="button" data-map aria-expanded="false">Map<span class="bar__key"> · m</span></button></lg-sitebar>
+
+<main class="deck" data-deck="03">
+
+  <!-- 1 · The price of a trade -->
+  <section class="slide" id="s1" aria-label="Slide 1">
+    <div class="slide__inner slide__grid">
+      <div class="slide__text">
+        <p class="kicker"><b>III · 1</b> The friction</p>
+        <h1>The price of a trade.</h1>
+        <p>The price impact of a trade is how far the price moves in the trade's direction: a purchase pushes it up, a sale pushes it down. The thinner the order book, the bigger the push.</p>
+        <p>When liquidity moves from one venue to another, there is a stretch when it is split: the old book has thinned and the new one has not yet filled. Slide the liquidity across and send the same order each time.</p>
+        <p>The paper's price-impact results are mixed, and it reads them as a transition cost: the price of liquidity reallocating across venues — a cost that should fade once liquidity has settled.</p>
+        <p class="note">A toy with made-up numbers: it shows why splitting liquidity can make a trade costlier, not how much it did for EU-Bonds.</p>
+      </div>
+      <div class="slide__visual">
+        <div class="ctl-row">
+          <div class="ctl"><div class="ctl__label"><span>Liquidity moved to the designated venue</span><output id="bk-out">0%</output></div><input type="range" id="bk-s" min="0" max="100" step="5" value="0" aria-label="Share of liquidity moved to the designated venue"></div>
+          <div class="ctl ctl--btn"><button class="btn btn--gold" type="button" id="bk-go">Send a buy order</button></div>
+        </div>
+        <div class="stage">
+          <svg class="fig" id="bk-svg" viewBox="0 0 400 176" role="img" aria-label="Two order books side by side: offers to sell at one to eight cents above the starting price, on the old venue and on the designated venue."></svg>
+        </div>
+        <div class="readouts">
+          <div><span>The order goes to</span><b id="bk-where">old venue</b><small>whichever book is deeper</small></div>
+          <div><span>Price impact of the order</span><b id="bk-imp">+2 cents</b><small>where its last lot traded</small></div>
+        </div>
+        <svg class="fig" id="bk-curve" viewBox="0 0 400 112" role="img" aria-label="Price impact of the same order for every share of liquidity moved: lowest at either end, highest when liquidity is split half and half." style="margin-top:12px"></svg>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#2" data-go="2">What the data cannot see</a>
+        <a class="door" href="aside-venues.html">Is spreading trading bad, then?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Limits -->
+  <section class="slide slide--text" id="s2" aria-label="Slide 2">
+    <div class="slide__inner">
+      <div class="slide__text">
+        <p class="kicker"><b>III · 2</b> The limits</p>
+        <h2>What the data cannot see.</h2>
+        <ul class="list">
+          <li><strong>Only lit venues.</strong> Trading can move between the exchanges in the data and the over-the-counter and dealer-to-client platforms outside it, unseen. A shift to the dark would look like a change in what the lit venues show.</li>
+          <li><strong>A handful of bonds.</strong> The comparison rests on a few treated bonds and their controls. That limits statistical power, and with so few bonds the usual standard errors can come out too optimistic.</li>
+          <li><strong>No private information.</strong> The classic measures of price discovery are reinterpreted rather than discarded, and the efficiency score is the paper's own construction.</li>
+          <li><strong>A draft.</strong> The paper is in preparation, and its numbers can still change.</li>
+        </ul>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#3" data-go="3">Play with the arrangement</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Sandbox -->
+  <section class="slide" id="s3" aria-label="Slide 3">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>III · 3</b> Sandbox</p>
+        <h2>Play with the arrangement.</h2>
+        <p>All the knobs. Add screens, change how many orders a day they share, and add a designated screen that dealers must keep quoted — the toy's version of the arrangement. In the toy it comes on top of the others: one more screen, not one fewer.</p>
+        <p>The designated screen is right the moment news arrives; the others still wait for an order. In the data, synchronisation across venues grew stronger. The toy cannot tell whether that is the designated screens themselves or the others following them, and the abstract does not say: a question you can now ask.</p>
+        <p class="note">Expected wait: with M screens sharing r orders a day, the last of the k screens that wait for orders catches up after (M ÷ r) × (1 + ½ + … + 1/k) trading days on average; k is M, or M − 1 with a designated screen. All numbers are toy values.</p>
+      </div>
+      <div class="slide__visual">
+        <div id="toy2"></div>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#4" data-go="4">So, does it do any good?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · The answer -->
+  <section class="slide" id="s4" aria-label="Slide 4">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>III · 4</b> The answer</p>
+        <h2>So, does it do any good?</h2>
+        <p class="answer"><b>Some.</b> EU-Bonds' public-information efficiency rose by 4.3 percentage points relative to comparable bonds, mostly because prices on different venues moved together more closely. <b>Not without frictions:</b> the price-impact results are mixed, which the paper reads as the cost of liquidity moving between venues.</p>
+      </div>
+      <div class="slide__visual">
+        <p class="kicker">Questions you can now ask</p>
+        <ul class="questions">
+          <li>Did any trading move off the lit screens, where the data cannot follow?</li>
+          <li>Do the other screens now follow the designated ones?</li>
+          <li>Did trading as a whole become more concentrated, or did the designated venues become extra screens?</li>
+          <li>Do the frictions fade once liquidity settles?</li>
+        </ul>
+        <p class="note">All of this rests on a handful of bonds and a paper still in preparation: Luca Galati and Loriana Pelizzon, working paper. The 4.3 points come from the paper's abstract; every other number on these pages is a toy value.</p>
+      </div>
+      <div class="slide__actions">
+        <a class="btn btn--gold" href="../../publication/centralising-decentralised-market/">← Back to the paper</a>
+        <a class="btn" href="index.html">The map</a>
+        <a class="btn btn--quiet" href="01-screens.html#1">Start over</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bar bar--bottom">
+  <button class="bar__btn" type="button" data-prev aria-label="Previous slide">←</button>
+  <div class="dots" data-dots role="group" aria-label="Slides"></div>
+  <span class="bar__count" data-count></span>
+  <button class="bar__btn" type="button" data-next aria-label="Next slide">→</button>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  var svgEl = XP.svgEl;
+
+  /* --- Slide 1: two order books (toy values: 4 lots a cent in total, an order of 7 lots) --- */
+  var DEPTH = 4, ORDER = 7, LEVELS = 8, MAXW = 150;
+  var S = document.getElementById('bk-svg'), C = document.getElementById('bk-curve');
+  var inp = document.getElementById('bk-s'), out = document.getElementById('bk-out');
+  var whereEl = document.getElementById('bk-where'), impEl = document.getElementById('bk-imp');
+  S.appendChild(svgEl('text', { x: 184, y: 18, 'text-anchor': 'end', 'class': 's' }, 'OLD VENUE'));
+  S.appendChild(svgEl('text', { x: 216, y: 18, 'class': 's' }, 'DESIGNATED'));
+  var rows = [];
+  for (var i = 1; i <= LEVELS; i++) {
+    var y = 158 - (i - 1) * 18;
+    S.appendChild(svgEl('text', { x: 200, y: y + 11, 'text-anchor': 'middle', 'class': 'm' }, '+' + i + '¢'));
+    rows.push({
+      old: S.appendChild(svgEl('rect', { y: y, height: 14, 'class': 'book__bar book__old' })),
+      neu: S.appendChild(svgEl('rect', { y: y, height: 14, 'class': 'book__bar book__new' })),
+      eat: S.appendChild(svgEl('rect', { y: y, height: 14, 'class': 'book__eaten' }))
+    });
+  }
+  function impactAt(s) { var d = DEPTH * Math.max(s, 1 - s); return Math.ceil(ORDER / d - 1e-9); }
+  var cv = svgEl('path', { 'class': 'book__curve' }), dot = svgEl('circle', { r: 6, 'class': 'book__dot' });
+  C.appendChild(svgEl('line', { x1: 20, y1: 84, x2: 350, y2: 84, 'class': 'axis' }));
+  var d = 'M 20 ' + (84 - impactAt(0) * 16), prev = impactAt(0);
+  for (var q = 1; q <= 400; q++) {
+    var sq = q / 400, iq = impactAt(sq), x = 20 + sq * 330;
+    if (iq !== prev) { d += ' H ' + x.toFixed(1) + ' V ' + (84 - iq * 16); prev = iq; }
+  }
+  d += ' H 350';
+  cv.setAttribute('d', d);
+  C.appendChild(cv); C.appendChild(dot);
+  [2, 3, 4].forEach(function (v) { C.appendChild(svgEl('text', { x: 360, y: 84 - v * 16 + 5, 'class': 'm' }, '+' + v + '¢')); });
+  [[20, 'start', 'all on old venue'], [185, 'middle', 'split evenly'], [350, 'end', 'all moved']].forEach(function (t) {
+    C.appendChild(svgEl('text', { x: t[0], y: 106, 'text-anchor': t[1], 'class': 'm' }, t[2]));
+  });
+
+  var timers = [];
+  function render(animate) {
+    timers.forEach(clearTimeout); timers = [];
+    var s = +inp.value / 100, dOld = DEPTH * (1 - s), dNew = DEPTH * s, toOld = dOld >= dNew, dUse = toOld ? dOld : dNew;
+    out.textContent = Math.round(s * 100) + '%';
+    var left = ORDER, touched = 0;
+    rows.forEach(function (r, k) {
+      var wOld = dOld / DEPTH * MAXW, wNew = dNew / DEPTH * MAXW;
+      r.old.setAttribute('x', 184 - wOld); r.old.setAttribute('width', wOld);
+      r.neu.setAttribute('x', 216); r.neu.setAttribute('width', wNew);
+      var take = Math.min(left, dUse); left -= take;
+      if (take > 0) touched = k + 1;
+      var w = take / DEPTH * MAXW;
+      r.eat.setAttribute('x', toOld ? 184 - w : 216);
+      r.eat.setAttribute('width', 0);
+      function fill() { r.eat.setAttribute('width', w); }
+      if (animate && !XP.reduced) timers.push(setTimeout(fill, 140 * k)); else fill();
+    });
+    whereEl.textContent = toOld ? 'old venue' : 'designated';
+    impEl.textContent = '+' + touched + ' cents';
+    dot.setAttribute('cx', 20 + s * 330); dot.setAttribute('cy', 84 - touched * 16);
+  }
+  inp.addEventListener('input', function () { render(false); });
+  document.getElementById('bk-go').addEventListener('click', function () { render(true); });
+  render(false);
+
+  /* --- Slide 3: sandbox (toy values) --- */
+  var toy = XP.screensToy(document.getElementById('toy2'), { venues: 7, ordersPerDay: 30, designated: false, controls: ['venues', 'orders', 'designated', 'news'], showExpected: true });
+  var s3 = document.getElementById('s3');
+  s3.addEventListener('xp:show', toy.start);
+  s3.addEventListener('xp:hide', toy.stop);
+  if (s3.classList.contains('is-active')) toy.start();
+});
+</script>
+</body>
+</html>

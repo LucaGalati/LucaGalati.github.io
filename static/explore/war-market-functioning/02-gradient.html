@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The gradient · The Effects of War on Market Functioning</title>
+<meta name="description" content="Deck 2 of an explorable explanation of Federle, Galati and Riordan, The Effects of War on Market Functioning: the difference-in-differences, the cost in euros, the distance gradient, more trading, and why price falls are not the reason.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-gradient.html">
+<lg-sitebar><noscript><a href="../../publication/war-market-functioning/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Did everyone pay more?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The gradient · 1 of 6</p>
+    <h2>Everyone was quoted more. Neighbours paid most.</h2>
+    <p class="lead">Deck 1 counted the jolt in standard deviations. Here it is plain cost, in percentage points of the share price: twenty trading days before the invasion against twenty after, for all 2,747 firms.</p>
+    <div class="two">
+      <div>
+        <p>Quoted spreads of distant firms widened too, by 0.07 percentage points, while their effective spreads barely moved. The <strong>difference-in-differences</strong> subtracts that common drift and keeps what is specific to proximity: how much more the exposed group rose than it would have risen anyway.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Put a price on it&nbsp;→</button></div>
+        <p class="note">Group means from Table 3, panels B to D. Panel D’s changes are computed before rounding, so they can differ from the rounded means by 0.01. The scale stays fixed whatever you pick, so the brackets can be compared.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="did-chart"></div>
+        <p class="legend"><span><i class="ln near"></i>exposed</span><span><i class="ln far"></i>control</span><span><i class="ln ghost"></i>exposed, had it moved like the control</span></p>
+        <div class="ctl"><span class="pair"><span>Outcome</span><span class="seg" id="did-outcome"></span></span><span class="pair"><span>Exposed group</span><span class="seg" id="did-group"></span></span></div>
+        <p class="def">Quoted: the posted gap. Effective: how far trades landed from the midpoint, one way.</p>
+        <p class="readout" id="did-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="How much more, in euros?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The gradient · 2 of 6</p>
+    <h2>About ten basis points more per trade</h2>
+    <div class="two">
+      <div>
+        <p>The regression version adds a fixed effect for every firm and for every day, and controls for size, price level and quoting activity. After the invasion, quoted spreads of firms in countries bordering Ukraine widened about <span class="num">9–12</span> basis points (hundredths of a percent) more than those of similar distant firms, roughly a sixth of the sample’s pre-war average of about 60 bp. Effective spreads widened about <span class="num">9–10</span> bp more.</p>
+        <p class="door-row"><a class="door" href="04-data.html#s3">What does a fixed effect for every firm and every day do?&nbsp;→</a></p>
+        <p>Count it on the paper’s own example, a EUR 10 million round trip. The two rulers together give its rough figure: EUR <span class="num">10,000–20,000</span> more than for a similar firm far from the war.</p>
+        <div class="actions"><button class="btn primary" type="button" data-next>Now measure in kilometres&nbsp;→</button></div>
+        <p class="note">Table 5, Neighbour1 × War: 0.117 and 0.089 for quoted spreads, 0.099 and 0.089 for effective spreads, in percent, without and with controls. A round trip buys at the ask and sells at the bid, so it pays the quoted spread once; the paper’s effective spread is one-way, |trade price − midpoint| ÷ midpoint, so a round trip pays it twice.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Count a EUR 10 million round trip with the</span><div class="seg" id="cost-mode"></div></div>
+        <div class="fig" id="cost-chart"></div>
+        <p class="readout" id="cost-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Did closer firms pay more?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The gradient · 3 of 6</p>
+    <h2>Closer firms paid more</h2>
+    <p class="lead">Replace the neighbour label with a number, <span class="num">1 ÷ (1 + distance in km)</span>. The paper assumes that shape; the data set only its height. Slide a headquarters along it.</p>
+    <div class="two">
+      <div>
+        <p>Under that shape, most of the extra cost is gone within a few hundred kilometres. The solid line is the curve estimated without controls, the dashed line with them; the shaded band is the range between the two.</p>
+        <p>But is it really every kilometre, or mostly the border? The authors check.</p>
+        <p class="door-row"><a class="door" href="05-border.html#s1">Kilometres or borders? The paper’s own test&nbsp;→</a></p>
+        <div class="actions"><button class="btn primary" type="button" data-next>And yet…&nbsp;→</button></div>
+        <p class="note">Table 4, Distance × War, without and with controls: 23.7 and 16.1 for quoted spreads, 13.7 and 11.2 for effective spreads (in percent per unit of the measure). Each line is the implied gap between a firm at the chosen distance and the most distant firm in the sample, about 16,000 km away; the closest is about 100 km away. City marks are rough great-circle distances to the Ukrainian border, added for orientation; they are not from the paper.</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Outcome</span><div class="seg" id="g-outcome"></div></div>
+        <div class="fig" id="g-chart"></div>
+        <p class="legend"><span><i class="ln"></i>without controls</span><span><i class="ln dash"></i>with controls</span><span><i class="sq band"></i>range between the two</span></p>
+        <label class="ctl" for="g-dist">Distance from headquarters to Ukraine</label>
+        <input type="range" id="g-dist" min="0" max="1000" step="1" value="0">
+        <p class="readout" id="g-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Did trading dry up?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The gradient · 4 of 6</p>
+    <h2>And yet they traded more</h2>
+    <p>If trading got dearer, you might expect less of it. The opposite happened. Firms in bordering countries are thin markets to begin with: before the war a typical one traded about $0.5 million of shares a day, against about $4.5 million for the rest. After the invasion their trading rose faster than everyone else’s.</p>
+    <div class="fig" id="vol-chart"></div>
+    <p class="caption">Raw changes in logs, twenty days after against twenty before (Table 3). Their gaps, 0.22 and 0.17, tell the same story as the regression.</p>
+    <p>Relative to otherwise similar distant firms, dollar volume in bordering-country firms rose about <span class="num">22–25%</span> more and the number of trades about <span class="num">13–19%</span> more (Table 6). Wider spreads and heavier trading at once: investors kept moving war risk around and paid up to do it, “a functioning albeit deteriorating market”, in the paper’s words. Trading went on, at a higher price.</p>
+    <div class="actions"><button class="btn primary" type="button" data-next>Was it just prices falling?&nbsp;→</button></div>
+    <p class="note">Typical daily dollar volume from Table 3’s mean log volume before the invasion: e<sup>13.12</sup> ≈ $0.5 million for bordering firms, e<sup>15.33</sup> ≈ $4.5 million for the rest. Table 6, Neighbour1 × War: 0.221 and 0.201 for log dollar volume, 0.170 and 0.118 for log trades; a change of x in logs is e<sup>x</sup> − 1 in percent. The paper rounds the range to about 13–22%.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Was it just prices falling?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The gradient · 5 of 6</p>
+    <h2>Prices moved. That is not why spreads widened.</h2>
+    <p>The obvious rival story: firms near the war simply lost more value, and spreads follow prices. So the authors swap geography for each firm’s own share-price return on 24 February. Here is the extra quoted spread each kind of exposure goes with:</p>
+    <div class="fig" id="cmp-chart"></div>
+    <p class="caption">Computed from the paper’s tables; each bar spans the estimates without and with controls.</p>
+    <p>Returns do line up with trading: with controls, the firms that fell most were traded most. Intraday volatility, tried the same way, adds little (Tables 10 and 11). Prices say what a firm is worth; spreads say what it costs to trade it right now. Near the war, spreads rose more than price falls can explain.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>What it adds up to&nbsp;→</button>
+      <a class="door" href="03-why.html#s2" data-return="next">Why would a dealer charge more? The mechanism&nbsp;→</a>
+    </div>
+    <p class="note">Table 9: War log return × War of −0.823 and −0.328 for quoted spreads (in percent per unit of log return); times 0.05, the standard deviation of war-day returns (Table 1), that is 4.1 and 1.6 bp. Its effective-spread coefficients are insignificant. Proximity: page 14. Bordering country: Table 5.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="What should you take away?">
+  <div class="inner">
+    <p class="kicker">Deck 2 · The gradient · 6 of 6</p>
+    <h2>What to take away</h2>
+    <p class="closer">For the twenty trading days after the invasion, a firm in a country bordering Ukraine paid about <span class="num">9–12</span> bp more to trade than a similar firm far away.</p>
+    <ol class="takeaways">
+      <li>Spreads near Ukraine gave no sign that dealers saw the timing coming; they jumped at the first open after the strikes.</li>
+      <li>Who paid followed geography, not how far a stock fell. The paper reads this as dealers fearing better-informed counterparties and riskier inventory near the war: consistent with the evidence, not tested directly.</li>
+      <li>Markets kept trading, at a higher cost, exactly when investors needed to rebalance.</li>
+    </ol>
+    <p class="caveat">The jump at the open rests on 54 nearby firms and is significant only at the 10% level; inside the bordering countries, extra closeness adds little.</p>
+    <p>The paper stops at listed equities and a forty-day window. Bonds, derivatives, bank balance sheets and other wars are open questions, as is whether distance to the fighting belongs in a regulator’s stress test.</p>
+    <p class="prompt">A question to take with you: where does Vienna sit on the curve, and does that match the paper’s separate estimate for the second ring, about 3.5–4 bp (Table 5)?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-go="3">Play with the gradient again&nbsp;→</button>
+      <a class="btn" href="../../publication/war-market-functioning/">Read the paper</a>
+      <button class="btn" type="button" data-map>Map of this explorable</button>
+    </div>
+    <p class="note">Side paths you may have skipped: <a class="door-link" href="03-why.html#s1">what a spread is, and why it widens</a> · <a class="door-link" href="05-border.html#s1">kilometres or borders</a> · <a class="door-link" href="04-data.html#s1">how eleven billion ticks became a sample</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/war-market-functioning/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the difference-in-differences as a slope chart (Table 3) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, fmt = E.fmt, plus = E.plus;
+  /* t: exposed group [before, after]; c: its control group; d: panel D [exposed change, control change, difference] */
+  var DID = {
+    qs: { t: { n1: [0.84, 1.03], n2: [0.46, 0.57], n12: [0.59, 0.72] },
+          c: { n1: [0.54, 0.62], n2: [0.55, 0.62], n12: [0.55, 0.62] },
+          d: { n1: [0.19, 0.07, 0.12], n2: [0.11, 0.07, 0.04], n12: [0.14, 0.07, 0.07] } },
+    es: { t: { n1: [0.38, 0.46], n2: [0.19, 0.23], n12: [0.25, 0.30] },
+          c: { n1: [0.40, 0.38], n2: [0.42, 0.40], n12: [0.42, 0.40] },
+          d: { n1: [0.08, -0.01, 0.10], n2: [0.04, -0.02, 0.06], n12: [0.05, -0.02, 0.07] } }
+  };
+  var GROUP = { n1: 'Firms bordering Ukraine', n2: 'Firms one border away', n12: 'Firms in either ring' };
+  var CONTROL = { n1: 'All other firms, second ring included', n2: 'Firms outside both rings', n12: 'Firms outside both rings' };
+  var LO = 0.1, HI = 1.1; /* one fixed scale, in % of the midpoint, for every outcome and group */
+  var box = document.getElementById('did-chart'), read = document.getElementById('did-read');
+  var cur = { o: 'qs', g: 'n1' }, shown = null, raf = null, geo = null;
+  /* [exposed before, exposed after, control before, control after, exposed had it moved like the control] */
+  function target() { var o = DID[cur.o], t = o.t[cur.g], c = o.c[cur.g], d = o.d[cur.g]; return [t[0], t[1], c[0], c[1], t[0] + d[1]]; }
+  function build(W, vh) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.42, 210, Math.min(262, vh * 0.33))), TOP = 10, B = W < 480 ? 28 : 44;
+    var xPre = 92, xPost = W - 150;
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Slope chart: the exposed group and its control group before and after the invasion, the exposed group’s path had it moved like the control, and a bracket marking the difference-in-differences.' }, box);
+    [0.2, 0.6, 1.0].forEach(function (v) {
+      S('line', { x1: 0, x2: W, y1: Y(v), y2: Y(v), 'class': 'grid' }, root);
+      T(root, 0, Y(v) - 4, v.toFixed(1) + '%');
+    });
+    S('line', { x1: xPre, x2: xPre, y1: TOP, y2: H - B, 'class': 'axis' }, root);
+    S('line', { x1: xPost, x2: xPost, y1: TOP, y2: H - B, 'class': 'axis' }, root);
+    T(root, xPre, H - B + 17, 'before', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, xPost, H - B + 17, 'after', { 'text-anchor': 'middle', 'class': 'label' });
+    if (W >= 480) {
+      T(root, xPre, H - B + 33, '27 Jan – 23 Feb 2022', { 'text-anchor': 'middle' });
+      T(root, xPost, H - B + 33, '24 Feb – 23 Mar 2022', { 'text-anchor': 'middle' });
+    }
+    geo = { Y: Y, xPre: xPre, xPost: xPost, dyn: S('g', {}, root) };
+    render(shown || target());
+  }
+  function render(v) {
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, xa = geo.xPre, xb = geo.xPost, d = DID[cur.o].d[cur.g];
+    g.innerHTML = '';
+    S('line', { x1: xa, y1: Y(v[2]), x2: xb, y2: Y(v[3]), 'class': 'far' }, g);
+    S('line', { x1: xa, y1: Y(v[0]), x2: xb, y2: Y(v[4]), 'class': 'ghost' }, g);
+    S('line', { x1: xa, y1: Y(v[0]), x2: xb, y2: Y(v[1]), 'class': 'near' }, g);
+    S('circle', { cx: xb, cy: Y(v[4]), r: 3.5, 'class': 'hollow-far' }, g);
+    [[xa, v[2], 'far-fill'], [xb, v[3], 'far-fill'], [xa, v[0], 'near-fill'], [xb, v[1], 'near-fill']].forEach(function (p) {
+      S('circle', { cx: p[0], cy: Y(p[1]), r: 5, 'class': p[2] }, g);
+    });
+    var left = E.spread([Y(v[0]) + 4, Y(v[2]) + 4], 15), right = E.spread([Y(v[1]) + 4, Y(v[3]) + 4], 15);
+    T(g, xa - 11, left[0], fmt(v[0]) + '%', { 'text-anchor': 'end', 'class': 'label' });
+    T(g, xa - 11, left[1], fmt(v[2]) + '%', { 'text-anchor': 'end', 'class': 'label' });
+    T(g, xb + 11, right[0], fmt(v[1]) + '%', { 'class': 'label' });
+    T(g, xb + 11, right[1], fmt(v[3]) + '%', { 'class': 'label' });
+    var bx = xb + 60, y1 = Y(v[4]), y2 = Y(v[1]);
+    S('path', { d: 'M' + (bx - 5) + ',' + y1.toFixed(1) + ' H' + bx + ' V' + y2.toFixed(1) + ' H' + (bx - 5), 'class': 'bracket' }, g);
+    T(g, bx + 7, (y1 + y2) / 2 + 4, plus(d[2]) + ' extra', { 'class': 'strong' });
+  }
+  function readout() {
+    var o = DID[cur.o], t = o.t[cur.g], c = o.c[cur.g], d = o.d[cur.g];
+    read.innerHTML = '<strong>' + GROUP[cur.g] + ':</strong> ' + fmt(t[0]) + '% → ' + fmt(t[1]) + '% (' + plus(d[0]) + '). ' +
+      '<strong>' + CONTROL[cur.g] + ':</strong> ' + fmt(c[0]) + '% → ' + fmt(c[1]) + '% (' + plus(d[1]) + '). ' +
+      '<strong>Difference-in-differences: ' + plus(d[2]) + ' percentage points.</strong>';
+  }
+  function update() {
+    var to = target();
+    readout();
+    if (!shown || E.still || !geo) { shown = to; render(shown); return; }
+    var from = shown.slice(), t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 380), e = 1 - Math.pow(1 - p, 3);
+      shown = from.map(function (f, i) { return f + (to[i] - f) * e; });
+      render(shown);
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  E.seg(document.getElementById('did-outcome'), [['qs', 'Quoted spread'], ['es', 'Effective spread']], 'qs', function (k) { cur.o = k; update(); }, 'Outcome');
+  E.seg(document.getElementById('did-group'), [['n1', 'Bordering Ukraine'], ['n2', 'One border away'], ['n12', 'Either ring']], 'n1', function (k) { cur.g = k; update(); }, 'Exposed group');
+  readout();
+  E.fit(box, build, { min: 300, max: 700, useHeight: true });
+})();
+
+/* ---------- slide 2: a EUR 10 million round trip, counted with each ruler (Table 5) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  /* extra euros on EUR 10 million, [without controls, with controls] ordered low to high */
+  var MODE = {
+    q: { rows: [[4450, 5850], [4450, 5850], [8900, 11700]],
+         labels: ['Buy at the ask: half the extra gap', 'Sell at the bid: the other half', 'Round trip: the extra gap, once'],
+         text: '<strong>Quoted spread, paid once per round trip:</strong> <span class="nw">+9–12 bp</span> of EUR 10 million ≈ <strong class="nw">EUR 9,000–12,000</strong> extra, half on the buy and half on the sell.' },
+    e: { rows: [[8900, 9900], [8900, 9900], [17800, 19800]],
+         labels: ['Buy: one effective spread', 'Sell: another one', 'Round trip: two effective spreads'],
+         text: '<strong>Effective spread, measured one way and paid on both legs:</strong> <span class="nw">2 × 9–10 bp</span> ≈ <strong class="nw">EUR 18,000–20,000</strong> extra.' }
+  };
+  var MAX = 20000;
+  var box = document.getElementById('cost-chart'), read = document.getElementById('cost-read');
+  var mode = 'q', shown = null, raf = null, geo = null;
+  function flat(m) { return [].concat.apply([], MODE[m].rows); }
+  function build(W) {
+    box.innerHTML = '';
+    var rowH = 40, TOP = 2, H = TOP + 3 * rowH + 22, xMax = W - 128;
+    function X(v) { return xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Extra cost of a EUR 10 million round trip in a border-country stock: with the quoted spread about EUR 9,000 to 12,000, with the effective spread about EUR 18,000 to 20,000.' }, box);
+    (W < 480 ? [0, 10000, 20000] : [0, 5000, 10000, 15000, 20000]).forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 20, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 5, v ? 'EUR ' + (v / 1000) + 'k' : '0', { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    geo = { X: X, rowH: rowH, TOP: TOP, W: W, dyn: S('g', {}, root) };
+    render(shown || flat(mode));
+  }
+  function render(v) {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X; g.innerHTML = '';
+    MODE[mode].labels.forEach(function (lab, i) {
+      var y = geo.TOP + i * geo.rowH, lo = v[2 * i], hi = v[2 * i + 1];
+      T(g, 0, y + 12, lab, { 'class': i === 2 ? 'strong' : 'label' });
+      S('rect', { x: 0, y: y + 18, width: Math.max(1, X(lo)), height: 13, 'class': 'near-fill' }, g);
+      S('rect', { x: X(lo), y: y + 18, width: Math.max(0, X(hi) - X(lo)), height: 13, 'class': 'near-fill', 'fill-opacity': 0.4 }, g);
+      T(g, X(hi) + 6, y + 29, 'EUR ' + th(lo) + '–' + th(hi), { 'class': i === 2 ? 'strong' : 'label' });
+    });
+  }
+  function update() {
+    var to = flat(mode);
+    read.innerHTML = MODE[mode].text;
+    if (!shown || E.still || !geo) { shown = to; render(shown); return; }
+    var from = shown.slice(), t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / 380), e = 1 - Math.pow(1 - p, 3);
+      shown = from.map(function (f, i) { return f + (to[i] - f) * e; });
+      render(shown);
+      raf = p < 1 ? requestAnimationFrame(step) : null;
+    }
+    raf = requestAnimationFrame(step);
+  }
+  E.seg(document.getElementById('cost-mode'), [['q', 'quoted spread'], ['e', 'effective spread']], 'q', function (k) { mode = k; update(); }, 'Count it with');
+  read.innerHTML = MODE[mode].text;
+  E.fit(box, build, { min: 300, max: 680 });
+})();
+
+/* ---------- slide 3: the distance gradient (Table 4) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var OUT = {
+    qs: { b: [23.667, 16.075], what: 'quoted spread', axis: 'Extra quoted spread after the invasion, bp, relative to the farthest firm', short: 'Extra quoted spread, bp' },
+    es: { b: [13.732, 11.169], what: 'effective spread', axis: 'Extra effective spread after the invasion, bp, relative to the farthest firm', short: 'Extra effective spread, bp' }
+  };
+  var DMIN = 100, DMAX = 16000, FARW = 1 / (1 + DMAX), YMAX = 26;
+  function gap(beta, d) { return beta * (1 / (1 + d) - FARW) * 100; }
+  var CITIES = [['Warsaw', 200], ['Vienna', 430], ['Frankfurt', 1000], ['London', 1600], ['New York', 7000], ['Auckland', 16000]];
+  var box = document.getElementById('g-chart'), slider = document.getElementById('g-dist'), read = document.getElementById('g-read');
+  var cur = 'qs', geo = null;
+  function dist() { return DMIN * Math.pow(DMAX / DMIN, (+slider.value) / 1000); }
+  function pt(p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.44, 250, 282)), L = 30, R = 14, TOP = 22, B = 76;
+    function X(d) { return L + (W - L - R) * Math.log(d / DMIN) / Math.log(DMAX / DMIN); }
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v / YMAX); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Implied extra post-invasion spread against distance to Ukraine on a log scale from 100 to 16,000 km, estimated without and with controls, with a movable marker.' }, box);
+    for (var v = 0; v <= 25; v += 5) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    }
+    [100, 300, 1000, 3000, 10000].forEach(function (d) {
+      S('line', { x1: X(d), x2: X(d), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      T(root, X(d), H - B + 17, th(d), { 'text-anchor': 'middle' });
+    });
+    T(root, (L + W - R) / 2, H - B + 33, W < 500 ? 'Distance to Ukraine, km (log scale)' : 'Distance from headquarters to Ukraine, km (log scale)', { 'text-anchor': 'middle', 'class': 'label' });
+    CITIES.forEach(function (c, i) {
+      var x = X(c[1]);
+      S('line', { x1: x, x2: x, y1: H - B + 40, y2: H - B + 46, 'class': 'axis' }, root);
+      T(root, x, H - B + 58 + (i % 2) * 13, c[0], { 'text-anchor': i === CITIES.length - 1 ? 'end' : 'middle' });
+    });
+    var title = T(root, L, TOP - 9, '', { 'class': 'label' });
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, B: B, title: title, curves: S('g', {}, root), dyn: S('g', {}, root) };
+    curves();
+  }
+  function curves() {
+    if (!geo) return;
+    var o = OUT[cur], g = geo.curves, X = geo.X, Y = geo.Y, N = 140, p0 = [], p1 = [];
+    geo.title.textContent = geo.W < 560 ? o.short : o.axis;
+    g.innerHTML = '';
+    for (var i = 0; i <= N; i++) { var d = DMIN * Math.pow(DMAX / DMIN, i / N); p0.push([X(d), Y(gap(o.b[0], d))]); p1.push([X(d), Y(gap(o.b[1], d))]); }
+    S('path', { d: 'M' + p0.map(pt).join(' L') + ' L' + p1.slice().reverse().map(pt).join(' L') + ' Z', 'class': 'band' }, g);
+    S('polyline', { points: p0.map(pt).join(' '), 'class': 'curve0' }, g);
+    S('polyline', { points: p1.map(pt).join(' '), 'class': 'curve1' }, g);
+    marker();
+  }
+  function nearestCity(d) {
+    var best = null;
+    CITIES.forEach(function (c) { if (Math.abs(Math.log(d / c[1])) < 0.14 && (!best || Math.abs(Math.log(d / c[1])) < Math.abs(Math.log(d / best[1])))) best = c; });
+    return best;
+  }
+  function marker() {
+    var o = OUT[cur], d = dist(), v0 = gap(o.b[0], d), v1 = gap(o.b[1], d);
+    slider.setAttribute('aria-valuetext', th(d) + ' km');
+    if (geo) {
+      var g = geo.dyn, x = geo.X(d), right = x > geo.W * 0.6;
+      g.innerHTML = '';
+      S('line', { x1: x, x2: x, y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+      S('circle', { cx: x, cy: geo.Y(v0), r: 5, 'class': 'text-fill' }, g);
+      S('circle', { cx: x, cy: geo.Y(v1), r: 5, 'class': 'muted-fill' }, g);
+      T(g, x + (right ? -7 : 7), geo.TOP + 12, th(d) + ' km', { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+    }
+    var lo = Math.min(v0, v1), hi = Math.max(v0, v1), dec = hi < 10 ? 1 : 0, city = nearestCity(d);
+    var who = '<strong>A firm ' + th(d) + ' km from Ukraine</strong>' + (city && city[1] < 16000 ? ', about as far as ' + city[0] : '');
+    if (hi < 0.05) read.innerHTML = who + ': the far end of the sample, where the gap is zero by construction. Every point on the curve is measured against this firm.';
+    else read.innerHTML = who + ': after the invasion its ' + o.what + ' widened about <strong class="nw">' + lo.toFixed(dec) + '–' + hi.toFixed(dec) + ' bp more</strong> than the farthest firm’s, about 16,000 km away.';
+  }
+  E.seg(document.getElementById('g-outcome'), [['qs', 'Quoted spread'], ['es', 'Effective spread']], 'qs', function (k) { cur = k; curves(); marker(); }, 'Outcome');
+  slider.setAttribute('aria-label', 'Distance from headquarters to Ukraine, on a logarithmic scale from 100 to 16,000 km');
+  slider.addEventListener('input', marker);
+  marker();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+
+/* ---------- slide 4: more trading (Table 3, panel D) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('vol-chart');
+  var ROWS = [['Dollar volume', 0.39, 0.17, 0.22], ['Number of trades', 0.36, 0.19, 0.17]], MAX = 0.45;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 88, H = ROWS.length * rowH - 6, xMax = W - 170;
+    function X(v) { return xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Change in log dollar volume: bordering firms +0.39, all other firms +0.17, a gap of 0.22. Change in log number of trades: +0.36 against +0.19, a gap of 0.17.' }, box);
+    ROWS.forEach(function (r, i) {
+      var y = i * rowH, a = X(r[2]), b = X(r[1]);
+      T(root, 0, y + 12, r[0] + ', change in logs', { 'class': 'label' });
+      T(root, (a + b) / 2, y + 30, 'gap ' + r[3].toFixed(2), { 'text-anchor': 'middle', 'class': 'strong' });
+      S('path', { d: 'M' + a.toFixed(1) + ',' + (y + 40) + ' V' + (y + 35) + ' H' + b.toFixed(1) + ' V' + (y + 40), 'class': 'bracket' }, root);
+      S('rect', { x: 0, y: y + 43, width: b, height: 13, 'class': 'near-fill' }, root);
+      T(root, b + 6, y + 54, '+' + r[1].toFixed(2) + '  bordering Ukraine', { 'class': 'label' });
+      S('rect', { x: 0, y: y + 61, width: a, height: 13, 'class': 'far-fill' }, root);
+      T(root, a + 6, y + 72, '+' + r[2].toFixed(2) + '  all other firms', { 'class': 'label' });
+    });
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 5: three kinds of exposure on one ruler (Tables 9 and 5, page 14) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('cmp-chart');
+  var ROWS = [
+    ['A share price that fell one standard deviation more on 24 February', 'Price fell 1 sd more on 24 Feb', 1.6, 4.1, 'muted-fill', '1.6–4.1 bp'],
+    ['Proximity to Ukraine one standard deviation higher', 'Proximity 1 sd higher', 6, 8, 'near-fill', '6–8 bp'],
+    ['Headquarters in a country bordering Ukraine', 'In a bordering country', 8.9, 11.7, 'near-fill', '9–12 bp']
+  ], MAX = 13;
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var rowH = 46, TOP = 2, H = TOP + ROWS.length * rowH + 22, xMax = W - 84;
+    function X(v) { return xMax * v / MAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Extra quoted spread after the invasion: a price fall one standard deviation larger, 1.6 to 4.1 basis points; proximity one standard deviation higher, 6 to 8; a bordering country, 9 to 12.' }, box);
+    [0, 4, 8, 12].forEach(function (v) {
+      S('line', { x1: X(v), x2: X(v), y1: TOP, y2: H - 20, 'class': v ? 'grid' : 'axis' }, root);
+      T(root, X(v), H - 5, v + ' bp', { 'text-anchor': v ? 'middle' : 'start' });
+    });
+    ROWS.forEach(function (r, i) {
+      var y = TOP + i * rowH;
+      T(root, 0, y + 13, W < 520 ? r[1] : r[0], { 'class': 'label' });
+      S('rect', { x: 0, y: y + 20, width: X(r[2]), height: 14, 'class': r[4] }, root);
+      S('rect', { x: X(r[2]), y: y + 20, width: X(r[3]) - X(r[2]), height: 14, 'class': r[4], 'fill-opacity': 0.4 }, root);
+      T(root, X(r[3]) + 6, y + 31, r[5], { 'class': 'strong' });
+    });
+  }, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

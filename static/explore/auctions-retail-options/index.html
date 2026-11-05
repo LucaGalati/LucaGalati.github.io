@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The order nobody bought · Auctions for Retail-Sized Options</title>
+<meta name="description" content="An explorable explanation of Auctions for Retail-Sized Options (Galati, Hendershott, Khan and Riordan): what a price-improvement auction does to a small SPX option order, and who pays for the improvement.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<noscript><style>.slide{display:grid !important}.map-btn{display:none}</style></noscript>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/auctions-retail-options/">← Back to the paper</a></noscript>
+  <div class="deck-label">Deck 1 of 4 · <b>The order nobody bought</b></div>
+  <button type="button" class="map-btn" aria-haspopup="dialog" aria-expanded="false">Map <span class="kbd">m</span></button>
+</lg-sitebar>
+<main>
+
+<section class="slide" id="s1">
+  <div class="inner hero">
+    <p class="eyebrow">An explorable explanation · working paper, 2026</p>
+    <h1>Auctions for Retail-Sized Options</h1>
+    <p class="byline">Luca Galati, Terrence Hendershott, Saad Ali Khan and Ryan Riordan</p>
+    <p class="body">Individual investors place about 62 percent of U.S. listed-option volume, and their brokers sell those orders: in 2021, trading firms called wholesalers paid $2.4 billion for them. The wholesaler fills the order against its own account, in part through auctions on an exchange in which rivals may offer a better price.</p>
+    <p class="body">What we know about those auctions comes from orders a wholesaler had already bought. Does the auction help the investor on its own?</p>
+    <p class="body">One market can tell. SPX options, on the S&amp;P 500 index itself, trade on one exchange, Cboe, and nobody pays brokers for their orders. On February 22, 2021, Cboe opened its auction to SPX orders of ten contracts or fewer.</p>
+    <p class="lede ask">Does exposing a small order that nobody bought to an auction make it cheaper to execute? And if it does, who pays?</p>
+    <p class="doors" style="justify-content:center"><a class="door" href="#s2">Start with the auction itself</a></p>
+  </div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="inner split">
+    <div>
+      <p class="eyebrow">The mechanism</p>
+      <h2>What an auction does to a price</h2>
+      <p>The firm holding the customer’s order offers to take the other side at a price it names. While the exchange exposes the order, anyone else may offer a better price for part or all of it. If someone does, the firm may match that price and keep 40 or 50 percent of the order; the rest goes to the best bidders.</p>
+      <p>Try it. The customer is buying ten contracts, the most the SPX auction takes. Prices move in ten-cent ticks.</p>
+      <p class="doors"><a class="door small" href="04-spy.html#s5">Why the tick matters</a></p>
+    </div>
+    <figure class="stage" id="toy">
+      <svg id="toySvg" role="img" aria-label="An auction for a customer buying ten contracts."></svg>
+      <div class="controls">
+        <div class="control"><label for="toyW">Quote width, bid to ask</label><output id="toyWOut" for="toyW">4 ticks · 40 ¢</output><input type="range" id="toyW" min="1" max="6" value="4" step="1"></div>
+        <div class="control"><label for="toyI">Initiator names a price below the ask by</label><output id="toyIOut" for="toyI">1 tick</output><input type="range" id="toyI" min="0" max="2" value="1" step="1"></div>
+        <div class="control"><label for="toyR">Liquidity providers who respond</label><output id="toyROut" for="toyR">0</output><input type="range" id="toyR" min="0" max="4" value="0" step="1"></div>
+      </div>
+      <p class="readline">Effective ÷ quoted <b id="rdRatio">0.50</b> &nbsp;·&nbsp; Prints, trade reports on the tape <b id="rdPrints">1</b></p>
+      <p class="toy-note" id="toyNote" aria-live="polite"></p>
+      <figcaption>Hollow ring: the initiator’s price. Gold: the execution; dots above it: responders. Toy rules: the initiator keeps 40 percent, responses move in ten-cent ticks and nobody sells below the midpoint; the quote is illustrative.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="slide" id="s3">
+  <div class="inner wide">
+    <p class="eyebrow">Where SPX trades go</p>
+    <h2>Many trades, little money</h2>
+    <p>How much of SPX goes through this auction? Over the paper’s sample it took 11.27 percent of SPX trades but only 1.04 percent of the dollars: many small orders. The trading floor is the mirror image, with 2.77 percent of the trades and 62.64 percent of the dollars.</p>
+    <figure>
+      <svg id="shares" role="img" aria-label="Share of SPX trades: book 85.96 percent, auction 11.27, floor 2.77. Share of SPX dollar volume: book 36.32 percent, auction 1.04, floor 62.64."></svg>
+      <figcaption>Share of SPX trades and of SPX dollar volume by execution mechanism (Table I of the paper). Book: the continuous limit order book. Floor: open outcry.</figcaption>
+    </figure>
+    <p style="margin-top:22px">In SPY, where wholesalers buy the orders and any size may enter, the auction takes 23 percent of trades.</p>
+    <p class="doors" style="margin-top:0"><a class="door small" href="04-spy.html#s5">Why twice the share in SPY?</a></p>
+  </div>
+</section>
+
+<section class="slide" id="s4">
+  <div class="inner split">
+    <div>
+      <p class="eyebrow">The catch</p>
+      <h2>Auction trades are not book trades</h2>
+      <p>Auction trades pay less: 6.28 cents against 8.99 in the book. Case closed? Look at the rest of the table.</p>
+      <p>The auction’s trades are smaller, closer to expiry and more exposed to the index, and they face wider quotes. Orders are routed on the very characteristics that set their cost, so the comparison mixes the mechanism with the orders it attracts.</p>
+      <p>The paper’s answer: for each auction trade, find its twin, a book trade of the same size and risk from the two weeks before the auction existed, when no order could choose it.</p>
+      <p class="doors"><a class="door" href="02-match.html">Find the twins</a></p>
+    </div>
+    <figure>
+      <table class="cmp">
+        <thead><tr><th>Single-leg SPX trades</th><th>Auction</th><th>Book</th></tr></thead>
+        <tbody>
+          <tr class="lead"><td>Effective spread, cents</td><td class="a">6.28</td><td class="b">8.99</td></tr>
+          <tr><td>Trade size, contracts</td><td class="a">2.32</td><td class="b">7.05</td></tr>
+          <tr><td>Days to expiration</td><td class="a">4.48</td><td class="b">15.35</td></tr>
+          <tr><td>Absolute delta</td><td class="a">0.35</td><td class="b">0.29</td></tr>
+          <tr><td>Contracts displayed at the best quote</td><td class="a">94</td><td class="b">140</td></tr>
+          <tr><td>Quoted spread, cents</td><td class="a">14.41</td><td class="b">13.06</td></tr>
+        </tbody>
+      </table>
+      <figcaption>Full-sample means, Table II of the paper; every difference is significant at the 1 percent level. A single-leg trade is one option; a complex trade is a package of two or more legs at one net price. Absolute delta: the trade’s exposure to the index.</figcaption>
+    </figure>
+  </div>
+</section>
+
+</main>
+<script src="explore.js"></script>
+<script>
+/* Playable 1 — Run an auction. Toy rules: ten-cent ticks; the customer buys ten contracts; the initiator
+   names a price below the ask; each responder betters the standing price by one tick, but nobody sells below
+   the midpoint; when a response betters the initiator's price, the initiator matches it and keeps 40 percent,
+   and the responders at the winning price share the rest. Measures as defined in Section I.D of the paper. */
+(function () {
+  var E = window.EXPLORE, S = E.svg;
+  var $ = function (id) { return document.getElementById(id); };
+  var svg = $('toySvg'), wIn = $('toyW'), iIn = $('toyI'), rIn = $('toyR');
+  var wOut = $('toyWOut'), iOut = $('toyIOut'), rOut = $('toyROut'), rdRatio = $('rdRatio'), rdPrints = $('rdPrints'), note = $('toyNote');
+  var BID = 4.40, TICK = 0.10;
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+  function money(p) { return '$' + p.toFixed(2); }
+
+  function state(w, i, r) {
+    var ft = Math.floor(w / 2); i = Math.min(i, ft);
+    var room = ft - i, k = Math.min(r, room), ask = BID + w * TICK, mid = (BID + ask) / 2;
+    var price = ask - (i + k) * TICK, q = w * 5, eff = Math.round(Math.abs(price - mid) * 1000) / 10;
+    var count = 0; for (var j = 1; j <= r; j++) if (Math.min(j, room) === k) count++;
+    return { w: w, i: i, r: r, ft: ft, room: room, k: k, ask: ask, mid: mid, price: price, q: q, eff: eff, pi: q - eff, count: count, prints: r === 0 ? 1 : 1 + count };
+  }
+  function message(s) {
+    if (s.w === 1) return 'One tick wide: no price lies between the bid and the ask, so there is nothing to improve. The order executes at the ask.';
+    if (s.r === 0) return 'No response: the order executes with the initiator at its price, ' + (s.i === 0 ? 'the ask itself.' : plural(s.i, 'tick') + ' below the ask.');
+    if (s.room === 0) return 'The initiator named ' + (s.w % 2 ? 'the last tick above the midpoint' : 'the midpoint') + ', so responders can only match. It keeps 40 percent; ' + (s.r === 1 ? 'the responder takes' : 'the responders share') + ' the rest.';
+    return 'Responders cut the price by ' + plural(s.k, 'tick') + (s.k < s.r ? '; the rest could only match' : '') + '. The initiator matched and kept 40 percent; ' + (s.count === 1 ? 'the best bidder took' : s.count + ' bidders shared') + ' the other 60.';
+  }
+  function current() { return state(+wIn.value, +iIn.value, +rIn.value); }
+
+  /* restore: a door may ask for a quote width (?w=1); otherwise the reader's last setting */
+  var q = /[?&]w=([1-6])(?:&|$)/.exec(location.search), saved = E.ui('toy');
+  if (q) { wIn.value = q[1]; iIn.value = 0; rIn.value = 0; try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) { /* keep the URL */ } }
+  else if (saved && saved.length === 3) { wIn.value = saved[0]; iIn.value = saved[1]; rIn.value = saved[2]; }
+
+  var G = null;
+  var Y = { label: 16, line: 66, price: 89, name: 106, rows: [128, 148, 168], fill: 199, sq: 206 };
+  function build(W) {
+    E.clear(svg);
+    var L = 30, R = W - 30;
+    G = { W: W, L: L, R: R, MID: (L + R) / 2 };
+    S(svg, 'line', { x1: G.MID, y1: 46, x2: G.MID, y2: Y.line + 12, 'class': 's-muted', 'stroke-dasharray': '2 3' });
+    S(svg, 'line', { x1: G.MID, y1: Y.rows[0] - 9, x2: G.MID, y2: Y.rows[2] + 9, 'class': 's-muted', 'stroke-dasharray': '2 3' });
+    S(svg, 'line', { x1: L, y1: Y.line, x2: R, y2: Y.line, 'class': 's-text' });
+    G.ticks = S(svg, 'g', {});
+    G.resp = S(svg, 'g', {});
+    G.init = S(svg, 'circle', { cx: 0, cy: Y.line, r: 8, 'class': 'f-none s-accent moves', 'stroke-width': 1.75 });
+    G.exec = S(svg, 'circle', { cx: 0, cy: Y.line, r: 5, 'class': 'f-gold moves' });
+    G.execLbl = S(svg, 'text', { x: 0, y: Y.label, 'text-anchor': 'middle', 'class': 't-val moves' });
+    /* the three measures, each drawn from the midpoint */
+    G.bars = [
+      S(svg, 'rect', { x: G.MID, y: Y.rows[0] - 6, width: R - G.MID, height: 12, 'class': 'f-none s-muted' }),
+      S(svg, 'rect', { x: G.MID, y: Y.rows[1] - 6, width: 0, height: 12, 'class': 'f-gold grows' }),
+      S(svg, 'rect', { x: G.MID, y: Y.rows[2] - 6, width: 0, height: 12, 'class': 'f-accent grows' })
+    ];
+    var names = [['quoted spread, half the quote', 'quoted spread', 'quoted'], ['effective spread', 'effective'], ['price improvement', 'improvement']];
+    G.labs = names.map(function (v, j) {
+      var t = S(svg, 'text', { x: G.MID - 10, y: Y.rows[j] + 4, 'text-anchor': 'end', 'class': 't-lab' });
+      var a = S(t, 'tspan', {}), b = S(t, 'tspan', { 'class': 't-val', dx: 6 });
+      b.textContent = '20 ¢';
+      for (var m = 0; m < v.length; m++) { a.textContent = v[m]; if (t.getComputedTextLength() <= G.MID - 14) break; }
+      return b;
+    });
+    S(svg, 'text', { x: L, y: Y.fill, 'class': 't-lab' }, W < 420 ? 'Fill' : 'Fill of ten contracts');
+    G.fillLbl = S(svg, 'text', { x: R, y: Y.fill, 'text-anchor': 'end', 'class': 't-lab' });
+    G.fill = S(svg, 'g', {});
+    E.view(svg, W, Y.sq + 22);
+    update(true);
+  }
+
+  function update(quiet) {
+    var ft = Math.floor(+wIn.value / 2);
+    iIn.max = ft; if (+iIn.value > ft) iIn.value = ft;
+    iIn.disabled = ft === 0;
+    var s = current();
+    wOut.textContent = plural(s.w, 'tick') + ' · ' + (s.w * 10) + ' ¢';
+    iOut.textContent = plural(s.i, 'tick');
+    rOut.textContent = s.r;
+    rdRatio.textContent = (s.eff / s.q).toFixed(2);
+    rdPrints.textContent = s.prints;
+    note.textContent = message(s);
+    if (!quiet) E.ui('toy', [s.w, s.i, s.r]);
+    svg.setAttribute('aria-label', 'Quote from ' + money(BID) + ' to ' + money(s.ask) + '. The order executes at ' + money(s.price) + ': effective spread ' + s.eff + ' cents, quoted spread ' + s.q + ' cents, price improvement ' + s.pi + ' cents; ' + plural(s.prints, 'print') + '.');
+    if (!G) return;
+    var L = G.L, R = G.R;
+    function X(p) { return L + (p - BID) / (s.ask - BID) * (R - L); }
+    E.clear(G.ticks);
+    for (var t = 0; t <= s.w; t++) {
+      var p = BID + t * TICK, x = X(p), end = t === 0 || t === s.w;
+      S(G.ticks, 'line', { x1: x, y1: end ? Y.line - 10 : Y.line - 6, x2: x, y2: end ? Y.line + 10 : Y.line + 6, 'class': end ? 's-text' : 's-muted', 'stroke-width': end ? 1.5 : 1 });
+      S(G.ticks, 'text', { x: x, y: Y.price, 'text-anchor': 'middle', 'class': end ? 't-val' : 't-lab' }, money(p));
+    }
+    S(G.ticks, 'text', { x: L, y: Y.name, 'text-anchor': 'middle', 'class': 't-lab' }, 'bid');
+    S(G.ticks, 'text', { x: G.MID, y: Y.name, 'text-anchor': 'middle', 'class': 't-lab' }, 'midpoint');
+    S(G.ticks, 'text', { x: R, y: Y.name, 'text-anchor': 'middle', 'class': 't-lab' }, 'ask');
+    E.clear(G.resp);
+    var stack = {};
+    for (var j = 1; j <= s.r; j++) {
+      var rp = s.ask - (s.i + Math.min(j, s.room)) * TICK, key = rp.toFixed(2), m = stack[key] || 0;
+      stack[key] = m + 1;
+      S(G.resp, 'circle', { cx: X(rp), cy: Y.line - 15 - m * 8, r: 3, 'class': 'f-gold' });
+    }
+    var xi = X(s.ask - s.i * TICK), xe = X(s.price);
+    G.init.style.transform = 'translate(' + xi + 'px,0)';
+    G.exec.style.transform = 'translate(' + xe + 'px,0)';
+    G.execLbl.textContent = 'executes at ' + money(s.price);
+    G.execLbl.style.transform = 'translate(' + E.clamp(xe, 62, 0, G.W) + 'px,0)';
+    G.bars[1].setAttribute('width', Math.max(0, xe - G.MID));
+    G.bars[2].setAttribute('x', xe);
+    G.bars[2].setAttribute('width', Math.max(0, R - xe));
+    [s.q, s.eff, s.pi].forEach(function (v, j) { G.labs[j].textContent = v + ' ¢'; });
+    E.clear(G.fill);
+    var owners = [], c;
+    if (s.r === 0) for (c = 0; c < 10; c++) owners.push(0);
+    else {
+      for (c = 0; c < 4; c++) owners.push(0);
+      var base = Math.floor(6 / s.count), rem = 6 - base * s.count;
+      for (var b = 1; b <= s.count; b++) for (c = 0; c < base + (b <= rem ? 1 : 0); c++) owners.push(b);
+    }
+    var sq = Math.min(24, Math.floor((R - L - 45) / 10));
+    owners.forEach(function (o, qq) {
+      var x = L + qq * (sq + 5);
+      S(G.fill, 'rect', { x: x, y: Y.sq, width: sq, height: 18, rx: 2, 'class': o === 0 ? 'f-accent' : 'f-gold' });
+      if (o > 0) S(G.fill, 'text', { x: x + sq / 2, y: Y.sq + 13, 'text-anchor': 'middle', 'class': 't-ink' }, o);
+    });
+    G.fillLbl.textContent = s.r === 0 ? 'initiator 10' : 'initiator 4 · ' + (s.count === 1 ? 'responder 6' : 'responders 6');
+  }
+
+  var all = [];
+  for (var w = 1; w <= 6; w++) for (var i = 0; i <= Math.floor(w / 2); i++) for (var r = 0; r <= 4; r++) { var m = message(state(w, i, r)); if (all.indexOf(m) < 0) all.push(m); }
+  E.reserve(note, all);
+  [wIn, iIn, rIn].forEach(function (inp) { inp.addEventListener('input', function () { update(false); }); });
+  update(true);
+  E.fit(svg, build);
+
+  /* Where SPX trades go: Table I, Panel A. */
+  var sh = $('shares');
+  var ROWS = [['Book', 85.96, 36.32, 'f-accent'], ['Auction', 11.27, 1.04, 'f-gold'], ['Floor', 2.77, 62.64, 'f-muted']];
+  E.fit(sh, function (W) {
+    E.clear(sh);
+    var wide = W >= 520, LBL = 72, GAP = 32, cw = wide ? (W - LBL - GAP) / 2 : W - LBL;
+    ['Share of SPX trades', 'Share of SPX dollar volume'].forEach(function (title, c) {
+      var x = wide ? LBL + c * (cw + GAP) : LBL, top = wide ? 0 : c * 134;
+      S(sh, 'text', { x: x, y: top + 12, 'class': 't-title' }, title);
+      S(sh, 'line', { x1: x, y1: top + 22, x2: x, y2: top + 120, 'class': 's-muted' });
+      ROWS.forEach(function (row, j) {
+        var y = top + 30 + j * 32, len = Math.max(2, row[c + 1] / 100 * (cw - 62));
+        if (!wide || c === 0) S(sh, 'text', { x: 0, y: y + 14, 'class': 't-val' }, row[0]);
+        S(sh, 'rect', { x: x, y: y, width: len, height: 19, rx: 2, 'class': row[3] });
+        S(sh, 'text', { x: x + len + 7, y: y + 14, 'class': 't-val' }, row[c + 1].toFixed(2) + '%');
+      });
+    });
+    E.view(sh, W, wide ? 124 : 258);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-wc-theme-default="{{ (lower site.Params.appearance.mode) | default "system" }}">
+  {{ partial "site_head" . }}
+  <body class="page-wrapper" id="top">
+    <header class="page-header{{ if site.Params.header.navbar.fixed_to_top }} sticky top-0 z-30{{ end }}">
+      <a class="skip-link" href="#main">{{ i18n "skip_to_content" }}</a>
+      {{ partial "components/headers/navbar.html" . }}
+    </header>
+    <main id="main" class="page-body" data-pagefind-body>
+      {{ block "main" . }}{{ end }}
+    </main>
+    <div class="page-footer">
+      {{ partial "site_footer" . }}
+    </div>
+    {{ partial "functions/get_hook" (dict "hook" "body-end" "context" .) }}
+  </body>
+</html>

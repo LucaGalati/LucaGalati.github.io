@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is 4.3 points a lot? · Centralising a Decentralised Market</title>
+<meta name="description" content="Side path of the explorable: percentage points against percent, and what the abstract does and does not tell.">
+<link rel="stylesheet" href="explore.css">
+<script src="explore.js" defer></script>
+<script src="../sitebar.js"></script>
+</head>
+<body>
+<lg-sitebar><noscript><a href="../../publication/centralising-decentralised-market/">← Back to the paper</a></noscript><button class="bar__btn" type="button" data-map aria-expanded="false">Map<span class="bar__key"> · m</span></button></lg-sitebar>
+
+<main class="deck" data-deck="a3">
+  <section class="slide" id="s1" aria-label="Side path">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>Side path</b> Scale</p>
+        <h1>Is 4.3 points a lot?</h1>
+        <p>It depends on where the score started — and the abstract reports the difference, not the levels.</p>
+        <p>Points are not percent. Suppose the controls stood still, so EU-Bonds' own score rose by 4.3 points. From 20% to 24.3% that is a rise of about a fifth; from 60% to 64.3%, a rise of about a fourteenth.</p>
+        <p>And a single estimate comes with a margin of error, which the abstract does not report.</p>
+        <p class="note">Starting levels are illustrative; the abstract gives none. The 4.3 points are the paper's.</p>
+      </div>
+      <div class="slide__visual pts">
+        <div class="ctl-row">
+          <div class="ctl"><div class="ctl__label"><span>Where EU-Bonds' score started (illustrative)</span><output id="pt-out">20%</output></div><input type="range" id="pt" min="5" max="90" step="1" value="20" aria-label="Illustrative starting level of the efficiency score"></div>
+        </div>
+        <div class="pts__track" aria-hidden="true"><div class="pts__base" id="pt-base"></div><div class="pts__gain" id="pt-gain"></div></div>
+        <div class="pts__scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
+        <div class="readouts">
+          <div><span>The score moves</span><b id="pt-move">20% → 24.3%</b><small>4.3 percentage points</small></div>
+          <div><span>As a share of where it started</span><b id="pt-rel">+22%</b><small id="pt-frac">about a fifth</small></div>
+        </div>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--back" href="02-measure.html#4">← Back to the bet (II · 4)</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bar bar--bottom">
+  <button class="bar__btn" type="button" data-prev aria-label="Previous slide">←</button>
+  <div class="dots" data-dots role="group" aria-label="Slides"></div>
+  <span class="bar__count" data-count></span>
+  <button class="bar__btn" type="button" data-next aria-label="Next slide">→</button>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  var GAIN = 4.3;  // percentage points: the paper's number (abstract)
+  var inp = document.getElementById('pt'), out = document.getElementById('pt-out');
+  var base = document.getElementById('pt-base'), gain = document.getElementById('pt-gain');
+  var move = document.getElementById('pt-move'), rel = document.getElementById('pt-rel'), frac = document.getElementById('pt-frac');
+  function draw() {
+    var s = +inp.value, r = GAIN / s;
+    out.textContent = s + '%';
+    base.style.width = s + '%';
+    gain.style.left = s + '%'; gain.style.width = GAIN + '%';
+    move.textContent = s + '% → ' + (s + GAIN).toFixed(1) + '%';
+    rel.textContent = '+' + Math.round(r * 100) + '%';
+    frac.textContent = r >= 0.75 ? 'close to doubling' : 'about one part in ' + Math.round(1 / r);
+  }
+  inp.addEventListener('input', draw);
+  draw();
+});
+</script>
+</body>
+</html>

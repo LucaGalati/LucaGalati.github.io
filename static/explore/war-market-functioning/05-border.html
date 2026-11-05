@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kilometres or borders · The Effects of War on Market Functioning</title>
+<meta name="description" content="Side path of an explorable explanation of Federle, Galati and Riordan, The Effects of War on Market Functioning: inside the countries bordering Ukraine, does being closer add cost, or does the border carry the information?">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  .fig .gold-line { stroke: var(--near); stroke-width: 2.5; fill: none; }
+  .fig .gold-dash { stroke: var(--near); stroke-width: 2.5; fill: none; stroke-dasharray: 6 4; }
+  .legend .ln.gold { border-color: var(--near); }
+  .legend .ln.gold.dash { border-top: 2.5px dashed var(--near); }
+  .legend .ln.text.dash { border-top: 2px dashed var(--text); }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="05-border.html">
+<lg-sitebar><noscript><a href="../../publication/war-market-functioning/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Kilometres or borders?">
+  <div class="inner">
+    <p class="kicker">Side path · Kilometres or borders · 1 of 1</p>
+    <h2>Inside the bordering countries, kilometres stop mattering</h2>
+    <p class="lead">The curve on the main path assumes every kilometre counts. For firms in the countries bordering Ukraine, the authors test that: they keep the border label and let distance add more on top. If closeness itself mattered, a firm 100 km from Ukraine should pay clearly more than one 600 km away.</p>
+    <div class="two">
+      <div>
+        <p>It does not. The border step survives, at <span class="num">0.08–0.11</span> percentage points; the extra slope inside the bordering countries is indistinguishable from zero. In the paper’s words, a national border “appears to summarize most of the cross-sectional heterogeneity”.</p>
+        <p>So across the whole sample closer firms did pay more, but near the war the pattern looks more like a step at the border than a smooth slope.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-gradient.html#s3">← Return to the main path</a>
+          <a class="btn" href="02-gradient.html#s4">Continue: and yet…&nbsp;→</a>
+        </div>
+        <p class="note">Table 7, quoted spreads, without and with controls: Neighbour1 × War 0.111 and 0.078; Neighbour1 × Distance × War 1.392 (standard error 4.50) and 2.201 (4.70). “Kilometres alone” is Table 4’s curve, measured against the farthest firm; “border plus kilometres” is measured against firms outside the bordering countries, so compare the shapes rather than the exact heights. “Give or take” is about twice the standard error of the closeness term. Effective spreads tell the same story (Table 7). For the two rings together a slope sometimes appears (11.0 and 7.9 for quoted spreads), but the paper finds it unstable across specifications. The 100–700 km range is a rough span of the bordering countries, not from the paper.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="b-chart"></div>
+        <p class="legend"><span><i class="ln"></i>kilometres alone (Table 4)</span><span><i class="ln gold"></i>border plus kilometres (Table 7)</span><span>solid: without controls · dashed: with</span></p>
+        <label class="ctl" for="b-dist">Move a firm across the bordering countries</label>
+        <input type="range" id="b-dist" min="100" max="700" step="10" value="150">
+        <p class="readout" id="b-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/war-market-functioning/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- kilometres alone (Table 4) against border plus kilometres (Table 7), quoted spreads ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var K4 = [23.667, 16.075];                       /* Distance × War, without and with controls */
+  var K7 = [[0.111, 1.392, 4.50], [0.078, 2.201, 4.70]]; /* Neighbour1 × War, Neighbour1 × Distance × War, its standard error */
+  var DMIN = 100, DMAX = 700, FARW = 1 / 16001, YMAX = 26;
+  function km(d, i) { return K4[i] * (1 / (1 + d) - FARW) * 100; }
+  function border(d, i) { return (K7[i][0] + K7[i][1] / (1 + d)) * 100; }
+  function slope(d, i) { return K7[i][1] / (1 + d) * 100; }
+  function band(d, i) { return 1.96 * K7[i][2] / (1 + d) * 100; }
+  var box = document.getElementById('b-chart'), slider = document.getElementById('b-dist'), read = document.getElementById('b-read');
+  var geo = null;
+  function rng(a, b) { var lo = Math.min(a, b), hi = Math.max(a, b), d = hi < 10 ? 1 : 0; return lo.toFixed(d) + '–' + hi.toFixed(d); }
+  function pts(f, i, X, Y) { var p = []; for (var d = DMIN; d <= DMAX; d += 5) p.push(X(d).toFixed(1) + ',' + Y(f(d, i)).toFixed(1)); return p.join(' '); }
+  function build(W) {
+    box.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.4, 220, 250)), L = 30, R = 14, TOP = 22, B = 44;
+    function X(d) { return L + (W - L - R) * (d - DMIN) / (DMAX - DMIN); }
+    function Y(v) { return TOP + (H - TOP - B) * (1 - v / YMAX); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'For firms in the bordering countries, from 100 to 700 km from Ukraine: the kilometres-only curve falls steeply, from about 16 to 23 basis points down to about 2 to 3; the border-plus-kilometres fit stays nearly flat at about 8 to 12.' }, box);
+    for (var v = 0; v <= 25; v += 5) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, String(v), { 'text-anchor': 'end' });
+    }
+    for (var d = 100; d <= 700; d += 100) {
+      S('line', { x1: X(d), x2: X(d), y1: H - B, y2: H - B + 5, 'class': 'axis' }, root);
+      T(root, X(d), H - B + 17, String(d), { 'text-anchor': d === 700 ? 'end' : 'middle' });
+    }
+    T(root, (L + W - R) / 2, H - 7, W < 520 ? 'Distance to Ukraine, km' : 'Distance from headquarters to Ukraine, km (bordering countries only)', { 'text-anchor': 'middle', 'class': 'label' });
+    T(root, L, TOP - 9, W < 520 ? 'Extra quoted spread, bp' : 'Extra quoted spread after the invasion, bp', { 'class': 'label' });
+    S('polyline', { points: pts(km, 0, X, Y), 'class': 'curve0' }, root);
+    S('polyline', { points: pts(km, 1, X, Y), 'class': 'curve0', 'stroke-dasharray': '6 4' }, root);
+    S('polyline', { points: pts(border, 0, X, Y), 'class': 'gold-line' }, root);
+    S('polyline', { points: pts(border, 1, X, Y), 'class': 'gold-dash' }, root);
+    geo = { X: X, Y: Y, W: W, H: H, TOP: TOP, B: B, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var d = +slider.value;
+    slider.setAttribute('aria-valuetext', d + ' km');
+    var kA = km(d, 0), kB = km(d, 1), bA = border(d, 0), bB = border(d, 1), sA = slope(d, 0), sB = slope(d, 1), pm = Math.max(band(d, 0), band(d, 1));
+    read.innerHTML = '<strong>A bordering-country firm ' + d + ' km from Ukraine.</strong> Kilometres alone: its spread widened <strong class="nw">' + rng(kA, kB) + ' bp</strong> more than the farthest firm’s. ' +
+      'Border plus kilometres: <strong class="nw">' + rng(bA, bB) + ' bp</strong> more than firms outside the bordering countries, of which closeness adds just ' +
+      Math.min(sA, sB).toFixed(1) + '–' + Math.max(sA, sB).toFixed(1) + ' bp, give or take about ' + (pm < 2 ? pm.toFixed(1) : Math.round(pm)) + '.';
+    if (!geo) return;
+    var g = geo.dyn, x = geo.X(d), right = x > geo.W * 0.62;
+    g.innerHTML = '';
+    S('line', { x1: x, x2: x, y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    [[kA, 'text-fill'], [kB, 'text-fill'], [bA, 'near-fill'], [bB, 'near-fill']].forEach(function (p) { S('circle', { cx: x, cy: geo.Y(p[0]), r: 4.5, 'class': p[1] }, g); });
+    T(g, x + (right ? -7 : 7), geo.TOP + 12, d + ' km', { 'text-anchor': right ? 'end' : 'start', 'class': 'strong halo' });
+  }
+  slider.setAttribute('aria-label', 'Distance from headquarters to Ukraine, 100 to 700 km');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 700 });
+})();
+</script>
+</body>
+</html>

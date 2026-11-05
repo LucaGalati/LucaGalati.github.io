@@ -1,0 +1,57 @@
+{{- /* BibTeX entry for a publication page: @article for published or forthcoming work,
+       @unpublished for working papers, @phdthesis / @mastersthesis / @misc (note = degree)
+       for theses (publication_types "thesis"). Key: <lastname><year><first title word>. */ -}}
+{{- $p := . -}}
+{{- $authors := $p.Params.authors | default slice -}}
+{{- $year := $p.Date.Format "2006" -}}
+{{- $wp := eq ($p.Params.tab | default "articles") "working-papers" -}}
+{{- $forth := eq ($p.Params.status | default "") "forthcoming" -}}
+{{- $unpub := and $wp (not $forth) -}}
+{{- $thesis := in ($p.Params.publication_types | default slice) "thesis" -}}
+{{- $degree := lower ($p.Params.degree | default "") -}}
+{{- $type := cond $unpub "unpublished" "article" -}}
+{{- if $thesis -}}
+  {{- $type = cond (or (hasPrefix $degree "phd") (hasPrefix $degree "doctoral")) "phdthesis" (cond (hasPrefix $degree "master") "mastersthesis" "misc") -}}
+{{- end -}}
+{{- $first := "" -}}{{- with $authors -}}{{- $first = index . 0 -}}{{- end -}}
+{{- $last := replaceRE "[^a-z0-9]" "" (lower (index (last 1 (split $first " ")) 0)) -}}
+{{- $word := "" -}}
+{{- range split (lower $p.Title) " " -}}
+  {{- $w := replaceRE "[^a-z0-9]" "" . -}}
+  {{- if and (not $word) $w (not (in (slice "a" "an" "the") $w)) -}}{{- $word = $w -}}{{- end -}}
+{{- end -}}
+{{- $title := replace $p.Title "&" "\\&" -}}
+{{- $journal := replace ($p.Params.journal | default "") "&" "\\&" -}}
+{{- $school := replace ($p.Params.institution | default "") "&" "\\&" -}}
+@{{ $type }}{{ "{" }}{{ $last }}{{ $year }}{{ $word }},
+  author = {{ "{" }}{{ delimit $authors " and " }}{{ "}" }},
+  title = {{ "{" }}{{ $title }}{{ "}" }},
+{{- if $thesis }}
+{{- with $school }}
+  school = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- else if not $unpub }}
+{{- with $journal }}
+  journal = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- with $p.Params.volume }}
+  volume = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- with $p.Params.issue }}
+  number = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- with ($p.Params.pages | default $p.Params.article_number) }}
+  pages = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- end }}
+  year = {{ "{" }}{{ $year }}{{ "}" }},
+{{- with $p.Params.doi }}
+  doi = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- if $thesis }}
+{{- if eq $type "misc" }}
+  note = {{ "{" }}{{ $p.Params.degree }}{{ "}" }},{{ end }}
+{{- with $p.Params.url_full }}
+  url = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- else if $forth }}
+  note = {Forthcoming},
+{{- else if $wp }}
+  note = {Working paper},
+{{- with $p.Params.url_ssrn }}
+  url = {{ "{" }}{{ . }}{{ "}" }},{{ end }}
+{{- end }}
+}

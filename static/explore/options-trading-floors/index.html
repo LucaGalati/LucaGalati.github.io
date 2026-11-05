@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not Dead Yet: Options Trading Floors — an explorable explanation</title>
+<meta name="description" content="An explorable explanation of the research paper Not Dead Yet: Options Trading Floors (Galati, Hendershott, Khan and Riordan): what the Cboe trading floor does that screens cannot, and what it costs.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+.hero{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:clamp(28px,5vw,72px); align-items:center}
+.hero figure{max-width:400px; width:100%; justify-self:center}
+.hero figcaption{text-align:center}
+@media (max-width:860px){ .hero{grid-template-columns:minmax(0,1fr)} .hero figure{max-width:300px; justify-self:start} .hero figcaption{text-align:left} }
+.howto{display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:18px; font-family:var(--sans); font-size:13px; color:var(--muted)}
+</style>
+</head>
+<body>
+<lg-sitebar class="on-hub">
+  <noscript><a href="../../publication/options-trading-floors/">← Back to the paper</a></noscript>
+  <span class="where">Explorable · overview</span>
+  <button class="mapbtn" type="button" aria-label="Open the map" aria-expanded="false">Map <kbd>m</kbd></button>
+</lg-sitebar>
+
+<div class="hub">
+  <div class="hero">
+    <div>
+      <span class="kicker">An explorable explanation of a research paper</span>
+      <h1>Not Dead Yet: Options Trading Floors</h1>
+      <p class="sans small muted">Luca Galati, Terrence Hendershott, Saad Ali Khan and Ryan Riordan · working paper, draft of October 2026</p>
+      <div class="lede prose">
+        <p>In 2020 the Cboe options floor in Chicago closed for three months while its screens kept trading. This explorable follows what the paper learned from that switch: what the floor costs, and what it does that screens cannot.</p>
+      </div>
+      <a class="cta" href="01-floor.html#1">Begin →</a>
+      <div class="howto">
+        <span>Three paths · fifteen slides</span>
+        <span>← → move between slides</span>
+        <span><kbd>m</kbd> opens the map</span>
+        <span>Progress is saved in this browser</span>
+      </div>
+    </div>
+    <figure>
+      <svg id="ring" class="fig" role="img" aria-label="Schematic of a trading crowd: a ring of market makers around one order being represented"></svg>
+      <figcaption>One order, represented to a crowd of market makers.</figcaption>
+    </figure>
+  </div>
+
+  <section class="paths">
+    <span class="kicker">The three paths</span>
+    <div class="decks" data-hub-decks></div>
+    <p class="source">Every number in these pages comes from the paper's October 2026 draft. Nothing here calls another site: the fonts are the site's own, and there are no external scripts, no analytics.</p>
+  </section>
+</div>
+
+<script src="explore.js"></script>
+<script>
+(function () {
+  Explore.hub();
+  var S = Explore.svg, svg = document.getElementById('ring');
+  var cx = 240, cy = 230, r = 180, N = 15;
+  svg.setAttribute('viewBox', '0 0 480 440');
+  S('circle', { cx: cx, cy: cy, r: r, fill: 'none', stroke: 'var(--border)', 'stroke-dasharray': '2 5' }, svg);
+  var pts = [];
+  for (var i = 0; i < N; i++) {
+    var a = (120 + i * 300 / (N - 1)) * Math.PI / 180;
+    pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
+  }
+  var bx = cx, by = cy + 26;
+  [2, 5, 7, 9, 12].forEach(function (i, k) {
+    var l = S('line', { x1: bx, y1: by, x2: pts[i][0], y2: pts[i][1], stroke: 'var(--gold)', 'stroke-width': 1.5, 'class': 'ray' }, svg);
+    l.style.setProperty('--d', k);
+  });
+  pts.forEach(function (p) { S('circle', { cx: p[0], cy: p[1], r: 12, fill: 'var(--bg)', stroke: 'var(--ink)', 'stroke-width': 1.25 }, svg); });
+  S('circle', { cx: bx, cy: by, r: 8, fill: 'var(--gold)' }, svg);
+})();
+</script>
+</body>
+</html>

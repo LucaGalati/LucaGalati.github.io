@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who pays · Auctions for Retail-Sized Options</title>
+<meta name="description" content="Deck 3 of the explorable: a liquidity provider's ledger. Matched twins cost the same to hedge, so the auction's price improvement comes out of what the provider keeps.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<noscript><style>.slide{display:grid !important}.map-btn{display:none}</style></noscript>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/auctions-retail-options/">← Back to the paper</a></noscript>
+  <div class="deck-label">Deck 3 of 4 · <b>Who pays</b></div>
+  <button type="button" class="map-btn" aria-haspopup="dialog" aria-expanded="false">Map <span class="kbd">m</span></button>
+</lg-sitebar>
+<main>
+
+<section class="slide" id="s1">
+  <div class="inner split">
+    <div>
+      <p class="eyebrow">Who pays</p>
+      <h2>A liquidity provider’s ledger</h2>
+      <p>An option’s delta is how far its price moves when the index moves one point: at 0.35, about 35 cents of option price per point. Whoever takes the other side of an order now holds that bet on the market. It offsets the bet in E-mini S&amp;P 500 futures and pays the futures spread to do so; a delta of 0.5 takes one E-mini.</p>
+      <p>So a liquidity provider, the market maker or other firm that fills the order, earns the effective spread and pays to hedge. What is left is its revenue. The twins of the last deck carry the same delta, 0.325, so they cost about the same to hedge: 4.24 cents and 4.15.</p>
+      <p>Drag the delta. Is there one at which the auction trade pays the provider as much as its twin?</p>
+    </div>
+    <figure class="stage">
+      <svg id="ledger" role="img" aria-label="What the provider earns, pays to hedge and keeps on the matched auction trade and on its book twin."></svg>
+      <div class="controls">
+        <div class="control"><label for="delta">Absolute delta of both trades</label><output id="deltaOut" for="delta">0.325</output><input type="range" id="delta" min="0.05" max="0.75" value="0.325" step="0.025"><div class="mark" aria-hidden="true"><span style="left:calc(39.29% + 1.7px)">matched mean</span></div></div>
+      </div>
+      <p class="toy-note" id="ledgerNote" aria-live="polite"></p>
+      <figcaption>Revenue as the paper measures it: the spread earned minus the cost of hedging the trade’s delta at the E-mini quote. Matched single-leg means, Table VI: effective spread 8.55 and 12.39 cents; hedge cost 4.24 cents at a delta of 0.325, scaled in proportion to the delta. The spread earned is held fixed as the delta moves.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="inner split text-right">
+    <div>
+      <p class="eyebrow">Who pays</p>
+      <h2>The provider pays for the improvement</h2>
+      <p>Twins share a delta, so they cost the same to hedge; the difference, 0.09 to 0.29 cents, is not significant. The provider’s revenue is 4.42 cents lower on the auction trade without controls and 7.78 lower with them: at least as large as the fall in the effective spread.</p>
+      <p>One worry: liquidity providers might start auctions only for the orders cheapest to fill. If so, they would earn more there. They earn less.</p>
+      <p class="lede ask">Is this what an auction does everywhere, or only where nobody bought the order?</p>
+      <p class="doors"><a class="door" href="04-spy.html">With and without a buyer</a><a class="door small" href="02-match.html#s3">The auction, or the week?</a><a class="door small" href="02-match.html#s4">Do complex orders gain too?</a></p>
+    </div>
+    <figure>
+      <svg id="coef" role="img" aria-label="Difference between a matched auction trade and its book twin, in cents: effective spread minus 3.84 without controls and minus 6.71 with them; provider revenue minus 4.42 and minus 7.78; hedge cost plus 0.09 and plus 0.29, not significant."></svg>
+      <figcaption>Coefficient on the auction indicator in the matched single-leg sample, 36,830 observations (Table VII and Appendix Table BI of the paper). Hollow: without controls. Filled: with the quoted spread, the trade’s characteristics, the VIX and daily SPY and SPX spreads. The hedge-cost estimates are not significant; all others are significant at the 1 percent level.</figcaption>
+    </figure>
+  </div>
+</section>
+
+</main>
+<script src="explore.js"></script>
+<script>
+(function () {
+  var E = window.EXPLORE, S = E.svg;
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* Playable 2 — the ledger, on the matched pair of Table VI. Revenue = effective spread − hedge cost,
+     hedge cost = |delta| × the E-mini quoted spread (Section I.E). One hedge line for both trades:
+     4.24 cents at the matched |delta| of 0.325, in proportion to delta. */
+  var RATE = 4.236 / 0.325;
+  var M = [{ name: 'auction trade', es: 8.55, cls: 'f-gold' }, { name: 'book twin', es: 12.39, cls: 'f-accent' }];
+  var DMAX = 0.75;
+  var svg = $('ledger'), dIn = $('delta'), dOut = $('deltaOut'), note = $('ledgerNote');
+  function message(d) {
+    var h = RATE * d, a = M[0].es - h, b = M[1].es - h;
+    return 'At a delta of ' + d.toFixed(3) + ', hedging costs ' + h.toFixed(2) + ' cents on either trade. ' +
+      (a < 0 ? 'The auction trade no longer covers its hedge; its twin keeps ' + b.toFixed(2) + '.' : 'The provider keeps ' + a.toFixed(2) + ' on the auction trade and ' + b.toFixed(2) + ' on its twin.') +
+      ' The gap is 3.84 cents, all of the fall in the spread.';
+  }
+  var saved = E.ui('delta');
+  if (typeof saved === 'number') dIn.value = saved;
+
+  var G = null;
+  E.fit(svg, function (W) {
+    E.clear(svg);
+    var K = 10.5, TOP = 50, Y0 = TOP + M[1].es * K, NEG = (RATE * DMAX - M[0].es) * K;
+    var bw = Math.min(40, Math.floor(W / 9));
+    G = { Y0: Y0, K: K, bars: [], vals: [] };
+    var lx = 0;
+    M.forEach(function (m) {
+      S(svg, 'circle', { cx: lx + 5, cy: 10, r: 5, 'class': m.cls });
+      var t = S(svg, 'text', { x: lx + 15, y: 14, 'class': 't-lab' }, m.name);
+      lx += 15 + t.getComputedTextLength() + 18;
+    });
+    S(svg, 'text', { x: W, y: 14, 'text-anchor': 'end', 'class': 't-lab' }, W < 360 ? 'cents' : 'cents per contract');
+    S(svg, 'line', { x1: 0, y1: Y0, x2: W, y2: Y0, 'class': 's-text' });
+    ['earns', 'pays to hedge', 'keeps'].forEach(function (cat, c) {
+      var gx = W * (2 * c + 1) / 6;
+      S(svg, 'text', { x: gx, y: Y0 + NEG + 32, 'text-anchor': 'middle', 'class': 't-val' }, cat);
+      G.bars[c] = M.map(function (m, j) { return S(svg, 'rect', { x: j === 0 ? gx - bw - 3 : gx + 3, y: Y0, width: bw, height: 0, rx: 2, 'class': m.cls + ' grows' }); });
+      if (c === 1) G.each = S(svg, 'text', { x: gx, y: Y0, 'text-anchor': 'middle', 'class': 't-val grows' });
+      else G.vals[c] = M.map(function (m, j) { return S(svg, 'text', { x: j === 0 ? gx - 3 - bw / 2 : gx + 3 + bw / 2, y: Y0, 'text-anchor': 'middle', 'class': 't-val grows' }); });
+    });
+    E.view(svg, W, Y0 + NEG + 40);
+    update(true);
+  });
+  function bar(r, t, v) {
+    var h = Math.abs(v) * G.K;
+    r.setAttribute('height', h);
+    r.setAttribute('y', v >= 0 ? G.Y0 - h : G.Y0);
+    if (t) { t.style.transform = 'translate(0,' + (v >= 0 ? -h - 6 : h + 15) + 'px)'; t.textContent = (v < 0 ? '−' : '') + Math.abs(v).toFixed(2); }
+  }
+  function update(quiet) {
+    var d = +dIn.value, h = RATE * d;
+    dOut.textContent = d.toFixed(3);
+    note.textContent = message(d);
+    if (!quiet) E.ui('delta', d);
+    svg.setAttribute('aria-label', 'At a delta of ' + d.toFixed(3) + ': the auction trade earns 8.55 cents, its twin 12.39; hedging costs ' + h.toFixed(2) + ' on each; the provider keeps ' + (M[0].es - h).toFixed(2) + ' and ' + (M[1].es - h).toFixed(2) + '.');
+    if (!G) return;
+    M.forEach(function (m, j) {
+      bar(G.bars[0][j], G.vals[0][j], m.es);
+      bar(G.bars[1][j], null, h);
+      bar(G.bars[2][j], G.vals[2][j], m.es - h);
+    });
+    G.each.style.transform = 'translate(0,' + (-h * G.K - 6) + 'px)';
+    G.each.textContent = h.toFixed(2) + ' each';
+  }
+  var all = [];
+  for (var d = 0.05; d <= DMAX + 1e-9; d += 0.025) all.push(message(Math.round(d * 1000) / 1000));
+  E.reserve(note, all);
+  dIn.addEventListener('input', function () { update(false); });
+  update(true);
+
+  /* Coefficient dot plot (Table VII, Panels A and B; Table BI, Panel A). */
+  var coef = $('coef');
+  var ROWS = [['Effective spread', -3.84, -6.71], ['Provider revenue', -4.42, -7.78], ['Hedge cost (n.s.)', 0.09, 0.29, true]];
+  E.fit(coef, function (W) {
+    E.clear(coef);
+    var wide = W >= 440, X0 = wide ? 142 : 10, X1 = W - 14, LO = wide ? -9 : -10.5, HI = 1.5, RH = wide ? 56 : 70, Y0 = wide ? 40 : 58;
+    function X(v) { return X0 + (v - LO) / (HI - LO) * (X1 - X0); }
+    var yEnd = Y0 + 2 * RH + 26;
+    S(coef, 'line', { x1: X(0), y1: 18, x2: X(0), y2: yEnd, 'class': 's-muted', 'stroke-dasharray': '2 3' });
+    S(coef, 'text', { x: X(0), y: 12, 'text-anchor': 'middle', 'class': 't-lab' }, 'no difference');
+    [-8, -6, -4, -2, 0].forEach(function (t) { S(coef, 'text', { x: X(t), y: yEnd + 16, 'text-anchor': 'middle', 'class': 't-lab' }, (t < 0 ? '−' : '') + Math.abs(t) + ' ¢'); });
+    ROWS.forEach(function (r, i) {
+      var y = Y0 + i * RH, ns = r[3];
+      S(coef, 'text', wide ? { x: 0, y: y + 4, 'class': 't-val' } : { x: 0, y: y - 18, 'class': 't-val' }, r[0]);
+      S(coef, 'line', { x1: X0, y1: y, x2: X1, y2: y, 'class': 's-line' });
+      S(coef, 'line', { x1: X(r[1]), y1: y, x2: X(r[2]), y2: y, 'class': ns ? 's-muted' : 's-gold', 'stroke-width': 2 });
+      S(coef, 'circle', { cx: X(r[1]), cy: y, r: 6, 'class': 'f-paper ' + (ns ? 's-muted' : 's-gold'), 'stroke-width': 1.75 });
+      S(coef, 'circle', { cx: X(r[2]), cy: y, r: 6, 'class': ns ? 'f-muted' : 'f-gold' });
+      if (ns) S(coef, 'text', { x: X(r[1]) - 10, y: y + 4, 'text-anchor': 'end', 'class': 't-val' }, E.minus(r[1], 2) + ' to ' + E.minus(r[2], 2));
+      else {
+        S(coef, 'text', { x: X(Math.min(r[1], r[2])) - 10, y: y + 4, 'text-anchor': 'end', 'class': 't-val' }, E.minus(Math.min(r[1], r[2]), 2));
+        S(coef, 'text', { x: X(Math.max(r[1], r[2])) + 10, y: y + 4, 'text-anchor': 'start', 'class': 't-val' }, E.minus(Math.max(r[1], r[2]), 2));
+      }
+    });
+    E.view(coef, W, yEnd + 22);
+  });
+})();
+</script>
+</body>
+</html>

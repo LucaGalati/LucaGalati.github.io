@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limits to Longer Benchmark Windows — an explorable</title>
+<meta name="description" content="An explorable explanation of Galati & Gaudiosi, “Limits to Longer Benchmark Windows”: how long should an FX fixing window be?">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .hook-grid { display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); gap: 24px 64px; align-items: center; }
+  .hook-clock { margin: 0; text-align: center; }
+  .hook .clock { width: 100%; max-width: 290px; height: auto; margin: 0 auto 10px; }
+  .hook .clock-cap { margin: 0; }
+  .hook .lead { margin-bottom: .55em; }
+  @media (max-width: 860px) { .hook-grid { grid-template-columns: minmax(0, 1fr); } .hook .clock { max-width: 128px; } }
+  .clock .face { fill: none; stroke: var(--text); stroke-width: 1.4; }
+  .clock .tk { stroke: var(--muted); stroke-width: 1.3; }
+  .clock .tk5 { stroke: var(--text); stroke-width: 2; }
+  .clock .hand { stroke: var(--text); stroke-linecap: round; }
+  .clock .arc { fill: none; stroke: var(--gold); stroke-width: 9; }
+  .clock .pin { fill: var(--text); }
+  #k-reveal { margin-top: 10px; }
+</style>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/benchmark-windows/">← Back to the paper</a></noscript>
+  <div class="deck"><b>The fix</b><span class="n"> · part 1 of 2</span></div>
+  <button type="button" class="map-btn" aria-haspopup="dialog">Map<kbd>m</kbd></button>
+</lg-sitebar>
+
+<main>
+
+<!-- 1 ─────────────────────────────────────────────── -->
+<section class="slide" id="s1">
+  <div class="slide-inner slide--wide hook">
+    <div class="hook-grid">
+      <figure class="hook-clock">
+        <svg class="clock" viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="face" cx="100" cy="100" r="88"></circle>
+          <g class="ticks"></g>
+          <path class="arc" d="M 77.74 16.93 A 86 86 0 0 1 122.26 16.93"></path>
+          <line class="hand" x1="100" y1="100" x2="139" y2="122.5" style="stroke-width:4.5"></line>
+          <line class="hand" x1="100" y1="100" x2="100" y2="30" style="stroke-width:2.6"></line>
+          <circle class="pin" cx="100" cy="100" r="4"></circle>
+        </svg>
+        <figcaption class="clock-cap">4pm London · the five-minute window in gold</figcaption>
+      </figure>
+      <div>
+        <h1>Limits to Longer Benchmark Windows</h1>
+        <p class="lead">At four o’clock in London, a number is born: the WMR 4pm fix, the average of the prices traded in a short window around four. Funds holding about <span class="k">$6 trillion</span> convert their currencies at it.</p>
+        <p>After the manipulation scandals (£1.1 billion of FCA fines in a single day), the window was widened in 2015 from <span class="k">one minute to five</span>. Providers now sell twenty-minute versions.</p>
+        <p class="q">If one minute was too short, why not twenty? Why not an hour?</p>
+        <p>One minute was easy to push around. This paper sets manipulation aside and asks a different question: what does a longer window cost the people who trade at the fix, and everyone who relies on it?</p>
+        <p><a class="next" href="#s2">Start with what a window is ›</a></p>
+        <p class="src">Galati &amp; Gaudiosi (2026), <em>Limits to Longer Benchmark Windows</em>, working paper. Figures from its introduction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 ─────────────────────────────────────────────── -->
+<section class="slide" id="s2">
+  <div class="slide-inner slide--wide">
+    <h2>An average over a window</h2>
+    <p>A fixing is not a price anyone quoted. It is the <span class="k">average of the prices traded inside a window</span>, and the WMR window is centred on 4pm: five minutes run from 3:57:30 to 4:02:30. The bar drawn on gold is the fix. Drag the window.</p>
+    <figure class="stage">
+      <svg id="svg-avg" role="img" aria-label="A simulated GBP/USD price path with the fixing window highlighted and the fix drawn as a bar across it"></svg>
+      <figcaption>A simulated afternoon of GBP/USD at the volatility the paper measures before the fix. Prices in basis points (hundredths of a per cent) from the 3:35 level.</figcaption>
+    </figure>
+    <div class="ctls ctls--2">
+      <label class="ctl"><span>Window length</span><input id="tf-avg" type="range" min="1" max="20" step="0.5" value="5"><output id="tf-avg-out">5.0 min</output></label>
+      <div class="readout" id="ro-avg" aria-live="polite" style="margin-top:0"></div>
+    </div>
+    <p class="gap-top">Notice that the fix is almost never the 4:00 price. For everyone who uses the published rate, that gap is a cost of its own. <a class="door" href="03-behind.html#s3">The gap, and why the window is centred on four</a></p>
+    <p><a class="next" href="#s3">But nobody trades in an empty window. Here is who does ›</a></p>
+  </div>
+</section>
+
+<!-- 3 ─────────────────────────────────────────────── -->
+<section class="slide" id="s3">
+  <div class="slide-inner slide--wide">
+    <div class="cols cols--stage-right">
+      <div>
+        <h2>The dealer hedges</h2>
+        <p>A pension fund wants to buy £50 million “at the fix”. A dealer promises it the fix price, whatever that turns out to be, and buys the pounds in the market. In the paper’s model it makes <span class="k">25 equal trades in the ten minutes before the window and 25 inside it</span>. Say a tenth of the order goes before: an illustrative split; a dealer optimising for itself pre-hedges less.</p>
+        <p>With the market’s own movement switched off, watch only the dealer. Each trade nudges the price up, so the fix averages a price the dealer itself is lifting — and the pension fund pays every basis point of it.</p>
+        <p class="after"><a class="door" href="03-behind.html#s1">Why trade before the window at all?</a></p>
+      </div>
+      <div>
+        <figure class="stage">
+          <svg id="svg-dealer" role="img" aria-label="The price impact of the dealer's hedge trades accumulating before and inside the fixing window"></svg>
+          <figcaption>Price displacement caused by the hedge, in basis points. Short ticks: trades of 0.2 million before the window; tall ticks: 1.8 million inside it. Impact parameters: the paper’s GBP/USD medians.</figcaption>
+        </figure>
+        <div class="ctls">
+          <label class="ctl"><span>Window length</span><input id="tf-dealer" type="range" min="1" max="20" step="0.5" value="5"><output id="tf-dealer-out">5.0 min</output></label>
+        </div>
+        <div class="readout" id="ro-dealer" aria-live="polite"></div>
+        <div class="btns"><button type="button" class="btn" id="replay-dealer">Replay the trades</button><a class="next" href="#s4">Wider window, smaller cost. Why? ›</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ─────────────────────────────────────────────── -->
+<section class="slide" id="s4">
+  <div class="slide-inner slide--wide">
+    <div class="cols cols--stage-right">
+      <div>
+        <h2>Impact fades</h2>
+        <p>Most of a trade’s footprint is temporary. In GBP/USD each million traded leaves about <span class="k">0.01 basis points for good</span> and <span class="k">0.06–0.07 that fade</span>, halving every 51 seconds or so: the paper’s median estimates from two years of trades around the fix.</p>
+        <p>Click the timeline to fire trades of 2 million; 25 of them make the whole order. Close together, the bumps stack. Spread out, each fades before the next arrives.</p>
+        <p class="after">So a longer window spreads the dealer’s trades thinner and lets each bump decay before it is averaged. The paper calls this <em>transient-impact dilution</em>.</p>
+      </div>
+      <div>
+        <figure class="stage">
+          <svg id="svg-kernel" role="img" aria-label="Price impact built from trades you place on a timeline; each trade adds a permanent step and a bump that fades"></svg>
+          <figcaption>Each trade adds 0.01 bp per million for good plus 0.065 bp per million (the midpoint of 0.06–0.07) that halves every 51 seconds: κ, λ and β = 0.82 per minute in the paper.</figcaption>
+        </figure>
+        <div class="btns">
+          <button type="button" class="btn" id="k-stack">25 in one minute</button>
+          <button type="button" class="btn" id="k-spread">25 over ten minutes</button>
+          <button type="button" class="btn" id="k-one">Fire one</button>
+          <button type="button" class="btn" id="k-clear">Clear</button>
+        </div>
+        <div class="readout" id="ro-kernel" aria-live="polite"></div>
+        <p class="small" id="k-reveal" hidden>Same 25 trades: about <b>1.5 bp</b> of average displacement packed into a minute, about <b>0.6 bp</b> spread over ten.</p>
+        <p class="gap-top"><a class="next" href="#s5">So the longer the better? ›</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ─────────────────────────────────────────────── -->
+<section class="slide" id="s5">
+  <div class="slide-inner slide--wide">
+    <h2>So: longer is better?</h2>
+    <p>For a client that cares only about the <em>expected</em> cost of its order, yes. Drag the window out to an hour.</p>
+    <figure class="stage">
+      <svg id="svg-long" role="img" aria-label="Expected client cost per unit traded against window length up to an hour, falling throughout"></svg>
+      <figcaption>Expected cost per unit of the £50 million order, basis points, at the paper’s GBP/USD medians with a tenth pre-hedged (eq. 17). One basis point of this order is £5,000.</figcaption>
+    </figure>
+    <div class="ctls ctls--2">
+      <label class="ctl"><span>Window length</span><input id="tf-long" type="range" min="1" max="60" step="0.5" value="20"><output id="tf-long-out">20.0 min</output></label>
+      <div class="readout" id="ro-long" aria-live="polite" style="margin-top:0"></div>
+    </div>
+    <p class="gap-top">The curve flattens but never turns up. Absent fees or an outside limit, a client that ignores risk <span class="k">prefers the longest possible window</span> (Section 3.1). Yet the industry settled on five minutes. Something is missing from this picture.</p>
+    <p><a class="next" href="02-limits.html#s1">What a longer window costs ›</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="nav">
+  <div><a class="arrow prev" href="#s1">‹ Previous</a></div>
+  <div class="dots"></div>
+  <div class="r"><a class="arrow next-arrow" href="#s2">Next ›</a></div>
+</footer>
+
+<script src="bw.js"></script>
+<script>
+(function () {
+  'use strict';
+  var B = window.BW;
+  B.initDeck('fix');
+  var P = B.params(B.PRESETS.GBP);
+  function bp(v, d) { return B.sgn(v, d === undefined ? 2 : d) + ' bp'; }
+
+  /* clock ticks */
+  (function () {
+    var g = document.querySelector('.clock .ticks'), i, a, r1;
+    for (i = 0; i < 60; i++) { a = i * Math.PI / 30; r1 = (i % 5 === 0) ? 74 : 81;
+      B.mk('line', { 'class': i % 5 === 0 ? 'tk5' : 'tk', x1: 100 + r1 * Math.sin(a), y1: 100 - r1 * Math.cos(a), x2: 100 + 87 * Math.sin(a), y2: 100 - 87 * Math.cos(a) }, g); }
+  })();
+
+  /* ---------- slide 2: the fix is an average over a window ---------- */
+  (function () {
+    var svg = document.getElementById('svg-avg'), ro = document.getElementById('ro-avg'); if (!svg) return;
+    var t0 = -25, t1 = 15, dt = 1 / 60, steps = Math.round((t1 - t0) / dt), path = B.bm(20240701, steps, dt, P.sigma), i0 = Math.round((0 - t0) / dt);
+    var Tf = 5, C, band, e1, e2, fix, fixLab, winLab, p4lab;
+    var ticks = [[-20, '3:40'], [-10, '3:50'], [0, '4:00'], [10, '4:10']];
+    function signed(v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v); }
+    function build() {
+      C = B.chart(svg, { W: 900, H: 240, x: [t0, t1], y: [-16, 16], pad: { l: 58, r: 120, t: 14, b: 30 }, xticks: ticks, yticks: [-10, 0, 10], yfmt: function (v) { return signed(v) + ' bp'; },
+        mobile: { W: 420, H: 290, pad: { l: 40, r: 12, t: 26, b: 30 }, yfmt: signed, ylabel: 'bp' } });
+      band = B.mk('rect', { 'class': 'band', y: C.top, height: C.bottom - C.top }, C.under);
+      e1 = B.mk('line', { 'class': 'band-edge', y1: C.top, y2: C.bottom }, C.under); e2 = B.mk('line', { 'class': 'band-edge', y1: C.top, y2: C.bottom }, C.under);
+      var pts = [], i; for (i = 0; i <= steps; i++) pts.push([C.X(t0 + i * dt), C.Y(path[i])]);
+      B.mk('path', { d: B.pathOf(pts), 'class': 'price' }, C.g);
+      B.mk('line', { x1: C.X(0), x2: C.X(0), y1: C.top, y2: C.bottom, 'class': 'hair' }, C.under);
+      fix = B.fixMark(C.over);
+      B.mk('circle', { cx: C.X(0), cy: C.Y(path[i0]), r: 4, 'class': 'ring' }, C.over);
+      p4lab = B.mk('text', { x: C.X(0) - 8, 'text-anchor': 'end', 'class': 'lbl', text: 'price at 4:00' }, C.over);
+      fixLab = B.mk('text', { 'class': 'lbl-strong' }, C.over);
+      winLab = B.mk('text', { 'class': 'lbl', 'text-anchor': 'middle', y: C.top + 13 }, C.over);
+      draw();
+    }
+    function draw() {
+      var a = -Tf / 2, b = Tf / 2, ia = Math.round((a - t0) / dt), ib = Math.round((b - t0) / dt), s = 0, k;
+      for (k = ia; k <= ib; k++) s += path[k];
+      var fx = s / (ib - ia + 1), gap = fx - path[i0];
+      band.setAttribute('x', C.X(a)); band.setAttribute('width', C.X(b) - C.X(a));
+      e1.setAttribute('x1', C.X(a)); e1.setAttribute('x2', C.X(a)); e2.setAttribute('x1', C.X(b)); e2.setAttribute('x2', C.X(b));
+      fix.set(C.X(a), C.X(b), C.Y(fx));
+      p4lab.setAttribute('y', path[i0] >= fx ? C.Y(path[i0]) - 10 : C.Y(path[i0]) + 19);   /* on the side away from the fix */
+      var right = C.X(b) < C.right - (C.narrow ? 70 : 20);
+      fixLab.setAttribute('text-anchor', right ? 'start' : 'end'); fixLab.setAttribute('x', right ? C.X(b) + 8 : C.X(a) - 8); fixLab.setAttribute('y', C.Y(fx) + 4);
+      fixLab.textContent = C.narrow ? 'fix' : 'the fix: ' + bp(fx, 1);
+      winLab.setAttribute('x', C.X(0)); winLab.textContent = B.clockLabel(a) + ' – ' + B.clockLabel(b);
+      ro.innerHTML = '<span class="sw sw--ink"></span>fix <b>' + bp(fx) + '</b> · price at 4:00 <b>' + bp(path[i0]) + '</b> · gap <b>' + B.fmt(Math.abs(gap), 2) + ' bp</b>';
+    }
+    B.bind(document.getElementById('tf-avg'), document.getElementById('tf-avg-out'), function (v) { Tf = v; if (C) draw(); }, function (v) { return B.fmt(v, 1) + ' min'; }).refresh();
+    B.layout(build);
+  })();
+
+  /* ---------- slide 3: the dealer's hedge lifts the price ---------- */
+  (function () {
+    var svg = document.getElementById('svg-dealer'), ro = document.getElementById('ro-dealer'), s3 = document.getElementById('s3'); if (!svg) return;
+    var theta = P.theta, t0 = -25, t1 = 15, res = 1 / 30;
+    var state = { Tf: 5, progress: 1, raf: null }, C, band, e1, e2, tickG, curve, fix, fixLab;
+    function build() {
+      C = B.chart(svg, { W: 620, H: 270, x: [t0, t1], y: [0, 3], pad: { l: 46, r: 14, t: 14, b: 30 }, clip: true,
+        xticks: [[-20, '3:40'], [-10, '3:50'], [0, '4:00'], [10, '4:10']], yticks: [0, 1, 2, [3, '3 bp']],
+        mobile: { W: 420, H: 290 } });
+      B.mk('text', { x: C.X(t0) + 6, y: C.bottom - 8, 'class': 'lbl', text: 'price before the dealer trades' }, C.under);
+      band = B.mk('rect', { 'class': 'band', y: C.top, height: C.bottom - C.top }, C.under);
+      e1 = B.mk('line', { 'class': 'band-edge', y1: C.top, y2: C.bottom }, C.under); e2 = B.mk('line', { 'class': 'band-edge', y1: C.top, y2: C.bottom }, C.under);
+      tickG = B.mk('g', {}, C.over); curve = B.mk('path', { 'class': 'ink' }, C.g);
+      fix = B.fixMark(C.over); fixLab = B.mk('text', { 'class': 'lbl-strong', 'text-anchor': 'end' }, C.over);
+      draw();
+    }
+    function trades(Tf) { var w0 = -Tf / 2, L = [], i; for (i = 1; i <= P.m; i++) L.push({ t: w0 - P.Tp + i * P.Tp / P.m, q: theta * P.X / P.m, pre: true }); for (i = 1; i <= P.n; i++) L.push({ t: w0 + i * Tf / P.n, q: (1 - theta) * P.X / P.n, pre: false }); return L; }
+    function impact(t, L) { var v = 0, i, tr; for (i = 0; i < L.length; i++) { tr = L[i]; if (tr.t <= t) v += tr.q * (P.kappa + P.lam * Math.exp(-P.beta * (t - tr.t))); } return v; }
+    function draw() {
+      var Tf = state.Tf, L = trades(Tf), w0 = -Tf / 2, w1 = Tf / 2, start = w0 - P.Tp, done = state.progress >= 1;
+      var tEnd = done ? t1 : start + (w1 - start) * state.progress, pts = [], t, i;
+      band.setAttribute('x', C.X(w0)); band.setAttribute('width', C.X(w1) - C.X(w0));
+      e1.setAttribute('x1', C.X(w0)); e1.setAttribute('x2', C.X(w0)); e2.setAttribute('x1', C.X(w1)); e2.setAttribute('x2', C.X(w1));
+      for (t = t0; t <= tEnd + 1e-9; t += res) pts.push([C.X(t), C.Y(impact(t, L))]);
+      curve.setAttribute('d', B.pathOf(pts));
+      while (tickG.firstChild) tickG.removeChild(tickG.firstChild);
+      for (i = 0; i < L.length; i++) if (L[i].t <= tEnd + 1e-9) B.mk('line', { 'class': L[i].pre ? 'pretick' : 'intick', x1: C.X(L[i].t), x2: C.X(L[i].t), y1: C.bottom, y2: C.bottom - (L[i].pre ? 7 : 13) }, tickG);
+      var s = 0, k = 0; for (t = w0; t <= w1 + 1e-9; t += Tf / 200) { s += impact(t, L); k++; }
+      var fx = s / k;
+      fix.set(C.X(w0), C.X(w1), C.Y(fx)); fix.show(done); fixLab.style.opacity = done ? 1 : 0;
+      fixLab.setAttribute('x', C.X(w0) - 8); fixLab.setAttribute('y', C.Y(fx) + 4); fixLab.textContent = 'impact in the fix';
+      ro.innerHTML = done ? '<span class="sw sw--ink"></span>impact inside the fix: <b>' + B.fmt(fx, 2) + ' bp</b>, about <b>' + B.money(fx, P.X) + '</b> on this order — the pension fund’s cost'
+        : '<span class="sw sw--ink"></span>the dealer is trading…';
+    }
+    function animate() {
+      if (state.raf) cancelAnimationFrame(state.raf);
+      if (B.reduced) { state.progress = 1; draw(); return; }
+      var T0 = null;
+      function step(ts) { if (T0 === null) T0 = ts; state.progress = Math.min(1, (ts - T0) / 3200); draw(); state.raf = state.progress < 1 ? requestAnimationFrame(step) : null; }
+      state.progress = 0; state.raf = requestAnimationFrame(step);
+    }
+    B.bind(document.getElementById('tf-dealer'), document.getElementById('tf-dealer-out'), function (v) { state.Tf = v; if (C) draw(); }, function (v) { return B.fmt(v, 1) + ' min'; }).refresh();
+    B.layout(build);
+    document.getElementById('replay-dealer').addEventListener('click', animate);
+    s3.addEventListener('bw:enter', animate);
+    if (s3.classList.contains('is-active')) animate();
+  })();
+
+  /* ---------- slide 4: the impact kernel ---------- */
+  (function () {
+    var svg = document.getElementById('svg-kernel'), ro = document.getElementById('ro-kernel'), reveal = document.getElementById('k-reveal'); if (!svg) return;
+    var q = 2, T = 12, trades = [1], ymax = 3, C, curve, fill, tickG, mean, hint;
+    var tried = B.load('bw.kernel', {}); if (!tried || typeof tried !== 'object') tried = {};
+    function showReveal() { reveal.hidden = !(tried.stack && tried.spread); }
+    function value(t) { var v = 0, i; for (i = 0; i < trades.length; i++) if (trades[i] <= t) v += q * (P.kappa + P.lam * Math.exp(-P.beta * (t - trades[i]))); return v; }
+    function build() {
+      C = B.chart(svg, { W: 620, H: 270, x: [0, T], y: [0, ymax], pad: { l: 46, r: 14, t: 14, b: 30 },
+        xticks: [0, 2, 4, 6, 8, 10, [12, '12 min']], yticks: ymax <= 3 ? [0, 1, 2, [3, '3 bp']] : [0, Math.round(ymax / 2), [ymax, ymax + ' bp']],
+        mobile: { W: 420, H: 280, xticks: [0, 4, 8, [12, '12 min']] } });
+      B.mk('rect', { x: C.left, y: C.top, width: C.right - C.left, height: C.bottom - C.top, fill: 'transparent', style: 'cursor:crosshair' }, C.under);
+      hint = B.mk('text', { x: (C.left + C.right) / 2, y: C.top + 16, 'text-anchor': 'middle', 'class': 'lbl', text: 'click anywhere here to fire a trade' }, C.under);
+      fill = B.mk('path', { 'class': 'fill-gold' }, C.under); curve = B.mk('path', { 'class': 'ink' }, C.g);
+      tickG = B.mk('g', {}, C.over); mean = B.fixMark(C.over);
+      draw();
+    }
+    function draw() {
+      var pts = [], t, v, i, s = 0, k = 0, mx = 0, tmin = Infinity, tmax = -Infinity;
+      for (i = 0; i < trades.length; i++) { tmin = Math.min(tmin, trades[i]); tmax = Math.max(tmax, trades[i]); }
+      for (t = 0; t <= T + 1e-9; t += 0.02) { v = value(t); mx = Math.max(mx, v); pts.push([C.X(t), C.Y(v)]); if (t >= tmin && t <= tmax) { s += v; k++; } }
+      var need = Math.max(3, Math.ceil(mx + 0.25)); if (need !== ymax) { ymax = need; build(); return; }
+      curve.setAttribute('d', B.pathOf(pts));
+      fill.setAttribute('d', trades.length ? B.pathOf(pts) + 'L' + C.X(T).toFixed(1) + ',' + C.bottom.toFixed(1) + 'L' + C.X(0).toFixed(1) + ',' + C.bottom.toFixed(1) + 'Z' : '');
+      while (tickG.firstChild) tickG.removeChild(tickG.firstChild);
+      for (i = 0; i < trades.length; i++) B.mk('line', { 'class': 'intick', x1: C.X(trades[i]), x2: C.X(trades[i]), y1: C.bottom, y2: C.bottom - 11 }, tickG);
+      hint.style.opacity = trades.length > 3 ? 0 : 1;
+      var n = trades.length, span = tmax - tmin, plural = n === 1 ? ' trade' : ' trades';
+      if (n > 1 && span >= 0.1 && k) {
+        var m = s / k; mean.show(true); mean.set(C.X(tmin), C.X(tmax), C.Y(m));
+        ro.innerHTML = '<b>' + n + '</b>' + plural + ' over <b>' + B.fmt(span, 1) + ' min</b> · <span class="sw sw--ink"></span>average displacement while trading <b>' + B.fmt(m, 2) + ' bp</b> · peak <b>' + B.fmt(mx, 2) + ' bp</b>';
+      } else {
+        mean.show(false);
+        ro.innerHTML = n ? '<b>' + n + '</b>' + plural + (n > 1 ? ' at once' : '') + ' · peak <b>' + B.fmt(mx, 2) + ' bp</b>, of which <b>' + B.fmt(n * q * P.kappa, 2) + ' bp</b> stays for good' : 'No trades yet. Click the chart or fire one.';
+      }
+    }
+    svg.addEventListener('click', function (e) {
+      var r = svg.getBoundingClientRect(), t = C.X.inv((e.clientX - r.left) / r.width * C.W);
+      if (t < 0 || t > T || trades.length >= 60) return; trades.push(t); draw();
+    });
+    document.getElementById('k-stack').addEventListener('click', function () { trades = []; for (var j = 1; j <= 25; j++) trades.push(0.5 + j / 25); tried.stack = true; B.save('bw.kernel', tried); showReveal(); draw(); });
+    document.getElementById('k-spread').addEventListener('click', function () { trades = []; for (var j = 1; j <= 25; j++) trades.push(0.5 + j * 10 / 25); tried.spread = true; B.save('bw.kernel', tried); showReveal(); draw(); });
+    document.getElementById('k-one').addEventListener('click', function () { if (trades.length >= 60) return; var last = trades.length ? Math.max.apply(null, trades) : 0.5; trades.push(last + 0.5 > T ? 1 : last + 0.5); draw(); });
+    document.getElementById('k-clear').addEventListener('click', function () { trades = []; draw(); });
+    showReveal();
+    B.layout(build);
+  })();
+
+  /* ---------- slide 5: expected cost alone keeps falling ---------- */
+  (function () {
+    var svg = document.getElementById('svg-long'), ro = document.getElementById('ro-long'); if (!svg) return;
+    var Tf = 20, C, dot, lab;
+    function etc(T) { return P.X * B.model(T, P.theta, P).ETC; }
+    function build() {
+      C = B.chart(svg, { W: 900, H: 240, x: [0, 60], y: [0, 2], pad: { l: 52, r: 18, t: 16, b: 30 },
+        xticks: [0, 5, 10, 20, 30, 40, 50, [60, '60 min']], yticks: [0, 0.5, 1, 1.5, [2, '2 bp']],
+        mobile: { W: 420, H: 270, xticks: [0, 10, 20, 30, 40, 50, [60, '60 min']], yticks: [0, 1, [2, '2 bp']] } });
+      var pts = [], T; for (T = 0.25; T <= 60.0001; T += 0.25) pts.push([C.X(T), C.Y(etc(T))]);
+      B.mk('path', { d: B.pathOf(pts), 'class': 'ink' }, C.g);
+      B.five(C);
+      dot = B.mk('circle', { r: 6, 'class': 'gold-dot' }, C.over); lab = B.mk('text', { 'class': 'lbl-strong' }, C.over);
+      draw();
+    }
+    function draw() {
+      var y = etc(Tf), y5 = etc(5), x = C.X(Tf);
+      dot.setAttribute('cx', x); dot.setAttribute('cy', C.Y(y));
+      lab.setAttribute('text-anchor', B.anchorFor(x, C, 90)); lab.setAttribute('x', x); lab.setAttribute('y', C.Y(y) - 14); lab.textContent = B.fmt(y, 2) + ' bp at ' + B.fmt(Tf, Tf % 1 ? 1 : 0) + ' min';
+      var d = y5 - y;
+      ro.innerHTML = '<span class="sw"></span>expected cost <b>' + B.fmt(y, 2) + ' bp</b>, about <b>' + B.money(y, P.X) + '</b> · ' + (Math.abs(d) < 0.005 ? 'the same as at five minutes' : '<b>' + B.fmt(Math.abs(d), 2) + ' bp ' + (d > 0 ? 'less' : 'more') + '</b> than at five minutes');
+    }
+    B.bind(document.getElementById('tf-long'), document.getElementById('tf-long-out'), function (v) { Tf = v; if (C) draw(); }, function (v) { return B.fmt(v, 1) + ' min'; }).refresh();
+    B.layout(build);
+  })();
+})();
+</script>
+</body>
+</html>

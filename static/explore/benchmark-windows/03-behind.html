@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Behind the window — Limits to Longer Benchmark Windows</title>
+<meta name="description" content="Side rooms of the explorable: why dealers trade before the window, what happens when they adapt, why the window is centred, attainability, the data, and where the model stops.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .bar-fixed { fill: var(--blue); fill-opacity: .85; }
+  .bar-resp { fill: var(--gold); }
+  .bar-total { stroke: var(--text); stroke-width: 1.6; }
+  .stage svg .grp-lbl { font-size: calc(12.5px * var(--k, 1)); font-weight: 500; fill: var(--text); }
+  .legend { font-family: var(--ui); font-size: 13px; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+  .legend .f { background: var(--blue); } .legend .r { background: var(--gold); } .legend .t { width: 2px; border-radius: 0; background: var(--text); }
+  .forces { padding-left: 0; list-style: none; }
+  .forces li { margin-bottom: .55em; }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 40px; }
+  @media (max-width: 760px) { .two { grid-template-columns: minmax(0, 1fr); } }
+  .two ul { font-size: 16.5px; }
+  .two li { margin-bottom: .45em; }
+</style>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/benchmark-windows/">← Back to the paper</a></noscript>
+  <div class="deck"><b>Behind the window</b><span class="n"> · side rooms</span></div>
+  <button type="button" class="map-btn" aria-haspopup="dialog">Map<kbd>m</kbd></button>
+</lg-sitebar>
+
+<main>
+
+<!-- 1 ─────────────────────────────────────────────── -->
+<section class="slide" id="s1">
+  <div class="slide-inner slide--wide">
+    <p class="room-back" hidden></p>
+    <div class="cols">
+      <div>
+        <h2>Trading before the window</h2>
+        <p>Why buy before the window opens? The dealer is paid the fix, so what matters is how much of each purchase the fix will see. Three forces pull different ways.</p>
+        <ul class="forces">
+          <li><b>Permanent impact.</b> An early trade lifts every price the fix averages; one inside lifts only what comes after it. Early buying raises the fix: more revenue for the dealer, more cost for the client.</li>
+          <li><b>Fading impact.</b> Early bumps have faded by the time the window opens, so less of them reaches the fix: cheaper for the client, less <em>benchmark revenue</em> for the dealer (what it earns because the fix includes its own impact).</li>
+          <li><b>Tracking.</b> The dealer promised a continuous average but trades in lumps; a small early purchase makes its average follow the fix more closely. As the window grows, this force is the one that remains.</li>
+        </ul>
+      </div>
+      <div>
+        <figure class="stage">
+          <svg id="svg-theta" role="img" aria-label="The share of the order a dealer chooses to buy before the window, against window length, for GBP/USD and AUD/USD"></svg>
+          <figcaption>The share a dealer weighing all three forces for itself buys before the window (eq. 82), at the median parameters. Dashed: its long-window limit, 3/(4n + 2).</figcaption>
+        </figure>
+        <div class="toggles"><span>Trades inside the window</span><span class="seg"><button type="button" class="btn is-on" data-n="25">25, as in the paper</button><button type="button" class="btn" data-n="10">only 10</button></span></div>
+        <div class="readout" id="ro-theta" aria-live="polite"></div>
+      </div>
+    </div>
+    <nav class="rooms" aria-label="Other side rooms"></nav>
+  </div>
+</section>
+
+<!-- 2 ─────────────────────────────────────────────── -->
+<section class="slide" id="s2">
+  <div class="slide-inner slide--wide">
+    <p class="room-back" hidden></p>
+    <h2>When the dealer adapts</h2>
+    <p>When the window changes, the dealer re-chooses how much to buy early. Does that undo the answer? Table 2 splits how far each best window moves, per one-standard-deviation rise in a market parameter, into a <span class="k">direct effect</span> with the strategy fixed and the <span class="k">strategy response</span>.</p>
+    <figure class="stage">
+      <svg id="svg-t2" role="img" aria-label="Bar chart of Table 2: change in the best window per one-standard-deviation parameter increase, split into the direct effect and the strategy response"></svg>
+    </figure>
+    <div class="toggles">
+      <span class="seg"><button type="button" class="btn is-on" data-ccy="GBP">GBP/USD</button><button type="button" class="btn" data-ccy="AUD">AUD/USD</button></span>
+      <span class="legend"><span><i class="f"></i>direct, strategy fixed</span><span><i class="r"></i>strategy response</span><span><i class="t"></i>total</span></span>
+    </div>
+    <p class="gap-top">For the client and the administrator the response is a rounding error: more transient impact still means a longer window (+2.9 minutes for GBP/USD), more volatility a shorter one (−2.5). For the dealer it <em>is</em> the story: higher volatility makes it pre-hedge less, leaves more of the order inside the window, and reverses the sign. The design conclusions survive.</p>
+    <nav class="rooms" aria-label="Other side rooms"></nav>
+  </div>
+</section>
+
+<!-- 3 ─────────────────────────────────────────────── -->
+<section class="slide" id="s3">
+  <div class="slide-inner slide--wide">
+    <p class="room-back" hidden></p>
+    <h2>Centre the window</h2>
+    <p>Remember the gap between the fix and the 4:00 price? <span class="k">Representativeness</span> asks how big it tends to be: does the published 4pm rate stay close to the untouched 4pm price? The variance of the gap is <span class="eq">σ²T<sub>f</sub>(α² − α + 1/3)</span>, where α says where “4pm” sits inside the window (eq. 67). Slide it.</p>
+    <figure class="stage">
+      <svg id="svg-alpha" role="img" aria-label="The variance factor of the gap between the fix and the 4pm price, as a function of where 4pm sits inside the window; lowest at the centre"></svg>
+    </figure>
+    <div class="ctls ctls--2">
+      <label class="ctl"><span>Where 4pm sits</span><input id="alpha" type="range" min="0" max="1" step="0.01" value="0.2"><output id="alpha-out"></output></label>
+      <div class="readout" id="ro-alpha" aria-live="polite" style="margin-top:0"></div>
+    </div>
+    <p class="gap-top">At either edge the factor is 1/3; at the centre it is 1/12, <span class="k">a quarter of the variance</span>. WMR centres its window on 4pm, and the paper adopts the same convention. A longer window still widens the gap: that is the cost representativeness counts.</p>
+    <nav class="rooms" aria-label="Other side rooms"></nav>
+  </div>
+</section>
+
+<!-- 4 ─────────────────────────────────────────────── -->
+<section class="slide" id="s4">
+  <div class="slide-inner slide--wide">
+    <p class="room-back" hidden></p>
+    <div class="cols cols--stage-right">
+      <div>
+        <h2>Attainability</h2>
+        <p>Attainability is how closely anyone, whether a corporate treasurer, a fund or another dealer, can replicate the published fix by trading. In the model it is the tracking error of a replicator who trades like the dealer but picks its own early share.</p>
+        <p>Even if the replicator re-optimises its early trading for every window, each extra minute still adds tracking error (eq. 87). So attainability <span class="k">always prefers the shortest window</span>.</p>
+        <p class="after">But it is small. Its weight pulls the administrator’s answer toward shorter windows, though only slightly: in the toy, dropping it moves the answer by three seconds, from 9.15 to 9.20 minutes. Most of the gap between the client’s eleven minutes and the administrator’s nine comes from representativeness.</p>
+      </div>
+      <div>
+        <figure class="stage">
+          <svg id="svg-attain" role="img" aria-label="The replicator's tracking error against window length, rising throughout, for GBP/USD and AUD/USD"></svg>
+          <figcaption>Standard deviation of the tracking error, bp per unit of the order, with the replicator’s early share chosen for each window (eqs. 86–87). For GBP/USD: about 0.07 bp at five minutes, 0.15 bp even at thirty.</figcaption>
+        </figure>
+        <div class="ctls">
+          <label class="ctl"><span>Window length</span><input id="tf-att" type="range" min="1" max="30" step="0.5" value="5"><output id="tf-att-out">5.0 min</output></label>
+        </div>
+        <div class="readout" id="ro-attain" aria-live="polite"></div>
+      </div>
+    </div>
+    <nav class="rooms" aria-label="Other side rooms"></nav>
+  </div>
+</section>
+
+<!-- 5 ─────────────────────────────────────────────── -->
+<section class="slide" id="s5">
+  <div class="slide-inner slide--wide">
+    <p class="room-back" hidden></p>
+    <div class="cols">
+      <div>
+        <h2>What the numbers rest on</h2>
+        <ul>
+          <li><b>Data.</b> LSEG Matching trades (direction, volume) and best quotes, GBP/USD and AUD/USD, 1 July 2024 – 26 June 2026.</li>
+          <li><b>Impact,</b> weekly, 3:52:30–4:02:30pm London: a Hasbrouck (1991) autoregression of one-second returns on signed volume, net of the order flow a trade predicts (Eisler, Bouchaud and Kockelkoren’s “bare” impact), fitted to a lasting step plus a fading bump.</li>
+          <li><b>Volatility</b> from five-second returns over 3:30–3:45pm, before fixing flow dominates.</li>
+          <li><b>Medians:</b> 0.01 bp per million for good, 0.06–0.07 that fades; half-lives near 51 s (GBP/USD) and 58 s (AUD/USD); typical one-minute moves of 1.60 and 2.35 bp.</li>
+          <li><b>Risk aversion is set, not estimated:</b> a basis point of risk is worth about a third of a basis point of expected cost to the client (γ<sub>C</sub> = 0.0005), three-quarters to the dealer, a half to representativeness.</li>
+        </ul>
+      </div>
+      <div>
+        <figure class="stage">
+          <svg id="svg-kern" role="img" aria-label="The fitted price impact of one million traded, against minutes since the trade, for GBP/USD and AUD/USD"></svg>
+          <figcaption>Price impact of one million traded, h minutes later, at the median estimates: 0.01 + 0.065·e<sup>−βh</sup> bp (eq. 92). The fit runs over a five-minute horizon at one-second steps.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <nav class="rooms" aria-label="Other side rooms"></nav>
+  </div>
+</section>
+
+<!-- 6 ─────────────────────────────────────────────── -->
+<section class="slide" id="s6">
+  <div class="slide-inner slide--wide">
+    <p class="room-back" hidden></p>
+    <h2>Where the model stops</h2>
+    <div class="two">
+      <div>
+        <h3>Left out</h3>
+        <ul>
+          <li><b>Manipulation.</b> Resistance to it depends mostly on how trades are weighted and trimmed inside the window, which the paper does not model.</li>
+          <li><b>Market power.</b> Competing dealers set fees at break-even; with market power the client would pay more.</li>
+          <li><b>Changing volatility.</b> Scheduled news near 4pm could change where the window should sit.</li>
+          <li><b>Free trade timing.</b> Letting the dealer time each trade changes little, except when permanent impact is large next to transient impact (Appendix E).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Checked</h3>
+        <ul>
+          <li><b>A median fix</b> instead of a mean: little change (Appendix D).</li>
+          <li><b>Order size.</b> Larger orders want longer windows, with a diminishing effect: 6.2, 10.7 and 11.3 minutes for 10, 50 and 200 million (GBP/USD client, Table B.2).</li>
+          <li><b>Who picks the split.</b> Letting the client choose it moves the GBP/USD answer from 10.7 to 10.5 minutes (Appendix C).</li>
+          <li><b>Risk aversion.</b> The trade-offs survive, but the numbers move: the GBP/USD administrator’s window is about 13.5 minutes with less risk-averse users and 4.8 with more risk-averse ones (Table B.1).</li>
+        </ul>
+      </div>
+    </div>
+    <p>The paper’s conclusion is a modest one: five minutes is not the exact optimum for every participant, currency or market state, but a practical compromise across them. EUR/USD and other benchmarks are left for future work.</p>
+    <div class="doors">
+      <a class="door" href="02-limits.html#s7">Back to the sandbox</a>
+      <a class="door" href="index.html#s1">Start again from four o’clock</a>
+      <a class="next" href="../../publication/benchmark-windows/">Back to the paper ›</a>
+    </div>
+    <nav class="rooms" aria-label="Other side rooms"></nav>
+  </div>
+</section>
+
+</main>
+
+<footer class="nav">
+  <div><a class="arrow prev" href="#s1">‹ Previous</a></div>
+  <div class="dots"></div>
+  <div class="r"><a class="arrow next-arrow" href="#s2">Next ›</a></div>
+</footer>
+
+<script src="bw.js"></script>
+<script>
+(function () {
+  'use strict';
+  var B = window.BW;
+  B.initDeck('behind');
+  var X30 = [0, 5, 10, 15, 20, 25, [30, '30 min']], X30m = [0, 10, 20, [30, '30 min']];
+  function el(id) { return document.getElementById(id); }
+
+  /* ---------- room 1: the dealer's own pre-hedge ---------- */
+  (function () {
+    var svg = el('svg-theta'), ro = el('ro-theta'); if (!svg) return;
+    var n = 25, C, lim, limLab, cg, ca, lg, la;
+    function build() {
+      C = B.chart(svg, { W: 620, H: 260, x: [0, 30], y: [0, 0.12], clip: true, pad: { l: 46, r: 14, t: 16, b: 30 }, xticks: X30,
+        yticks: [0, 0.03, 0.06, 0.09, [0.12, '12%']], yfmt: function (v) { return Math.round(v * 100) + '%'; }, mobile: { W: 420, H: 280, xticks: X30m } });
+      B.five(C);
+      lim = B.mk('line', { 'class': 'hair', x1: C.left, x2: C.right }, C.under);
+      cg = B.mk('path', { 'class': 'ink' }, C.g); ca = B.mk('path', { 'class': 'price' }, C.g);
+      limLab = B.mk('text', { 'class': 'lbl', 'text-anchor': 'start' }, C.over);
+      lg = B.mk('text', { 'class': 'lbl-strong', 'text-anchor': 'end', x: C.right - 2, text: 'GBP/USD' }, C.over);
+      la = B.mk('text', { 'class': 'lbl', 'text-anchor': 'end', x: C.right - 2, text: 'AUD/USD' }, C.over);
+      draw();
+    }
+    function curve(p) { var pts = [], T; for (T = 0.05; T <= 30.0001; T += 0.1) pts.push([C.X(T), C.Y(B.thetaD(T, p))]); return pts; }
+    function draw() {
+      var pg = B.params(B.PRESETS.GBP, { n: n }), pa = B.params(B.PRESETS.AUD, { n: n }), L = 3 / (4 * n + 2);
+      cg.setAttribute('d', B.pathOf(curve(pg))); ca.setAttribute('d', B.pathOf(curve(pa)));
+      lim.setAttribute('y1', C.Y(L)); lim.setAttribute('y2', C.Y(L));
+      var g30 = B.thetaD(30, pg), a30 = B.thetaD(30, pa);
+      /* n = 25: the empty space is under the line at the left; n = 10: above it at the right */
+      if (n === 25) { limLab.setAttribute('x', C.X(0.3)); limLab.setAttribute('y', C.Y(L) + 16); limLab.setAttribute('text-anchor', 'start'); }
+      else { limLab.setAttribute('x', C.X(17)); limLab.setAttribute('y', C.Y(L) - 7); limLab.setAttribute('text-anchor', 'middle'); }
+      limLab.textContent = 'limit 3/(4n + 2) = ' + B.fmt(100 * L, 1) + '%';
+      lg.setAttribute('y', C.Y(g30) + (g30 >= a30 ? -7 : 16)); la.setAttribute('y', C.Y(a30) + (a30 > g30 ? -7 : 16));
+      ro.innerHTML = 'At a five-minute window the dealer buys <b>' + B.fmt(100 * B.thetaD(5, pg), 1) + '%</b> of a GBP/USD order early and <b>' + B.fmt(100 * B.thetaD(5, pa), 1) + '%</b> of an AUD/USD one, far less than the illustrative tenth. ' +
+        (n === 10 ? 'With only ten trades inside, the share dips and then climbs back toward its limit, as in the paper’s Figure 4.' : 'The more volatile AUD/USD makes it buy less early: tracking risk weighs more.');
+    }
+    B.seg(el('s1'), 'data-n', function (v) { n = parseInt(v, 10); draw(); });
+    B.layout(build);
+  })();
+
+  /* ---------- room 2: Table 2 ---------- */
+  (function () {
+    var svg = el('svg-t2'); if (!svg) return;
+    /* Table 2 (p. 72): [fixed strategy, strategy response, total], minutes per one s.d. */
+    var T2 = {
+      GBP: { kappa: { client: [0, 0.106, 0.106], dealer: [0, -1.334, -1.334], admin: [0, 0.085, 0.085] }, lam: { client: [2.92, -0.022, 2.899], dealer: [0.881, -1.566, -0.685], admin: [2.404, -0.021, 2.383] }, beta: { client: [-1.165, 0.006, -1.159], dealer: [-0.761, 0.484, -0.277], admin: [-0.587, 0.006, -0.581] }, sigma: { client: [-2.563, 0.053, -2.51], dealer: [-0.426, 0.984, 0.557], admin: [-2.192, 0.038, -2.153] } },
+      AUD: { kappa: { client: [0, 0.011, 0.011], dealer: [0, -1.481, -1.481], admin: [0, 0.048, 0.048] }, lam: { client: [3.678, -0.019, 3.66], dealer: [1.252, -1.538, -0.286], admin: [2.949, -0.021, 2.929] }, beta: { client: [-0.441, 0.011, -0.43], dealer: [-0.432, 0.483, 0.05], admin: [-0.125, 0.01, -0.115] }, sigma: { client: [-1.788, 0.018, -1.77], dealer: [-0.564, 1.221, 0.657], admin: [-1.525, 0.016, -1.509] } }
+    };
+    var PARS = [['kappa', 'Permanent impact'], ['lam', 'Transient impact'], ['beta', 'Faster recovery'], ['sigma', 'Volatility']], OBJS = [['client', 'Client'], ['dealer', 'Dealer'], ['admin', 'Administrator']];
+    var ccy = 'GBP', C, g;
+    function build() {
+      C = B.chart(svg, { W: 900, H: 196, x: [-4, 4], y: [0, 12], pad: { l: 280, r: 24, t: 6, b: 26 }, noYAxis: true,
+        xticks: [-4, -3, -2, -1, 0, 1, 2, 3, [4, '+4 min']], xfmt: function (v) { return v > 0 ? '+' + v : v < 0 ? '−' + Math.abs(v) : '0'; },
+        mobile: { W: 420, H: 470, pad: { l: 120, r: 16, t: 8, b: 28 }, xticks: [-4, -2, 0, 2, [4, '+4']] } });
+      B.mk('line', { x1: C.X(0), x2: C.X(0), y1: C.top, y2: C.bottom, 'class': 'axis' }, C.under);
+      g = B.mk('g', {}, C.g);
+      draw();
+    }
+    function draw() {
+      while (g.firstChild) g.removeChild(g.firstChild);
+      var nar = C.narrow, gh = (C.bottom - C.top) / 4, head = nar ? 20 : 0, rowH = (gh - head) / 3;
+      PARS.forEach(function (pr, pi) {
+        var yTop = C.top + pi * gh;
+        if (pi) B.mk('line', { x1: nar ? 4 : 8, x2: C.right, y1: yTop, y2: yTop, 'class': 'axis' }, g);
+        B.mk('text', { x: nar ? 4 : 8, y: nar ? yTop + 15 : yTop + gh / 2 + 4, 'class': 'grp-lbl', text: pr[1] }, g);
+        OBJS.forEach(function (ob, oi) {
+          var d = T2[ccy][pr[0]][ob[0]], y = yTop + head + oi * rowH + 3, h = Math.max(3, (rowH - 6) / 2);
+          B.mk('text', { x: C.left - 10, y: y + h + 1, 'text-anchor': 'end', 'class': 'lbl', text: ob[1] }, g);
+          B.mk('rect', { x: Math.min(C.X(0), C.X(d[0])), y: y, width: Math.abs(C.X(d[0]) - C.X(0)), height: h, 'class': 'bar-fixed' }, g);
+          B.mk('rect', { x: Math.min(C.X(d[0]), C.X(d[0] + d[1])), y: y + h, width: Math.abs(C.X(d[1]) - C.X(0)), height: h, 'class': 'bar-resp' }, g);
+          B.mk('line', { x1: C.X(d[2]), x2: C.X(d[2]), y1: y - 1, y2: y + 2 * h + 1, 'class': 'bar-total' }, g);
+          var xs = [C.X(0), C.X(d[0]), C.X(d[0] + d[1]), C.X(d[2])], right = Math.max.apply(null, xs), left = Math.min.apply(null, xs);
+          B.mk('text', { x: d[2] >= 0 ? right + 5 : left - 5, y: y + h + 4, 'text-anchor': d[2] >= 0 ? 'start' : 'end', 'class': 'lbl', text: B.sgn(d[2], 2) }, g);
+        });
+      });
+    }
+    B.seg(el('s2'), 'data-ccy', function (c) { ccy = c; draw(); });
+    B.layout(build);
+  })();
+
+  /* ---------- room 3: centre the window ---------- */
+  (function () {
+    var svg = el('svg-alpha'), ro = el('ro-alpha'); if (!svg) return;
+    var al = 0.2, C, dot, lab, tick, tickLab;
+    function build() {
+      C = B.chart(svg, { W: 900, H: 210, x: [0, 1], y: [0, 0.36], pad: { l: 58, r: 24, t: 14, b: 50 }, noAxes: true,
+        yticks: [[0, '0'], [1 / 12, '1/12'], [1 / 3, '1/3']], mobile: { W: 420, H: 250, pad: { l: 40, r: 16, t: 14, b: 50 } } });
+      B.mk('line', { x1: C.left, x2: C.left, y1: C.top, y2: C.bottom, 'class': 'axis' }, C.under);
+      B.mk('line', { x1: C.left, x2: C.right, y1: C.Y(1 / 12), y2: C.Y(1 / 12), 'class': 'hair' }, C.under);
+      B.mk('line', { x1: C.left, x2: C.right, y1: C.Y(1 / 3), y2: C.Y(1 / 3), 'class': 'hair' }, C.under);
+      var pts = [], a; for (a = 0; a <= 1.0001; a += 0.01) pts.push([C.X(a), C.Y(a * a - a + 1 / 3)]);
+      B.mk('path', { d: B.pathOf(pts), 'class': 'ink' }, C.g);
+      /* the x-axis is the window itself: a gold strip from its start to its end */
+      var ty = C.bottom + 14;
+      B.mk('rect', { x: C.X(0), y: ty - 8, width: C.X(1) - C.X(0), height: 16, 'class': 'band' }, C.under);
+      B.mk('line', { x1: C.X(0), x2: C.X(0), y1: ty - 8, y2: ty + 8, 'class': 'band-edge' }, C.under); B.mk('line', { x1: C.X(1), x2: C.X(1), y1: ty - 8, y2: ty + 8, 'class': 'band-edge' }, C.under);
+      B.mk('text', { x: C.X(0), y: ty + 26, 'class': 'lbl', text: 'window opens' }, C.under);
+      B.mk('text', { x: C.X(1), y: ty + 26, 'text-anchor': 'end', 'class': 'lbl', text: 'window closes' }, C.under);
+      tick = B.mk('line', { y1: ty - 12, y2: ty + 12, 'class': 'tick' }, C.over); tickLab = B.mk('text', { y: ty + 26, 'text-anchor': 'middle', 'class': 'lbl-strong', text: '4pm' }, C.over);
+      dot = B.mk('circle', { r: 6, 'class': 'gold-dot' }, C.over); lab = B.mk('text', { 'class': 'lbl-strong', 'text-anchor': 'middle' }, C.over);
+      B.mk('text', { x: C.left + 6, y: C.top + 4, 'class': 'lbl', text: 'variance factor' }, C.under);
+      draw();
+    }
+    function draw() {
+      var f = al * al - al + 1 / 3, x = C.X(al);
+      dot.setAttribute('cx', x); dot.setAttribute('cy', C.Y(f)); lab.setAttribute('x', x); lab.setAttribute('y', C.Y(f) - 12); lab.textContent = B.fmt(f, 3);
+      tick.setAttribute('x1', x); tick.setAttribute('x2', x); tickLab.setAttribute('x', B.clamp(x, C.X(0) + 70, C.X(1) - 70));
+      ro.innerHTML = 'variance of the fix around the 4pm price: <b>' + B.fmt(f, 3) + ' × σ²T<sub>f</sub></b>, <b>' + B.fmt(f * 12, 2) + '×</b> the centred window’s';
+    }
+    B.bind(el('alpha'), el('alpha-out'), function (v) { al = v; if (C) draw(); }, function (v) { return v < 0.02 ? 'at the start' : v > 0.98 ? 'at the end' : Math.abs(v - 0.5) < 0.005 ? 'centre' : Math.round(v * 100) + '% in'; }).refresh();
+    B.layout(build);
+  })();
+
+  /* ---------- room 4: attainability ---------- */
+  (function () {
+    var svg = el('svg-attain'), ro = el('ro-attain'); if (!svg) return;
+    var pg = B.params(B.PRESETS.GBP), pa = B.params(B.PRESETS.AUD), Tf = 5, C, dg, da;
+    function sd(T, p) { return p.sigma * Math.sqrt(B.trackVar(T, B.thetaA(T, p), p)); }
+    function build() {
+      C = B.chart(svg, { W: 620, H: 250, x: [0, 30], y: [0, 0.25], pad: { l: 50, r: 14, t: 16, b: 30 }, xticks: X30,
+        yticks: [0, 0.05, 0.1, 0.15, 0.2, 0.25], yfmt: function (v) { return B.fmt(v, 2); }, mobile: { W: 420, H: 270, xticks: X30m, yticks: [0, 0.1, 0.2] } });
+      B.five(C);
+      [pg, pa].forEach(function (p, i) { var pts = [], T; for (T = 0.05; T <= 30.0001; T += 0.1) pts.push([C.X(T), C.Y(sd(T, p))]); B.mk('path', { d: B.pathOf(pts), 'class': i ? 'price' : 'ink' }, C.g);
+        B.mk('text', { x: C.right - 2, y: C.Y(sd(30, p)) + (i ? -8 : 16), 'text-anchor': 'end', 'class': i ? 'lbl' : 'lbl-strong', text: i ? 'AUD/USD' : 'GBP/USD' }, C.over); });
+      dg = B.mk('circle', { r: 5.5, 'class': 'gold-dot' }, C.over); da = B.mk('circle', { r: 5.5, 'class': 'gold-dot' }, C.over);
+      draw();
+    }
+    function draw() {
+      dg.setAttribute('cx', C.X(Tf)); dg.setAttribute('cy', C.Y(sd(Tf, pg))); da.setAttribute('cx', C.X(Tf)); da.setAttribute('cy', C.Y(sd(Tf, pa)));
+      ro.innerHTML = 'tracking error at <b>' + B.fmt(Tf, 1) + ' min</b>: <b>' + B.fmt(sd(Tf, pg), 3) + ' bp</b> for GBP/USD, <b>' + B.fmt(sd(Tf, pa), 3) + ' bp</b> for AUD/USD · the replicator buys <b>' + B.fmt(100 * B.thetaA(Tf, pg), 1) + '%</b> early';
+    }
+    B.bind(el('tf-att'), el('tf-att-out'), function (v) { Tf = v; if (C) draw(); }, function (v) { return B.fmt(v, 1) + ' min'; }).refresh();
+    B.layout(build);
+  })();
+
+  /* ---------- room 5: the fitted impact kernel ---------- */
+  (function () {
+    var svg = el('svg-kern'); if (!svg) return;
+    function build() {
+      var C = B.chart(svg, { W: 620, H: 230, x: [0, 5], y: [0, 0.08], pad: { l: 50, r: 14, t: 16, b: 30 }, xticks: [0, 1, 2, 3, 4, [5, '5 min']],
+        yticks: [0, 0.02, 0.04, 0.06, 0.08], yfmt: function (v) { return B.fmt(v, 2); }, mobile: { W: 420, H: 270 } });
+      B.mk('line', { x1: C.left, x2: C.right, y1: C.Y(0.01), y2: C.Y(0.01), 'class': 'hair' }, C.under);
+      B.mk('text', { x: C.right - 2, y: C.Y(0.01) + 16, 'text-anchor': 'end', 'class': 'lbl', text: 'stays for good: 0.01 bp' }, C.under);
+      [['GBP', 'ink', 'GBP/USD, half-life 51 s'], ['AUD', 'price', 'AUD/USD, 58 s']].forEach(function (c, i) {
+        var p = B.PRESETS[c[0]], pts = [], h; for (h = 0; h <= 5.0001; h += 0.02) pts.push([C.X(h), C.Y(p.kappa + p.lam * Math.exp(-p.beta * h))]);
+        B.mk('path', { d: B.pathOf(pts), 'class': c[1] }, C.g);
+        var h0 = i ? 1.4 : 0.55; B.mk('text', { x: C.X(h0) + 8, y: C.Y(p.kappa + p.lam * Math.exp(-p.beta * h0)) - (i ? -16 : 8), 'class': i ? 'lbl' : 'lbl-strong', text: c[2] }, C.over);
+      });
+    }
+    B.layout(build);
+  })();
+})();
+</script>
+</body>
+</html>

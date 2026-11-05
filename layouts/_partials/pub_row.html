@@ -1,0 +1,44 @@
+{{- /* Compact publication row for the homepage research-area accordions. Context: a publication page. */ -}}
+{{- $p := . -}}
+{{- $year := .Date.Format "2006" -}}
+{{- $thesis := eq (.Params.tab | default "articles") "theses" -}}
+{{- $slug := "" -}}{{- with .File -}}{{- $slug = .ContentBaseName -}}{{- end -}}
+<article class="area-pub">
+  <p class="area-pub__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- if eq .Params.status "forthcoming" }} <span class="badge-status">{{ i18n "forthcoming" | default "Forthcoming" }}</span>{{ end }}
+    {{ partial "jmp_badge.html" . }}
+  </p>
+  <p class="area-pub__meta">{{ partial "authors.html" (dict "authors" .Params.authors "owner" site.Params.author_name) }}. {{ with .Params.publication }}{{ if eq ($p.Params.tab | default "articles") "working-papers" }}{{ . }}{{ else }}<b>{{ . }}</b>{{ end }}, {{ end }}{{ $year }}.{{ if .Params.letter }} <span class="badge-status">{{ i18n "letter" | default "Letter" }}</span>{{ end }}</p>
+  {{- with .Params.award }}
+  <p class="award-line">{{ partial "award_badge.html" . }}</p>
+  {{- end }}
+  <p class="area-pub__links">
+    {{- if and $slug (fileExists (printf "static/explore/%s/index.html" $slug)) }}
+    <a class="mini-btn mini-btn--explore" href="{{ printf "explore/%s/" $slug | relURL }}">{{ i18n "btn_explore" | default "Explore" }}</a>
+    {{- end }}
+    {{- with .Params.abstract }}
+    <a class="mini-btn" href="{{ $p.RelPermalink }}#abstract">{{ i18n "abstract" | default "Abstract" }}</a>
+    {{- end }}
+    {{- with .Params.url_full }}
+    <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_full_text" | default "Full text" }}</a>
+    {{- end }}
+    {{- with .Params.url_pdf }}
+    <a class="mini-btn" href="{{ . | relURL }}"{{ if hasPrefix . "http" }} target="_blank" rel="noopener"{{ end }}>{{ i18n "btn_pdf" | default "PDF" }}</a>
+    {{- end }}
+    {{- with .Params.url_ssrn }}
+    <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_ssrn" | default "SSRN" }}</a>
+    {{- end }}
+    {{- with .Params.doi }}{{ if not (or $thesis (hasPrefix . "10.2139/ssrn")) }}
+    <a class="mini-btn" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_article" | default "Article" }}</a>
+    {{- end }}{{ end }}
+    {{- with .Params.url_code }}
+    <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_code" | default "Code" }}</a>
+    {{- end }}
+    {{- with .Params.url_slides }}
+    <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_slides" | default "Slides" }}</a>
+    {{- end }}
+    {{- with .Params.url_podcast }}
+    <a class="mini-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "btn_podcast" | default "Podcast" }}</a>
+    {{- end }}
+  </p>
+</article>

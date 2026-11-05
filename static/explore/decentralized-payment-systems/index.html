@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore: The Market Quality of Decentralized Payment Systems</title>
+<meta name="description" content="An explorable explanation of Foley, Galati, Riordan and Svec: what happened when Ethereum replaced its fee auction with a posted price.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="explore.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<script src="../sitebar.js"></script>
+</head>
+<body>
+<lg-sitebar><noscript><a href="../../publication/decentralized-payment-systems/">← Back to the paper</a></noscript></lg-sitebar>
+<div class="hub">
+  <h1>What happens when you rewrite the rules of an auction nobody can see?</h1>
+  <p class="authors">An explorable explanation of <em>The Market Quality of Decentralized Payment Systems</em> by Sean Foley, <a href="../../">Luca Galati</a>, Ryan Riordan and Jiri Svec (working paper).</p>
+
+  <div class="invite">
+    <div>
+      <div class="prose">
+        <p>Every transaction on a blockchain has to win a place in the next block, and places are scarce. For years Ethereum sold them in a sealed auction: you named a fee without seeing anyone else's, and you either overpaid or waited. In August 2021 the network replaced that auction with a posted price that rises and falls block by block.</p>
+        <p>The paper measures what that change did, against Bitcoin as a control: what users paid, who received the money, and how much the network settled. The answers are not the ones the reform promised, and a second shock a year later shows it was the rules, not the upheaval.</p>
+        <p>Three short decks, with side trips where questions come up. You will bid in the old auction, watch the new price find its level, bet on the main result, and end in a sandbox where three fee markets run side by side on the same crowd. Press <kbd>m</kbd>, or the Map button, on any deck page for the map.</p>
+      </div>
+      <div class="start">
+        <a class="fork fork--primary" href="01-auction.html#1">Begin with the auction <span aria-hidden="true">→</span></a>
+        <a class="next" id="resume" href="01-auction.html#1" hidden>Continue where you left off <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div>
+      <svg class="block-motif" viewBox="0 0 320 250" role="img" aria-label="A block drawn as a grid of thirty slots, fifteen of them filled, with a queue of transactions waiting beneath it">
+        <rect class="frame" x="20.5" y="20.5" width="279" height="134"></rect>
+        <g id="slots"></g>
+        <text x="20" y="172">one block · 30 slots · target 15</text>
+        <g id="queue"></g>
+        <text x="20" y="242">waiting for the next block</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="map-grid" id="hubmap" tabindex="-1" aria-label="Map of the explorable"></div>
+
+  <div class="foot">
+    <span>Numbers come from the manuscript (Tables 2–10 and the appendix). Toy markets illustrate the rules, not the estimates.</span>
+    <a href="https://www.ssrn.com/abstract=5348013" rel="noopener">Paper on SSRN</a>
+    <a href="../../publication/decentralized-payment-systems/">Paper page</a>
+  </div>
+</div>
+
+<script src="explore.js"></script>
+<script>
+(function () {
+  // block motif: 10 x 3 slots, the first 15 filled, one in gold
+  var g = document.getElementById('slots'), q = document.getElementById('queue');
+  var html = '';
+  for (var i = 0; i < 30; i++) {
+    var r = Math.floor(i / 10), c = i % 10;
+    var cls = i < 15 ? (i === 7 ? 'slot gold' : 'slot on') : 'slot';
+    html += '<rect class="' + cls + '" x="' + (28 + c * 27) + '" y="' + (28 + r * 40) + '" width="22" height="32" rx="2"></rect>';
+  }
+  g.innerHTML = html;
+  var qh = '';
+  for (var j = 0; j < 9; j++) qh += '<rect class="slot" x="' + (28 + j * 27) + '" y="190" width="22" height="32" rx="2"></rect>';
+  q.innerHTML = qh;
+
+  // the map of the tree, the same component as the overlay
+  var mapEl = document.getElementById('hubmap');
+  explore.buildMapGrid(mapEl, null, 0);
+
+  // resume where the reader actually stopped
+  var last = explore.last();
+  if (last && last.file && explore.titleOf(last.file, last.at)) {
+    var a = document.getElementById('resume');
+    a.href = last.file + '#' + last.at;
+    a.firstChild.nodeValue = 'Continue: ' + explore.titleOf(last.file, last.at) + ' ';
+    a.hidden = false;
+  }
+
+  // m jumps to the map here too
+  document.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    if (ev.key === 'm' || ev.key === 'M') {
+      mapEl.scrollIntoView({ behavior: explore.reduced ? 'auto' : 'smooth', block: 'start' });
+      mapEl.focus({ preventScroll: true });
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{{ define "main" }}
+<section class="wrap"{{ if eq .Kind "term" }} data-pagefind-ignore{{ end }}>
+  {{ partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  {{- with .Pages }}
+  <ul class="page-list">
+    {{- range . }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Params.summary }} <span class="page-list__summary">— {{ . }}</span>{{ end }}</li>
+    {{- end }}
+  </ul>
+  {{- end }}
+</section>
+{{ end }}

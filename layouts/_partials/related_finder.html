@@ -1,0 +1,85 @@
+{{- /* "See also" for paper pages, computed at build time over the publication section only.
+       1. Explicit picks: related_papers (slugs), see_also ({url,title} external or {section,slug}).
+       2. Shared research area (data/research_areas.json papers lists, or overlapping `areas` front matter).
+       3. Scored backfill: +2 per shared title token (stop words and tokens under 3 chars dropped),
+          +1 per shared co-author, +2 per shared tag. Threshold 4, relaxed to 2 when fewer than 3 picks
+          come from steps 1-2. Cap 8, dedupe by kind+title. */ -}}
+{{- $me := . -}}
+{{- $owner := site.Params.author_name -}}
+{{- $stop := slice "a" "an" "and" "the" "of" "for" "in" "on" "to" "with" "by" "at" "as" "is" "are" "be" "or" "from" "into" "using" "via" "new" "not" "no" "it" "its" "we" "our" "their" "you" "your" "this" "that" "these" "those" "but" "if" "than" "then" "so" "can" "will" "would" "could" "should" "may" "might" "also" "more" "most" "some" "all" "any" "each" "every" "who" "whom" "which" "what" "when" "where" "why" "how" "about" "between" "among" "through" "over" "under" "after" "before" "upon" "across" "per" "vs" "de" "la" "les" "et" "du" -}}
+{{- $mySlug := "" -}}{{- with .File -}}{{- $mySlug = .ContentBaseName -}}{{- end -}}
+
+{{- $myTokens := slice -}}
+{{- range split (lower $me.Title) " " -}}
+  {{- $w := replaceRE "[^a-z0-9]" "" . -}}
+  {{- if and (ge (len $w) 3) (not (in $stop $w)) -}}{{- $myTokens = $myTokens | append $w -}}{{- end -}}
+{{- end -}}
+{{- $myTokens = $myTokens | uniq -}}
+{{- $myCo := complement (slice $owner) ($me.Params.authors | default slice) -}}
+{{- $myTags := $me.Params.tags | default slice -}}
+{{- $myAreas := $me.Params.areas | default slice -}}
+
+{{- /* explicit picks as publication slugs; external see_also links kept apart */ -}}
+{{- $pins := $me.Params.related_papers | default slice -}}
+{{- $external := slice -}}
+{{- range $me.Params.see_also | default slice -}}
+  {{- if .url -}}{{- $external = $external | append . -}}
+  {{- else if and (eq (.section | default "publication") "publication") .slug -}}{{- $pins = $pins | append .slug -}}{{- end -}}
+{{- end -}}
+
+{{- /* slugs sharing a research area with this paper */ -}}
+{{- $areaSlugs := slice -}}
+{{- with site.Data.research_areas -}}
+  {{- range .areas -}}
+    {{- with .papers -}}{{- if in . $mySlug -}}{{- $areaSlugs = $areaSlugs | append . -}}{{- end -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $rows := slice -}}
+{{- $explicit := 0 -}}
+{{- range $p := where site.RegularPages "Section" "publication" -}}
+  {{- if not ($p.Eq $me) -}}
+    {{- $pslug := "" -}}{{- with $p.File -}}{{- $pslug = .ContentBaseName -}}{{- end -}}
+    {{- $pinned := in $pins $pslug -}}
+    {{- $area := or (in $areaSlugs $pslug) (gt (len (intersect $myAreas ($p.Params.areas | default slice))) 0) -}}
+    {{- $ptoks := slice -}}
+    {{- range split (lower $p.Title) " " -}}
+      {{- $w := replaceRE "[^a-z0-9]" "" . -}}
+      {{- if and (ge (len $w) 3) (not (in $stop $w)) -}}{{- $ptoks = $ptoks | append $w -}}{{- end -}}
+    {{- end -}}
+    {{- $score := mul 2 (len (intersect $myTokens ($ptoks | uniq))) -}}
+    {{- $score = add $score (len (intersect $myCo (complement (slice $owner) ($p.Params.authors | default slice)))) -}}
+    {{- $score = add $score (mul 2 (len (intersect $myTags ($p.Params.tags | default slice)))) -}}
+    {{- if or $pinned $area -}}{{- $explicit = add $explicit 1 -}}{{- end -}}
+    {{- $rank := $score -}}
+    {{- if $pinned -}}{{- $rank = add $rank 1000 -}}{{- else if $area -}}{{- $rank = add $rank 100 -}}{{- end -}}
+    {{- $rows = $rows | append (dict "page" $p "score" $score "pinned" $pinned "area" $area "sortval" (add (mul $rank 10000) $p.Date.Year)) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $threshold := cond (lt $explicit 3) 2 4 -}}
+{{- $picked := slice -}}
+{{- range $rows -}}{{- if or .pinned .area (ge .score $threshold) -}}{{- $picked = $picked | append . -}}{{- end -}}{{- end -}}
+{{- $picked = sort $picked "sortval" "desc" -}}
+
+{{- if or $picked $external }}
+<section class="see-also" aria-labelledby="see-also-heading">
+  <h2 id="see-also-heading">{{ i18n "see_also" | default "See also" }}</h2>
+  <ul>
+    {{- $n := 0 -}}{{- $seen := slice -}}
+    {{- range $external -}}{{- if lt $n 8 }}
+    <li><span class="see-also__kind">[{{ .kind | default "Link" }}]</span> <a href="{{ .url }}" target="_blank" rel="noopener">{{ .title | default .url }}</a></li>
+    {{- $n = add $n 1 -}}{{- end -}}{{- end -}}
+    {{- range $picked -}}
+      {{- $p := .page -}}
+      {{- $ptab := $p.Params.tab | default "articles" -}}
+      {{- $kind := cond (eq $ptab "working-papers") "Working paper" (cond (eq $ptab "theses") "Thesis" "Paper") -}}
+      {{- $key := printf "%s|%s" $kind (replaceRE "[^a-z0-9]" "" (lower $p.Title)) -}}
+      {{- if and (lt $n 8) (not (in $seen $key)) }}
+    <li><span class="see-also__kind">[{{ $kind }}]</span> <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a> ({{ $p.Date.Format "2006" }})</li>
+      {{- $seen = $seen | append $key -}}{{- $n = add $n 1 -}}
+      {{- end -}}
+    {{- end }}
+  </ul>
+</section>
+{{- end }}

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measuring public information · Centralising a Decentralised Market</title>
+<meta name="description" content="Deck II of the explorable: what efficiency means when all news is public, a bet on the result, and where the order flow went.">
+<link rel="stylesheet" href="explore.css">
+<script src="explore.js" defer></script>
+<script src="../sitebar.js"></script>
+</head>
+<body>
+<lg-sitebar><noscript><a href="../../publication/centralising-decentralised-market/">← Back to the paper</a></noscript><button class="bar__btn" type="button" data-map aria-expanded="false">Map<span class="bar__key"> · m</span></button></lg-sitebar>
+
+<main class="deck" data-deck="02">
+
+  <!-- 1 · The measurement problem -->
+  <section class="slide" id="s1" aria-label="Slide 1">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>II · 1</b> The measurement problem</p>
+        <h1>Nothing to discover, everything to synchronise.</h1>
+        <p>Textbook measures of price discovery ask who learns first. They assume that some trader knows something the others do not, and that prices reveal it trade by trade. A top-rated bond has no such secrets to speak of: what moves it is announced to everyone at once.</p>
+        <p>So the paper asks a different question — how efficiently is public information absorbed across venues? — and looks for two symptoms of inefficiency: screens that disagree with each other, and price moves that predictably undo themselves.</p>
+      </div>
+      <div class="slide__visual">
+        <svg class="fig" viewBox="0 0 400 230" role="img" aria-label="Left: private news. One trader knows first and the price follows. Right: public news. A bulletin reaches every screen at once, so every screen should agree.">
+          <text x="10" y="22" class="s">PRIVATE NEWS</text>
+          <circle cx="34" cy="100" r="12" class="ink"></circle>
+          <line x1="50" y1="100" x2="104" y2="100" class="hair"></line>
+          <path d="M 104 95 L 112 100 L 104 105 z" class="ink-muted"></path>
+          <rect x="114" y="82" width="66" height="36" rx="2" class="box"></rect>
+          <text x="147" y="105" text-anchor="middle">price</text>
+          <text x="10" y="178" class="m">One trader knows first;</text>
+          <text x="10" y="198" class="m">the price follows.</text>
+          <line x1="196" y1="14" x2="196" y2="214" class="axis"></line>
+          <text x="212" y="22" class="s">PUBLIC NEWS</text>
+          <g id="pub-screens"></g>
+          <rect x="212" y="80" width="54" height="40" rx="2" class="gold"></rect>
+          <text x="239" y="105" text-anchor="middle" class="on-gold">news</text>
+          <text x="212" y="178" class="m">Everyone hears at once;</text>
+          <text x="212" y="198" class="m">every screen should agree.</text>
+        </svg>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#2" data-go="2">The first symptom</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · First symptom: synchronisation -->
+  <section class="slide" id="s2" aria-label="Slide 2">
+    <div class="slide__inner slide__grid">
+      <div class="slide__text">
+        <p class="kicker"><b>II · 2</b> The first symptom</p>
+        <h2>Screens that disagree.</h2>
+        <p>Here three screens price the same bond through one trading day. The pale band is its true value, moved by public news; the lines are what the screens show. Make them catch up less often, and they stop agreeing.</p>
+        <p>The paper's first gauge, synchronisation, measures how closely the venues' prices move together: a statistical cousin of the toy's share of time all screens agree. In this lab, 1 means lockstep.</p>
+        <p>Now add a designated screen that dealers must keep quoted, and watch the gauge.</p>
+        <p class="note">A toy with made-up numbers, not the paper's estimator. Each reading comes from eighty simulated trading days; the chart shows the first.</p>
+      </div>
+      <div class="slide__visual">
+        <div id="lab1"></div>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#3" data-go="3">The second symptom</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Second symptom: predictable moves -->
+  <section class="slide" id="s3" aria-label="Slide 3">
+    <div class="slide__inner slide__grid">
+      <div class="slide__text">
+        <p class="kicker"><b>II · 3</b> The second symptom</p>
+        <h2>Moves that undo themselves.</h2>
+        <p>Now let the screens misjudge the news. Overshoot, and prices go too far and drift back; move only part of the way, and they creep after it. Either way the next move becomes predictable, which public news should not allow.</p>
+        <p>Two gauges catch it. The variance ratio compares a long move with the short steps inside it — here, an hour and its twelve five-minute steps: a random walk scores 1; below 1, short moves partly reverse; above 1, they keep going. Autocorrelation asks whether one short move predicts the next: 0 means it does not.</p>
+        <p>The paper folds these two gauges and synchronisation into one score of public-information efficiency.</p>
+      </div>
+      <div class="slide__visual">
+        <div id="lab2"></div>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#4" data-go="4">Place your bet</a>
+        <a class="door" href="aside-random-walk.html">Why does a random walk score 1?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Bet -->
+  <section class="slide" id="s4" aria-label="Slide 4">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>II · 4</b> Place your bet</p>
+        <h2>Did EU-Bonds' score rise, relative to the controls?</h2>
+        <p>Think back to the toy. After the arrangement, dealers had to keep quotes alive on designated screens. Prices across venues could move together more — or the designated screens could become a few more places for prices to disagree.</p>
+        <div class="bet" id="bet">
+          <button class="btn" type="button" data-bet="rose">It rose</button>
+          <button class="btn" type="button" data-bet="flat">It stayed flat</button>
+          <button class="btn" type="button" data-bet="fell">It fell</button>
+          <a class="skip" href="#4" data-bet="skip">Just show me</a>
+        </div>
+        <p class="bet-note" id="bet-note" aria-live="polite"></p>
+        <div class="gated" id="reveal">
+          <p>That is a difference-in-differences: EU-Bonds' change minus the controls' change over the same months, so whatever moved both — the rate cycle, a quiet summer — cancels out. The groups need not look alike, only move alike when nothing happens.</p>
+        </div>
+      </div>
+      <div class="slide__visual">
+        <svg class="fig did" id="did" viewBox="0 0 400 290" role="img" aria-label="Schematic difference-in-differences, drawn once you have bet.">
+          <line x1="30" y1="250" x2="380" y2="250" class="axis"></line>
+          <line x1="130" y1="40" x2="130" y2="250" class="guide"></line>
+          <line x1="300" y1="40" x2="300" y2="250" class="guide"></line>
+          <text x="130" y="274" text-anchor="middle" class="m">before</text>
+          <text x="300" y="274" text-anchor="middle" class="m">after</text>
+          <text x="10" y="24" class="s">EFFICIENCY SCORE · SCHEMATIC</text>
+          <circle cx="130" cy="130" r="5" class="ink"></circle>
+          <circle cx="130" cy="200" r="5" class="ink-muted"></circle>
+          <text x="118" y="135" text-anchor="end" class="t">EU-Bonds</text>
+          <text x="118" y="205" text-anchor="end" class="m">Controls</text>
+          <text x="300" y="168" text-anchor="middle" class="big q">?</text>
+          <g class="reveal-ink">
+            <line x1="130" y1="130" x2="300" y2="136" class="ln-cf"></line>
+            <line x1="130" y1="200" x2="300" y2="206" class="ln-c draw" pathLength="1"></line>
+            <line x1="130" y1="130" x2="300" y2="80" class="ln-t draw" pathLength="1"></line>
+            <circle cx="300" cy="206" r="5" class="ink-muted"></circle>
+            <circle cx="300" cy="80" r="5" class="ink"></circle>
+            <path d="M 312 80 H 320 V 136 H 312" class="hair"></path>
+            <text x="328" y="110" class="gap">+4.3</text>
+            <text x="328" y="128" class="m">points</text>
+          </g>
+        </svg>
+        <p class="caption" id="did-cap">The picture fills in once you have bet.</p>
+      </div>
+      <div class="slide__actions gated" id="reveal-doors">
+        <a class="door door--next" href="#5" data-go="5">What moved the score</a>
+        <a class="door" href="aside-points.html">Is 4.3 points a lot?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Decomposition -->
+  <section class="slide" id="s5" aria-label="Slide 5">
+    <div class="slide__inner">
+      <div class="slide__text">
+        <p class="kicker"><b>II · 5</b> The decomposition</p>
+        <h2>What moved the score.</h2>
+        <p>Back to the first question: do the screens agree? Not fully — and after the arrangement, EU-Bonds' screens agreed more closely than before, relative to the controls'. Stronger synchronisation across venues drove most of the 4.3 points.</p>
+        <p>The other two gauges point the same way, in the paper's reading: its variance-ratio and autocorrelation estimates also indicate more efficient pricing.</p>
+      </div>
+      <div class="slide__visual" style="margin-top:18px">
+        <div class="cards">
+          <div class="card card--lead">
+            <svg viewBox="0 0 72 36" aria-hidden="true"><path d="M2 28 L14 20 L26 24 L38 10 L50 16 L62 6 L70 9" style="stroke:var(--accent)"></path><path d="M2 31 L14 23 L26 27 L38 13 L50 19 L62 9 L70 12" style="stroke:var(--muted)"></path></svg>
+            <h3>Synchronisation</h3>
+            <p>How closely the venues' prices move together.</p>
+            <p class="verdict">Stronger — the main driver</p>
+          </div>
+          <div class="card">
+            <svg viewBox="0 0 72 36" aria-hidden="true"><path d="M4 18 L66 5 M4 18 L66 18 M4 18 L66 31" style="stroke:var(--muted)"></path><path d="M68 5 V31" style="stroke:var(--accent)"></path></svg>
+            <h3>Variance ratio</h3>
+            <p>A long move against the short steps inside it.</p>
+            <p class="verdict">Read by the paper as more efficient pricing</p>
+          </div>
+          <div class="card">
+            <svg viewBox="0 0 72 36" aria-hidden="true"><path d="M2 18 L12 7 L22 29 L32 7 L42 29 L52 7 L62 29 L70 18" style="stroke:var(--muted)"></path></svg>
+            <h3>Autocorrelation</h3>
+            <p>Whether one short move predicts the next.</p>
+            <p class="verdict">Read by the paper as more efficient pricing</p>
+          </div>
+        </div>
+        <p class="src">Directions as stated in the paper's abstract, which gives no values for the three gauges.</p>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#6" data-go="6">Where the flow went</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · Where the flow went -->
+  <section class="slide" id="s6" aria-label="Slide 6">
+    <div class="slide__inner slide__grid">
+      <div class="slide__text">
+        <p class="kicker"><b>II · 6</b> The mechanism</p>
+        <h2>Concentrated quotes, not fewer screens.</h2>
+        <p>The arrangement closed no venue: the other exchanges kept trading. What changed is where dealers had to keep quotes alive — and the order flow followed. The paper finds that it concentrated on the designated venues.</p>
+        <p>That is what centralising means here. Not gathering the market into one place, but giving it designated screens that are always quoted and that draw the flow.</p>
+      </div>
+      <div class="slide__visual">
+        <svg class="fig" id="flow" viewBox="0 0 400 250" role="img" aria-label="Schematic: before, orders are spread across six exchanges; after, the two designated venues draw more of them, and every exchange still trades."></svg>
+        <p class="caption">Schematic: each dot is an order; counts are illustrative. Gold marks a designated venue.</p>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="03-frictions.html#1">Next deck: what it cost</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bar bar--bottom">
+  <button class="bar__btn" type="button" data-prev aria-label="Previous slide">←</button>
+  <div class="dots" data-dots role="group" aria-label="Slides"></div>
+  <span class="bar__count" data-count></span>
+  <button class="bar__btn" type="button" data-next aria-label="Next slide">→</button>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  var svgEl = XP.svgEl;
+
+  /* --- Slide 1: one bulletin, four screens --- */
+  var ps = document.getElementById('pub-screens');
+  [[300, 52], [350, 52], [300, 128], [350, 128]].forEach(function (p) {
+    ps.appendChild(svgEl('line', { x1: 266, y1: 100, x2: p[0], y2: p[1] + 14, 'class': 'hair' }));
+    ps.appendChild(svgEl('rect', { x: p[0], y: p[1], width: 40, height: 28, rx: 2, 'class': 'box' }));
+  });
+
+  /* --- Slides 2 and 3: the lab (toy values) --- */
+  XP.pricesLab(document.getElementById('lab1'), { controls: ['catchup', 'designated'], readouts: ['sync'] });
+  XP.pricesLab(document.getElementById('lab2'), { controls: ['catchup', 'reaction', 'designated'], readouts: ['sync', 'vr', 'ac'] });
+
+  /* --- Slide 4: the bet. The only number here, 4.3 points, is the paper's (abstract). --- */
+  var did = document.getElementById('did'), cap = document.getElementById('did-cap');
+  var reveal = document.getElementById('reveal'), doors = document.getElementById('reveal-doors'), note = document.getElementById('bet-note');
+  var SAID = { rose: 'You said it rose. It did: by 4.3 percentage points more than the controls’ score.',
+    flat: 'You said it stayed flat. It rose: by 4.3 percentage points more than the controls’ score.',
+    fell: 'You said it fell. It rose: by 4.3 percentage points more than the controls’ score.',
+    skip: 'It rose: by 4.3 percentage points more than the controls’ score.' };
+  function show(choice) {
+    note.textContent = SAID[choice] || SAID.skip;
+    [reveal, doors].forEach(function (n) { n.classList.add('is-open'); });
+    did.classList.add('is-open');
+    did.setAttribute('aria-label', 'Schematic difference-in-differences: EU-Bonds rose by 4.3 percentage points more than the controls. The levels drawn are not the paper’s.');
+    cap.textContent = 'Schematic: the levels, and which group starts higher, are not the paper’s; only the gap, 4.3 percentage points, is. Dashed: where EU-Bonds would have gone had they moved like the controls. The abstract gives no margin of error, and the paper is in preparation: read the gap as a first estimate.';
+    Array.prototype.forEach.call(document.querySelectorAll('#bet [data-bet]'), function (b) {
+      if (b.tagName === 'BUTTON') { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === choice ? 'true' : 'false'); b.disabled = true; }
+      else b.hidden = true;
+    });
+  }
+  document.getElementById('bet').addEventListener('click', function (e) {
+    var t = e.target.closest('[data-bet]'); if (!t) return;
+    e.preventDefault();
+    XP.store.set('02', { bet: t.getAttribute('data-bet') });
+    show(t.getAttribute('data-bet'));
+  });
+  var saved = XP.store.get('02').bet;
+  if (saved && SAID[saved]) show(saved);
+
+  /* --- Slide 6: where the flow went (schematic, counts illustrative) --- */
+  var F = document.getElementById('flow');
+  var BEFORE = [3, 2, 3, 3, 2, 3], AFTER = [2, 5, 1, 2, 5, 1], GOLD = [1, 4];
+  [['BEFORE', 24, 86, BEFORE], ['AFTER', 144, 206, AFTER]].forEach(function (r) {
+    F.appendChild(svgEl('text', { x: 10, y: r[1], 'class': 's' }, r[0]));
+    r[3].forEach(function (n, i) {
+      var x = 16 + i * 64;
+      F.appendChild(svgEl('rect', { x: x, y: r[2], width: 44, height: 28, rx: 2, 'class': GOLD.indexOf(i) >= 0 ? 'gold' : 'box' }));
+      for (var k = 0; k < n; k++) F.appendChild(svgEl('circle', { cx: x + 22, cy: r[2] - 10 - k * 10, r: 3.5, 'class': 'ink' }));
+    });
+  });
+});
+</script>
+</body>
+</html>

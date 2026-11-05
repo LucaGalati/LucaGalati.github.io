@@ -1,0 +1,19 @@
+# Hugo build output and caches
+public/
+resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+# Node
+node_modules/
+
+# macOS and local scraps (bookmarks of the example sites live in examples/)
+.DS_Store
+*.webloc
+examples/
+.claude/
+
+# Private notes: the owner's to-do list and the design notes of the explore pages (remarks on the
+# manuscripts). The repository is public; these stay on the computer the site is edited from.
+NOTES-PRIVATE.md
+static/explore/*/plan.md

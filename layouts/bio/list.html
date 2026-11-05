@@ -1,0 +1,145 @@
+{{ define "main" }}
+{{- $photo := resources.Get "images/luca-galati-portrait.jpg" -}}
+{{- $name := site.Params.author_name | default site.Title -}}
+{{- $owner := site.Params.author_name -}}
+<article class="wrap bio">
+  {{ partial "breadcrumbs.html" . }}
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+    <p class="page-head__actions"><a class="btn btn--outline" href="{{ "files/luca-galati-cv.pdf" | relURL }}">{{ i18n "download_cv" }}</a></p>
+  </header>
+
+  <div class="prose">
+    {{- with $photo }}
+      {{- $img := .Fill "660x880 Center q85" }}
+    <img class="bio__photo" src="{{ $img.RelPermalink }}" width="240" height="320" alt="Portrait of {{ $name }}, {{ site.Params.institution }}" decoding="async">
+    {{- else }}
+    <span class="bio__photo bio__monogram" aria-hidden="true">LG</span>
+    {{- end }}
+    {{ .Content }}
+  </div>
+
+  {{- with site.Data.cv }}
+  {{- /* The rows follow the printed CV: the role, degree or award in bold, then the institution, the
+         place after a dash. Employment and the other appointments (habilitations, editorships,
+         industry) are separate chronologies in cv.json; keep them under separate headings. */}}
+  {{- range slice (dict "label" "appointments" "rows" .employment) (dict "label" "other_appointments" "rows" .appointments) }}
+  {{- $label := .label }}
+  {{- with .rows }}
+  <section class="cv-section">
+    <h2>{{ i18n $label }}</h2>
+    {{- range . }}
+    <div class="cv-row">
+      <div class="cv-row__when">{{ .years }}</div>
+      <div class="cv-row__what">
+        {{- with .position }}<span class="cv-row__title">{{ . }}</span>{{ end }}
+        {{- with .institution }}, {{ . }}{{ end }}
+        {{- with .location }}<span class="cv-row__loc"> &ndash; {{ . }}</span>{{ end }}
+      </div>
+    </div>
+    {{- end }}
+  </section>
+  {{- end }}
+  {{- end }}
+
+  {{- with .education }}
+  <section class="cv-section">
+    <h2>{{ i18n "education" }}</h2>
+    {{- range . }}
+    <div class="cv-row">
+      <div class="cv-row__when">{{ with .start_year }}{{ . }}{{ end }}{{ with .end_year }}–{{ . }}{{ end }}</div>
+      <div class="cv-row__what">
+        {{- with .degree }}<span class="cv-row__title">{{ . }}</span>{{ end }}
+        {{- with .institution }}, {{ . }}{{ end }}
+        {{- with .location }}<span class="cv-row__loc"> &ndash; {{ . }}</span>{{ end }}
+        {{- /* notes hold the grade or distinction: right under the degree, on a line of its own */}}
+        {{- range .notes }}<div class="cv-row__grade">{{ . }}</div>{{ end }}
+        {{- with .thesis }}<div class="cv-row__note">{{ i18n "thesis" }}: <em>{{ . }}</em></div>{{ end }}
+        {{- with .advisors }}<div class="cv-row__note">{{ i18n "advisors" }}: {{ . }}</div>{{ end }}
+      </div>
+    </div>
+    {{- end }}
+  </section>
+  {{- end }}
+
+  {{- with (.honors | default .awards) }}
+  <section class="cv-section">
+    <h2>{{ i18n "awards_grants" }}</h2>
+    {{- /* One year, then everything received in it: the year is printed on its first row only. */}}
+    {{- $prev := "" }}
+    {{- range . }}
+    {{- $y := string .year }}
+    <div class="cv-row cv-row--award{{ if ne $y $prev }} cv-row--year{{ end }}">
+      <div class="cv-row__when">{{ if ne $y $prev }}{{ .year }}{{ end }}</div>
+      <div class="cv-row__what">
+        {{- with .title }}<span class="cv-row__title">{{ . }}</span>{{ end }}
+        {{- with .organization }}, {{ . }}{{ end }}
+      </div>
+      <div class="cv-row__amount">{{ with .amount }}{{ . }}{{ end }}</div>
+    </div>
+    {{- $prev = $y }}
+    {{- end }}
+  </section>
+  {{- end }}
+
+  {{- with .service }}
+  <section class="cv-section">
+    <h2>{{ i18n "service" }}</h2>
+    {{- range . }}
+    <div class="cv-row">
+      <div class="cv-row__when">{{ .years }}</div>
+      <div class="cv-row__what">
+        {{- with .position }}<span class="cv-row__title">{{ . }}</span>{{ end }}
+        {{- with .organization }}, {{ . }}{{ end }}
+        {{- with .location }}<span class="cv-row__loc"> &ndash; {{ . }}</span>{{ end }}
+      </div>
+    </div>
+    {{- end }}
+  </section>
+  {{- end }}
+
+  {{- /* Presentations of papers that are not on the site: data/other_presentations.json. */}}
+  {{- with site.Data.other_presentations }}
+  <section class="cv-section" id="other-presentations">
+    <h2>{{ i18n "other_presentations" | default "Other presentations" }}</h2>
+    {{- range . }}
+    <div class="presentation">
+      <p class="presentation__title">{{ .title }}</p>
+      <p class="presentation__meta">{{ partial "authors.html" (dict "authors" .authors "owner" $owner) }}{{ with .year }} &middot; {{ . }}{{ end }}</p>
+      {{- with .events }}{{ partial "events.html" . }}{{ end }}
+    </div>
+    {{- end }}
+  </section>
+  {{- end }}
+
+  {{- with .peer_review }}
+  <section class="cv-section">
+    <h2>{{ i18n "peer_review" }}</h2>
+    <p class="cv-text">{{ delimit . ", " }}</p>
+  </section>
+  {{- end }}
+
+  {{- with .memberships }}
+  <section class="cv-section">
+    <h2>{{ i18n "memberships" }}</h2>
+    <p class="cv-text">{{ delimit . ", " }}</p>
+  </section>
+  {{- end }}
+  {{- end }}
+
+  <section class="contact" id="contact">
+    <h2>{{ i18n "contact" }}</h2>
+    {{- with site.Params.email }}
+    <p class="contact__email">{{ i18n "email" }}: <a href="mailto:{{ . }}">{{ . }}</a></p>
+    {{- end }}
+    {{- with site.Params.address }}
+    <p class="contact__address">{{ . }}</p>
+    {{- end }}
+    <ul class="contact__profiles">
+      {{- range site.Params.profiles }}{{ if and .url (not (hasPrefix .url "mailto:")) }}
+      <li><a class="icon-link" href="{{ .url }}">{{ partial "social-icon.html" .icon }} <span>{{ .name }}</span></a></li>
+      {{- end }}{{ end }}
+    </ul>
+  </section>
+</article>
+{{ end }}

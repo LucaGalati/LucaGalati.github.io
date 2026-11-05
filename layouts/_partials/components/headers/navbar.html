@@ -1,0 +1,52 @@
+{{- /* Site navigation: brand left, links flush right, search icon, mobile hamburger.
+       The search button reuses Blox's mechanism: hb-search.js binds [data-search-toggle]
+       and opens the Alpine search store rendered by components/search-modal.html. */ -}}
+{{- $brand := site.Params.header.navbar.logo.text | default site.Params.author_name | default site.Title -}}
+{{- $home := site.Home.RelPermalink -}}
+{{- $cur := .RelPermalink -}}
+{{- $show_search := site.Params.header.navbar.show_search | default false -}}
+<nav class="site-nav" aria-label="{{ i18n "main_navigation" }}">
+  <div class="site-nav__inner wrap">
+    <a class="site-nav__brand" href="{{ $home }}">{{ $brand }}</a>
+    <ul class="site-nav__links">
+      {{- range site.Menus.main }}
+        {{- $url := .URL | relLangURL }}{{ with .Page }}{{ $url = .RelPermalink }}{{ end }}
+        {{- $active := and (ne $url $home) (hasPrefix $cur $url) }}
+        <li><a class="site-nav__link{{ if $active }} is-active{{ end }}" href="{{ $url }}"{{ if $active }} aria-current="{{ if eq $url $cur }}page{{ else }}true{{ end }}"{{ end }}>{{ .Name }}</a></li>
+      {{- end }}
+    </ul>
+    {{- if $show_search }}
+    <button class="site-nav__search" type="button" aria-label="{{ i18n "search" }}" title="{{ i18n "search" }} (Ctrl+K)" data-search-toggle>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+    </button>
+    {{- end }}
+    <button class="site-nav__toggle" type="button" aria-label="{{ i18n "menu" }}" aria-expanded="false" aria-controls="site-nav-mobile">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="site-nav__mobile" id="site-nav-mobile">
+    <ul>
+      <li><a href="{{ $home }}">{{ i18n "home" }}</a></li>
+      {{- range site.Menus.main }}
+        {{- $url := .URL | relLangURL }}{{ with .Page }}{{ $url = .RelPermalink }}{{ end }}
+        {{- $active := and (ne $url $home) (hasPrefix $cur $url) }}
+        <li><a{{ if $active }} class="is-active"{{ end }} href="{{ $url }}"{{ if $active }} aria-current="{{ if eq $url $cur }}page{{ else }}true{{ end }}"{{ end }}>{{ .Name }}</a></li>
+      {{- end }}
+    </ul>
+  </div>
+</nav>
+<script>
+(function () {
+  var nav = document.querySelector('.site-nav');
+  var btn = nav && nav.querySelector('.site-nav__toggle');
+  if (!btn) return;
+  function set(open) { nav.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  btn.addEventListener('click', function () { set(!nav.classList.contains('is-open')); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) { set(false); btn.focus(); }
+  });
+})();
+</script>
+{{- if $show_search }}
+  {{- partial "components/search-modal.html" . -}}
+{{- end }}

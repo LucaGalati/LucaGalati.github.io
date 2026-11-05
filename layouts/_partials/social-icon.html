@@ -1,0 +1,19 @@
+{{- /* Inline 20px icon for a profile link. Context: icon name (email, scholar, orcid, ssrn, github, linkedin). */ -}}
+{{- $name := lower (printf "%v" .) -}}
+<svg class="icon icon--{{ $name }}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{{- if eq $name "email" -}}
+  <rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6.5 12 12.5l8.5-6"/>
+{{- else if eq $name "scholar" -}}
+  <path d="M2.5 9.5 12 4.5l9.5 5L12 14.5z"/><path d="M6.5 12v4.5c0 1.4 2.5 2.8 5.5 2.8s5.5-1.4 5.5-2.8V12"/><path d="M21.5 9.5v5.5"/>
+{{- else if eq $name "orcid" -}}
+  <circle cx="12" cy="12" r="9.5"/><text x="12" y="15.4" text-anchor="middle" font-family="inherit" font-size="9" font-weight="600" fill="currentColor" stroke="none">iD</text>
+{{- else if eq $name "ssrn" -}}
+  <rect x="2.5" y="6" width="19" height="12" rx="1.5"/><text x="12" y="14.6" text-anchor="middle" font-family="inherit" font-size="6.2" font-weight="600" letter-spacing="0.4" fill="currentColor" stroke="none">SSRN</text>
+{{- else if eq $name "github" -}}
+  <path d="M5.5 10.5 4.5 4.5l4.2 2.7"/><path d="M18.5 10.5l1-6-4.2 2.7"/><path d="M5.3 10.4a7 7 0 1 0 13.4 0"/><circle cx="9.5" cy="12.8" r=".7" fill="currentColor" stroke="none"/><circle cx="14.5" cy="12.8" r=".7" fill="currentColor" stroke="none"/><path d="M11 16.2h2"/>
+{{- else if eq $name "linkedin" -}}
+  <rect x="3" y="3" width="18" height="18" rx="2"/><text x="12" y="16.3" text-anchor="middle" font-family="inherit" font-size="10" font-weight="600" fill="currentColor" stroke="none">in</text>
+{{- else -}}
+  <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.4 1.4"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.4-1.4"/>
+{{- end -}}
+</svg>{{- "" -}}

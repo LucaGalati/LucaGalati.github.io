@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The floor that would not die — Not Dead Yet, explorable</title>
+<meta name="description" content="Path 1 of the explorable explanation of Not Dead Yet: Options Trading Floors: why a trading floor survives in S&P 500 options, and what the COVID-19 closure lets us measure.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+.slide[data-id="hook"] h1{font-size:clamp(28px,3.4vw,40px)}
+.q{font-size:19px; line-height:1.45; margin:0}
+/* 1.1 the share bar */
+.share{margin-top:18px}
+.share .sb{position:relative; height:26px; border:1px solid var(--border-strong); border-radius:var(--radius)}
+.share .sb i{position:absolute; left:0; top:0; bottom:0; width:0; transition:width 1s ease}
+.share .sb-all{background:var(--ink-soft)}
+.share .sb-spx{background:var(--ink)}
+.share.go .sb-all{width:22%}
+.share.go .sb-spx{width:16.31%}
+.share .sb-guess{position:absolute; top:-8px; bottom:-8px; width:2px; margin-left:-1px; background:var(--gold); display:none}
+.share.guessed .sb-guess{display:block}
+.sb-axis{display:flex; justify-content:space-between; font-family:var(--sans); font-size:12px; color:var(--muted); margin-top:8px}
+.share .key{display:inline-block; width:10px; height:10px; margin-right:6px; vertical-align:-1px}
+.share .k1{background:var(--ink-soft)}
+.share .k2{background:var(--ink); margin-left:8px}
+.share .k3{background:var(--gold); width:3px; margin-left:8px}
+@media (prefers-reduced-motion: reduce){ .share .sb i{transition:none} }
+/* 1.2 the ticket */
+.ticket{border:1px solid var(--border-strong); border-radius:var(--radius); padding:16px 18px; font-family:var(--sans); max-width:460px}
+.ticket .t-head{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:500; margin-bottom:10px}
+.ticket .t-legs{border-left:2px solid var(--gold); padding-left:12px; transition:border-color .3s}
+.ticket[data-mode="legs"] .t-legs{border-left-color:var(--border-strong); border-left-style:dashed}
+.ticket .t-row{display:grid; grid-template-columns:minmax(0,1fr) 4.2em 8.4em; gap:10px; align-items:baseline; padding:6px 0; font-size:15px}
+.ticket .t-px{text-align:right; font-variant-numeric:tabular-nums}
+.ticket .t-st{font-size:12.5px; color:var(--muted); text-align:right}
+.ticket[data-mode="legs"] .t-row.put{color:var(--muted)}
+.ticket[data-mode="legs"] .t-row.put .t-st{color:var(--text); font-weight:500}
+.ticket .t-net{display:flex; justify-content:space-between; gap:10px; border-top:1px solid var(--border); margin-top:8px; padding-top:8px; font-size:14px}
+.ticket [data-show]{display:none}
+.ticket[data-mode="pkg"] [data-show="pkg"],.ticket[data-mode="legs"] [data-show="legs"]{display:inline}
+.ticketnote{font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--muted); margin:12px 0 0; min-height:4.5em; max-width:460px}
+/* 1.3 unit charts */
+.units{display:flex; gap:40px; align-items:flex-end; flex-wrap:wrap; font-family:var(--sans)}
+.uhead{font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500; margin-bottom:10px}
+.ublock{display:grid; gap:3px}
+.urow{display:flex; gap:3px}
+.urow i{width:8px; height:8px; background:var(--ink); display:block}
+.ucol.e .urow i{background:var(--ink-soft)}
+.ucap{font-size:13.5px; color:var(--muted); margin-top:10px}
+.ucap b{font-weight:500; color:var(--text); font-size:18px}
+.sharehead{font-family:var(--sans); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500; margin:26px 0 10px}
+/* 1.4 */
+.tl-fig{max-width:1000px; width:100%; margin:0 auto}
+.rules{margin:0 0 .75em; padding-left:1.2em; font-size:15px; line-height:1.5}
+.rules li{margin-bottom:.4em}
+/* 1.5 */
+.forks{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:22px}
+@media (max-width:700px){ .forks{grid-template-columns:1fr} }
+.fork{display:block; border:1px solid var(--border-strong); border-radius:var(--radius); padding:16px 18px; color:var(--text); transition:border-color .15s}
+.fork:hover{border-color:var(--gold)}
+.fork .t{font-family:var(--sans); font-weight:500; font-size:15px; display:block; margin-bottom:4px}
+.fork .s{font-family:var(--sans); font-size:13px; color:var(--muted); display:block; line-height:1.45}
+</style>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/options-trading-floors/">← Back to the paper</a></noscript>
+  <span class="where"></span>
+  <button class="mapbtn" type="button" aria-label="Open the map" aria-expanded="false">Map <kbd>m</kbd></button>
+</lg-sitebar>
+
+<main class="stage">
+
+  <!-- 1.1 Hook: a guess that needs no prior knowledge -->
+  <section class="slide" data-id="hook">
+    <div class="wrap split">
+      <div class="prose">
+        <span class="kicker">An explorable explanation of a research paper</span>
+        <h1>Stock markets stopped shouting a long time ago.</h1>
+        <p>On the New York Stock Exchange people still stand on the floor, but floor trading is roughly 3% of share volume, most of it in the opening and closing auctions. In stocks, the move to screens is essentially complete.</p>
+      </div>
+      <div>
+        <p class="q">So guess: what share of U.S. options trading, by dollar value, still happens by open outcry, voice and hand signal on a trading floor?</p>
+        <div class="bet" id="hookbet" data-gate role="group" aria-label="Your guess">
+          <button type="button" data-v="1">Under 1%</button>
+          <button type="button" data-v="5">About 5%</button>
+          <button type="button" data-v="20">Over 20%</button>
+        </div>
+        <p class="verdict" id="hookverdict" data-hint aria-live="polite"></p>
+        <figure class="share" id="share">
+          <div class="sb" role="img" aria-label="A bar from 0 to 100% of U.S. options dollar volume; it fills in after your guess">
+            <i class="sb-all"></i><i class="sb-spx"></i><b class="sb-guess"></b>
+          </div>
+          <div class="sb-axis" aria-hidden="true"><span>0</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+          <figcaption class="reveal" id="sharecap"><span class="key k1"></span>all trading floors, 22%<span class="key k2"></span>SPX on the Cboe floor, 16%<span class="key k3"></span>your guess<br>Share of the dollar volume of all U.S. listed options, 2020 outside the closure.</figcaption>
+        </figure>
+        <div class="reveal prose" id="hookreveal" style="margin-top:16px">
+          <p>More than a fifth. About three quarters of that is one product on one floor: options on the S&amp;P 500 index, in Chicago.</p>
+          <p>On March 16, 2020, that floor closed for three months while the screens kept trading. Why would anyone still shout? And what did the market lose when the shouting stopped?</p>
+          <a class="cta" href="#2" data-go="2">What trades there? →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.2 One order, one price -->
+  <section class="slide" data-id="package">
+    <div class="wrap split">
+      <div class="prose">
+        <h2>Almost nothing on the floor is a simple “buy 100 calls”.</h2>
+        <p>A <em>complex order</em> is one instruction to trade two or more options, called legs, at a single net price. Buy a call at $3.00 and sell a put at $1.00 as one package, and you pay $2.00 net.</p>
+        <p>The legs fill together or not at all. For legs meant to offset each other, the package hedges only if every leg executes. Try sending the same two legs separately.</p>
+        <a class="cta" href="#3" data-go="3">Where do the big packages go? →</a>
+      </div>
+      <figure>
+        <div class="ticket" id="ticket" data-mode="pkg">
+          <div class="t-head"><span data-show="pkg">One order · one net price</span><span data-show="legs">Two separate orders</span></div>
+          <div class="t-legs">
+            <div class="t-row call"><span>Buy 1 SPX call</span><span class="t-px">$3.00</span><span class="t-st"><span data-show="pkg">fills with the put</span><span data-show="legs">filled</span></span></div>
+            <div class="t-row put"><span>Sell 1 SPX put</span><span class="t-px">$1.00</span><span class="t-st"><span data-show="pkg">fills with the call</span><span data-show="legs">not filled yet</span></span></div>
+          </div>
+          <div class="t-net"><span data-show="pkg">Net price</span><span data-show="pkg">$2.00 debit</span><span data-show="legs">You now hold</span><span data-show="legs">one call, alone</span></div>
+        </div>
+        <div class="chips" id="legmode" role="group" aria-label="How to send the two legs" style="margin-top:14px">
+          <button class="chip" type="button" data-m="pkg">As one package</button>
+          <button class="chip" type="button" data-m="legs">Leg by leg</button>
+        </div>
+        <p class="ticketnote" id="ticketnote" aria-live="polite"></p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 1.3 Where the big packages go -->
+  <section class="slide" data-id="big">
+    <div class="wrap split rev">
+      <figure>
+        <div class="units">
+          <div class="ucol">
+            <div class="uhead">Average floor trade</div>
+            <div class="ublock" id="ufloor" role="img" aria-label="784 contracts in 12 legs"></div>
+            <div class="ucap"><b>784</b> contracts · <b>12.1</b> legs</div>
+          </div>
+          <div class="ucol e">
+            <div class="uhead">Average electronic trade</div>
+            <div class="ublock" id="uelec" role="img" aria-label="36 contracts in under 3 legs"></div>
+            <div class="ucap"><b>36</b> contracts · <b>2.6</b> legs</div>
+          </div>
+        </div>
+        <div class="sharehead">The floor's share of complex SPX trading</div>
+        <div class="hbars go">
+          <div class="hb"><span class="lab">of the dollar volume</span><span class="track"><i style="--w:70%"></i></span><span class="val">70%</span></div>
+          <div class="hb"><span class="lab">of the orders</span><span class="track"><i style="--w:1.6%"></i></span><span class="val">1.6%</span></div>
+        </div>
+        <figcaption>One square is 4 contracts; each row is one leg, drawn the same size. Floor trades June 15–26 and electronic trades June 1–14, 2020. Dollar share: 2020 outside the closure. Order share: June 15 – October 21.</figcaption>
+      </figure>
+      <div class="prose">
+        <h2>The floor is where the big packages go.</h2>
+        <p>Right after it reopened, the average floor trade had 784 contracts and 12 legs. In the closure's last two weeks, the average electronic trade had 36 contracts and under 3 legs.</p>
+        <p>So the floor carries about 70% of the dollar volume in complex SPX trades but only 1.6% of the orders: a small number of very large packages.</p>
+        <a class="cta" href="#4" data-go="4">How do you test what a floor is worth? →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.4 The experiment -->
+  <section class="slide" data-id="experiment">
+    <div class="wrap">
+      <figure class="tl-fig">
+        <svg id="tl" class="fig" role="img" aria-label="Timeline of 2020: the Cboe floor is open until March 16, closed until June 15, then open again"></svg>
+      </figure>
+      <div class="split even" style="margin-top:20px; align-items:start">
+        <div class="prose">
+          <h2>A clean switch is rare in markets.</h2>
+          <p>Usually traders choose their venue, and any comparison of venues carries the fingerprints of that choice. In 2020 the choice was taken away. On March 16 Cboe shut the floor and rejected every order marked for it. On June 15 the floor reopened.</p>
+          <p>The paper studies the reopening. In March the VIX, the market's volatility gauge, rose above 80; around June 15 it averaged about 29 in the two weeks before and 33 in the two weeks after, with no jump on the day. SPY packages, which track the same index on other exchanges and never touch the Cboe floor, showed no change in cost (−0.05 cents, statistically zero).</p>
+        </div>
+        <div class="prose">
+          <p class="small">While the floor was shut, two temporary rules kept SPX packages trading on the screens:</p>
+          <ol class="rules">
+            <li>AIM, an electronic auction in which a broker brings an order already paired with a counterparty and others may improve the price, was switched on for SPX packages for the first time.</li>
+            <li>Packages whose legs differ in size by up to 25 to 1 could trade electronically. The limit had been 3 to 1; anything beyond it had to go to the floor.</li>
+          </ol>
+          <p class="small">Both were reversed on June 15. The reopening brought back the floor and switched off AIM on the same day.</p>
+          <a class="cta" href="#5" data-go="5">So what happened when the floor came back? →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.5 Bet -->
+  <section class="slide" data-id="bet">
+    <div class="wrap split" style="align-items:center">
+      <div class="prose">
+        <h2>When the floor came back, did comparable trades cost more there, or less?</h2>
+        <p class="small muted sans">The paper pairs each floor trade from June 15–26 with a look-alike electronic trade from June 1–14.</p>
+        <p class="def">Cost is the <em>effective spread</em>: how far the price paid sits from the midpoint of the quotes, in cents per unit of the index. One cent on one contract is one dollar.</p>
+        <div class="bet" id="bet1" data-gate role="group" aria-label="Your bet">
+          <button type="button" data-v="less">Less on the floor</button>
+          <button type="button" data-v="same">About the same</button>
+          <button type="button" data-v="more">More on the floor</button>
+        </div>
+        <p class="verdict" id="verdict1" data-hint aria-live="polite"></p>
+        <div class="reveal" id="reveal1">
+          <p>Matched floor trades paid 4.45 cents against 3.15 cents for their electronic twins. With market conditions and the traits of each trade held fixed, the gap is 1.14 cents, 36% of the electronic spread, and market makers kept it: their revenue was 1.15 cents higher. Against AIM trades alone the gap is about twice as large, 2.44 cents.</p>
+          <p>So the floor is an expensive habit? That is one reading. It is incomplete, and each of the two paths shows why.</p>
+        </div>
+      </div>
+      <div class="reveal" id="revealfig">
+        <figure>
+          <div class="hbars" id="bars">
+            <div class="hb soft"><span class="lab">Electronic twins, June 1–14</span><span class="track"><i style="--w:63%"></i></span><span class="val">3.15¢</span></div>
+            <div class="hb"><span class="lab">Floor, June 15–26</span><span class="track"><i style="--w:89%"></i></span><span class="val">4.45¢</span></div>
+          </div>
+          <figcaption>Average effective spread of the 1,177 matched pairs, in cents per unit of the index; the bars run from 0 to 5 cents.</figcaption>
+        </figure>
+        <div class="forks">
+          <a class="fork" href="02-price.html#1"><span class="t">Follow the money →</span><span class="s">Does the gap depend on the size of the trade? Find out with a dial.</span></a>
+          <a class="fork" href="03-crowd.html#1"><span class="t">Step into the crowd →</span><span class="s">What a pit does that a screen cannot: commitment, division, faces.</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bar">
+  <div class="nav"><button class="navbtn prev" type="button">← Previous</button></div>
+  <nav class="dots" aria-label="Slides"></nav>
+  <div class="nav next"><button class="navbtn next" type="button">Next →</button></div>
+</footer>
+
+<script src="explore.js"></script>
+<script>
+(function () {
+  var S = Explore.svg, textW = Explore.textW;
+  var D = Explore.deck('floor', { next: '02-price.html#1', nextLabel: 'Next path →' });
+
+  /* --- 1.1 the guess (Table I: floors 22.00% of OPRA dollar volume; SPX on the Cboe floor 16.31%) --- */
+  (function () {
+    var fig = document.getElementById('share'), guess = fig.querySelector('.sb-guess');
+    var cap = document.getElementById('sharecap'), rev = document.getElementById('hookreveal'), verdict = document.getElementById('hookverdict');
+    var texts = {
+      '1': 'Your guess: under 1%. The real share is more than twenty times that.',
+      '5': 'Your guess: about 5%. The real share is more than four times that.',
+      '20': 'Your guess: over 20%. Right: 22%.'
+    };
+    Explore.bet(D, 'hookbet', function (v, instant) {
+      if (instant) fig.classList.add('instant');
+      guess.style.left = v + '%';
+      fig.classList.add('guessed');
+      verdict.textContent = texts[v] || '';
+      cap.classList.add('on'); rev.classList.add('on');
+      requestAnimationFrame(function () { fig.classList.add('go'); setTimeout(function () { fig.classList.remove('instant'); }, 60); });
+    });
+  })();
+
+  /* --- 1.2 one package or two orders --- */
+  (function () {
+    var t = document.getElementById('ticket'), note = document.getElementById('ticketnote');
+    var btns = document.querySelectorAll('#legmode button');
+    var notes = {
+      pkg: 'Both legs fill together at the net price, or neither does.',
+      legs: 'Until the put fills, you hold a call on its own, a position you never wanted, and the put’s price can move before you get it. That is execution risk. A package removes it.'
+    };
+    function set(m, save) {
+      t.setAttribute('data-mode', m);
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-m') === m ? 'true' : 'false'); });
+      note.textContent = notes[m];
+      if (save) { D.state.mode = m; D.save(); }
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { set(b.getAttribute('data-m'), true); }); });
+    set(D.state.mode || 'pkg', false);
+  })();
+
+  /* --- 1.3 unit charts: one square = 4 contracts (Table IV: 783.62 and 36.17 contracts; 12.14 and 2.58 legs) --- */
+  (function () {
+    function block(id, rows) {
+      var b = document.getElementById(id);
+      rows.forEach(function (k) {
+        var r = document.createElement('div'); r.className = 'urow';
+        for (var i = 0; i < k; i++) r.appendChild(document.createElement('i'));
+        b.appendChild(r);
+      });
+    }
+    block('ufloor', [17, 17, 17, 17, 16, 16, 16, 16, 16, 16, 16, 16]);   // 196 squares = 784 contracts, 12 legs
+    block('uelec', [3, 3, 3]);                                             // 9 squares = 36 contracts, 3 legs
+  })();
+
+  /* --- 1.4 the timeline, drawn at its rendered width --- */
+  (function () {
+    var svg = document.getElementById('tl');
+    Explore.fit(svg, function (W) {
+      var compact = W < 560;
+      var yBar = compact ? 62 : 44, H = yBar + 40;
+      var t = Explore.timeline(svg, { W: W, H: H, yBar: yBar });
+      var evs = compact
+        ? [[76, 'Mar 16 · floor closes', yBar - 40], [167, 'Jun 15 · reopens', yBar - 18]]
+        : [[76, 'March 16: the floor closes', yBar - 20], [167, 'June 15: the floor reopens and AIM is switched off', yBar - 20]];
+      evs.forEach(function (e) {
+        var xx = t.x(e[0]), y = e[2];
+        S('line', { x1: xx, y1: y + 3, x2: xx, y2: yBar, stroke: 'var(--ink)', 'stroke-width': 1.25 }, svg);
+        S('circle', { cx: xx, cy: y + 3, r: 3.5, fill: 'var(--gold)' }, svg);
+        var end = xx + 8 + textW(e[1], 12) > W - 2;
+        S('text', { x: end ? xx - 8 : xx + 8, y: y + 7, 'text-anchor': end ? 'end' : 'start', 'font-size': 12, fill: 'var(--text)', text: e[1] }, svg);
+      });
+    }, 1000);
+  })();
+
+  /* --- 1.5 the bet --- */
+  (function () {
+    var rv = document.getElementById('reveal1'), fig = document.getElementById('revealfig'), bars = document.getElementById('bars'), verdict = document.getElementById('verdict1');
+    var texts = {
+      less: 'Your bet: less on the floor. For these trades, the data disagree.',
+      same: 'Your bet: about the same. Not quite.',
+      more: 'Your bet: more on the floor. The data agree.'
+    };
+    Explore.bet(D, 'bet1', function (v, instant) {
+      verdict.textContent = texts[v] || '';
+      rv.classList.add('on'); fig.classList.add('on');
+      if (instant) bars.classList.add('instant');
+      requestAnimationFrame(function () { bars.classList.add('go'); setTimeout(function () { bars.classList.remove('instant'); }, 60); });
+    });
+  })();
+})();
+</script>
+</body>
+</html>

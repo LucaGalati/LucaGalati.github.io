@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why spreads widen · The Effects of War on Market Functioning</title>
+<meta name="description" content="Side path of an explorable explanation of Federle, Galati and Riordan, The Effects of War on Market Functioning: what a bid–ask spread is, how quoted and effective spreads differ, and why a dealer widens the spread when a war starts next door.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<style>
+  #sp-chart { max-width: 20rem; justify-self: center; margin-left: auto; margin-right: auto; }
+  .fig .link-text { fill: var(--link); font-weight: 500; }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-why.html">
+<lg-sitebar><noscript><a href="../../publication/war-market-functioning/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="What is a spread, exactly?">
+  <div class="inner">
+    <p class="kicker">Side path · Why spreads widen · 1 of 2</p>
+    <h2>The price of now</h2>
+    <div class="two">
+      <div>
+        <p>A share has no single price. At any moment there is a highest <strong>bid</strong>, what someone will pay right now, and a lowest <strong>ask</strong>, what someone will sell for right now. To trade immediately you cross the gap: buy at the ask, sell at the bid.</p>
+        <p>The <strong>quoted spread</strong> is that gap divided by the midpoint: the posted price of immediacy. The <strong>effective spread</strong> looks at real trades: how far each landed from the midpoint, counted one way. A buy at the ask pays half the quoted spread; a round trip, a buy and then a sell, pays that half twice.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>Why would anyone widen it?&nbsp;→</button>
+          <a class="btn return-link" href="01-shock.html#s2" data-primary-when="01-shock.html">← Return to the main path</a>
+        </div>
+        <p class="note">Definitions as in the paper, equations (1) and (2). The slider starts at the sample’s average quoted spread before the invasion, 0.56% (median 0.32%), which the paper rounds to about 60 bp; a basis point (bp) is a hundredth of a percent. The euro arithmetic is definitional, not a result.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="sp-chart"></div>
+        <label class="ctl" for="sp-gap">Widen or narrow the gap</label>
+        <input type="range" id="sp-gap" min="2" max="200" step="2" value="56">
+        <p class="readout" id="sp-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Why would a dealer charge more?">
+  <div class="inner">
+    <p class="kicker">Side path · Why spreads widen · 2 of 2</p>
+    <h2>Two reasons a dealer charges more</h2>
+    <div class="two">
+      <div>
+        <p>Whoever posts the bid and the ask is offering to trade with anyone who shows up, including people who know something.</p>
+        <h3>Adverse selection</h3>
+        <p>The likelier it is that the next order comes from someone better informed, the more the dealer loses to them on average, and the wider the spread must be to break even on everyone else (Glosten and Milgrom, 1985).</p>
+        <h3>Inventory risk</h3>
+        <p>Holding a position in a stock that may gap on the next headline is dangerous, and the dealer charges for carrying it (Stoll, 1978).</p>
+        <p>A war next door raises both: escalation, broken supply chains, regulatory intervention and macroeconomic instability are hard to judge from afar and easier to know about up close. That is how the paper reads its results, as consistent with these two channels, though it does not measure them directly.</p>
+        <div class="actions">
+          <a class="btn primary return-link" href="02-gradient.html#s6">← Return to the main path</a>
+          <a class="btn" href="02-gradient.html#s6">Skip to the takeaways&nbsp;→</a>
+        </div>
+      </div>
+      <div class="stage">
+        <p class="stage-title">Adverse selection, as a toy <span class="tag">textbook model, not a paper result</span></p>
+        <div class="ctl"><span>Start from</span><div class="seg" id="gm-preset"></div></div>
+        <div class="fig" id="gm-chart"></div>
+        <label class="ctl" for="gm-mu">Share of orders from better-informed traders</label>
+        <input type="range" id="gm-mu" min="0" max="30" step="1" value="10">
+        <label class="ctl" for="gm-g">Size of the next price move, up or down</label>
+        <input type="range" id="gm-g" min="0.5" max="6" step="0.1" value="3">
+        <p class="readout" id="gm-read" aria-live="polite"></p>
+        <p class="note">If a share μ of orders comes from traders who know which way a move of size G will go, and the rest buy or sell at random, a dealer who breaks even quotes the ask and the bid μ × G either side of the midpoint. Illustrative numbers; the paper estimates neither.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/war-market-functioning/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the price ladder ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var box = document.getElementById('sp-chart'), slider = document.getElementById('sp-gap'), read = document.getElementById('sp-read');
+  var geo = null;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 320, TOP = 16, axisX = 44, barX = 56, barW = E.clamp(W - 232, 70, 120);
+    function Y(p) { return TOP + (101 - p) * 144; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'A price ladder: the ask above the midpoint, the bid below it, the quoted spread between them, and a buy at the ask that lands half the quoted spread above the midpoint.' }, box);
+    S('line', { x1: axisX, x2: axisX, y1: Y(101), y2: Y(99), 'class': 'axis' }, root);
+    [99, 99.5, 100, 100.5, 101].forEach(function (p) {
+      S('line', { x1: axisX - 4, x2: axisX, y1: Y(p), y2: Y(p), 'class': 'axis' }, root);
+      T(root, axisX - 7, Y(p) + 4, p.toFixed(2), { 'text-anchor': 'end' });
+    });
+    geo = { Y: Y, x0: barX, x1: barX + barW, barW: barW, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var c = +slider.value, half = c / 2, ask = 100 + half / 100, bid = 100 - half / 100;
+    slider.setAttribute('aria-valuetext', c + ' basis points');
+    read.innerHTML = '<strong>Bid ' + bid.toFixed(2) + ', ask ' + ask.toFixed(2) + ':</strong> a quoted spread of ' + c + ' bp, ' + (c / 100).toFixed(2) +
+      '% of the midpoint. A buy at the ask lands ' + half + ' bp above the midpoint: its effective spread. A EUR 1 million round trip at these quotes costs about <strong>EUR ' + th(c * 100) + '</strong>.';
+    if (!geo) return;
+    var g = geo.dyn, Y = geo.Y, x0 = geo.x0, x1 = geo.x1;
+    g.innerHTML = '';
+    var yA = Y(ask), yB = Y(bid), yM = Y(100), gapPx = yB - yA;
+    S('line', { x1: x0, x2: x1, y1: yM, y2: yM, 'class': 'ghost' }, g);
+    S('rect', { x: x0, y: yA - 3, width: geo.barW, height: 6, 'class': 'text-fill' }, g);
+    S('rect', { x: x0, y: yB - 3, width: geo.barW, height: 6, 'class': 'hollow' }, g);
+    var tx = x0 + geo.barW * 0.68;
+    S('line', { x1: tx, x2: tx, y1: yM, y2: yA, 'class': 'link-line' }, g);
+    S('circle', { cx: tx, cy: yA, r: 5, 'class': 'link-fill' }, g);
+    /* labels beside the bars stay apart however narrow the gap */
+    var ya = Math.min(yA + 4, yM - 10), yb = Math.max(yB + 4, yM + 18);
+    T(g, x1 + 8, ya, 'ask ' + ask.toFixed(2), { 'class': 'label' });
+    if (gapPx >= 28) T(g, x1 + 8, yM + 4, 'midpoint');
+    T(g, x1 + 8, yb, 'bid ' + bid.toFixed(2), { 'class': 'label' });
+    var one = half + ' bp, one way';
+    if (gapPx / 2 >= 22) T(g, tx + 8, (yM + yA) / 2 + 4, one, { 'class': 'link-text halo' });
+    else T(g, x1 - 2, Math.min(yA, ya) - 12, one, { 'text-anchor': 'end', 'class': 'link-text halo' });
+    var xq = x1 + 86;
+    S('path', { d: 'M' + (xq - 5) + ',' + yA.toFixed(1) + ' H' + xq + ' V' + yB.toFixed(1) + ' H' + (xq - 5), 'class': 'bracket' }, g);
+    T(g, xq + 7, yM - 3, 'quoted', { 'class': 'label' });
+    T(g, xq + 7, yM + 12, c + ' bp', { 'class': 'strong' });
+  }
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 290, max: 340 });
+})();
+
+/* ---------- slide 2: adverse selection, the textbook toy ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('gm-chart'), mu = document.getElementById('gm-mu'), gs = document.getElementById('gm-g'), read = document.getElementById('gm-read');
+  var PRESET = { calm: [10, 3.0], war: [11, 3.3] }, GMAX = 6;
+  var CALM = 2 * PRESET.calm[0] / 100 * PRESET.calm[1];
+  var geo = null;
+  var setPreset = E.seg(document.getElementById('gm-preset'), [['calm', 'A calm day'], ['war', 'War next door']], 'calm', function (k) {
+    mu.value = PRESET[k][0]; gs.value = PRESET[k][1]; draw();
+  }, 'Start from');
+  function build(W) {
+    box.innerHTML = '';
+    var H = 156, xMax = W - 64;
+    function X(v) { return xMax * v / GMAX; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'The size of the next price move, the share of better-informed orders shown as filled dots out of 100, and the break-even half-spread, their product, on the same scale as the move.' }, box);
+    geo = { X: X, W: W, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var m = +mu.value, G = +gs.value, half = m / 100 * G, spread = 2 * half;
+    mu.setAttribute('aria-valuetext', m + ' percent'); gs.setAttribute('aria-valuetext', G.toFixed(1) + ' percent');
+    var match = null;
+    for (var k in PRESET) if (PRESET[k][0] === m && Math.abs(PRESET[k][1] - G) < 1e-9) match = k;
+    setPreset(match);
+    var bp = Math.round(spread * 100), rel = Math.round((spread / CALM - 1) * 100);
+    read.innerHTML = '<strong>Half-spread = ' + m + '% × ' + G.toFixed(1) + '% = ' + half.toFixed(2) + '%.</strong> The dealer quotes ' + Math.round(half * 100) +
+      ' bp either side of the midpoint: a <strong>' + bp + ' bp</strong> spread' + (rel === 0 ? ', as on the calm day.' : ', ' + Math.abs(rel) + '% ' + (rel > 0 ? 'wider' : 'narrower') + ' than on the calm day.');
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, narrow = geo.W < 420;
+    g.innerHTML = '';
+    T(g, 0, 12, (narrow ? 'Next move, either way: ' : 'Next price move, up or down: ') + G.toFixed(1) + '%', { 'class': 'label' });
+    S('rect', { x: 0, y: 19, width: X(G), height: 12, 'class': 'muted-fill', 'fill-opacity': 0.3 }, g);
+    T(g, 0, 56, (narrow ? 'Better-informed orders: ' : 'Orders from better-informed traders: ') + m + ' of 100', { 'class': 'label' });
+    for (var i = 0; i < 100; i++) {
+      var cx = 4 + (i % 25) * 11, cy = 68 + Math.floor(i / 25) * 11;
+      S('circle', { cx: cx, cy: cy, r: 3.3, 'class': i < m ? 'text-fill' : 'hollow-far' }, g);
+    }
+    T(g, 0, 132, (narrow ? 'Half-spread, share × move: ' : 'Dealer’s break-even half-spread, share × move: ') + half.toFixed(2) + '%', { 'class': 'label' });
+    S('rect', { x: 0, y: 139, width: X(G), height: 12, 'class': 'muted-fill', 'fill-opacity': 0.12 }, g);
+    S('rect', { x: 0, y: 139, width: Math.max(1, X(half)), height: 12, 'class': 'link-fill' }, g);
+  }
+  mu.addEventListener('input', draw);
+  gs.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 290, max: 640 });
+})();
+</script>
+</body>
+</html>

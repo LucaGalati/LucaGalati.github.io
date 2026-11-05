@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The price of a handshake — Not Dead Yet, explorable</title>
+<meta name="description" content="Path 2 of the explorable explanation of Not Dead Yet: Options Trading Floors: how floor and electronic trades are matched, how the cost gap flips with trade size, and what a large trade costs when it must be built on screens.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+.ghost{fill:none !important; stroke-dasharray:2 3; opacity:.6}
+.pair{stroke-dasharray:900; stroke-dashoffset:900; transition:stroke-dashoffset .6s ease}
+.pair.on{stroke-dashoffset:0}
+.twin{transition:stroke-width .3s}
+@media (prefers-reduced-motion: reduce){ .pair{transition:none} }
+.ctrl{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:12px}
+.slab{transition:opacity .2s}
+#dial.live{cursor:ew-resize; touch-action:pan-y}
+.figbtn{margin-left:6px; padding:2px 9px; font-size:12px}
+/* 2.4 the counterfeit */
+.fk{display:flex; gap:36px; flex-wrap:wrap; align-items:flex-start; font-family:var(--sans)}
+.fk-col{flex:1 1 200px; min-width:0}
+.uhead{font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500; margin-bottom:10px}
+.ucap{font-size:13.5px; color:var(--muted); margin-top:10px}
+.ucap b{font-weight:500; color:var(--text); font-size:17px}
+.pkg17{display:grid; gap:3px; max-width:220px}
+.pkg17 i{display:block; height:7px; background:var(--ink)}
+.pkg17 i.s{background:none; border:1.25px solid var(--ink)}
+.pile{display:flex; flex-wrap:wrap; gap:5px 6px; max-width:300px}
+.pile span{display:grid; gap:2px; width:22px}
+.pile i{display:block; height:4px; background:var(--ink-soft)}
+.pile i.s{background:none; border:1px solid var(--ink-soft)}
+</style>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/options-trading-floors/">← Back to the paper</a></noscript>
+  <span class="where"></span>
+  <button class="mapbtn" type="button" aria-label="Open the map" aria-expanded="false">Map <kbd>m</kbd></button>
+</lg-sitebar>
+
+<main class="stage">
+
+  <!-- 2.1 Who gets a twin -->
+  <section class="slide" data-id="match">
+    <div class="wrap split rev" style="align-items:start">
+      <div>
+        <figure>
+          <svg id="matchfig" class="fig" role="img" aria-label="Floor trades, large and few, paired with electronic twins of the same size; about two thirds of floor trades have no twin"></svg>
+          <figcaption>1,177 of 3,284 floor trades find a twin. The other 2,107 average 1,031 contracts and 17 legs. Schematic: dot area follows contracts, the dot counts are illustrative. <button class="chip figbtn" id="replay" type="button">Replay</button></figcaption>
+        </figure>
+        <div class="tablewrap" style="margin-top:12px">
+          <table class="stats" aria-label="Means of matched and unmatched floor trades and their electronic twins">
+            <thead><tr><th></th><th>Floor, matched</th><th>Electronic twin</th><th>Floor, no twin</th></tr></thead>
+            <tbody>
+              <tr><td>Contracts</td><td>342</td><td>339</td><td>1,031</td></tr>
+              <tr><td>Legs</td><td>3.08</td><td>3.07</td><td>17.2</td></tr>
+              <tr><td>Days to expiration</td><td>25.2</td><td>25.2</td><td>117</td></tr>
+              <tr><td>|Vega|</td><td>0.41</td><td>0.40</td><td>1.64</td></tr>
+              <tr class="hi"><td>Effective spread, ¢</td><td>4.45</td><td>3.15</td><td>5.46</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="prose">
+        <span class="kicker">Path 2 · The price of a handshake</span>
+        <h2>Only about a third of floor trades have an electronic twin.</h2>
+        <p>Size and legs decide where a package goes: a routing model with just those two fits nearly as well (pseudo-R² 0.70) as one with every other trait (0.80). So the paper pairs each floor trade from June 15–26 with its nearest electronic trade from June 1–14, within a quarter of a standard deviation on six traits: size, legs, days to expiration, implied volatility, delta and vega.</p>
+        <p>About a third of floor trades find a twin, and those pairs are where the 1.14-cent gap comes from: with controls, the floor charged them 36% more. The rest are bigger and far more complex. In the closure's last two weeks, no electronic trade came close enough on all six traits to be their twin.</p>
+        <p class="note">Effective spread: the distance between the price paid and the midpoint of the leg quotes, in cents per unit of the index. Hedging the package's delta in futures costs 0.28 cents for these pairs, so nearly all of the spread is market-maker revenue.</p>
+        <a class="cta" href="#2" data-go="2">Does size change the answer? →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.2 The size dial -->
+  <section class="slide" data-id="dial">
+    <div class="wrap split rev" style="align-items:start">
+      <div>
+        <p class="small muted sans" style="margin:0">Before you touch the dial: where does the floor win?</p>
+        <div class="bet" id="bet2" data-gate role="group" aria-label="Your prediction">
+          <button type="button" data-v="small">Small trades</button>
+          <button type="button" data-v="large">Large trades</button>
+          <button type="button" data-v="nowhere">Nowhere</button>
+        </div>
+        <p class="verdict" id="verdict2" data-hint aria-live="polite"></p>
+        <figure style="margin-top:6px">
+          <svg id="dial" class="fig" role="img" aria-label="Floor minus electronic effective spread by trade size: plus 3.49 cents for 166 contracts or fewer, no reliable difference in the middle, minus 4.35 cents for 1,949 contracts or more"></svg>
+        </figure>
+        <div class="reveal" id="dialreveal">
+          <input type="range" id="sizer" min="0" max="1000" step="0.1" value="568.4" aria-label="Trade size in contracts">
+          <div class="axis-note" id="dialnote"><span>10 contracts</span><span>5,000</span></div>
+          <div class="readout c2" id="dialout" aria-live="polite"></div>
+          <figcaption>Floor minus electronic effective spread, cents per unit, with the full controls. Solid: significant at the 1% level; dashed: not distinguishable from zero. Band cuts at the 25th, 50th, 75th and 90th percentiles of floor trade size. Drag the dial or the chart.</figcaption>
+        </div>
+      </div>
+      <div class="prose">
+        <div class="swap"><h2 id="dialq">Does the answer depend on the size of the trade?</h2><h2 id="diala" class="off">Split them by size and the sign flips.</h2></div>
+        <p>Averages mix very different trades. So the paper also compares every floor trade from June 15–26 with every electronic order from June 1–12, without matching, inside five bands of the floor size distribution, with the same controls as before.</p>
+        <div class="reveal" id="dialtext">
+          <p>For small packages the floor is clearly dearer: 3.49 cents more than electronic trades of the same size. In the middle, no reliable difference. For the largest tenth of floor trades, 1,949 contracts and up, the floor is cheaper by 4.35 cents. Market-maker revenue tells the same story.</p>
+          <p>The matched gap of 1.14 cents, the 36%, came from the lower half of the distribution, where the floor loses. The trades the floor exists for sit in the right tail. Harris (2003) predicted this division of labor: small option trades automate, and floors keep the large traders.</p>
+          <a class="cta" href="#3" data-go="3">What if you must trade 1,950 contracts without a floor? →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.3 What 1,950 contracts cost on screens -->
+  <section class="slide" data-id="build">
+    <div class="wrap split rev" style="align-items:start">
+      <div>
+        <figure>
+          <svg id="build" class="fig" role="img" aria-label="Assembling 1,950 contracts from electronic orders: 65 orders, 1.3 minutes, 6,166 to 6,168 dollars, against 3,357 dollars for floor trades of similar size"></svg>
+        </figure>
+        <div class="ctrl" role="group" aria-label="Build controls">
+          <button class="chip" id="play" type="button">Build it</button>
+          <button class="chip" id="step" type="button">One order</button>
+          <button class="chip" id="reset" type="button">Reset</button>
+        </div>
+        <div class="readout c2" id="buildout"></div>
+        <p class="verdict" id="buildnote" aria-live="polite"></p>
+        <figcaption>Each slab is one electronic order; their sizes are illustrative. The count, the minutes and the dollar totals are the paper's. Floor: the 85 floor trades within 2.5 percentile points of the 90th percentile of size, mean 1,903 contracts.</figcaption>
+      </div>
+      <div class="prose">
+        <h2>The biggest floor trades have no twin, so the paper builds one.</h2>
+        <p>Take a floor trade of 1,950 contracts, bigger than nine in ten floor trades. To do it on the screens, chain the electronic orders of June 1–12, one after another within a day, until they add up to 1,950 contracts. On average that takes 65 orders and 1.3 minutes.</p>
+        <p>Each piece pays the screen's price, about 3.12 cents per unit, so the bill grows in a straight line: $6,081 in spreads, plus $85–87 of futures slippage as the hedging of the growing delta moves the price. Floor trades of similar size paid between $2,439 and $4,246.</p>
+        <a class="cta" href="#4" data-go="4">But is it the same trade? →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.4 A counterfeit twin -->
+  <section class="slide" data-id="fake">
+    <div class="wrap split" style="align-items:center">
+      <div class="prose">
+        <h2>And the twin is a counterfeit.</h2>
+        <p>The chain matches the size of a big floor trade, not its package. Floor trades without a twin average 17 legs, and 65 unrelated small packages do not add up to those legs. A trader who built the package leg by leg would be exposed on every leg still missing: the risk a package exists to remove.</p>
+        <p class="note">A caution the paper raises itself: every cost here is measured on trades that executed, and a trade someone wanted but never made is invisible on both venues. For big trades that likely flatters the screen, since the few that executed electronically were probably the cheapest. Traders who could not wait for the floor may have paid more.</p>
+        <div class="ctas">
+          <a class="cta" id="nextcta" href="03-crowd.html#1">Why can't the screen do what the crowd does? →</a>
+        </div>
+      </div>
+      <figure>
+        <div class="fk">
+          <div class="fk-col">
+            <div class="uhead">What a big floor trade is</div>
+            <div class="pkg17" id="pkg17" role="img" aria-label="One package of 17 legs, some bought and some sold"></div>
+            <div class="ucap"><b>1</b> order · <b>17</b> legs · <b>1</b> price</div>
+          </div>
+          <div class="fk-col">
+            <div class="uhead">What the chain gives you</div>
+            <div class="pile" id="pile" role="img" aria-label="65 small, unrelated packages"></div>
+            <div class="ucap"><b>65</b> orders · any strategy · <b>65</b> prices</div>
+          </div>
+        </div>
+        <figcaption style="margin-top:16px">Illustrative: the same 1,950 contracts as one package and as a chain of electronic orders. Filled bars are legs bought, open bars legs sold; bar length follows contracts.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bar">
+  <div class="nav"><button class="navbtn prev" type="button">← Previous</button></div>
+  <nav class="dots" aria-label="Slides"></nav>
+  <div class="nav next"><button class="navbtn next" type="button">Next →</button></div>
+</footer>
+
+<script src="explore.js"></script>
+<script>
+(function () {
+  var S = Explore.svg, clear = Explore.clear, fmt = Explore.fmt, money = Explore.money, textW = Explore.textW;
+  var D = Explore.deck('price', { next: '03-crowd.html#1', nextLabel: 'Next path →' });
+  function seeded(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function lognorm(rnd, med, sig) { var u = rnd(), v = rnd(); return med * Math.exp(sig * Math.sqrt(-2 * Math.log(u + 1e-9)) * Math.cos(2 * Math.PI * v)); }
+
+  /* ---------- 2.1 matching (Table IV: 1,177 of 3,284 floor trades matched, 35.8%) ---------- */
+  (function () {
+    var svg = document.getElementById('matchfig'), replay = document.getElementById('replay');
+    var rnd = seeded(20200615);
+    var floor = [], elec = [], i;
+    for (i = 0; i < 25; i++) floor.push({ sz: Math.min(3000, lognorm(rnd, 420, 0.95)) });
+    for (i = 0; i < 70; i++) elec.push({ sz: Math.min(220, lognorm(rnd, 26, 0.9)) });
+    // 9 of 25, about a third, find a twin: the smallest floor trades, each paired with the nearest electronic trade by size,
+    // drawn at its partner's size because the match holds size fixed.
+    var order = floor.slice().sort(function (a, b) { return a.sz - b.sz; });
+    var matched = order.slice(0, 9), unmatched = order.slice(9), used = {};
+    matched.forEach(function (f) {
+      var best = 0, bd = Infinity;
+      elec.forEach(function (e, k) { if (used[k]) return; var dd = Math.abs(Math.log(e.sz) - Math.log(f.sz)); if (dd < bd) { bd = dd; best = k; } });
+      used[best] = true; f.twin = elec[best]; elec[best].partner = f;
+    });
+    var timers = [], played = !!D.state.matched;
+    // grid slots with jitter; depth 0 is the column (or row) nearest the other cloud
+    function slots(box, cols, rows, prng, nearEnd, vertical) {
+      var cw = (box[1] - box[0]) / cols, rh = (box[3] - box[2]) / rows, out = [];
+      for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) out.push({
+        x: box[0] + cw * (c + 0.5) + (prng() - 0.5) * cw * 0.4, y: box[2] + rh * (r + 0.5) + (prng() - 0.5) * rh * 0.4,
+        cap: Math.min(cw, rh) * 0.48, depth: vertical ? (nearEnd ? rows - 1 - r : r) : (nearEnd ? cols - 1 - c : c)
+      });
+      return out;
+    }
+    function put(d, s) { d.x = s.x; d.y = s.y; d.cap = s.cap; }
+    function draw(W) {
+      clear(svg);
+      var compact = W < 430, H = compact ? 420 : 250, sc = Math.max(0.6, Math.min(1, W / 640));
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var bf = compact ? [6, W - 6, 30, 200] : [6, W / 2 - 22, 30, H - 4];
+      var be = compact ? [6, W - 6, 250, H - 4] : [W / 2 + 22, W - 6, 30, H - 4];
+      var prng = seeded(7), along = compact ? 'x' : 'y';
+      // matched floor trades sit nearest the screen's cloud, their twins nearest the floor's, so each pair lines up
+      var fs = slots(bf, 5, 5, prng, true, compact), es = slots(be, 10, 7, prng, false, compact);
+      var near = fs.filter(function (s) { return s.depth <= 1; }).sort(function (a, b) { return a.depth - b.depth || a[along] - b[along]; });
+      var rest = near.slice(matched.length).concat(fs.filter(function (s) { return s.depth > 1; }));
+      matched.forEach(function (f, k) { put(f, near[k]); });
+      unmatched.forEach(function (f, k) { put(f, rest[k]); });
+      matched.slice().sort(function (a, b) { return a[along] - b[along]; }).forEach(function (f) {
+        var best = 0, bd = Infinity;
+        es.forEach(function (s, k) { if (s.depth > 1) return; var dd = Math.hypot(s.x - f.x, s.y - f.y); if (dd < bd) { bd = dd; best = k; } });
+        put(f.twin, es.splice(best, 1)[0]);
+      });
+      elec.filter(function (e) { return !e.partner; }).forEach(function (e, k) { put(e, es[k]); });
+      S('text', { x: bf[0], y: 16, 'font-size': 11.5, fill: 'var(--muted)', 'font-weight': 500, 'letter-spacing': '.06em', text: 'FLOOR TRADES · JUNE 15–26' }, svg);
+      S('text', { x: be[0], y: compact ? 236 : 16, 'font-size': 11.5, fill: 'var(--muted)', 'font-weight': 500, 'letter-spacing': '.06em', text: 'ELECTRONIC TRADES · JUNE 1–14' }, svg);
+      function r(sz, cap) { return Math.min(cap, Math.max(2.2, 0.5 * sc * Math.sqrt(sz))); }
+      var lines = S('g', null, svg), dots = S('g', null, svg);
+      matched.forEach(function (f) {
+        f.line = S('line', { x1: f.x, y1: f.y, x2: f.twin.x, y2: f.twin.y, stroke: 'var(--ink)', 'stroke-width': 1, 'class': 'pair', opacity: .65 }, lines);
+      });
+      floor.forEach(function (f) { f.rad = r(f.sz, f.cap); });
+      elec.forEach(function (e) {
+        e.el = S('circle', { cx: e.x, cy: e.y, r: e.partner ? e.partner.rad : r(e.sz, e.cap), fill: 'var(--ink-soft)' }, dots);
+      });
+      floor.forEach(function (f) { f.el = S('circle', { cx: f.x, cy: f.y, r: f.rad, fill: 'var(--ink)', stroke: 'var(--ink)', 'stroke-width': 1 }, dots); });
+      if (played) run(true);
+    }
+    function run(instant) {
+      timers.forEach(clearTimeout); timers = [];
+      matched.forEach(function (f) { f.line.setAttribute('class', 'pair'); f.twin.el.removeAttribute('stroke'); });
+      unmatched.forEach(function (f) { f.el.setAttribute('class', ''); });
+      var fast = instant || Explore.reduced;
+      matched.forEach(function (f, k) {
+        timers.push(setTimeout(function () {
+          f.line.setAttribute('class', 'pair on');
+          f.twin.el.setAttribute('stroke', 'var(--ink)'); f.twin.el.setAttribute('stroke-width', 1.5);
+        }, fast ? 0 : 250 + k * 180));
+      });
+      timers.push(setTimeout(function () { unmatched.forEach(function (f) { f.el.setAttribute('class', 'ghost'); }); }, fast ? 0 : 250 + matched.length * 180 + 300));
+    }
+    Explore.fit(svg, draw, 760);
+    replay.addEventListener('click', function () { run(false); });
+    D.onShow('match', function () { if (!played) { played = true; D.state.matched = true; D.save(); run(false); } });
+  })();
+
+  /* ---------- 2.2 the size dial (Table VII, column 3: full controls and strategy fixed effects) ---------- */
+  (function () {
+    var BANDS = [
+      { lo: 10, hi: 166, name: '166 or fewer', diff: 3.49, sig: true, share: 25 },
+      { lo: 167, hi: 380, name: '167–380', diff: 1.10, sig: false, share: 25 },
+      { lo: 381, hi: 839, name: '381–839', diff: 0.66, sig: false, share: 25 },
+      { lo: 840, hi: 1948, name: '840–1,948', diff: -0.48, sig: false, share: 15 },
+      { lo: 1949, hi: 5000, name: '1,949 or more', diff: -4.35, sig: true, share: 10 }
+    ];
+    var CUTS = [166.5, 380.5, 839.5, 1948.5], LG = Math.log10(5000) - 1;
+    function tToSize(t) { return Math.round(Math.pow(10, 1 + t / 1000 * LG)); }
+    function bandOf(v) { for (var i = 0; i < BANDS.length; i++) if (v <= BANDS[i].hi) return i; return 4; }
+    var svg = document.getElementById('dial'), rng = document.getElementById('sizer'), out = document.getElementById('dialout'), note = document.getElementById('dialnote');
+    var verdict = document.getElementById('verdict2'), reveal = document.getElementById('dialreveal'), text = document.getElementById('dialtext');
+    var hq = document.getElementById('dialq'), ha = document.getElementById('diala');
+    var revealed = false, G = null, drag = false;
+    if (D.state.t != null) rng.value = D.state.t;
+    function sgn(c, d) { return (c > 0 ? '+' : '−') + Math.abs(c).toFixed(d == null ? 2 : d); }
+    function draw(W) {
+      clear(svg);
+      var compact = W < 520, L = compact ? 38 : 50, R = 8, T = 14, B = 42, H = compact ? 232 : 258, plotW = W - L - R;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      function X(v) { return L + (Math.log10(v) - 1) / LG * plotW; }
+      function Y(c) { return T + (6 - c) / 12 * (H - T - B); }
+      [-6, -4, -2, 2, 4, 6].forEach(function (c) {
+        S('line', { x1: L, y1: Y(c), x2: W - R, y2: Y(c), stroke: 'var(--border)' }, svg);
+        S('text', { x: L - 7, y: Y(c) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)', text: sgn(c, 0) + '¢' }, svg);
+      });
+      S('line', { x1: L, y1: Y(0), x2: W - R, y2: Y(0), stroke: 'var(--text)' }, svg);
+      S('text', { x: L - 7, y: Y(0) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)', text: '0' }, svg);
+      S('text', { x: L + 6, y: Y(6) + 13, 'font-size': 11, fill: 'var(--muted)', text: 'floor dearer' }, svg);
+      S('text', { x: L + 6, y: Y(-6) - 5, 'font-size': 11, fill: 'var(--muted)', text: 'floor cheaper' }, svg);
+      CUTS.forEach(function (cut, i) {
+        S('line', { x1: X(cut), y1: T, x2: X(cut), y2: H - B + 5, stroke: 'var(--border-strong)', 'stroke-dasharray': '2 3' }, svg);
+        S('text', { x: X(cut), y: H - B + 18, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: ['166', '380', '839', '1,948'][i] }, svg);
+      });
+      S('text', { x: L + plotW / 2, y: H - 6, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: 'trade size, contracts (log scale)' }, svg);
+      G = { W: W, L: L, plotW: plotW, X: X, Y: Y, hl: null, knob: null, line: null };
+      if (revealed) {
+        G.hl = S('rect', { x: 0, y: T, width: 0, height: H - B - T, fill: 'var(--gold)', opacity: .14 }, svg);
+        BANDS.forEach(function (b, i) {
+          var x0 = X(i ? CUTS[i - 1] : 10), x1 = X(i < 4 ? CUTS[i] : 5000);
+          S('rect', { x: x0, y: Math.min(Y(0), Y(b.diff)), width: x1 - x0, height: Math.abs(Y(0) - Y(b.diff)), fill: 'var(--ink)', opacity: b.sig ? .14 : .06 }, svg);
+          S('line', { x1: x0, y1: Y(b.diff), x2: x1, y2: Y(b.diff), stroke: b.sig ? 'var(--ink)' : 'var(--ink-soft)', 'stroke-width': b.sig ? 3 : 2, 'stroke-dasharray': b.sig ? '' : '5 4' }, svg);
+          S('text', { x: (x0 + x1) / 2, y: Y(b.diff) + (b.diff >= 0 ? -7 : 16), 'text-anchor': 'middle', 'font-size': compact && !b.sig ? 11 : 12, fill: b.sig ? 'var(--text)' : 'var(--muted)', 'font-weight': b.sig ? 500 : 400, text: sgn(b.diff) + (compact ? '' : '¢') }, svg);
+        });
+        G.line = S('line', { x1: 0, y1: T, x2: 0, y2: H - B + 5, stroke: 'var(--gold)', 'stroke-width': 1.5 }, svg);
+        G.knob = S('circle', { cx: 0, cy: 0, r: 7, fill: 'var(--gold)', stroke: 'var(--bg)', 'stroke-width': 2 }, svg);
+      }
+      Explore.alignRange(rng, svg, W, L, plotW, note);
+      render();
+    }
+    function render() {
+      // the readout is filled even before the bet (it is hidden then), so revealing it never resizes the slide
+      var t = +rng.value, v = tToSize(t), bi = bandOf(v), b = BANDS[bi];
+      if (revealed && G && G.knob) {
+        var x0 = G.X(bi ? CUTS[bi - 1] : 10), x1 = G.X(bi < 4 ? CUTS[bi] : 5000);
+        G.hl.setAttribute('x', x0); G.hl.setAttribute('width', x1 - x0);
+        G.line.setAttribute('x1', G.X(v)); G.line.setAttribute('x2', G.X(v));
+        G.knob.setAttribute('cx', G.X(v)); G.knob.setAttribute('cy', G.Y(b.diff));
+      }
+      rng.setAttribute('aria-valuetext', fmt(v) + ' contracts, band ' + b.name);
+      var usd = b.sig ? '$' + Math.abs(b.diff).toFixed(2) + '<small>' + (b.diff > 0 ? 'more' : 'less') + ' per contract on the floor</small>' : '—<small>no reliable difference</small>';
+      out.innerHTML = '<div><div class="k">Trade size</div><div class="v">' + fmt(v) + '<small>contracts</small></div></div>' +
+        '<div><div class="k">Size band</div><div class="v">' + b.name + '<small>' + b.share + '% of floor trades</small></div></div>' +
+        '<div><div class="k">Floor − screen</div><div class="v">' + sgn(b.diff) + '¢<small>' + (b.sig ? 'per unit · p < 0.01' : 'statistically zero') + '</small></div></div>' +
+        '<div><div class="k">In dollars</div><div class="v">' + usd + '</div></div>';
+      D.state.t = t;
+    }
+    function move(e) {
+      var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * (G.W / r.width);
+      var f = Math.max(0, Math.min(1, (x - G.L) / G.plotW));
+      rng.value = (f * 1000).toFixed(1); render();
+    }
+    svg.addEventListener('pointerdown', function (e) { if (!revealed) return; drag = true; try { svg.setPointerCapture(e.pointerId); } catch (x) {} move(e); });
+    svg.addEventListener('pointermove', function (e) { if (drag) move(e); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (n) { svg.addEventListener(n, function () { if (drag) { drag = false; D.save(); } }); });
+    rng.addEventListener('input', render);
+    rng.addEventListener('change', function () { D.save(); });
+    Explore.rangeKeys(rng);
+    var fitted = Explore.fit(svg, draw, 760);
+    render();
+    Explore.bet(D, 'bet2', function (v) {
+      verdict.textContent = { small: 'Your bet: small trades. The opposite: that is where the floor loses most.', large: 'Your bet: large trades. The data agree.', nowhere: 'Your bet: nowhere. It wins somewhere, and loses somewhere else.' }[v] || '';
+      revealed = true; svg.classList.add('live');
+      hq.classList.add('off'); ha.classList.remove('off');
+      reveal.classList.add('on'); text.classList.add('on');
+      fitted.redraw();
+    });
+  })();
+
+  /* ---------- 2.3 build 1,950 contracts (Table IX) ---------- */
+  (function () {
+    var ELEC = { orders: 65, minutes: 1.3, spread: 6081, totLo: 6166, totHi: 6168, slipHi: 87 };
+    var FL = { cost: 3357, n: 85, mean: 1903 };
+    var svg = document.getElementById('build'), out = document.getElementById('buildout'), bnote = document.getElementById('buildnote');
+    var play = document.getElementById('play'), step = document.getElementById('step'), reset = document.getElementById('reset');
+    var rnd = seeded(1950), sizes = [], tot = 0, i;
+    for (i = 0; i < ELEC.orders; i++) { var v = 8 + (-Math.log(1 - rnd())) * 22; sizes.push(v); tot += v; }
+    sizes = sizes.map(function (v) { return v / tot * 1950; });           // illustrative sizes that add up to 1,950
+    var perC = ELEC.spread / 1950;                                         // dollars per contract: 3.12 cents per unit
+    var cross = FL.cost / perC;                                            // contracts at which the screen bill passes the floor's ($3,357)
+    var k = D.state.built ? ELEC.orders : 0, timer = null, G = null;
+    function contracts(n) { var c = 0; for (var j = 0; j < n; j++) c += sizes[j]; return c; }
+    function draw(W) {
+      clear(svg);
+      var compact = W < 520, H = 300;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var sx = 2, sw = compact ? 54 : 74, sy0 = 30, sh = H - 30 - 52;
+      S('text', { x: sx, y: 16, 'font-size': 11, fill: 'var(--muted)', 'font-weight': 500, 'letter-spacing': '.06em', text: compact ? '1,950' : 'TARGET 1,950' }, svg);
+      S('rect', { x: sx + 0.5, y: sy0, width: sw, height: sh, fill: 'none', stroke: 'var(--border-strong)' }, svg);
+      var slabs = S('g', null, svg), y = sy0 + sh;
+      sizes.forEach(function (c, j) {
+        var h = c / 1950 * sh; y -= h;
+        S('rect', { x: sx + 1.5, y: y, width: sw - 2, height: Math.max(h - 0.6, 0.4), fill: j % 2 ? 'var(--ink-soft)' : 'var(--ink)', 'class': 'slab', opacity: 0 }, slabs);
+      });
+      var cnt = S('text', { x: sx + sw / 2, y: sy0 + sh + 20, 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--text)', text: '' }, svg);
+      var clk = S('text', { x: sx + sw / 2, y: sy0 + sh + 38, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: '' }, svg);
+      var bx = sx + sw + (compact ? 22 : 40), bw = W - bx - 8, max = 7000;
+      function bxw(dl) { return dl / max * bw; }
+      S('text', { x: bx, y: 16, 'font-size': 11, fill: 'var(--muted)', 'font-weight': 500, 'letter-spacing': '.06em', text: compact ? 'SPREAD PAID, $' : 'TOTAL SPREAD PAID, DOLLARS' }, svg);
+      var r1 = 62, r2 = 132, bh = 22;
+      S('text', { x: bx, y: r1 - 8, 'font-size': 12, fill: 'var(--text)', text: compact ? 'Screens, chained orders' : 'Screens: electronic orders, chained' }, svg);
+      S('text', { x: bx, y: r2 - 8, 'font-size': 12, fill: 'var(--text)', text: compact ? 'Floor, similar size' : 'Floor: trades of similar size' }, svg);
+      S('rect', { x: bx, y: r1, width: bw, height: bh, fill: 'none', stroke: 'var(--border)' }, svg);
+      var ebar = S('rect', { x: bx, y: r1, width: 0, height: bh, fill: 'var(--ink)' }, svg);
+      var eslip = S('rect', { x: bx, y: r1, width: 0, height: bh, fill: 'var(--ink)', opacity: .45 }, svg);
+      var etxt = S('text', { x: bx, y: r1 + 15.5, 'font-size': 12, fill: 'var(--text)', text: '' }, svg);
+      S('rect', { x: bx, y: r2, width: bxw(FL.cost), height: bh, fill: 'var(--ink-soft)' }, svg);
+      S('text', { x: bx + bxw(FL.cost) + 6, y: r2 + 15.5, 'font-size': 12, fill: 'var(--text)', text: money(FL.cost) }, svg);
+      var gx = bx + bxw(FL.cost);
+      S('line', { x1: gx, y1: r1 - 4, x2: gx, y2: r2 + bh, stroke: 'var(--gold)', 'stroke-width': 1.5, 'stroke-dasharray': '3 3' }, svg);
+      var ay = r2 + bh + 28;
+      S('line', { x1: bx, y1: ay, x2: bx + bw, y2: ay, stroke: 'var(--border-strong)' }, svg);
+      (compact ? [0, 3000, 6000] : [0, 2000, 4000, 6000]).forEach(function (dl) {
+        S('line', { x1: bx + bxw(dl), y1: ay, x2: bx + bxw(dl), y2: ay + 5, stroke: 'var(--border-strong)' }, svg);
+        S('text', { x: bx + bxw(dl), y: ay + 18, 'text-anchor': dl ? 'middle' : 'start', 'font-size': 11, fill: 'var(--muted)', text: '$' + fmt(dl) }, svg);
+      });
+      G = { slabs: slabs, cnt: cnt, clk: clk, ebar: ebar, eslip: eslip, etxt: etxt, bx: bx, bw: bw, bxw: bxw, W: W, compact: compact };
+      render();
+    }
+    function render() {
+      var done = k >= ELEC.orders, c = done ? 1950 : contracts(k), bill = done ? ELEC.spread : c * perC;
+      var mins = (k / ELEC.orders * ELEC.minutes).toFixed(1);
+      if (G) {
+        var sl = G.slabs.childNodes;
+        for (var j = 0; j < sl.length; j++) sl[j].setAttribute('opacity', j < k ? 1 : 0);
+        G.cnt.textContent = k + ' of 65';
+        G.clk.textContent = G.compact ? mins + ' min' : mins + ' of 1.3 min';
+        G.ebar.setAttribute('width', G.bxw(bill));
+        G.eslip.setAttribute('x', G.bx + G.bxw(bill)); G.eslip.setAttribute('width', done ? G.bxw(ELEC.slipHi) : 0);
+        var label = done ? (G.compact ? '$6,166–6,168' : '$6,081 + $85–87 slippage = $6,166–6,168') : money(bill);
+        var inside = done || G.bx + G.bxw(bill) + 6 + textW(label, 12) > G.W;
+        G.etxt.setAttribute('x', inside ? G.bx + 8 : G.bx + G.bxw(bill) + 6);
+        G.etxt.setAttribute('fill', inside && bill > 0 ? 'var(--bg)' : 'var(--text)');
+        G.etxt.textContent = k ? label : '';
+      }
+      out.innerHTML = '<div><div class="k">Orders</div><div class="v">' + k + ' of 65<small>' + mins + ' of 1.3 minutes</small></div></div>' +
+        '<div><div class="k">Contracts</div><div class="v">' + fmt(c) + '<small>of 1,950</small></div></div>' +
+        '<div><div class="k">Screen bill</div><div class="v">' + (done ? '$6,166–6,168' : money(bill)) + '<small>' + (done ? 'spread + futures slippage' : '3.12¢ per unit, piece after piece') + '</small></div></div>' +
+        '<div><div class="k">Floor, similar size</div><div class="v">' + money(FL.cost) + '<small>' + (done ? '46% less than the screens' : '85 trades, mean 1,903 contracts') + '</small></div></div>';
+      bnote.textContent = c >= cross ? 'The screen bill passed what the floor charged for the whole trade after about 1,080 contracts, with 870 still to go.' : '';
+      play.textContent = done ? 'Built' : (timer ? 'Pause' : (k ? 'Continue' : 'Build it'));
+      play.disabled = done; step.disabled = done;
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } render(); }
+    function tick() { if (k >= ELEC.orders) { stop(); return; } k++; if (k >= ELEC.orders) { D.state.built = true; D.save(); stop(); } else render(); }
+    play.addEventListener('click', function () {
+      if (timer) { stop(); return; }
+      if (Explore.reduced) { k = ELEC.orders; D.state.built = true; D.save(); render(); return; }
+      timer = setInterval(tick, 85); render();
+    });
+    step.addEventListener('click', function () { if (timer) { clearInterval(timer); timer = null; } tick(); });
+    reset.addEventListener('click', function () { stop(); k = 0; D.state.built = false; D.save(); render(); });
+    Explore.fit(svg, draw, 760);
+    render();
+  })();
+
+  /* ---------- 2.4 the counterfeit (illustrative shapes) ---------- */
+  (function () {
+    var rnd = seeded(17), pkg = document.getElementById('pkg17'), pile = document.getElementById('pile'), i, j;
+    for (i = 0; i < 17; i++) {
+      var b = document.createElement('i');
+      b.style.width = (25 + rnd() * 75).toFixed(0) + '%';
+      if (rnd() < 0.45) b.className = 's';
+      pkg.appendChild(b);
+    }
+    for (i = 0; i < 65; i++) {
+      var p = document.createElement('span'), legs = rnd() < 0.55 ? 2 : (rnd() < 0.7 ? 3 : 4);
+      for (j = 0; j < legs; j++) {
+        var l = document.createElement('i');
+        l.style.width = (40 + rnd() * 60).toFixed(0) + '%';
+        if (j % 2) l.className = 's';
+        p.appendChild(l);
+      }
+      pile.appendChild(p);
+    }
+    var cta = document.getElementById('nextcta');
+    if (D.done('crowd')) { cta.textContent = 'Back to the conclusion →'; cta.href = '03-crowd.html#5'; }
+  })();
+})();
+</script>
+</body>
+</html>

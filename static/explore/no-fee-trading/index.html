@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free — an explorable of “No-fee trading” (Galati, 2024)</title>
+<meta name="description" content="If trading is free, what does it cost? An explorable explanation of Galati (2024), Journal of Banking & Finance: what happened to the spread when Binance set Bitcoin trading fees to zero.">
+<link rel="stylesheet" href="style.css">
+<script src="../sitebar.js"></script>
+<noscript><style>.slide { display: block; padding: 36px 24px 40px; } .after, .doors.is-hidden { visibility: visible !important; } lg-sitebar > :not(noscript) { display: none; } lg-sitebar a { display: block; padding: 14px 24px 0; font-family: var(--sans); font-size: 13px; }</style></noscript>
+<style>
+  .motif { width: 100%; max-width: 560px; height: 84px; margin: 0 auto 30px; }
+  .motif .tick { transition: transform 2600ms cubic-bezier(.2,.7,.2,1); }
+  .motif.go .tick { transform: translateX(var(--to)); }
+  @media (prefers-reduced-motion: reduce) { .motif .tick { transition: none; } }
+
+  .bet { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); grid-template-areas: "head head" "stage after" "stage doors"; grid-template-rows: auto auto 1fr; }
+  .bet > .head { grid-area: head; max-width: 82ch; margin-bottom: 16px; }
+  .bet > .stage { grid-area: stage; align-self: start; }
+  .bet > .after { grid-area: after; max-width: 52ch; }
+  .bet > .doors { grid-area: doors; align-self: start; margin-top: 18px; }
+  @media (max-width: 940px) { .bet { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "stage" "after" "doors"; } }
+  .bet .q { margin: 0.6em 0 0; }
+  #betchart { touch-action: pan-y; cursor: ew-resize; scroll-margin-top: 12px; /* on top of the scroll-padding the site bar sets on <html> */ }
+  .guess { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: end; margin-top: 6px; }
+  .guess .field { margin: 0; }
+  @media (max-width: 480px) { .guess { grid-template-columns: minmax(0, 1fr); } .guess .btn { justify-self: start; } }
+  .reply:focus { outline: none; }
+  .reply { font-weight: 500; font-size: 1.08em; min-height: 1.5em; margin-bottom: 0.6em; }
+  .after.is-hidden, .doors.is-hidden { visibility: hidden; }
+
+  .hub { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+  @media (max-width: 760px) { .hub { grid-template-columns: 1fr; } }
+  .hub a { display: block; border: 1px solid var(--border-strong); border-radius: 3px; padding: 18px 18px 16px; text-decoration: none; color: var(--text); }
+  .hub a:hover { border-color: var(--text); }
+  .hub .who { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .hub .what { font-size: 1.02em; font-weight: 500; line-height: 1.3; margin-bottom: 10px; }
+  .hub .go { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--link); }
+</style>
+</head>
+<body data-deck="01-free">
+<lg-sitebar>
+  <noscript><a href="../../publication/no-fee-trading/">← Back to the paper</a></noscript>
+  <span class="deck-title">Free · <b>The gift</b></span>
+  <button type="button" data-map-open aria-haspopup="dialog">Map <span class="muted">(m)</span></button>
+</lg-sitebar>
+
+<!-- 1. The gift -->
+<section class="slide" id="s1">
+  <div class="col">
+    <div class="motif" id="motif" aria-hidden="true"></div>
+    <p class="kicker">An explorable explanation</p>
+    <h1>If trading is free, what does it cost?</h1>
+    <p class="lead">On 8 July 2022, at two in the afternoon UTC, the largest cryptocurrency exchange in the world stopped charging its customers to trade Bitcoin.</p>
+    <p>Binance was turning five. For thirteen Bitcoin pairs the trading fee, 0.10% a side for an ordinary customer, went to zero. It was meant to be a six-month trial.</p>
+    <p>But a fee is only one price of trading. The other, the spread that market makers set, is what a paper measured minute by minute. Theory said it should fall too.</p>
+    <div class="doors">
+      <a class="door primary" href="#2" data-go="2"><span class="arrow">→</span> Start with what a trade costs</a>
+    </div>
+    <p class="note">Based on Luca Galati, “Exchange market share, market makers, and murky behavior: the impact of no-fee trading on cryptocurrency market quality”, Journal of Banking &amp; Finance 165 (2024). Four short decks, about fifteen minutes; press <b>m</b> at any point for the map.</p>
+  </div>
+</section>
+
+<!-- 2. Two bills -->
+<section class="slide" id="s2">
+  <div class="two">
+    <div class="stage">
+      <div class="chart" id="bills"></div>
+      <p class="small" style="margin-top:10px">Lower panel to scale (fee schedule, Section 3; spreads, Table 2). The most active accounts paid less: 0.024% to take, 0.012% to make. One basis point of a bitcoin at 20,265 USDT, the sample mean (Table 1), is about 2 USDT; Tether (USDT) is a dollar stablecoin.</p>
+    </div>
+    <div class="text">
+      <p class="kicker">Two bills</p>
+      <h2>Every trade pays twice.</h2>
+      <p>Every trade has two sides. The <em>maker</em> posts an order and waits; the <em>taker</em> hits an order that is already there.</p>
+      <p>The first bill goes to the exchange: a fee, a slice of the amount traded. An ordinary Binance customer paid 0.10% each way, or 10 basis points (hundredths of a percent).</p>
+      <p>The second goes to whoever posted the order you hit: the market maker, who sells a little above the mid-price and buys a little below it. That gap is the bid–ask spread. The first bill is printed on a fee schedule; the second is set minute by minute by the people who make the market.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#3" data-go="3"><span class="arrow">→</span> Now remove the first bill</a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Place your bet -->
+<section class="slide top" id="s3">
+  <div class="two bet">
+    <div class="head">
+      <p class="kicker">Place your bet</p>
+      <h2>On 8 July the first bill disappeared.</h2>
+      <p>Makers and takers now paid nothing to the exchange. Standard theory (Colliard and Foucault, 2012) says what follows: a cut in the exchange’s total fee is passed on, makers compete, and the spread tightens.</p>
+      <p class="q">Where did the gap on screen go in the week after, on Bitcoin–Tether at Binance, the most liquid pair in the market? Drag the gold ring to your guess.</p>
+    </div>
+    <div class="stage">
+      <div class="chart" id="betchart"></div>
+      <div class="guess">
+        <div class="field">
+          <label for="guess">Your guess for the week after <span class="val" id="guess-val"></span></label>
+          <input type="range" id="guess" min="0" max="2.2" step="0.01" value="0.29">
+        </div>
+        <button type="button" class="btn primary" id="lock"><span class="arrow">→</span> Lock in my guess</button>
+      </div>
+    </div>
+    <div class="after is-hidden" id="after">
+      <p class="reply" id="bet-reply" tabindex="-1"></p>
+      <p>Bitcoin–Tether on Binance went from 0.29 to 1.70 basis points between the best bid and the best ask: nearly six times wider. The same pair narrowed on FTX and barely moved on Kucoin; Ether on Binance, still paying the fee, held still.</p>
+      <p>What trades actually paid in spread rose far less, from 1.80 to 1.98 bps. But it did not fall. <a class="inline-door" href="03-maker.html#2">Who sets that spread, and what do they earn? →</a></p>
+      <p class="small">Hollow dots: the week before; filled: the week after. Mean quoted spread over 10,080 one-minute intervals in each week (Table 2).</p>
+    </div>
+    <div class="doors is-hidden" id="after-doors">
+      <a class="door primary" href="02-experiment.html"><span class="arrow">→</span> Was it the fee, or just July?</a>
+      <a class="door" href="#4" data-go="4"><span class="arrow">→</span> Who paid for it</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Three parties -->
+<section class="slide" id="s4">
+  <div class="col wide">
+    <p class="kicker">Three parties</p>
+    <h2>The gap on screen grew nearly six-fold. Someone pays a spread, and someone collects it.</h2>
+    <p>Three parties were in the room that afternoon. Follow whichever you are curious about; the paths rejoin, and the map is always one key away.</p>
+    <div class="hub">
+      <a href="03-maker.html#1">
+        <div class="who">The customer</div>
+        <div class="what">Paid the spread. What did a round trip actually cost, before and after?</div>
+        <div class="go">Two spreads →</div>
+      </a>
+      <a href="03-maker.html#4">
+        <div class="who">The market maker</div>
+        <div class="what">Collected it. Take their seat: set the quote and see where the fee cut’s saving went.</div>
+        <div class="go">Set the quote →</div>
+      </a>
+      <a href="04-murky.html">
+        <div class="who">The exchange</div>
+        <div class="what">Gave up its fee on thirteen pairs. What it got instead, and why the paper calls it murky.</div>
+        <div class="go">Murky →</div>
+      </a>
+    </div>
+    <p class="note">Not sure the fee did it? <a class="inline-door" href="02-experiment.html">Was it the fee, or just July? →</a></p>
+  </div>
+</section>
+
+<script src="charts.js"></script>
+<script src="nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var C = Charts, el = C.el, T = C.text, fmt = C.fmt;
+
+  // ---- 1. motif: bid and ask drift towards the mid, as theory predicts ----
+  var motifHost = document.getElementById('motif');
+  C.mount(motifHost, function (w) {
+    var svg = C.root(w, 84, '');
+    svg.removeAttribute('role'); svg.setAttribute('aria-hidden', 'true');
+    var cx = w / 2, cy = 38, d0 = Math.min(96, w * 0.22);
+    svg.appendChild(el('line', { x1: 0, x2: w, y1: cy, y2: cy, 'class': 'hair' }));
+    [-1, 1].forEach(function (s) {
+      var g = el('g', { 'class': 'tick', style: '--to:' + (-s * d0 * 0.6) + 'px' });
+      g.appendChild(el('line', { x1: cx + s * d0, x2: cx + s * d0, y1: cy - 18, y2: cy + 18, 'class': 'ink', 'stroke-width': 1.5 }));
+      g.appendChild(T(cx + s * d0, cy + 36, s < 0 ? 'bid' : 'ask', { 'text-anchor': 'middle', 'font-size': 11, 'class': 'muted' }));
+      svg.appendChild(g);
+    });
+    svg.appendChild(el('circle', { cx: cx, cy: cy, r: 5, fill: 'var(--gold)', stroke: 'var(--gold-edge)', 'stroke-width': 1 }));
+    return svg;
+  });
+  Explore.onShow(function (n) { if (n === 0) setTimeout(function () { motifHost.classList.add('go'); }, 300); });
+
+  // ---- 2. two bills: the price line zoomed in, then one round trip to scale ----
+  var BILLS = [ // bps per round trip, week before 8 July
+    { label: 'Fee, ordinary account', sub: '0.10% each way, to the exchange', v: 20, d: 0, fill: 'var(--s1)' },
+    { label: 'Spread trades paid', sub: 'effective spread, to the maker', v: 1.8047, d: 2, fill: 'var(--gold)', edge: 'var(--gold-edge)' },
+    { label: 'Gap on screen', sub: 'quoted spread', v: 0.2872, d: 2, fill: 'var(--gold)', edge: 'var(--gold-edge)' }
+  ];
+  C.mount(document.getElementById('bills'), function (w) {
+    var stacked = w < 480, h = stacked ? 322 : 304;
+    var svg = C.root(w, h, 'Top: a price line with the bid below and the ask above the mid-price; the gap between them is the spread, paid to the market maker; the fee is charged on top of each side and paid to the exchange. Bottom, to scale for one round trip the week before 8 July: fee for an ordinary account 20 basis points, spread paid by trades 1.80, gap on screen 0.29.');
+    // the price line, schematic
+    var cy = 62, cx = w / 2, g = Math.min(70, w * 0.15), f = Math.min(80, w * 0.16);
+    svg.appendChild(T(0, 12, 'The price line, zoomed in (not to scale)', { 'font-size': 11, 'class': 'muted' }));
+    svg.appendChild(el('line', { x1: 0, x2: w, y1: cy, y2: cy, 'class': 'hair' }));
+    svg.appendChild(el('path', { d: 'M' + (cx - g) + ' ' + (cy - 24) + ' v-6 h' + (2 * g) + ' v6', fill: 'none', 'class': 'ink' }));
+    svg.appendChild(T(cx, cy - 36, 'the spread, to the maker', { 'text-anchor': 'middle', 'font-size': 12 }));
+    [-1, 1].forEach(function (s) {
+      var x = cx + s * g;
+      svg.appendChild(el('line', { x1: x, x2: x, y1: cy - 16, y2: cy + 16, 'class': 'ink', 'stroke-width': 1.5 }));
+      svg.appendChild(T(x, cy + 32, s < 0 ? 'bid: you sell' : 'ask: you buy', { 'text-anchor': 'middle', 'font-size': 12 }));
+      svg.appendChild(el('path', { d: 'M' + x + ' ' + (cy + 44) + ' v6 h' + (s * f) + ' v-6', fill: 'none', stroke: 'var(--s1)', 'stroke-width': 1.5 }));
+      svg.appendChild(T(x + s * f / 2, cy + 66, s < 0 ? '− fee' : '+ fee', { 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--s1)' }));
+    });
+    svg.appendChild(T(cx, cy + 84, 'the fee, to the exchange, on each side', { 'text-anchor': 'middle', 'font-size': 11, 'class': 'muted' }));
+    svg.appendChild(el('circle', { cx: cx, cy: cy, r: 5, fill: 'var(--gold)', stroke: 'var(--gold-edge)', 'stroke-width': 1 }));
+    svg.appendChild(T(cx, cy - 8, 'mid', { 'text-anchor': 'middle', 'font-size': 11, 'class': 'muted' }));
+    // one round trip, to scale
+    var y0 = cy + 116;
+    svg.appendChild(el('line', { x1: 0, x2: w, y1: y0 - 18, y2: y0 - 18, 'class': 'hair' }));
+    svg.appendChild(T(0, y0, 'One round trip, the week before 8 July, to scale (bps)', { 'font-size': 11, 'class': 'muted' }));
+    var labelW = stacked ? 0 : Math.min(200, Math.round(w * 0.36)), padR = 40, rowH = stacked ? 42 : 38;
+    var sx = (w - labelW - padR) / 20;
+    BILLS.forEach(function (b, i) {
+      var y = y0 + 16 + i * rowH, by = stacked ? y + 16 : y;
+      if (stacked) {
+        svg.appendChild(T(0, y + 11, b.label, { 'font-size': 12 }));
+        if (C.measure(b.label, 12) + 6 + C.measure(b.sub, 11) < w) svg.appendChild(T(C.measure(b.label, 12) + 6, y + 11, b.sub, { 'font-size': 11, 'class': 'muted' }));
+      } else {
+        svg.appendChild(T(labelW - 12, by + 10, b.label, { 'text-anchor': 'end', 'font-size': 12 }));
+        svg.appendChild(T(labelW - 12, by + 24, b.sub, { 'text-anchor': 'end', 'font-size': 11, 'class': 'muted' }));
+      }
+      svg.appendChild(el('rect', { x: labelW, y: by, width: Math.max(b.v * sx, 1.5), height: 14, fill: b.fill, stroke: b.edge || 'none', 'stroke-width': 1 }));
+      svg.appendChild(T(labelW + Math.max(b.v * sx, 1.5) + 8, by + 11, fmt(b.v, b.d), { 'font-size': 12, 'font-weight': 500 }));
+    });
+    return svg;
+  });
+
+  // ---- 3. the bet: quoted spread, bps, week before and week after (Table 2, Panel A) ----
+  var MK = [
+    { name: 'Binance', sub: 'BTC–USDT · fee to zero', pre: 0.2872, post: 1.7036, color: 'var(--gold)', edge: 'var(--gold-edge)', d: 2 },
+    { name: 'FTX', sub: 'BTC–USDT', pre: 1.9849, post: 1.7448, color: 'var(--s1)', d: 2 },
+    { name: 'Kucoin', sub: 'BTC–USDT', pre: 0.4112, post: 0.4665, color: 'var(--s2)', d: 2 },
+    { name: 'Binance', sub: 'ETH–USDT · fee kept', pre: 0.0271, post: 0.0250, color: 'var(--s3)', d: 3 }
+  ];
+  var HI = 2.2;
+  var host = document.getElementById('betchart');
+  var input = document.getElementById('guess');
+  var lockBtn = document.getElementById('lock');
+  var saved = Explore.get('bet');
+  var bet = { g: 0.29, locked: false, t: 0 };
+  if (saved && typeof saved === 'object' && typeof saved.g === 'number') bet = { g: saved.g, locked: true, t: 1 };
+  var geo = null; // last drawn geometry, for dragging
+
+  var chart = C.mount(host, function (w) {
+    var narrow = w < 480, labW = narrow ? 96 : 176, padR = 22, top = 46, rowH = 54;
+    var h = top + rowH * 4 + 6;
+    var X = function (v) { return labW + v / HI * (w - labW - padR); };
+    var nudge = function (x) { return x - labW < 22 ? 8 : 0; }; // values near zero: label to the right, clear of the row name
+    geo = { X: X, labW: labW, padR: padR, w: w, top: top, rowH: rowH };
+    var svg = C.root(w, h, 'Quoted spread in basis points, week before and week after 8 July 2022, for Bitcoin–Tether on Binance (the treated pair), FTX and Kucoin, and Ether–Tether on Binance' + (bet.locked ? ': 0.29 to 1.70, 1.98 to 1.74, 0.41 to 0.47, 0.027 to 0.025. Your guess for Binance: ' + fmt(bet.g, 2) + '.' : '. Your guess for Binance: ' + fmt(bet.g, 2) + '.'));
+    svg.appendChild(T(labW, 12, 'Quoted spread, basis points', { 'font-size': 11, 'class': 'muted' }));
+    for (var v = 0; v <= 2.0001; v += 0.5) {
+      svg.appendChild(el('line', { x1: X(v), x2: X(v), y1: top - 10, y2: h - 4, 'class': v === 0 ? 'axis' : 'hair' }));
+      svg.appendChild(T(X(v), top - 16, fmt(v, 1), { 'text-anchor': 'middle', 'font-size': 11, 'class': 'muted' }));
+    }
+    MK.forEach(function (m, i) {
+      var cy = top + i * rowH + rowH / 2, treated = i === 0;
+      if (treated) svg.appendChild(el('rect', { x: 0, y: cy - rowH / 2 + 2, width: w, height: rowH - 4, fill: 'var(--surface)' }));
+      svg.appendChild(T(labW - 12, cy - 2, m.name, { 'text-anchor': 'end', 'font-size': 13, 'font-weight': treated ? 500 : 400 }));
+      svg.appendChild(T(labW - 12, cy + 13, narrow ? m.sub.split(' · ')[0] : m.sub, { 'text-anchor': 'end', 'font-size': 11, 'class': 'muted' }));
+      var xb = X(m.pre);
+      if (treated && !bet.locked) svg.appendChild(el('line', { x1: xb, x2: X(bet.g), y1: cy, y2: cy, stroke: 'var(--muted)', 'stroke-width': 1, 'stroke-dasharray': '3 3' }));
+      if (bet.t > 0) {
+        var xa = X(m.pre + (m.post - m.pre) * bet.t);
+        svg.appendChild(el('line', { x1: xb, x2: xa, y1: cy, y2: cy, stroke: m.color, 'stroke-width': treated ? 3 : 2 }));
+        svg.appendChild(el('circle', { cx: xa, cy: cy, r: 6, fill: m.color, stroke: m.edge || 'none', 'stroke-width': 1 }));
+        if (bet.t === 1) svg.appendChild(T(xa + nudge(xa), cy - 11, fmt(m.post, m.d), { 'text-anchor': nudge(xa) ? 'start' : 'middle', 'font-size': 12, 'font-weight': 500, 'class': 'halo' }));
+      }
+      svg.appendChild(el('circle', { cx: xb, cy: cy, r: 5, fill: 'var(--bg)', stroke: m.edge || m.color, 'stroke-width': 2 }));
+      svg.appendChild(T(xb + nudge(xb), cy + 21, fmt(m.pre, m.d), { 'text-anchor': nudge(xb) ? 'start' : 'middle', 'font-size': 11, 'class': 'muted halo' }));
+      if (treated) {
+        var xg = X(bet.g), below = bet.t === 1 && Math.abs(bet.g - m.post) < 0.6;
+        svg.appendChild(el('circle', { cx: xg, cy: cy, r: 10, fill: 'none', stroke: 'var(--gold-edge)', 'stroke-width': 2, 'stroke-dasharray': bet.locked ? '3 2' : 'none' }));
+        if (!bet.locked) svg.appendChild(el('circle', { cx: xg, cy: cy, r: 7, fill: 'var(--gold)', 'fill-opacity': 0.35 }));
+        svg.appendChild(T(Math.max(labW + 30, Math.min(w - 40, xg)), below ? cy + 25 : cy - 15, (narrow ? 'guess ' : 'your guess ') + fmt(bet.g, 2), { 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 500, 'class': 'halo' }));
+      }
+    });
+    return svg;
+  });
+
+  function setGuess(g) {
+    bet.g = Math.round(Math.max(0, Math.min(HI, g)) * 100) / 100;
+    input.value = bet.g;
+    document.getElementById('guess-val').textContent = fmt(bet.g, 2) + ' bps';
+    chart.redraw();
+  }
+  function reply(g) {
+    if (g < 0.24) return 'You sided with the theory: tighter. It went the other way.';
+    if (g <= 0.34) return 'You bet it would hold. It widened instead.';
+    if (g < 1.2) return 'You bet on wider, but not this wide.';
+    return 'You saw it coming. The theory did not.';
+  }
+  function reveal(animate) {
+    bet.locked = true;
+    input.disabled = true; lockBtn.disabled = true;
+    lockBtn.innerHTML = 'Locked in';
+    document.getElementById('bet-reply').textContent = reply(bet.g);
+    document.getElementById('after').classList.remove('is-hidden');
+    document.getElementById('after-doors').classList.remove('is-hidden');
+    if (animate) {
+      C.tween(900, function (t) { bet.t = t; chart.redraw(); });
+      if (window.matchMedia('(max-width: 940px)').matches) host.scrollIntoView({ block: 'start', behavior: C.reduced ? 'auto' : 'smooth' });
+      document.getElementById('bet-reply').focus({ preventScroll: true });
+    } else { bet.t = 1; chart.redraw(); }
+  }
+  input.addEventListener('input', function () { if (!bet.locked) setGuess(parseFloat(input.value)); });
+  var dragging = false;
+  function fromPointer(e) {
+    var r = host.getBoundingClientRect();
+    return (e.clientX - r.left - geo.labW) / (geo.w - geo.labW - geo.padR) * HI;
+  }
+  host.addEventListener('pointerdown', function (e) {
+    if (bet.locked || !geo) return;
+    var y = e.clientY - host.getBoundingClientRect().top;
+    if (y < geo.top - 10 || y > geo.top + geo.rowH * 1.4) return; // the Binance row only
+    dragging = true; host.setPointerCapture(e.pointerId); setGuess(fromPointer(e)); e.preventDefault();
+  });
+  host.addEventListener('pointermove', function (e) { if (dragging) setGuess(fromPointer(e)); });
+  host.addEventListener('pointerup', function () { dragging = false; });
+  host.addEventListener('pointercancel', function () { dragging = false; });
+  lockBtn.addEventListener('click', function () { Explore.set('bet', { g: bet.g }); reveal(true); });
+  setGuess(bet.g);
+  if (bet.locked) reveal(false);
+})();
+</script>
+</body>
+</html>

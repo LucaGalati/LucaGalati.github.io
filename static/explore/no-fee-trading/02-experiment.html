@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The experiment — Free, an explorable of “No-fee trading” (Galati, 2024)</title>
+<meta name="description" content="How the paper knows it was the fee change: three control markets, two weeks of millisecond data, a difference-in-differences design, and what that design cannot rule out.">
+<link rel="stylesheet" href="style.css">
+<script src="../sitebar.js"></script>
+<noscript><style>.slide { display: block; padding: 36px 24px 40px; } lg-sitebar > :not(noscript) { display: none; } lg-sitebar a { display: block; padding: 14px 24px 0; font-family: var(--sans); font-size: 13px; }</style></noscript>
+<style>
+  .did { width: 100%; max-width: 540px; border-collapse: collapse; font-family: var(--sans); font-size: 13px; table-layout: fixed; }
+  .did caption { caption-side: bottom; text-align: left; color: var(--muted); font-size: 12px; padding-top: 10px; }
+  .did th, .did td { border: 1px solid var(--border); padding: 0; height: 74px; vertical-align: middle; }
+  .did thead th { height: auto; padding: 8px 10px; font-weight: 500; color: var(--muted); background: var(--surface); text-align: left; }
+  .did thead th:first-child { background: transparent; border-color: transparent transparent var(--border) transparent; }
+  .did tbody th { padding: 8px 10px; font-weight: 500; color: var(--muted); background: var(--surface); text-align: left; width: 28%; }
+  .did .cell, .did button { display: flex; flex-direction: column; justify-content: center; gap: 2px; width: 100%; height: 100%; padding: 8px 10px; text-align: left; }
+  .did button { font: inherit; color: var(--text); background: transparent; border: 0; cursor: pointer; }
+  .did button:hover { background: var(--surface); }
+  .did button[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--blue); }
+  .did .t { background: var(--gold); color: var(--on-gold); }
+  .did .v { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .did .d { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12px; }
+  .did .t .d { color: var(--on-gold); }
+  .did .na { color: var(--muted); text-align: center; }
+  @media (max-width: 480px) {
+    .did { font-size: 12px; }
+    .did tbody th { width: 24%; padding: 6px; }
+    .did .cell, .did button { padding: 6px; }
+  }
+  .did-out { font-family: var(--sans); font-size: 14px; min-height: 4.8em; margin: 14px 0 0; }
+  .did-out .eq { font-variant-numeric: tabular-nums; font-weight: 500; display: block; }
+
+  .timeline { max-width: 760px; margin: 0 auto 28px; }
+
+  .panels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; width: 100%; margin-top: 20px; }
+  @media (max-width: 760px) { .panels { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .panel .chart { height: 206px; }
+  .panel .diff { font-family: var(--sans); font-size: 12px; text-align: center; color: var(--muted); margin: 6px 0 0; min-height: 1.6em; font-variant-numeric: tabular-nums; }
+  .panel .diff b { color: var(--text); font-weight: 500; }
+  .below { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: start; margin-top: 16px; }
+  @media (max-width: 760px) { .below { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
+  #metric-note { min-height: 8em; margin: 0; }
+  @media (max-width: 760px) { #metric-note { min-height: 12.6em; } }
+  .coef .star { color: var(--muted); font-size: 12px; margin-left: 4px; white-space: nowrap; }
+</style>
+</head>
+<body data-deck="02-experiment">
+<lg-sitebar>
+  <noscript><a href="../../publication/no-fee-trading/">← Back to the paper</a></noscript>
+  <span class="deck-title">Free · <b>The experiment</b></span>
+  <button type="button" data-map-open aria-haspopup="dialog">Map <span class="muted">(m)</span></button>
+</lg-sitebar>
+
+<!-- 1. Before and after is not enough -->
+<section class="slide" id="s1">
+  <div class="two">
+    <div class="stage">
+      <table class="did">
+        <caption>Quoted spread in basis points, week before → week after; below it, the change (Table 2).</caption>
+        <thead><tr><th></th><th scope="col">Binance</th><th scope="col">FTX</th><th scope="col">Kucoin</th></tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row">Bitcoin–Tether</th>
+            <td class="t"><div class="cell"><span class="v">0.29 → 1.70</span><span class="d">+1.42 · fee to zero</span></div></td>
+            <td><button type="button" data-c="1" aria-pressed="false"><span class="v">1.98 → 1.74</span><span class="d">−0.24</span></button></td>
+            <td><button type="button" data-c="2" aria-pressed="false"><span class="v">0.41 → 0.47</span><span class="d">+0.06</span></button></td>
+          </tr>
+          <tr>
+            <th scope="row">Ether–Tether</th>
+            <td><button type="button" data-c="3" aria-pressed="false"><span class="v">0.027 → 0.025</span><span class="d">−0.002 · fee kept</span></button></td>
+            <td class="na">—</td>
+            <td class="na">—</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="did-out" id="did-out" aria-live="polite"></p>
+    </div>
+    <div class="text">
+      <p class="kicker">The experiment</p>
+      <h1 class="t2">Before and after is not enough.</h1>
+      <p>July 2022 was not a quiet month. Stablecoins had collapsed in May, and FTX, one of the exchanges in this story, would be insolvent within months. Anything measured on Binance that week might have happened anyway.</p>
+      <p>So the paper sets the treated pair beside three that shared its weather but kept their fees: the same pair, Bitcoin–Tether, on FTX and Kucoin, the third- and fifth-largest exchanges; and Ether–Tether on Binance itself.</p>
+      <p>If zero fees did something, it should show on Binance’s Bitcoin–Tether and nowhere else. The treated pair’s change minus a control’s change is the estimate: a difference-in-differences. <strong>Pick a control.</strong></p>
+      <p class="small">Each control has its quirks, FTX’s coming collapse among them; that is one reason for three controls, not one. The paper repeats the test on three smaller zero-fee pairs: BTCEUR, BTCGBP and BTCUSDC.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#2" data-go="2"><span class="arrow">→</span> What was measured</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Two weeks, split at the switch -->
+<section class="slide" id="s2">
+  <div class="col wide">
+    <div class="chart timeline" id="timeline"></div>
+    <p class="kicker">Two weeks of ticks</p>
+    <h2>Every trade and every quote, the switch exactly in the middle.</h2>
+    <p>For each of the four markets the paper has every trade and every change in the best bid and offer, stamped to the millisecond, with the side that started each trade (Refinitiv Tick History). Crypto never closes, so the sample runs 24 hours a day: one week before 8 July 14:00 UTC and one week after, averaged into 20,160 one-minute intervals per market.</p>
+    <p>In the paper’s hourly charts the treated pair’s measures jump at the switch instead of drifting into it — “every adjustment was instantaneous” — which points to fast traders reacting at once.</p>
+    <div class="doors">
+      <a class="door primary" href="#3" data-go="3"><span class="arrow">→</span> See every measure</a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PLAYABLE: ten measures, four markets -->
+<section class="slide top" id="s3">
+  <div class="col" style="max-width:1140px">
+    <p class="kicker">Ten measures, four markets</p>
+    <h2>Pick a measure. Watch who moves.</h2>
+    <div class="picker" id="metrics" role="group" aria-label="Measure"></div>
+    <div class="panels" id="panels"></div>
+    <div class="below">
+      <p id="metric-note" class="state-line"></p>
+      <p class="small" style="margin:0">Outlined bar: the week before; filled: the week after. Under each control: Binance’s change minus that market’s change, from the means. Means over 10,080 one-minute intervals each side (FTX: 9,328 before; order-book data were missing for a few hours). Every change on the treated pair is significant at the 0.1% level. Source: Table 2.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#4" data-go="4"><span class="arrow">→</span> What the regression adds</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. What the regression adds -->
+<section class="slide" id="s4">
+  <div class="two">
+    <div class="stage">
+      <table class="coef">
+        <thead><tr><th scope="col">Measure</th><th scope="col">Treated × after</th><th scope="col">Reading</th></tr></thead>
+        <tbody>
+          <tr><td>Quoted spread</td><td>+3.63 bps</td><td>wider</td></tr>
+          <tr><td>Market depth (log)</td><td>−0.86<span class="star">5% level</span></td><td>shallower</td></tr>
+          <tr><td>Effective spread</td><td>+1.45 bps</td><td>takers pay more spread</td></tr>
+          <tr><td>Price impact</td><td class="ns">−0.45 bps</td><td class="ns">not significant</td></tr>
+          <tr><td>Realized spread</td><td>+1.90 bps</td><td>makers keep more</td></tr>
+        </tbody>
+      </table>
+      <p class="small" style="margin-top:12px">Controls: price, turnover, volatility and exchange concentration, with asset-time fixed effects; 261,328 one-minute observations across the four zero-fee pairs and their controls. Standard errors clustered by asset and by time; significant at the 0.1% level unless marked. Source: Table 3.</p>
+    </div>
+    <div class="text">
+      <p class="kicker">What the regression adds</p>
+      <h2>Averages can be moved by other things.</h2>
+      <p>Price, volatility, turnover and how concentrated trading is across exchanges all shift from week to week. The paper’s main test is a panel regression with those as controls. The number that matters is the coefficient on <em>treated × after</em>: the extra change on the zero-fee pairs after 8 July, beyond the controls’ change.</p>
+      <p>Pooled across the four zero-fee pairs it could observe, the quoted spread rose 3.6 bps — more than Bitcoin–Tether’s 1.4, because the three smaller pairs, quoted several times wider throughout (sample means of 3.7 to 7.6 bps against 1.0), widened more: about 5.5 bps against the euro, 4.5 against sterling and 2.4 against USDC.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#5" data-go="5"><span class="arrow">→</span> What this design cannot rule out</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. What this design cannot rule out -->
+<section class="slide" id="s5">
+  <div class="col">
+    <p class="kicker">Limits</p>
+    <h2>What this design cannot rule out.</h2>
+    <ul class="plain">
+      <li>Only a week on each side. The paper reports similar results over a month around the event, but does not tabulate them (footnote 13).</li>
+      <li>Binance chose the thirteen pairs; nobody drew them at random. The paper calls the group “arguably” exogenous (Section 3).</li>
+      <li>One control was itself touched. Ether on Binance kept its fee, yet its trades rose 41% as traders moved to the exchange (Table 2), which blurs comparisons against it.</li>
+      <li>Behaviour the models do not cover. The paper allows that the switch “may result in irrational changes in traders’ behavior” it cannot explain.</li>
+    </ul>
+    <p>Within those limits, the pattern holds against each of the three controls taken one at a time: the gap on screen widened, depth fell, and the makers’ take rose by about 1.8 to 2.6 bps (Table B.1).</p>
+    <div class="doors">
+      <a class="door primary" href="03-maker.html"><span class="arrow">→</span> Where did the money go?</a>
+      <a class="door" href="04-murky.html"><span class="arrow">→</span> And the exchange?</a>
+    </div>
+  </div>
+</section>
+
+<script src="charts.js"></script>
+<script src="nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var C = Charts, el = C.el, T = C.text, fmt = C.fmt, signed = C.signed;
+
+  // ---- 1. difference-in-differences on the quoted spread (Table 2, Panel A, "difference" rows) ----
+  var TREATED = 1.4164;
+  var CONTROLS = { 1: { name: 'FTX', d: -0.2401 }, 2: { name: 'Kucoin', d: 0.0554 }, 3: { name: 'Ether on Binance', d: -0.0021 } };
+  var out = document.getElementById('did-out');
+  function pick(c) {
+    Array.prototype.forEach.call(document.querySelectorAll('.did button'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === String(c) ? 'true' : 'false'); });
+    var k = CONTROLS[c];
+    if (!k) { out.textContent = 'Pick a control in the table to compute the estimate.'; return; }
+    var dd = Math.abs(k.d) < 0.01 ? 3 : 2;
+    out.innerHTML = '<span class="eq">Binance ' + signed(TREATED, 2) + ' − ' + k.name + ' (' + signed(k.d, dd) + ') = ' + signed(TREATED - k.d, 2) + ' bps</span>' +
+      'The fee’s effect on the gap, measured against ' + k.name + '. Try the others: each control gives its own estimate.';
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.did button'), function (b) {
+    b.addEventListener('click', function () { var c = b.getAttribute('data-c'); Explore.set('control', c); pick(c); });
+  });
+  pick(Explore.get('control'));
+
+  // ---- 2. timeline ----
+  C.mount(document.getElementById('timeline'), function (w) {
+    var narrow = w < 560, h = narrow ? 128 : 112, x0 = 6, x1 = w - 6, y = narrow ? 76 : 64, mid = (x0 + x1) / 2;
+    var svg = C.root(w, h, 'Timeline from 1 July 14:00 UTC to 15 July 14:00 UTC, with the fee change at 8 July 14:00 UTC in the middle: 10,080 one-minute intervals on each side.');
+    svg.appendChild(el('line', { x1: x0, x2: x1, y1: y, y2: y, 'class': 'axis' }));
+    for (var d = 0; d <= 14; d++) {
+      var x = x0 + (x1 - x0) * d / 14;
+      svg.appendChild(el('line', { x1: x, x2: x, y1: y - 5, y2: y + 5, 'class': 'axis' }));
+    }
+    svg.appendChild(el('line', { x1: mid, x2: mid, y1: y - 40, y2: y + 14, stroke: 'var(--gold)', 'stroke-width': 3 }));
+    svg.appendChild(T(mid, 14, '8 July, 14:00 UTC: fee to zero', { 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 500 }));
+    [[(x0 + mid) / 2, 'week before'], [(mid + x1) / 2, 'week after']].forEach(function (p) {
+      if (narrow) {
+        svg.appendChild(T(p[0], y - 26, p[1], { 'text-anchor': 'middle', 'font-size': 12 }));
+        svg.appendChild(T(p[0], y - 11, '10,080 minutes', { 'text-anchor': 'middle', 'font-size': 11, 'class': 'muted' }));
+      } else {
+        svg.appendChild(T(p[0], y - 14, p[1] + ' · 10,080 minutes', { 'text-anchor': 'middle', 'font-size': 12 }));
+      }
+    });
+    svg.appendChild(T(x0, y + 24, '1 July, 14:00', { 'font-size': 11, 'class': 'muted' }));
+    svg.appendChild(T(x1, y + 24, '15 July, 14:00', { 'text-anchor': 'end', 'font-size': 11, 'class': 'muted' }));
+    svg.appendChild(T(mid, y + 42, 'one tick a day · 20,160 minutes per market', { 'text-anchor': 'middle', 'font-size': 11, 'class': 'muted' }));
+    return svg;
+  });
+
+  // ---- 3. Table 2: week-before and week-after means for four markets ----
+  var MARKETS = [
+    { name: 'BTC–USDT · Binance', sub: 'treated', color: 'var(--gold)', edge: 'var(--gold-edge)' },
+    { name: 'BTC–USDT · FTX', sub: 'control', color: 'var(--s1)' },
+    { name: 'BTC–USDT · Kucoin', sub: 'control', color: 'var(--s2)' },
+    { name: 'ETH–USDT · Binance', sub: 'control', color: 'var(--s3)' }
+  ];
+  function typical(logs) { return logs.map(function (p) { return [Math.exp(p[0]), Math.exp(p[1])]; }); } // exp of the mean log: the typical minute
+  var METRICS = [
+    { id: 'qs', label: 'Quoted spread', unit: 'bps', d: 2, pct: true,
+      v: [[0.2872, 1.7036], [1.9849, 1.7448], [0.4112, 0.4665], [0.0271, 0.0250]],
+      note: 'The gap between the best bid and the best ask: up 1.42 bps on the treated pair, to nearly six times its level. FTX and Ether narrowed; Kucoin barely moved.' },
+    { id: 'es', label: 'Effective spread', unit: 'bps', d: 2, pct: true,
+      v: [[1.8047, 1.9788], [2.8084, 3.0363], [1.7650, 1.9226], [0.1749, 0.1279]],
+      note: 'What a trade actually paid per round trip, against the mid-price. Up 0.17 bps on the treated pair, but about as much on FTX (+0.23) and Kucoin (+0.16): against those two the paper finds no change for this pair (Table B.1). Against Ether, and pooled over all four zero-fee pairs with controls, takers paid more (+1.45 bps, Table 3). Either way, it did not fall.' },
+    { id: 'pi', label: 'Price impact', unit: 'bps', d: 2, pct: true,
+      v: [[3.6688, 1.4724], [3.9633, 4.5427], [4.0998, 3.6855], [0.3108, 0.2532]],
+      note: 'How far the mid-price moves against the maker in the 20 seconds after a trade. Down 2.2 bps on the treated pair: the maker’s saving. It rose on FTX and fell a little on Kucoin and Ether.' },
+    { id: 'rs', label: 'Realized spread', unit: 'bps', d: 2,
+      v: [[-1.8641, 0.5064], [-1.1549, -1.5063], [-2.3348, -1.7629], [-0.1359, -0.1253]],
+      note: 'What the maker keeps after the price moves: effective spread minus price impact. Negative on every market before 8 July; positive afterwards only on the treated pair, up 2.37 bps.' },
+    { id: 'dp', label: 'Market depth', unit: 'lots', d: 0, pct: true, logs: true,
+      v: typical([[7.0192, 5.1500], [5.8737, 6.2436], [8.1204, 8.5568], [8.9821, 9.3215]]),
+      note: 'How much waits at the best bid and ask, in lots, for the typical minute (the exponential of Table 2’s mean log). On the treated pair it fell 85%, divided by about 6.5, while every control deepened by 40 to 55%.' },
+    { id: 'nq', label: 'Quotes / minute', unit: '', d: 0, pct: true,
+      v: [[227.5713, 836.9249], [348.9415, 505.0088], [1349.706, 1842.74], [227.761, 227.7712]],
+      note: 'Best quotes posted per minute: 3.7 times as many on the treated pair. Quoting rose on the other exchanges too, far less; Ether on Binance did not move.' },
+    { id: 'nt', label: 'Trades / minute', unit: '', d: 0, pct: true,
+      v: [[664.2939, 2523.486], [38.8813, 40.5598], [169.3213, 151.9999], [380.8475, 537.6347]],
+      note: '3.8 times as many trades a minute on the treated pair. Ether on Binance rose 41% with no change in its fee, which the paper reads as traders moving to the exchange; Kucoin’s count fell.' },
+    { id: 'ts', label: 'Trade size', unit: 'lots', d: 3, pct: true,
+      v: [[0.0719, 0.0478], [0.0445, 0.0417], [0.0365, 0.0350], [1.6056, 1.6930]],
+      note: 'The average trade shrank by a third on the treated pair. The paper reads this as who arrived: smaller, likely retail, traders.' },
+    { id: 'vo', label: 'Volume / minute', unit: 'lots', d: 1, pct: true,
+      v: [[50.1768, 141.3288], [2.1416, 2.0426], [6.5913, 5.6750], [692.2538, 848.6211]],
+      note: 'Lots traded per minute: 2.8 times the week before, with an all-time high on launch day. In the regressions it depends on the comparison: about +64 lots a minute against the same pair elsewhere (Table B.1), −12.2 against all controls including Ether, which trades far more lots (Table 3).' },
+    { id: 'fr', label: 'Fill rate', unit: '', d: 3, pct: false,
+      v: [[0.7055, 0.7356], [0.1044, 0.0708], [0.1243, 0.0818], [0.5729, 0.6289]],
+      note: 'Trades as a share of trades plus best quotes: the paper’s proxy for how often a limit order is filled. Up on both Binance pairs, down on the other two exchanges.' }
+  ];
+  var seg = document.getElementById('metrics');
+  var panels = document.getElementById('panels');
+  var note = document.getElementById('metric-note');
+  var currentId = Explore.get('metric');
+  if (!METRICS.some(function (m) { return m.id === currentId; })) currentId = 'rs';
+  function metric() { return METRICS.filter(function (x) { return x.id === currentId; })[0]; }
+  METRICS.forEach(function (m) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = m.label; b.setAttribute('data-id', m.id);
+    b.addEventListener('click', function () { currentId = m.id; Explore.set('metric', m.id); render(); });
+    seg.appendChild(b);
+  });
+  var charts = MARKETS.map(function (mk, i) {
+    var p = document.createElement('div'); p.className = 'panel';
+    var c = document.createElement('div'); c.className = 'chart';
+    var dl = document.createElement('p'); dl.className = 'diff';
+    p.appendChild(c); p.appendChild(dl); panels.appendChild(p);
+    var handle = C.mount(c, function (w) {
+      var m = metric(), pre = m.v[i][0], post = m.v[i][1];
+      return C.barPair(w, { title: mk.name, sub: mk.sub + (m.unit ? ' · ' + m.unit : ''), pre: pre, post: post, color: mk.color, edge: mk.edge, decimals: m.d, pct: m.pct,
+        label: m.label + ' for ' + mk.name + ': ' + fmt(pre, m.d) + ' before, ' + fmt(post, m.d) + ' after' });
+    });
+    return { handle: handle, diff: dl };
+  });
+  function render() {
+    var m = metric();
+    Array.prototype.forEach.call(seg.querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-id') === m.id ? 'true' : 'false'); });
+    var dT = m.v[0][1] - m.v[0][0];
+    charts.forEach(function (c, i) {
+      c.handle.redraw();
+      if (i === 0) { c.diff.textContent = 'the treated pair'; return; }
+      if (m.logs) {
+        var pc = function (p) { return signed(Math.round((p[1] / p[0] - 1) * 100), 0) + '%'; };
+        c.diff.innerHTML = 'Binance <b>' + pc(m.v[0]) + '</b>, here <b>' + pc(m.v[i]) + '</b>';
+      } else {
+        c.diff.innerHTML = 'Binance minus this: <b>' + signed(dT - (m.v[i][1] - m.v[i][0]), m.d) + '</b>';
+      }
+    });
+    note.textContent = m.note;
+  }
+  render();
+})();
+</script>
+</body>
+</html>

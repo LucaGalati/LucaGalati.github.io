@@ -1,0 +1,15 @@
+{{- /* Event list. Context: a slice of {name, organizer, city, country, online, url}.
+       Each item renders as "Name, Organizer, City, Country"; `online: true` replaces city and country
+       with "online"; empty parts are skipped; with a `url` the name links to the talk's own page.
+       Used by the paper page and the Bio "Other presentations". */ -}}
+<ul class="events">
+  {{- range . }}
+    {{- $rest := slice }}{{ $url := .url | default "" }}
+    {{- with .organizer }}{{ $rest = $rest | append . }}{{ end }}
+    {{- if .online }}{{ $rest = $rest | append (i18n "online" | default "online") }}{{ else }}
+      {{- with .city }}{{ $rest = $rest | append . }}{{ end }}
+      {{- with .country }}{{ $rest = $rest | append . }}{{ end }}
+    {{- end }}
+  <li class="event">{{ with .name }}{{ if $url }}<a class="event__name" href="{{ $url }}" target="_blank" rel="noopener">{{ . }}</a>{{ else }}<span class="event__name">{{ . }}</span>{{ end }}{{ end }}{{ if and .name $rest }}, {{ end }}{{ delimit $rest ", " }}</li>
+  {{- end }}
+</ul>

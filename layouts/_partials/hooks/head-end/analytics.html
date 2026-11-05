@@ -1,0 +1,7 @@
+{{- /* Cloudflare Web Analytics (cookieless). Emitted only when a token is configured; otherwise nothing. */ -}}
+{{- with site.Params.analytics.cloudflare_token }}
+  {{- $token := printf "%v" . | strings.TrimSpace }}
+  {{- if $token }}
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "{{ $token }}"}'></script>
+  {{- end }}
+{{- end }}

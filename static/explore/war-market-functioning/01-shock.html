@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The shock · The Effects of War on Market Functioning</title>
+<meta name="description" content="Deck 1 of an explorable explanation of Federle, Galati and Riordan, The Effects of War on Market Functioning: the night of 24 February 2022, a bet on the size of the jolt, and two rings around Ukraine.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-shock.html">
+<lg-sitebar><noscript><a href="../../publication/war-market-functioning/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide" data-title="What does a war next door do to the cost of trading?">
+  <div class="inner">
+    <p class="kicker">An explorable explanation · Federle, Galati &amp; Riordan</p>
+    <h1>When a war starts next door, what happens to the cost of trading?</h1>
+    <p>At 03:53 UTC on 24 February 2022, missiles struck Kyiv and Kharkiv. The stock exchanges nearest the fighting were closed for the night. They would open a few hours later.</p>
+    <p>An earlier study found that share prices of firms near the border fell further than those of firms far away. This paper looks underneath the prices, at what it cost to buy or sell a share at a moment like that. That cost is the <strong>spread</strong>: the gap between the best price you can buy at and the best you can sell at, paid by anyone who needs to trade right now.</p>
+    <p>In the World Wars, exchanges near the fighting often simply shut. In 2022 they opened as usual. So did the market keep working that morning, and did a war next door make trading dearer in Warsaw than in New York?</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Watch the night unfold&nbsp;→</button>
+      <a class="door" href="03-why.html#s1" data-return="next">What is a spread, exactly? Widen one yourself&nbsp;→</a>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What happened overnight?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The shock · 2 of 4</p>
+    <h2>The shock arrived while the nearest markets were shut</h2>
+    <div class="fig" id="timeline"></div>
+    <p>By the open, four hours of escalating news had piled up with nowhere to trade it; the opening auction had to absorb it all at once. For the study that is a gift: the same firms on the same exchanges, a few hours apart, with the shock pinned to the minute.</p>
+    <div class="actions"><button class="btn primary" type="button" data-next>How big was the jolt?&nbsp;→</button></div>
+    <p class="note">Overnight events as listed in the paper’s Table 16, in UTC; the first strikes were reported shortly before 06:00 Kyiv time. The main European exchanges open at about 08:00 UTC.</p>
+  </div>
+</section>
+
+<section class="slide wide play" data-title="How big was the jolt at the open?">
+  <div class="inner">
+    <p class="kicker">Deck 1 · The shock · 3 of 4</p>
+    <h2>Place a bet before the data draw</h2>
+    <div class="bet-grid">
+      <div class="q">
+        <p>Each firm’s spread is measured against its own normal: its average in the same trading hour on five ordinary days a fortnight earlier, counted in units of its usual day-to-day wobble, the <strong>standard deviation</strong> (sd). On an ordinary day the number sits within about <span class="num">±1</span>.</p>
+        <p><strong>At the open on 24 February, how far above normal were the spreads of firms near Ukraine?</strong></p>
+        <div class="actions bet" id="bet" role="group" aria-label="Your bet">
+          <button class="btn" type="button" data-bet="0.5" aria-pressed="false">About 0.5 sd</button>
+          <button class="btn" type="button" data-bet="2" aria-pressed="false">About 2 sd</button>
+          <button class="btn" type="button" data-bet="6" aria-pressed="false">About 6 sd</button>
+        </div>
+      </div>
+      <div class="stage c">
+        <div class="fig" id="es-chart"></div>
+        <p class="legend"><span><i class="dt near"></i>Nearby: first- or second-degree neighbour</span><span><i class="dt far"></i>Distant</span><span><i class="sq normal"></i>a normal day’s range</span></p>
+        <label class="ctl" for="es-day">Walk through the days</label>
+        <input type="range" id="es-day" min="-5" max="5" value="0" step="1" disabled aria-label="Trading day relative to the invasion">
+        <p class="readout" id="es-read" aria-live="polite">The data draw once you have placed your bet.</p>
+        <p class="note" id="es-note" hidden>Of the 1,015 firms with a complete intraday record, only 54 are nearby, so even a 5.9 sd gap clears only the 10% bar. Each hour is compared with the same hour’s normal: the closing hour before the invasion, the opening hour from day 0. The t-statistic says how far a gap stands out from noise; about 1.65 clears the 10% bar. Source: Table 2.</p>
+      </div>
+      <div class="t">
+        <p id="es-verdict" aria-live="polite"></p>
+        <div class="actions" id="es-next" hidden>
+          <button class="btn primary" type="button" data-next>Who counts as “nearby”?&nbsp;→</button>
+          <a class="door" href="04-data.html#s2">What does “six standard deviations” mean? Build one&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="Who counts as near?">
+  <div class="inner two">
+    <div>
+      <p class="kicker">Deck 1 · The shock · 4 of 4</p>
+      <h2>Two rings around Ukraine</h2>
+      <p>The paper’s first measure of exposure is blunt, and the authors know it. A firm is a <strong>first-degree neighbour</strong> if its headquarters is in a country that borders Ukraine, a <strong>second-degree neighbour</strong> if its country borders one of those. Everyone else is distant. Of the 2,747 firms in the main sample, 448 sit in the two rings, about 15% of the observations.</p>
+      <p>Borders are a crude ruler. The authors therefore also measure each headquarters’ distance to Ukraine in kilometres, so they can test slope against cliff. First, though: how much wider did spreads get?</p>
+      <div class="actions">
+        <a class="btn primary" href="02-gradient.html#s1">How much wider?&nbsp;→</a>
+        <a class="door" href="04-data.html#s1">Why only 2,747 firms?&nbsp;→</a>
+      </div>
+      <p class="note">Names sit at their rough compass bearing from Kyiv. Firms headquartered in Russia and Ukraine are excluded: the question is the spillover to third countries. Schematic, not to scale; footnote 3 of the paper lists the rings.</p>
+    </div>
+    <div>
+      <div class="fig narrow" id="rings"></div>
+      <p class="legend" style="justify-content:center"><span><i class="sq ring1"></i>first-degree neighbour</span><span><i class="sq ring2"></i>second-degree neighbour</span><span><i class="sq ring0"></i>distant: everyone else</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/war-market-functioning/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 2: the night, as a timeline (horizontal on wide screens, vertical on phones) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('timeline');
+  /* [hour, time, description, side in the horizontal layout, level, gold] */
+  var EV = [
+    [3 + 53 / 60, '03:53', 'Missile strikes in Kyiv and Kharkiv', 'up', 1, false],
+    [4 + 55 / 60, '04:55', 'Martial law declared', 'down', 1, false],
+    [5 + 17 / 60, '05:17', 'Attacks on several oblasts; fighting begins', 'up', 2, false],
+    [5 + 55 / 60, '05:55', 'Russian aircraft shot down', 'down', 2, false],
+    [8, '≈ 08:00', 'European exchanges open', 'up', 1, true]
+  ];
+  var ARIA = 'Timeline in UTC, 24 February 2022: missile strikes in Kyiv and Kharkiv at 03:53, martial law at 04:55, attacks on several oblasts at 05:17, a Russian aircraft shot down at 05:55, European exchanges open at about 08:00.';
+  function hh(h) { return (h < 10 ? '0' : '') + h + ':00'; }
+  function horizontal(W) {
+    var H = 226, x0 = 48, x1 = W - 28, yA = 116;
+    function X(h) { return x0 + (x1 - x0) * h / 9; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': ARIA }, box);
+    S('rect', { x: X(0), y: yA - 9, width: X(8) - X(0), height: 18, 'class': 'tl-closed' }, root);
+    S('rect', { x: X(8), y: yA - 9, width: X(9) - X(8), height: 18, 'class': 'tl-open' }, root);
+    T(root, X(0.25), yA + 4, 'European exchanges closed');
+    for (var h = 0; h <= 9; h++) {
+      S('line', { x1: X(h), x2: X(h), y1: yA + 9, y2: yA + 14, 'class': 'axis' }, root);
+      T(root, X(h), yA + 29, hh(h), { 'text-anchor': 'middle' });
+    }
+    T(root, x1, yA + 48, 'UTC, 24 February 2022', { 'text-anchor': 'end' });
+    EV.forEach(function (e, i) {
+      var g = S('g', { 'class': 'tl-ev' + (e[5] ? ' gold' : ''), style: 'animation-delay:' + (0.3 + i * 0.45) + 's' }, root);
+      var x = X(e[0]), up = e[3] === 'up';
+      var yText = up ? (e[4] === 1 ? yA - 36 : yA - 66) : (e[4] === 1 ? yA + 66 : yA + 90);
+      /* leader lines below the bar start under the hour labels, so they never cut through them */
+      if (up) S('line', { x1: x, x2: x, y1: yA - 9, y2: yText + 6 }, g);
+      else { S('line', { x1: x, x2: x, y1: yA + 9, y2: yA + 14 }, g); S('line', { x1: x, x2: x, y1: yA + 36, y2: yText - 14 }, g); }
+      S('circle', { cx: x, cy: yA, r: 4, 'class': e[5] ? 'near-fill' : 'text-fill' }, g);
+      var w = E.textW(e[1] + '  ' + e[2]), cx = E.clamp(x, w / 2 + 4, W - w / 2 - 4);
+      var t = T(g, cx, yText, '', { 'text-anchor': 'middle' });
+      var a = S('tspan', { 'class': 'strong' }, t); a.textContent = e[1] + '  ';
+      var b = S('tspan', {}, t); b.textContent = e[2];
+    });
+  }
+  function wrap(str, maxW) {
+    var words = str.split(' '), lines = [], line = '';
+    words.forEach(function (wd) {
+      var tryLine = line ? line + ' ' + wd : wd;
+      if (E.textW(tryLine) > maxW && line) { lines.push(line); line = wd; } else line = tryLine;
+    });
+    if (line) lines.push(line);
+    return lines;
+  }
+  function vertical(W) {
+    var top = 30, per = 34, barX = 50, barW = 14, lx = barX + barW + 30;
+    function Y(h) { return top + h * per; }
+    var H = Y(9) + 40;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': ARIA }, box);
+    S('rect', { x: barX, y: Y(0), width: barW, height: Y(8) - Y(0), 'class': 'tl-closed' }, root);
+    S('rect', { x: barX, y: Y(8), width: barW, height: Y(9) - Y(8), 'class': 'tl-open' }, root);
+    for (var h = 0; h <= 9; h++) {
+      S('line', { x1: barX - 5, x2: barX, y1: Y(h), y2: Y(h), 'class': 'axis' }, root);
+      T(root, barX - 9, Y(h) + 4, hh(h), { 'text-anchor': 'end' });
+    }
+    T(root, 0, 14, 'UTC, 24 February 2022');
+    T(root, lx, Y(0.6) + 4, 'European exchanges closed');
+    var maxW = W - lx - 4, items = EV.map(function (e) {
+      var lines = wrap(e[2], maxW);
+      return { e: e, y: Y(e[0]), lines: lines, h: 15 * (lines.length + 1) };
+    });
+    var next = -Infinity;
+    items.forEach(function (it) { it.top = Math.max(it.y - 8, next); next = it.top + it.h + 6; });
+    items.forEach(function (it, i) {
+      var g = S('g', { 'class': 'tl-ev' + (it.e[5] ? ' gold' : ''), style: 'animation-delay:' + (0.3 + i * 0.45) + 's' }, root);
+      S('polyline', { points: [barX + barW, it.y, barX + barW + 12, it.y, lx - 6, it.top + 4].join(' ') }, g);
+      S('circle', { cx: barX + barW / 2, cy: it.y, r: 4, 'class': it.e[5] ? 'near-fill' : 'text-fill' }, g);
+      T(g, lx, it.top + 8, it.e[1], { 'class': 'strong' });
+      it.lines.forEach(function (ln, k) { T(g, lx, it.top + 23 + 15 * k, ln); });
+    });
+  }
+  Explore.fit(box, function (W) { box.innerHTML = ''; (W >= 640 ? horizontal : vertical)(W); }, { min: 300, max: 1000 });
+})();
+
+/* ---------- slide 3: a bet on the size of the jolt, then the event study (Table 2) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, fmt = E.fmt, plus = E.plus;
+  var DAYS = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+  var NEAR = [-1.30, 0.33, 0.77, 0.03, 1.87, 6.57, 7.89, 3.61, 2.13, 1.84, -0.22];
+  var FAR  = [-1.01, -0.28, -0.64, 0.39, -0.14, 0.69, -0.15, -0.85, -0.86, -0.62, -0.76];
+  var DIFF = [-0.29, 0.62, 1.42, -0.36, 2.01, 5.87, 8.05, 4.46, 3.00, 2.47, 0.54];
+  var TST  = [-0.30, 0.38, 0.69, -0.41, 0.78, 1.86, 0.98, 1.45, 0.99, 0.83, 0.42];
+  var betBox = document.getElementById('bet'), chart = document.getElementById('es-chart'), slider = document.getElementById('es-day');
+  var read = document.getElementById('es-read'), verdict = document.getElementById('es-verdict'), nextBox = document.getElementById('es-next'), note = document.getElementById('es-note');
+  var YMIN = -3, YMAX = 9;
+  var st = { bet: null, k: -1, cur: 5 }, geo = null, timer = null;
+
+  function build(W) {
+    chart.innerHTML = '';
+    var H = Math.round(E.clamp(W * 0.52, 250, 320)), L = 34, R = 12, TOP = 22, B = 40;
+    function X(i) { return L + (W - L - R) * i / 10; }
+    function Y(v) { return TOP + (H - TOP - B) * (YMAX - v) / (YMAX - YMIN); }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'Standardized abnormal quoted spreads by trading day around 24 February 2022. Nearby firms: within noise before, 6.57 standard deviations at the open on day 0, 7.89 on day plus one, fading over the following week. Distant firms stay below one throughout.' }, chart);
+    S('rect', { x: L, y: Y(1), width: W - L - R, height: Y(-1) - Y(1), 'class': 'band-normal' }, root);
+    [-3, 0, 3, 6, 9].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'axis zero' : 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v), { 'text-anchor': 'end' });
+    });
+    /* above the band on the left, where both series stay inside it */
+    T(root, L + 4, Y(1) - 5, W < 520 ? 'normal: ±1' : 'a normal day: within about ±1', { 'class': 'halo' });
+    DAYS.forEach(function (d, i) { T(root, X(i), H - B + 17, (d > 0 ? '+' : d < 0 ? '−' : '') + Math.abs(d), { 'text-anchor': 'middle' }); });
+    T(root, (L + W - R) / 2, H - 6, W < 520 ? 'Trading days around 24 Feb 2022' : 'Trading days around 24 February 2022', { 'text-anchor': 'middle' });
+    T(root, L, TOP - 9, W < 560 ? 'Abnormal quoted spread (sd)' : 'Abnormal quoted spread, in standard deviations (sd) from each firm’s own normal', { 'class': 'label' });
+    S('line', { x1: X(5), x2: X(5), y1: TOP, y2: H - B, 'class': 'grid' }, root);
+    T(root, X(5) - 5, H - B - 6, 'invasion', { 'text-anchor': 'end' });
+    geo = { X: X, Y: Y, W: W, H: H, L: L, R: R, TOP: TOP, B: B, dyn: S('g', {}, root) };
+    drawDyn();
+  }
+  function drawDyn() {
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y;
+    g.innerHTML = '';
+    if (st.k < 0) { T(g, (geo.L + geo.W - geo.R) / 2, Y(4.5), 'Place your bet to draw the data', { 'text-anchor': 'middle', 'class': 'placeholder' }); return; }
+    var k = st.k, c = st.cur;
+    S('line', { x1: X(c), x2: X(c), y1: geo.TOP, y2: geo.H - geo.B, 'class': 'cursor' }, g);
+    function series(arr, cls) {
+      var pts = [];
+      for (var i = 0; i <= k; i++) pts.push(X(i).toFixed(1) + ',' + Y(arr[i]).toFixed(1));
+      if (pts.length > 1) S('polyline', { points: pts.join(' '), 'class': cls }, g);
+      for (var j = 0; j <= k; j++) S('circle', { cx: X(j), cy: Y(arr[j]), r: j === c ? 6 : 3.5, 'class': cls + '-fill' }, g);
+    }
+    series(FAR, 'far'); series(NEAR, 'near');
+    if (k >= 5) T(g, X(5) - 10, Y(NEAR[5]) + 4, '+6.57', { 'text-anchor': 'end', 'class': 'label halo' });
+    if (k >= 6) T(g, X(6) + 10, Y(NEAR[6]) + 4, 'peak +7.89', { 'class': 'label halo' });
+  }
+  function readout(i) {
+    var d = DAYS[i], sig = Math.abs(TST[i]) >= 1.65;
+    var when = d === 0 ? 'Day 0, 24 February, opening hour' : 'Day ' + (d > 0 ? '+' : '−') + Math.abs(d) + (d < 0 ? ', closing hour' : ', opening hour');
+    read.innerHTML = '<strong>' + when + ':</strong> nearby ' + plus(NEAR[i]) + ' sd, distant ' + plus(FAR[i]) + ' sd. Gap ' + plus(DIFF[i]) +
+      ' <span class="nw">(t = ' + fmt(TST[i]) + ')</span>, ' + (sig ? 'the only day on which it clears the 10% bar.' : 'within noise.');
+    slider.setAttribute('aria-valuetext', when);
+  }
+  var LEAD = {
+    '0.5': 'Half a wobble is what the distant firms did: +0.69. At the open on 24 February, spreads of nearby firms jumped 6.6 standard deviations above their own normal. ',
+    '2': 'Bigger than that. At the open on 24 February, spreads of nearby firms jumped 6.6 standard deviations above their own normal; distant firms moved by 0.7. ',
+    '6': 'You called it. At the open on 24 February, spreads of nearby firms jumped 6.6 standard deviations above their own normal; distant firms moved by 0.7. '
+  };
+  var TAIL = 'Before the 24th both groups wobble around zero; nearby firms tick up on day −1 (+1.87), but the gap is within noise (t = 0.78). The peak comes the next day, +7.9, and the gap fades over the following week.';
+  function finish() {
+    if (timer) { clearInterval(timer); timer = null; }
+    st.k = 10; st.cur = 5; slider.value = 0; slider.disabled = false;
+    drawDyn(); readout(st.cur);
+    verdict.textContent = LEAD[st.bet] + TAIL;
+    nextBox.hidden = false; note.hidden = false;
+  }
+  function place(bet, animate) {
+    st.bet = bet;
+    [].forEach.call(betBox.querySelectorAll('[data-bet]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-bet') === bet ? 'true' : 'false'); });
+    E.save('bet', bet);
+    if (!animate || E.still) { finish(); return; }
+    if (timer) clearInterval(timer);
+    verdict.textContent = ''; nextBox.hidden = true; note.hidden = true; slider.disabled = true;
+    st.k = 0; st.cur = 0; drawDyn(); readout(0);
+    timer = setInterval(function () {
+      if (st.k >= 10) { finish(); return; }
+      st.k++; st.cur = st.k; drawDyn(); readout(st.k);
+    }, 330);
+    if (chart.getBoundingClientRect().bottom > window.innerHeight) chart.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  slider.addEventListener('input', function () { st.cur = +slider.value + 5; drawDyn(); readout(st.cur); });
+  betBox.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-bet]'); if (!b) return;
+    place(b.getAttribute('data-bet'), true);
+  });
+  var prior = E.load('bet');
+  if (Object.prototype.hasOwnProperty.call(LEAD, prior)) place(prior, false);
+  E.fit(chart, build, { min: 300, max: 720 });
+})();
+
+/* ---------- slide 4: the two rings, names at their rough bearing from Kyiv ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var box = document.getElementById('rings');
+  /* compass bearings in degrees, nudged apart where neighbours would overlap; Russia (east) is excluded */
+  var INNER = [['Belarus', 350], ['Poland', 298], ['Slovakia', 270], ['Hungary', 246], ['Romania', 222], ['Moldova', 185]];
+  var OUTER = [['Latvia', 345], ['Lithuania', 323], ['Germany', 298], ['Czechia', 279], ['Austria', 261], ['Slovenia', 243], ['Croatia', 226], ['Serbia', 209], ['Bulgaria', 190]];
+  E.fit(box, function (W0, vh) {
+    var W = Math.round(Math.max(280, Math.min(W0, 500, vh * 0.6)));
+    box.innerHTML = '';
+    var c = W / 2, rO = 0.48 * W, rM = 0.31 * W, rC = 0.12 * W;
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + W, role: 'img',
+      'aria-label': 'Schematic rings around Ukraine, names at their rough bearing from Kyiv. First-degree neighbours: Belarus, Poland, Slovakia, Hungary, Romania, Moldova. Second-degree neighbours: Latvia, Lithuania, Germany, Czechia, Austria, Slovenia, Croatia, Serbia, Bulgaria. Russia, to the east, is excluded. All other countries are distant.' }, box);
+    root.style.maxWidth = W + 'px'; root.style.margin = '0 auto';
+    S('circle', { cx: c, cy: c, r: rO, 'class': 'ring2' }, root);
+    S('circle', { cx: c, cy: c, r: rM, 'class': 'ring1' }, root);
+    S('circle', { cx: c, cy: c, r: rC, 'class': 'ring0' }, root);
+    T(root, c, c + 1, 'Ukraine', { 'text-anchor': 'middle', 'class': 'big label' });
+    T(root, c, c + 16, 'excluded', { 'text-anchor': 'middle' });
+    function place(list, r) {
+      list.forEach(function (p) {
+        var a = p[1] * Math.PI / 180;
+        T(root, c + r * Math.sin(a), c - r * Math.cos(a) + 4, p[0], { 'text-anchor': 'middle', 'class': 'label' });
+      });
+    }
+    place(INNER, (rC + rM) / 2);
+    place(OUTER, (rM + rO) / 2);
+    T(root, c + (rC + rM) / 2, c - 3, 'Russia:', { 'text-anchor': 'middle' });
+    T(root, c + (rC + rM) / 2, c + 12, 'excluded', { 'text-anchor': 'middle' });
+  }, { useHeight: true, min: 280, max: 500 });
+})();
+</script>
+</body>
+</html>

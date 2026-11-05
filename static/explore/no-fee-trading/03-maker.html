@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The maker’s quote — Free, an explorable of “No-fee trading” (Galati, 2024)</title>
+<meta name="description" content="The gap on screen and what a trade paid, what a market maker earns, the saving zero fees created, and a sandbox where you set the quote and see who keeps it.">
+<link rel="stylesheet" href="style.css">
+<script src="../sitebar.js"></script>
+<noscript><style>.slide { display: block; padding: 36px 24px 40px; } lg-sitebar > :not(noscript) { display: none; } lg-sitebar a { display: block; padding: 14px 24px 0; font-family: var(--sans); font-size: 13px; }</style></noscript>
+<style>
+  .seg.small { font-size: 12px; margin-bottom: 12px; }
+  .readings { list-style: none; padding: 0; margin: 0.4em 0 0; }
+  .readings li { margin: 0 0 0.8em; }
+  .readings .chip { margin-bottom: 4px; }
+  .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .pair .chart { height: 206px; }
+
+  .sandbox { grid-template-areas: "stage head" "stage controls" "stage doors"; grid-template-rows: auto auto 1fr; }
+  .sandbox > .head { grid-area: head; max-width: 52ch; }
+  .sandbox > .controls { grid-area: controls; max-width: 52ch; }
+  .sandbox > .stage { align-self: start; }
+  .sandbox > .doors { align-self: start; margin-top: 16px; }
+  @media (max-width: 940px) {
+    .sandbox { grid-template-areas: "head" "stage" "controls" "doors"; grid-template-rows: auto; }
+    .sandbox > .stage { position: sticky; top: var(--lg-sitebar-h, 0px); z-index: 2; background: var(--bg); padding: 6px 0 8px; border-bottom: 1px solid var(--border); }
+  }
+  .since { font-family: var(--sans); font-size: 13px; margin: 6px 0 0; font-variant-numeric: tabular-nums; min-height: 1.6em; }
+  .since b { font-weight: 500; }
+  .ledger-note { margin: 14px 0 0; }
+  @media (max-width: 940px) { .ledger-note { display: none; } } /* phones: the stage is sticky; the fee hint under the toggle carries the point */
+  .obs { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  #state { min-height: 6em; }
+  .sandbox .field { margin: 12px 0; }
+  @media (max-width: 940px) { #state { min-height: 7.6em; } }
+</style>
+</head>
+<body data-deck="03-maker">
+<lg-sitebar>
+  <noscript><a href="../../publication/no-fee-trading/">← Back to the paper</a></noscript>
+  <span class="deck-title">Free · <b>The maker’s quote</b></span>
+  <button type="button" data-map-open aria-haspopup="dialog">Map <span class="muted">(m)</span></button>
+</lg-sitebar>
+
+<!-- 1. Two spreads -->
+<section class="slide" id="s1">
+  <div class="two">
+    <div class="stage">
+      <div class="seg small" id="week" role="group" aria-label="Which week">
+        <button type="button" data-w="before">Week before 8 July</button>
+        <button type="button" data-w="after">Week after</button>
+      </div>
+      <div class="chart" id="spreads"></div>
+      <p class="small" style="margin-top:8px">Bitcoin–Tether on Binance, zoomed in around the mid-price. Means of the quoted and effective spreads, Table 2.</p>
+    </div>
+    <div class="text">
+      <p class="kicker">The maker’s quote</p>
+      <h1 class="t2">Two spreads: the gap on screen, and what a trade paid.</h1>
+      <p>The <em>quoted spread</em> is the gap between the best bid and the best ask, averaged each minute: what the screen shows. The <em>effective spread</em> compares each trade’s price with the mid-price at that moment, doubled for a round trip: what a trade actually paid.</p>
+      <p>They are not the same. In the week before 8 July the screen showed 0.29 bps while trades paid 1.80; the paper does not break down the gap.</p>
+      <p>In the week after, the screen widened nearly six-fold, to 1.70. What trades paid rose by about a tenth, to 1.98 — and by about as much on FTX (+0.23) and Kucoin (+0.16), where nothing had changed. For the taker, the spread bill did not fall.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#2" data-go="2"><span class="arrow">→</span> What does the maker earn?</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. What a market maker earns -->
+<section class="slide" id="s2">
+  <div class="two">
+    <div class="stage"><div class="chart" id="ledger2"></div></div>
+    <div class="text">
+      <p class="kicker">What a maker earns</p>
+      <h2>The maker does not keep the spread.</h2>
+      <p>Round trip, the taker pays the maker the effective spread: 1.80 bps on Bitcoin–Tether at Binance in the week before 8 July. But some takers know something. In the 20 seconds after a trade the mid-price tends to move against the maker: that <em>price impact</em> was 3.67 bps.</p>
+      <p>What is left is the <em>realized spread</em>, the maker’s earnings: 1.80 − 3.67 ≈ −1.86 bps (unrounded, 1.805 − 3.669). By this measure making the market lost money on the average round trip, as it did that week on every control market.</p>
+      <p class="small">Why quote at a loss on average? The paper does not say; what it tests is the change, and that is what the fee moved.</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#3" data-go="3"><span class="arrow">→</span> Then the fee vanished</a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. The saving -->
+<section class="slide" id="s3">
+  <div class="two">
+    <div class="stage" style="max-width:360px; justify-self:center"><div class="chart" id="pi3"></div></div>
+    <div class="text">
+      <p class="kicker">The saving</p>
+      <h2>Removing the fee cut the maker’s cost.</h2>
+      <p>Price impact fell from 3.67 to 1.47 bps. The paper’s reading: quotes no longer had to build the fee into the price, and a zero commission does not distinguish between orders that make liquidity and orders that take it, so traders choose by the posted spread alone.</p>
+      <p>On Bitcoin–Tether the drop holds against every control (Table B.1: −1.8 to −2.7 bps); pooled with the three smaller pairs, where price impact barely moved, it is not significant (Table 3).</p>
+      <p>The paper’s Hypothesis 3, from the standard model: with the fee gone, what takers pay should fall. A drop in the maker’s own costs is exactly what competition would pass on.</p>
+      <p class="q">Who got the 2.2 bps?</p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#4" data-go="4"><span class="arrow">→</span> Set the quote yourself</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PLAYABLE: set the quote -->
+<section class="slide top" id="s4">
+  <div class="two sandbox">
+    <div class="head">
+      <p class="kicker">Set the quote</p>
+      <h2>You are the market maker.</h2>
+      <p>You post a bid and an ask. A taker crosses them and pays you; then the price drifts against you as informed traders reveal what they knew. You keep the difference.</p>
+    </div>
+    <div class="stage">
+      <div class="chart" id="axis"></div>
+      <div class="chart" id="ledger4"></div>
+      <p class="since" id="since"></p>
+      <p class="small ledger-note">Not in this ledger: the fee itself. Until 8 July you also paid the exchange on every fill, from 0.10% a side for an ordinary account down to 0.012% at the top tier; afterwards, nothing. Mid-price: the sample mean (Table 1).</p>
+    </div>
+    <div class="controls">
+      <div class="field">
+        <div class="label">Fee regime</div>
+        <div class="seg" id="fee" role="group" aria-label="Fee regime">
+          <button type="button" data-fee="before">Week before · fee 0.10%</button>
+          <button type="button" data-fee="after">Week after · no fee</button>
+        </div>
+        <p class="hint">Sets the price move against you to that week’s mean: 3.67 or 1.47 bps (Table 2). The fee itself, 0.10% a side for an ordinary account, is not in this ledger.</p>
+      </div>
+      <div class="field">
+        <label for="eff">What you charge the taker per round trip <span class="val" id="eff-val"></span></label>
+        <div class="ticks above"><span class="r" id="be-tick"></span></div>
+        <input type="range" id="eff" min="0" max="4" step="0.01" value="1.80" aria-describedby="state">
+        <div class="ticks"><span class="l" style="left:45.12%">1.80 week before</span><span class="r" style="left:49.47%">1.98 week after</span></div>
+      </div>
+      <div class="obs">
+        <button type="button" class="btn" data-obs="before">What happened, week before</button>
+        <button type="button" class="btn" data-obs="after">What happened, week after</button>
+      </div>
+      <p class="state-line" id="state"></p>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="#5" data-go="5"><span class="arrow">→</span> Why didn’t a rival undercut you?</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Why no rival undercut them -->
+<section class="slide" id="s5">
+  <div class="two">
+    <div class="stage">
+      <div class="pair"><div class="chart" id="gap5"></div><div class="chart" id="depth5"></div></div>
+      <p class="small" style="margin-top:10px">Bitcoin–Tether on Binance. Typical depth, the exponential of the mean log depth at the best quotes, fell from 1,118 to 172 lots: divided by about 6.5 (Table 2).</p>
+    </div>
+    <div class="text">
+      <p class="kicker">Competition</p>
+      <h2>Why didn’t a rival undercut them?</h2>
+      <p>The makers kept the saving and offered less, too: the typical quantity at the best prices fell to about a sixth while it rose on every control, in the paper’s words “liquidity deterioration for takers”. A rival quoting a little tighter should have taken the business. Why none did, the paper does not test. It offers three readings, with very different evidence behind them:</p>
+      <ul class="readings">
+        <li><span class="chip solid">the paper’s reading</span> Customers saw the fee, not the spread: trades shrank by a third, a sign of retail traders drawn by an apparent discount.</li>
+        <li><span class="chip">the paper’s concern</span> One venue pulled the trade from its rivals, creating “a favorable environment for market makers”.</li>
+        <li><span class="chip">no evidence</span> Ties between the exchange and the makers: the paper raises them and says it has no evidence.</li>
+      </ul>
+    </div>
+    <div class="doors">
+      <a class="door primary" href="04-murky.html#2"><span class="arrow">→</span> Why would an exchange give its fee away?</a>
+      <a class="door" href="02-experiment.html#3"><span class="arrow">→</span> Ten measures</a>
+    </div>
+  </div>
+</section>
+
+<script src="charts.js"></script>
+<script src="nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var C = Charts, el = C.el, T = C.text, fmt = C.fmt, signed = C.signed;
+  var PI = { before: 3.6688, after: 1.4724 };   // Table 2: price impact, bps
+  var ES = { before: 1.8047, after: 1.9788 };   // Table 2: effective spread, bps
+  var QS = { before: 0.2872, after: 1.7036 };   // Table 2: quoted spread, bps
+  var KEEP0 = -1.8641;                          // Table 2: realized spread, week before
+  var MID = 20264.8331;                         // Table 1: mean mid-price, USDT
+  // self-check: the paper's identity (effective = price impact + realized) reproduces Table 2's realized spreads
+  console.assert(Math.abs(ES.before - PI.before - KEEP0) < 1e-3 && Math.abs(ES.after - PI.after - 0.5064) < 1e-3, 'Table 2 identity check failed');
+
+  // ---- 1. two spreads on the price line ----
+  var week = Explore.get('week') === 'after' ? 'after' : 'before';
+  var weekSeg = document.getElementById('week');
+  var spreads = C.mount(document.getElementById('spreads'), function (w) {
+    var h = 170, cx = w / 2, cy = 82, sx = (w / 2 - 24) / 1.2;
+    var q = QS[week] / 2 * sx, e = ES[week] / 2 * sx;
+    var svg = C.root(w, h, (week === 'before' ? 'Week before 8 July' : 'Week after 8 July') + ': the gap between the best bid and ask on screen was ' + fmt(QS[week], 2) + ' basis points; trades paid ' + fmt(ES[week], 2) + ' basis points per round trip.');
+    svg.appendChild(el('line', { x1: 0, x2: w, y1: cy, y2: cy, 'class': 'hair' }));
+    // on screen: best bid and ask, bracket above
+    [-1, 1].forEach(function (s) {
+      svg.appendChild(el('line', { x1: cx + s * q, x2: cx + s * q, y1: cy - 26, y2: cy, 'class': 'ink', 'stroke-width': 1.5 }));
+      svg.appendChild(T(cx + s * q + s * 4, cy - 30, s < 0 ? 'best bid' : 'best ask', { 'text-anchor': s < 0 ? 'end' : 'start', 'font-size': 11, 'class': 'muted' }));
+    });
+    svg.appendChild(el('path', { d: 'M' + (cx - q) + ' ' + (cy - 44) + ' v-5 h' + (2 * q) + ' v5', fill: 'none', 'class': 'ink' }));
+    svg.appendChild(T(cx, cy - 56, 'on screen: ' + fmt(QS[week], 2) + ' bps', { 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 500 }));
+    // what trades paid: the average trade price on each side, bracket below
+    [-1, 1].forEach(function (s) {
+      var x = cx + s * e;
+      svg.appendChild(el('path', { d: 'M' + x + ' ' + (cy - 7) + ' l7 7 l-7 7 l-7 -7 z', fill: 'var(--s1)' }));
+    });
+    svg.appendChild(el('path', { d: 'M' + (cx - e) + ' ' + (cy + 18) + ' v5 h' + (2 * e) + ' v-5', fill: 'none', stroke: 'var(--s1)', 'stroke-width': 1.5 }));
+    svg.appendChild(T(cx, cy + 40, 'what trades paid: ' + fmt(ES[week], 2) + ' bps', { 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 500, fill: 'var(--s1)' }));
+    svg.appendChild(el('circle', { cx: cx, cy: cy, r: 5, fill: 'var(--gold)', stroke: 'var(--gold-edge)', 'stroke-width': 1 }));
+    // a ruler: half a basis point
+    var r0 = 4, r1 = 4 + 0.5 * sx;
+    svg.appendChild(el('path', { d: 'M' + r0 + ' ' + (h - 12) + ' v-4 M' + r0 + ' ' + (h - 14) + ' H' + r1 + ' M' + r1 + ' ' + (h - 12) + ' v-4', fill: 'none', stroke: 'var(--muted)' }));
+    svg.appendChild(T(r1 + 6, h - 10, '0.5 bps ≈ 1 USDT', { 'font-size': 11, 'class': 'muted' }));
+    return svg;
+  });
+  function setWeek(w) {
+    week = w;
+    Array.prototype.forEach.call(weekSeg.querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-w') === w ? 'true' : 'false'); });
+    spreads.redraw();
+  }
+  Array.prototype.forEach.call(weekSeg.querySelectorAll('button'), function (b) {
+    b.addEventListener('click', function () { Explore.set('week', b.getAttribute('data-w')); setWeek(b.getAttribute('data-w')); });
+  });
+  setWeek(week);
+
+  // ---- 2. the week-before ledger ----
+  C.mount(document.getElementById('ledger2'), function (w) {
+    return C.waterfall(w, { pay: ES.before, impact: PI.before, payLabel: 'The taker pays the maker', impactLabel: 'The price moves against the maker', keepLabel: 'The maker keeps',
+      label: 'Ledger of the week before, in basis points: the taker pays 1.80, the price then moves 3.67 against the maker, the maker keeps minus 1.86.' });
+  });
+
+  // ---- 3. price impact, before and after ----
+  C.mount(document.getElementById('pi3'), function (w) {
+    return C.barPair(w, { title: 'Price impact, bps', sub: 'Bitcoin–Tether on Binance', pre: PI.before, post: PI.after, color: 'var(--gold)', edge: 'var(--gold-edge)', height: 230, decimals: 2, pct: true, label: 'Price impact fell from 3.67 to 1.47 basis points' });
+  });
+
+  // ---- 4. sandbox: you are the maker ----
+  var saved = Explore.get('sandbox');
+  var st = saved && (saved.fee === 'before' || saved.fee === 'after') && typeof saved.eff === 'number' ? saved : { fee: 'before', eff: ES.before };
+  var feeSeg = document.getElementById('fee');
+  var slider = document.getElementById('eff');
+  var axis = C.mount(document.getElementById('axis'), function (w) {
+    var h = 112, cx = w / 2, cy = 44, sx = (w / 2 - 26) / 2.2, half = st.eff / 2 * sx, shown = Math.round(st.eff * 100) / 100;
+    var svg = C.root(w, h, 'Your quote around the mid-price: a round trip of ' + fmt(shown, 2) + ' basis points.');
+    svg.appendChild(el('line', { x1: 0, x2: w, y1: cy, y2: cy, 'class': 'hair' }));
+    svg.appendChild(el('line', { x1: cx - half, x2: cx + half, y1: cy, y2: cy, stroke: 'var(--s1)', 'stroke-width': 2 }));
+    [-1, 1].forEach(function (s) {
+      var lx = s < 0 ? Math.max(cx - half - 4, 54) : Math.min(cx + half + 4, w - 54); // keep the label on the page
+      svg.appendChild(el('line', { x1: cx + s * half, x2: cx + s * half, y1: cy - 16, y2: cy + 16, 'class': 'ink', 'stroke-width': 1.5 }));
+      svg.appendChild(T(lx, cy + 30, s < 0 ? 'your bid' : 'your ask', { 'text-anchor': s < 0 ? 'end' : 'start', 'font-size': 12 }));
+    });
+    svg.appendChild(el('circle', { cx: cx, cy: cy, r: 5, fill: 'var(--gold)', stroke: 'var(--gold-edge)', 'stroke-width': 1 }));
+    svg.appendChild(T(cx, cy - 24, 'mid-price 20,264.83 USDT', { 'text-anchor': 'middle', 'font-size': 11, 'class': 'muted' }));
+    svg.appendChild(T(cx, h - 8, 'Round trip: ' + fmt(shown, 2) + ' bps ≈ ' + fmt(shown / 1e4 * MID, 2) + ' USDT per bitcoin', { 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 500 }));
+    return svg;
+  });
+  var ledger = C.mount(document.getElementById('ledger4'), function (w) {
+    return C.waterfall(w, { pay: st.eff, impact: PI[st.fee], ghost: KEEP0, ghostLabel: 'week before',
+      label: 'Your ledger, in basis points: the taker pays you ' + fmt(st.eff, 2) + ', the price then moves ' + fmt(PI[st.fee], 2) + ' against you, you keep ' + fmt(st.eff - PI[st.fee], 2) + '.' });
+  });
+  function near(a, b) { return Math.abs(a - b) < 0.015; }
+  function sentence(fee, eff) {
+    var keep = eff - PI[fee];
+    if (fee === 'before') {
+      if (near(eff, ES.before)) return 'This is the week before: the taker paid you 1.80 bps a round trip, the price then moved 3.67 against you, and you kept −1.86. Now switch the fee regime to the week after, and leave your charge where it is.';
+      if (keep < 0) return 'Below break-even: the price moves against you by more than the taker pays. With the fee in place you would have to charge 3.67 bps to break even.';
+      return 'At or above break-even. The week’s average round trip was cheaper than this: 1.80 bps.';
+    }
+    if (keep < 0) return 'Below the new break-even of 1.47 bps: even with no fee, you lose on the average round trip.';
+    if (eff < ES.before - 0.015) return 'This is what passing the saving on would look like: the taker pays less than the week before, and you still keep more than you did. Competition should push the charge here. It did not happen.';
+    if (near(eff, ES.before)) return 'Same charge as the week before, yet what you keep rose from −1.86 to +0.33 bps: the whole 2.2 bps saving, without touching your quote. Now find where the market settled.';
+    if (near(eff, ES.after)) return 'Where the market settled: 1.98 bps. You keep +0.51, the whole 2.2 bps saving and 0.17 more from the taker. That extra 0.17 also appeared on FTX and Kucoin, where nothing changed.';
+    return 'The taker pays more than the week before, and you keep the whole 2.2 bps saving and ' + fmt(eff - ES.before, 2) + ' more: ' + signed(keep, 2) + ' bps a round trip.';
+  }
+  function render() {
+    var pi = PI[st.fee], keep = st.eff - pi;
+    Array.prototype.forEach.call(feeSeg.querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-fee') === st.fee ? 'true' : 'false'); });
+    if (Math.abs(parseFloat(slider.value) - st.eff) > 0.005) slider.value = st.eff;
+    document.getElementById('eff-val').textContent = fmt(st.eff, 2) + ' bps';
+    var be = document.getElementById('be-tick');
+    be.style.left = (pi / 4 * 100) + '%';
+    be.textContent = 'you break even at ' + fmt(pi, 2);
+    be.className = pi / 4 > 0.6 ? 'l' : 'r';
+    document.getElementById('since').innerHTML = 'Compared with the week before — what you keep: <b>' + signed(keep - KEEP0, 2) + ' bps</b> · what the taker pays: <b>' + signed(st.eff - ES.before, 2) + ' bps</b>';
+    document.getElementById('state').textContent = sentence(st.fee, st.eff);
+    axis.redraw(); ledger.redraw();
+    Explore.set('sandbox', st);
+  }
+  Array.prototype.forEach.call(feeSeg.querySelectorAll('button'), function (b) {
+    b.addEventListener('click', function () { st.fee = b.getAttribute('data-fee'); render(); });
+  });
+  slider.addEventListener('input', function () { st.eff = parseFloat(slider.value); render(); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-obs]'), function (b) {
+    b.addEventListener('click', function () { var w = b.getAttribute('data-obs'); st.fee = w; st.eff = ES[w]; render(); });
+  });
+  render();
+
+  // ---- 5. wider and thinner ----
+  C.mount(document.getElementById('gap5'), function (w) {
+    return C.barPair(w, { title: 'Gap on screen', sub: 'quoted spread, bps', pre: QS.before, post: QS.after, color: 'var(--gold)', edge: 'var(--gold-edge)', decimals: 2, pct: true, label: 'Quoted spread rose from 0.29 to 1.70 basis points' });
+  });
+  C.mount(document.getElementById('depth5'), function (w) {
+    return C.barPair(w, { title: 'Typical depth', sub: 'at the best quotes, lots', pre: Math.exp(7.0192), post: Math.exp(5.1500), color: 'var(--gold)', edge: 'var(--gold-edge)', decimals: 0, pct: true, label: 'Typical depth at the best quotes fell from about 1,118 to about 172 lots' });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{{ define "main" }}
+{{- /* Taxonomy index (/tags/, /publication_types/): one row per term. Overrides the Blox
+       Tailwind pill list; kept out of the search index like the term pages. */ -}}
+<section class="wrap" data-pagefind-ignore>
+  {{ partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+  <ul class="page-list">
+    {{- range .Pages }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="page-list__summary">({{ i18n "papers_count" (len .Pages) }})</span></li>
+    {{- end }}
+  </ul>
+</section>
+{{ end }}

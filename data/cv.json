@@ -1,0 +1,453 @@
+{
+  "header": {
+    "name": "Luca Galati",
+    "position": "PostDoc Researcher · Technology-driven Market Design",
+    "address": "Institute for Financial Innovation & Technology, LMU Munich School of Management, Ludwig Maximilian University of Munich, Schackstraße 4, Munich, 80539, EG, Germany",
+    "email": "Luca.Galati@lmu.de",
+    "homepage": "www.sites.google.com/view/lucagalati",
+    "linkedin": "www.linkedin.com/in/luca-galati",
+    "orcid": "0000-0001-7662-5152",
+    "cv_dated": "September 2026",
+    "google_footer_affiliation": [
+      "Ludwig-Maximilians-Universität München",
+      "LMU Munich School of Management",
+      "Institute for Financial Innovation and Technology",
+      "Schackstraße 4, DE 80539 - Munich, Germany"
+    ]
+  },
+  "employment": [
+    {
+      "years": "2027",
+      "start_year": 2027,
+      "end_year": 2027,
+      "position": "Visiting Scholar",
+      "institution": "University of California, Berkeley",
+      "location": "Berkeley, USA"
+    },
+    {
+      "years": "2025–",
+      "start_year": 2025,
+      "end_year": null,
+      "position": "Affiliated Researcher",
+      "institution": "Digital Finance Cooperative Research Centre (DFCRC)",
+      "location": "Sydney, Australia"
+    },
+    {
+      "years": "2025–",
+      "start_year": 2025,
+      "end_year": null,
+      "position": "Postdoctoral Research Scientist",
+      "institution": "LMU Munich School of Management, Ludwig Maximilian University of Munich",
+      "location": "Munich, Germany"
+    },
+    {
+      "years": "2024–2025",
+      "start_year": 2024,
+      "end_year": 2025,
+      "position": "Postdoctoral Research Fellow",
+      "institution": "Department of Management, University of Bologna",
+      "location": "Bologna, Italy"
+    },
+    {
+      "years": "2023",
+      "start_year": 2023,
+      "end_year": 2023,
+      "position": "Visiting Scholar",
+      "institution": "Department of Data Science & Business Analytics, Florida Polytechnic University",
+      "location": "Lakeland, USA"
+    },
+    {
+      "years": "2021–2024",
+      "start_year": 2021,
+      "end_year": 2024,
+      "position": "Industrial PhD Research Fellow",
+      "institution": "Rozetta Institute (formerly CMCRC-SIRCA)",
+      "location": "Sydney, Australia"
+    }
+  ],
+  "appointments": [
+    {
+      "years": "2026–2038",
+      "start_year": 2026,
+      "end_year": 2038,
+      "position": "Habilitation as Associate Professor of Political Economy",
+      "institution": "Ministry of University and Research, Italy",
+      "location": null
+    },
+    {
+      "years": "2026–2038",
+      "start_year": 2026,
+      "end_year": 2038,
+      "position": "Habilitation as Associate Professor of Mathematical Finance",
+      "institution": "Ministry of University and Research, Italy",
+      "location": null
+    },
+    {
+      "years": "2024–2036",
+      "start_year": 2024,
+      "end_year": 2036,
+      "position": "Habilitation as Associate Professor of Finance",
+      "institution": "Ministry of University and Research, Italy",
+      "location": null
+    },
+    {
+      "years": "2024–",
+      "start_year": 2024,
+      "end_year": null,
+      "position": "Associate Editor",
+      "institution": "Research in International Business and Finance, Elsevier",
+      "location": null
+    },
+    {
+      "years": "2021–2023",
+      "start_year": 2021,
+      "end_year": 2023,
+      "position": "FinTech Startup Co-Founder",
+      "institution": "110 Laude s.r.l. (University of Molise spin-off)",
+      "location": "Campobasso, Italy"
+    },
+    {
+      "years": "2021–2024",
+      "start_year": 2021,
+      "end_year": 2024,
+      "position": "Foreign Exchange (FX) Benchmark Surveillance Specialist",
+      "institution": "LSEG Data & Analytics",
+      "location": "Exeter, UK"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Doctor of Philosophy in Finance",
+      "institution": "University of Wollongong",
+      "location": "Wollongong, Australia",
+      "dates": "August 2020 - September 2024",
+      "start": "2020-08",
+      "end": "2024-09",
+      "start_year": 2020,
+      "end_year": 2024,
+      "notes": [
+        "Examiners’ Commendation for Outstanding Thesis"
+      ],
+      "thesis": "Essays on the Market Microstructure of Centralised and Decentralised Finance",
+      "advisors": "A/Prof. Andrew Ainsworth & Prof. Terry Walter"
+    },
+    {
+      "degree": "Doctorate in Accounting",
+      "institution": "University of Molise",
+      "location": "Campobasso, Italy",
+      "dates": "April 2022 - July 2024",
+      "start": "2022-04",
+      "end": "2024-07",
+      "start_year": 2022,
+      "end_year": 2024,
+      "notes": [
+        "Excellent Cum Laude from the Examiners' Valuation"
+      ],
+      "thesis": "On the Quality of Financial Statements in Municipally Owned Entities: Empirical Evidence from Benford's Law",
+      "advisors": "Prof. Francesco Capalbo & Prof. Claudio Lupi"
+    },
+    {
+      "degree": "Master in Economics",
+      "institution": "University of Molise",
+      "location": "Campobasso, Italy",
+      "dates": "September 2018 - October 2020",
+      "start": "2018-09",
+      "end": "2020-10",
+      "start_year": 2018,
+      "end_year": 2020,
+      "notes": [
+        "Summa Cum Laude & Special Mention of Honour"
+      ],
+      "thesis": "Do Municipally Owned Utilities Round Earnings Before Elections? An Application of the Benford's Law",
+      "advisors": "Prof. Claudio Lupi & Prof. Francesco Capalbo"
+    },
+    {
+      "degree": "Bachelor in Economics",
+      "institution": "University of Molise",
+      "location": "Campobasso, Italy",
+      "dates": "October 2015 - April 2019",
+      "start": "2015-10",
+      "end": "2019-04",
+      "start_year": 2015,
+      "end_year": 2019,
+      "notes": [
+        "With Merit & Special Mention of Honour"
+      ],
+      "thesis": "The Market Impact Cost of Trading Large Bond Sizes: Evidence from the Transparent Italian Stock Exchange",
+      "advisors": "Prof. Claudio Lupi & Prof. Alex Frino"
+    }
+  ],
+  "honors": [
+    {
+      "year": 2026,
+      "year_inherited": false,
+      "title": "AMASES Doctoral Award for the best single-authored published paper from a Doctoral Dissertation",
+      "organization": "Association for Mathematics Applied to Social and Economic Science",
+      "amount": "€ 500"
+    },
+    {
+      "year": 2025,
+      "year_inherited": false,
+      "title": "3 PostDoc Support Funds - LMU Excellent",
+      "organization": "LMU Munich School of Management",
+      "amount": "€ 7,000"
+    },
+    {
+      "year": 2025,
+      "year_inherited": true,
+      "title": "Best Paper Award - Semifinalist (Market Microstructure)",
+      "organization": "Financial Management Association Annual Meeting",
+      "amount": null
+    },
+    {
+      "year": 2025,
+      "year_inherited": true,
+      "title": "Global Pitching Research Competition - Semifinalist",
+      "organization": "International Society of Pitching Research for Responsible Science (InSPiR2eS)",
+      "amount": null
+    },
+    {
+      "year": 2024,
+      "year_inherited": false,
+      "title": "Examiners' Commendation for Outstanding Thesis",
+      "organization": "University of Wollongong",
+      "amount": null
+    },
+    {
+      "year": 2024,
+      "year_inherited": true,
+      "title": "HDR Excellence Award",
+      "organization": "University of Wollongong",
+      "amount": null
+    },
+    {
+      "year": 2024,
+      "year_inherited": true,
+      "title": "Global Pitching Research Competition - Semifinalist",
+      "organization": "International Society of Pitching Research for Responsible Science (InSPiR2eS)",
+      "amount": null
+    },
+    {
+      "year": 2023,
+      "year_inherited": false,
+      "title": "Open Access High Impact Grant",
+      "organization": "University of Wollongong",
+      "amount": "A$ 2,500"
+    },
+    {
+      "year": 2023,
+      "year_inherited": true,
+      "title": "Best PhD Student Paper Award",
+      "organization": "Cryptocurrency Research Conference (CRC)",
+      "amount": "$ 1,000"
+    },
+    {
+      "year": 2023,
+      "year_inherited": true,
+      "title": "Annual Meeting Travel Grant",
+      "organization": "American Finance Association (AFA)",
+      "amount": "$ 1,350"
+    },
+    {
+      "year": 2022,
+      "year_inherited": false,
+      "title": "Advancement and Equity Grant Scheme for Research (AEGiS)",
+      "organization": "University of Wollongong",
+      "amount": "A$ 16,355"
+    },
+    {
+      "year": 2022,
+      "year_inherited": true,
+      "title": "Annual Meeting Travel Grant",
+      "organization": "European Finance Association (EFA)",
+      "amount": "€ 550"
+    },
+    {
+      "year": 2022,
+      "year_inherited": true,
+      "title": "Annual Meeting and Doctoral Colloquium Travel Grant",
+      "organization": "Accounting and Finance Association of Australia and New Zealand (AFAANZ)",
+      "amount": "A$ 600"
+    },
+    {
+      "year": 2021,
+      "year_inherited": false,
+      "title": "Industrial PhD Scholarship",
+      "organization": "RoZetta Institute (formerly CMCRC-SIRCA)",
+      "amount": "A$ 150,000"
+    },
+    {
+      "year": 2021,
+      "year_inherited": true,
+      "title": "Start-Up Prize",
+      "organization": "Rotaract",
+      "amount": "€ 5,000"
+    },
+    {
+      "year": 2020,
+      "year_inherited": false,
+      "title": "International Postgraduate Tuition Award",
+      "organization": "University of Wollongong",
+      "amount": "A$ 124,000"
+    },
+    {
+      "year": 2019,
+      "year_inherited": false,
+      "title": "International Summer School Scholarship",
+      "organization": "University of Molise",
+      "amount": "€ 2,000"
+    },
+    {
+      "year": 2018,
+      "year_inherited": false,
+      "title": "Study Abroad Scholarship",
+      "organization": "University of Molise",
+      "amount": "€ 5,500"
+    },
+    {
+      "year": 2017,
+      "year_inherited": false,
+      "title": "Erasmus Exchange Program Scholarship",
+      "organization": "University of Molise",
+      "amount": "€ 2,100"
+    }
+  ],
+  "service": [
+    {
+      "organization": "Sydney Banking and Financial Stability Conference",
+      "position": "Program Committee Member",
+      "location": "Australia",
+      "years": "2026–",
+      "start_year": 2026,
+      "end_year": null
+    },
+    {
+      "organization": "Cryptocurrency Research Conference (CRC)",
+      "position": "Scientific Committee Member",
+      "location": "UK",
+      "years": "2025–",
+      "start_year": 2025,
+      "end_year": null
+    },
+    {
+      "organization": "Italian Doctorate Society (ADI)",
+      "position": "Member",
+      "location": "Italy",
+      "years": "2025",
+      "start_year": 2025,
+      "end_year": 2025
+    },
+    {
+      "organization": "International Campus of Excellence",
+      "position": "Nominated Member",
+      "location": "Africa",
+      "years": "2023–",
+      "start_year": 2023,
+      "end_year": null
+    },
+    {
+      "organization": "Italian Doctorate Society (SiDRI)",
+      "position": "National Advisor",
+      "location": "Italy",
+      "years": "2023–2024",
+      "start_year": 2023,
+      "end_year": 2024
+    },
+    {
+      "organization": "Wollongong University Postgraduate Association (WUPA)",
+      "position": "Member",
+      "location": "Australia",
+      "years": "2020–2024",
+      "start_year": 2020,
+      "end_year": 2024
+    },
+    {
+      "organization": "University of Molise",
+      "position": "Student Representative",
+      "location": "Italy",
+      "years": "2016–2018",
+      "start_year": 2016,
+      "end_year": 2018
+    }
+  ],
+  "development": [
+    {
+      "title": "Summer School in “Cryptoeconomics”",
+      "year": 2025,
+      "description": "Attended an advanced course on the economics of blockchain and crypto markets at Columbia University, taught by Prof. Agostino Capponi, Prof. Andreas Park, and A/Prof. Fahad Saleh, among the world's most distinguished economists in Decentralised Finance."
+    },
+    {
+      "title": "Summer School in “Market Microstructure”",
+      "year": 2025,
+      "description": "Attended an advanced course on both theoretical and empirical market microstructure at Stockholm University, taught by Prof. Thierry Foucault and Prof. Albert Menkveld, two of the world's most distinguished financial economists (among market microstructure theoreticians and empiricists)."
+    },
+    {
+      "title": "Summer School in “Machine Learning Methods for Finance”",
+      "year": 2024,
+      "description": "Attended advanced courses for early career researchers on machine learning techniques for the analysis of financial markets taught by leading academics such as Blanka Horvath (University of Oxford, UK)."
+    },
+    {
+      "title": "Summer School in “Sustainable Finance and Entrepreneurship for the Transition to a Green Economy”",
+      "year": 2024,
+      "description": "Attended advanced courses for early career researchers on sustainable finance, banking, and entrepreneurship."
+    },
+    {
+      "title": "Asset Pricing Course",
+      "year": 2024,
+      "description": "Attended an advanced course for early career researchers held by Prof. Otto Randl (WU Vienna University, Austria)."
+    },
+    {
+      "title": "Accounting Summer Camp",
+      "year": 2023,
+      "description": "Attended advanced masterclasses for early researchers held by Prof. Delphine Samuels (Chicago Booth, US), Prof. Joachim Gassen (Humboldt University, Germany), and Prof. Christine Botosan (FASB, US)."
+    },
+    {
+      "title": "Summer School in “Market Microstructure”",
+      "year": 2021,
+      "description": "Attended an advanced course on both theoretical and empirical market microstructure at Stockholm University, taught by Prof. Thierry Foucault and Prof. Albert Menkveld, two of the world's most distinguished financial economists (among market microstructure theoreticians and empiricists)."
+    },
+    {
+      "title": "MSc Single Course in “Theoretical Market Microstructure”",
+      "year": 2021,
+      "description": "Attended an advanced course on theoretical market microstructure at the University of Naples “Federico II”, taught by Prof. Marco Pagano, one of the world's most distinguished financial economists and market microstructure theoreticians."
+    },
+    {
+      "title": "Summer School in “Behavioral and Neuroscientific Research for Economics, Finance and Accounting”",
+      "year": 2020,
+      "description": "Attended an advanced course on theories and techniques for behavioural and neuroscientific research applied to economics, accounting, and finance."
+    },
+    {
+      "title": "International Summer School in “Business English”",
+      "year": 2019,
+      "description": "Attended an advanced course on Business English at one of the leading universities for English language courses and Ireland's first 5-star university: University College Cork."
+    }
+  ],
+  "peer_review": [
+    "Journal of Money, Credit & Banking",
+    "British Accounting Review",
+    "Public Management Review",
+    "International Review of Financial Analysis",
+    "Journal of International Financial Markets Institutions and Money",
+    "Journal of Futures Markets",
+    "Pacific Basin Finance Journal",
+    "Finance Research Letters",
+    "Global Finance Journal",
+    "Research in International Business & Finance",
+    "Journal of Economics and Business",
+    "Financial Innovation",
+    "Review of Managerial Science",
+    "Journal of Public Budgeting, Accounting & Financial Management",
+    "Pacific Accounting Review",
+    "Applied Economics",
+    "Applied Economics Letters",
+    "Cogent Economics & Finance",
+    "Digital Finance",
+    "Data Science and Management"
+  ],
+  "memberships": [
+    "Financial Management Association (FMA)",
+    "European Finance Association (EFA)",
+    "Italian Financial Economist Association (IFEA)",
+    "Association for Mathematics Applied to Social and Economic Sciences (AMASES)"
+  ]
+}

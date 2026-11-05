@@ -1,0 +1,226 @@
+{{ define "main" }}
+{{- $photo := resources.Get "images/luca-galati-portrait.jpg" -}}
+{{- $name := site.Params.author_name | default site.Title -}}
+<section class="wrap hero">
+  {{- /* Body first, photo second: custom.css places the grid by source order (text left, photo right)
+         and flips the photo to the top on mobile with `order: -1`. */}}
+  <div class="hero__body">
+    <h1 class="hero__name">{{ $name }}</h1>
+    <p class="hero__tagline">{{ site.Params.role }}{{ with site.Params.tagline }} &middot; {{ . }}{{ end }}</p>
+    <p class="hero__inst">
+      <a href="{{ site.Params.institution_url }}">{{ site.Params.institution }}</a>
+      {{- with site.Params.affiliation_secondary }} &middot; {{ with site.Params.affiliation_secondary_url }}<a href="{{ . }}">{{ end }}{{ . }}{{ if site.Params.affiliation_secondary_url }}</a>{{ end }}{{ end }}
+    </p>
+    {{- with .Params.intro }}
+    <div class="hero__intro">{{ . | markdownify }}</div>
+    {{- end }}
+    <div class="hero__actions">
+      {{- with site.GetPage "/bio" }}
+      <a class="btn btn--outline" href="{{ .RelPermalink }}">{{ i18n "bio_cv" }}</a>
+      {{- end }}
+      {{- with site.GetPage "/publication" }}
+      <a class="btn btn--outline" href="{{ .RelPermalink }}">{{ i18n "research" }}</a>
+      {{- end }}
+      <span class="hero__icons">
+        {{- range site.Params.profiles }}{{ if .url }}
+        <a class="icon-link" href="{{ .url }}" aria-label="{{ .name }}" title="{{ .name }}">{{ partial "social-icon.html" .icon }}</a>
+        {{- end }}{{ end }}
+      </span>
+    </div>
+  </div>
+  {{- with $photo }}
+    {{- $img := .Fill "480x640 Center q85" }}
+  <img class="hero__photo" src="{{ $img.RelPermalink }}" width="160" height="213" alt="Portrait of {{ $name }}, {{ site.Params.institution }}" fetchpriority="high" decoding="async">
+  {{- else }}
+  <span class="hero__photo hero__monogram" aria-hidden="true">LG</span>
+  {{- end }}
+</section>
+
+<section class="wrap" id="research-areas">
+  <div class="section-head">
+    <h2 class="section-title">{{ i18n "research_areas" }}</h2>
+  </div>
+  {{- with site.Data.research_areas }}{{ with .areas }}
+  {{- /* Network data: one node per area and per listed, non-draft paper; one link per area membership
+         (a paper in two areas gets two links). Drawn by the script below. */}}
+  {{- $areaNodes := slice }}{{ $paperNodes := slice }}{{ $links := slice }}{{ $seen := slice }}
+  {{- $mapOrder := site.Data.research_areas.map_order | default slice }}
+  {{- range . }}
+    {{- $aid := .id | default (anchorize .name) }}{{ $n := 0 }}
+    {{- range .papers }}{{ with site.GetPage (printf "/publication/%s" .) }}{{ if not .Draft }}
+      {{- $slug := "" }}{{ with .File }}{{ $slug = .ContentBaseName }}{{ end }}
+      {{- $n = add $n 1 }}
+      {{- $links = $links | append (dict "source" $aid "target" $slug) }}
+      {{- if not (in $seen $slug) }}{{ $seen = $seen | append $slug }}
+        {{- $paperNodes = $paperNodes | append (dict
+              "id" $slug "kind" "paper" "label" .Title
+              "short" (strings.TrimSpace (index (split .Title ":") 0))
+              "year" (.Date.Format "2006") "url" .RelPermalink
+              "wp" (eq (.Params.tab | default "articles") "working-papers")
+              "jmp" (.Params.jmp | default false)) }}
+      {{- end }}
+    {{- end }}{{ end }}{{ end }}
+    {{- $slot := -1 }}{{ range $k, $v := $mapOrder }}{{ if eq $v $aid }}{{ $slot = $k }}{{ end }}{{ end }}
+    {{- $areaNodes = $areaNodes | append (dict "id" $aid "kind" "area" "label" .name "count" $n "slot" $slot) }}
+  {{- end }}
+  <figure class="net" id="research-net">
+    <svg class="net__svg" viewBox="0 0 1000 560" role="img" aria-labelledby="net-title"><title id="net-title">Map of research areas and papers</title></svg>
+    <div class="net__tip" hidden></div>
+  </figure>
+  <script type="application/json" id="net-data">{{ dict "nodes" ($areaNodes | append $paperNodes) "links" $links | jsonify | safeJS }}</script>
+  <script>
+  (function () {
+    var fig = document.getElementById('research-net'), raw = document.getElementById('net-data');
+    if (!fig || !raw) return;
+    var data; try { data = JSON.parse(raw.textContent); } catch (e) { return; }
+    var svg = fig.querySelector('svg'), tip = fig.querySelector('.net__tip');
+    var W = 1000, H = 560, CX = W / 2, CY = H / 2, NS = 'http://www.w3.org/2000/svg';
+    var seed = 11; // seeded jitter: the map looks the same on every visit
+    function rnd() { seed = (seed * 48271) % 2147483647; return seed / 2147483647; }
+
+    var byId = {}, nodes = data.nodes, areas = [], papers = [];
+    nodes.forEach(function (n) { byId[n.id] = n; n.deg = 0; n.sx = 0; n.sy = 0; (n.kind === 'area' ? areas : papers).push(n); });
+    var links = data.links.map(function (l) { return { s: byId[l.source], t: byId[l.target] }; })
+      .filter(function (l) { return l.s && l.t; });
+
+    // Area hubs are anchored loosely on an ellipse, clockwise from the top in the order of map_order
+    // (data/research_areas.json; the list order when it is absent); papers start near their hub(s).
+    areas.forEach(function (a, i) {
+      var ang = -Math.PI / 2 + (a.slot >= 0 ? a.slot : i) * 2 * Math.PI / areas.length;
+      a.ax = a.x = CX + 320 * Math.cos(ang); a.ay = a.y = CY + 150 * Math.sin(ang);
+    });
+    links.forEach(function (l) { l.t.sx += l.s.ax; l.t.sy += l.s.ay; l.t.deg++; });
+    papers.forEach(function (p) {
+      var d = p.deg || 1;
+      p.x = (p.deg ? p.sx / d : CX) + (rnd() - 0.5) * 140;
+      p.y = (p.deg ? p.sy / d : CY) + (rnd() - 0.5) * 140;
+    });
+
+    // Force layout, settled synchronously before the first paint: soft repulsion between all nodes,
+    // springs along links (rest length 90), gentle centering, hub anchors, and a repulsion point
+    // under each hub so papers stay off its label. No animation (prefers-reduced-motion is moot).
+    var ITER = 300;
+    for (var it = 0; it < ITER; it++) {
+      var step = 0.05 + 0.5 * (1 - it / ITER);
+      nodes.forEach(function (n) { n.fx = 0; n.fy = 0; });
+      for (var i = 0; i < nodes.length; i++) for (var j = i + 1; j < nodes.length; j++) {
+        var a = nodes[i], b = nodes[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy + 60, d = Math.sqrt(d2);
+        var f = ((a.kind === 'area' || b.kind === 'area') ? 9000 : 2200) / d2;
+        a.fx += dx / d * f; a.fy += dy / d * f; b.fx -= dx / d * f; b.fy -= dy / d * f;
+      }
+      areas.forEach(function (a) { papers.forEach(function (p) {
+        var dx = p.x - a.x, dy = p.y - (a.y + 52), d2 = dx * dx + dy * dy + 60, f = 5000 / d2 / Math.sqrt(d2);
+        p.fx += dx * f; p.fy += dy * f;
+      }); });
+      links.forEach(function (l) {
+        var dx = l.t.x - l.s.x, dy = l.t.y - l.s.y, d = Math.sqrt(dx * dx + dy * dy) || 1, f = (d - 90) * 0.05;
+        l.s.fx += dx / d * f; l.s.fy += dy / d * f; l.t.fx -= dx / d * f; l.t.fy -= dy / d * f;
+      });
+      nodes.forEach(function (n) {
+        n.fx += (CX - n.x) * 0.003; n.fy += (CY - n.y) * 0.003;
+        if (n.kind === 'area') { n.fx += (n.ax - n.x) * 0.1; n.fy += (n.ay - n.y) * 0.1; }
+        var m = Math.sqrt(n.fx * n.fx + n.fy * n.fy);
+        if (m > 30) { n.fx *= 30 / m; n.fy *= 30 / m; }
+        n.x = Math.min(W - 24, Math.max(24, n.x + n.fx * step));
+        n.y = Math.min(H - 24, Math.max(24, n.y + n.fy * step));
+      });
+    }
+
+    // Draw: links, then hubs, then papers on top (papers are real links, so they are focusable).
+    function el(tag, attrs, parent) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      (parent || svg).appendChild(e);
+      return e;
+    }
+    function r1(v) { return Math.round(v * 10) / 10; }
+    function at(n) { return 'translate(' + r1(n.x) + ' ' + r1(n.y) + ')'; }
+    links.forEach(function (l) {
+      l.el = el('line', { 'class': 'net__link', x1: r1(l.s.x), y1: r1(l.s.y), x2: r1(l.t.x), y2: r1(l.t.y),
+        'data-source': l.s.id, 'data-target': l.t.id, stroke: 'currentColor', 'stroke-opacity': '0.25' });
+    });
+    areas.forEach(function (a) {
+      a.el = el('g', { 'class': 'net__area', 'data-id': a.id, transform: at(a) });
+      el('title', {}, a.el).textContent = a.label + ' (' + a.count + ')';
+      el('circle', { r: 26, fill: 'currentColor' }, a.el);
+      var text = el('text', { y: 44, 'text-anchor': 'middle', 'font-size': 13 }, a.el);
+      var words = a.label.split(' '), first = [], len = 0, half = a.label.length / 2; // two lines max
+      while (words.length > 1 && len + words[0].length <= half) { len += words[0].length + 1; first.push(words.shift()); }
+      if (!first.length) first.push(words.shift());
+      [first.join(' '), words.join(' ')].forEach(function (line, i) {
+        if (line) el('tspan', { x: 0, dy: i ? 16 : 0 }, text).textContent = line;
+      });
+    });
+    papers.forEach(function (p) {
+      var cls = 'net__paper' + (p.jmp ? ' net__paper--jmp' : '') + (p.wp ? ' net__paper--wp' : '');
+      p.el = el('a', { 'class': cls, 'data-id': p.id, href: p.url, transform: at(p) });
+      el('title', {}, p.el).textContent = p.label + ' (' + p.year + ')';
+      el('circle', { r: p.jmp ? 9 : 7, fill: 'currentColor' }, p.el);
+    });
+
+    // Hover or focus: a paper lights its links (is-hot) and shows the tip; an area lights its links and
+    // dims the papers outside it (is-dim).
+    var cur = null;
+    function light(n, on) {
+      var near = {};
+      links.forEach(function (l) {
+        if (l.s !== n && l.t !== n) return;
+        l.el.classList.toggle('is-hot', on);
+        near[l.s.id] = near[l.t.id] = true;
+      });
+      if (n.kind === 'area') papers.forEach(function (p) { p.el.classList.toggle('is-dim', on && !near[p.id]); });
+    }
+    function showTip(p, x, y) {
+      tip.textContent = p.short + (p.year ? ' (' + p.year + ')' : '');
+      tip.hidden = false;
+      tip.style.position = 'fixed';
+      var w = tip.offsetWidth, h = tip.offsetHeight;
+      tip.style.left = Math.max(8, Math.min(x + 14, window.innerWidth - w - 8)) + 'px';
+      tip.style.top = (y + 14 + h > window.innerHeight ? y - h - 10 : y + 14) + 'px';
+    }
+    function nodeOf(t) { var g = t && t.closest ? t.closest('[data-id]') : null; return g ? byId[g.getAttribute('data-id')] : null; }
+    function setCur(n, x, y) {
+      if (n === cur) return;
+      if (cur) { light(cur, false); tip.hidden = true; }
+      cur = n;
+      if (n) { light(n, true); if (n.kind === 'paper') showTip(n, x, y); }
+    }
+    svg.addEventListener('mouseover', function (e) { setCur(nodeOf(e.target), e.clientX, e.clientY); });
+    svg.addEventListener('mousemove', function (e) { if (cur && !tip.hidden) showTip(cur, e.clientX, e.clientY); });
+    svg.addEventListener('mouseleave', function () { setCur(null); });
+    svg.addEventListener('focusin', function (e) {
+      var n = nodeOf(e.target); if (!n) return;
+      var r = e.target.getBoundingClientRect();
+      setCur(n, r.right, r.bottom);
+    });
+    svg.addEventListener('focusout', function () { setCur(null); });
+  })();
+  </script>
+  <div class="areas">
+    {{- range . }}
+      {{- $pages := slice }}
+      {{- range .papers }}{{ with site.GetPage (printf "/publication/%s" .) }}{{ if not .Draft }}{{ $pages = $pages | append . }}{{ end }}{{ end }}{{ end }}
+    <details class="area" id="area-{{ .id | default (anchorize .name) }}">
+      <summary>
+        <span class="area__name">{{ .name }}</span>
+        <span class="area__count">{{ i18n "papers_count" (len $pages) }}</span>
+      </summary>
+      <div class="area__body">
+        {{- with .summary }}<p class="area__summary">{{ . | markdownify }}</p>{{ end }}
+        {{- range $pages }}
+          {{- if templates.Exists "_partials/pub_row.html" }}
+            {{- partial "pub_row.html" . }}
+          {{- else }}
+        <p class="area-pub"><a class="area-pub__title" href="{{ .RelPermalink }}">{{ .Title }}</a></p>
+          {{- end }}
+        {{- end }}
+      </div>
+    </details>
+    {{- end }}
+  </div>
+  {{- end }}{{ end }}
+  {{- with site.GetPage "/publication" }}
+  <p class="section-more"><a class="link-arrow" href="{{ .RelPermalink }}">{{ i18n "all_research" }} &rarr;</a></p>
+  {{- end }}
+</section>
+{{ end }}

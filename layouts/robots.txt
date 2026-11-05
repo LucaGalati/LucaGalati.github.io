@@ -1,0 +1,5 @@
+# A plain-text overview of this site for AI agents is at {{ "llms.txt" | absURL }}
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}

@@ -1,0 +1,1760 @@
+/* ==========================================================================
+   lucagalati.com — custom.css
+   Loaded by Blox (site_head.html) as a separate stylesheet AFTER the
+   Tailwind bundle. Plain CSS, no Tailwind directives. Because Tailwind v4
+   puts every utility in @layer, the unlayered rules here win the cascade
+   without !important. Font files are declared in
+   layouts/_partials/hooks/head-end/fonts.html; only the stacks live here.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --color-bg: #FCFBF8;
+  --color-surface: #F3F0E8;
+  --color-text: #1C1C1A;
+  --color-text-muted: #5A5A56;
+  --color-accent: #003262;
+  --color-link: var(--color-accent);
+  --color-link-hover: #1B2A4A;
+  --color-gold: #FDB515;
+  --color-on-gold: #003262;
+  --color-border: #D9D6CE;
+  --color-border-strong: #C7C3B9;
+  --color-institution: var(--color-accent);
+  /* Owner-name marker in author lists: a gold wash behind accent text
+     (9.8:1 light, 5.3:1 dark) */
+  --color-owner-bg: color-mix(in srgb, var(--color-gold) 42%, var(--color-bg));
+  --color-owner-text: var(--color-accent);
+
+  --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Vollkorn", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --radius: 3px;
+  --nav-h: 56px;
+  --tabs-h: 48px;
+  --gutter: clamp(1rem, 4vw, 2rem);
+
+  /* Blox reads its primary scale for nav hover, details > summary, prose
+     link decoration and the search spinner; point it at the tokens so no
+     Tailwind blue survives. They flip with the tokens in dark mode. */
+  --color-primary-50: var(--color-surface);
+  --color-primary-100: var(--color-surface);
+  --color-primary-200: var(--color-border);
+  --color-primary-300: var(--color-accent);
+  --color-primary-400: var(--color-accent);
+  --color-primary-500: var(--color-accent);
+  --color-primary-600: var(--color-accent);
+  --color-primary-700: var(--color-accent);
+  --color-primary-800: var(--color-link-hover);
+  --color-primary-900: var(--color-link-hover);
+  --color-primary-950: var(--color-link-hover);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-bg: #0B1A2E;
+    --color-surface: #13263F;
+    --color-text: #E8EDF3;
+    --color-text-muted: #A7B3C2;
+    --color-accent: #8EC1E6;
+    --color-link-hover: #B5D7F2;
+    --color-on-gold: #0B1A2E;
+    --color-border: #23395A;
+    --color-border-strong: #2E4768;
+    --color-owner-bg: color-mix(in srgb, var(--color-gold) 70%, #0B1A2E);
+    --color-owner-text: var(--color-on-gold);
+  }
+}
+
+html.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0B1A2E;
+  --color-surface: #13263F;
+  --color-text: #E8EDF3;
+  --color-text-muted: #A7B3C2;
+  --color-accent: #8EC1E6;
+  --color-link-hover: #B5D7F2;
+  --color-on-gold: #0B1A2E;
+  --color-border: #23395A;
+  --color-border-strong: #2E4768;
+  --color-owner-bg: color-mix(in srgb, var(--color-gold) 70%, #0B1A2E);
+  --color-owner-text: var(--color-on-gold);
+}
+
+/* --------------------------------------------------------------------------
+   2. Blox / Tailwind leak guard
+   Surfaces, text and links are always painted by the tokens, whatever
+   utility classes the theme puts on body, navbar, footer or search modal.
+   -------------------------------------------------------------------------- */
+html {
+  background: var(--color-bg);
+  scroll-behavior: smooth;
+}
+
+body,
+.page-wrapper,
+.dark\:bg-hb-dark {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.dark\:text-white,
+.text-black {
+  color: var(--color-text);
+}
+
+#page-bg {
+  display: none;
+}
+
+.theme-toggle,
+button[accesskey="t"],
+[data-theme-toggle],
+.wc-toggle-theme {
+  display: none !important;
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+/* Stock Blox navbar, in case it renders instead of .site-nav */
+#site-header.header {
+  background: var(--color-bg);
+  box-shadow: none;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navbar-brand,
+.nav-link,
+[data-search-toggle] {
+  color: var(--color-text);
+}
+
+.nav-link:hover,
+.dark .nav-link:hover,
+[data-search-toggle]:hover {
+  color: var(--color-accent);
+}
+
+/* Stock Blox footer wrapper */
+footer.container {
+  color: var(--color-text-muted);
+}
+
+/* Stock Blox search modal (Alpine, Pagefind) */
+[x-data^="searchModal"] .bg-white {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+[x-data^="searchModal"] input {
+  color: var(--color-text);
+}
+
+[x-data^="searchModal"] [class*="border-gray-"],
+[x-data^="searchModal"] [class*="divide-gray-"] > * {
+  border-color: var(--color-border);
+}
+
+[x-data^="searchModal"] [class*="text-gray-"] {
+  color: var(--color-text-muted);
+}
+
+[x-data^="searchModal"] h3,
+[x-data^="searchModal"] .font-semibold {
+  color: var(--color-text);
+}
+
+[x-data^="searchModal"] [class*="bg-gray-"],
+[x-data^="searchModal"] [class*="bg-primary-"],
+[x-data^="searchModal"] [class*="from-primary-"],
+[x-data^="searchModal"] .search-result:hover {
+  background: var(--color-surface);
+}
+
+[x-data^="searchModal"] [class*="text-primary-"] {
+  color: var(--color-accent);
+}
+
+[x-data^="searchModal"] .rounded-full,
+[x-data^="searchModal"] .rounded-xl,
+[x-data^="searchModal"] .rounded-lg,
+[x-data^="searchModal"] kbd {
+  border-radius: var(--radius);
+}
+
+.search-result mark,
+.dark .search-result mark,
+.search-result:hover mark,
+.dark .search-result:hover mark {
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base typography
+   Tailwind preflight zeroes margins and resets heading sizes; set them here.
+   -------------------------------------------------------------------------- */
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3,
+.hero__name,
+.pub-item__title,
+.paper__title,
+.area-pub__title,
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-accent);
+}
+
+/* Running text is set in Vollkorn too (owner's pick): abstracts, bio, course
+   descriptions, the homepage intro. Interface text stays in Geist. */
+.prose,
+.hero__intro,
+.paper__abstract,
+.area__summary,
+.course__desc,
+.course p {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Running text is justified and hyphenated, like a paper (owner's note): bio, teaching,
+   abstracts, the homepage intro. Phone-width columns stay ragged: justified lines that
+   short open rivers. */
+.prose p,
+.prose li,
+.hero__intro,
+.paper__abstract p,
+.area__summary,
+.course__desc {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+@media (min-width: 640px) {
+  .prose p,
+  .prose li,
+  .hero__intro,
+  .paper__abstract p,
+  .area__summary,
+  .course__desc {
+    text-align: justify;
+  }
+}
+
+h1 { font-size: 36px; margin: 0 0 0.6em; }
+h2 { font-size: 24px; margin: 0 0 0.6em; }
+h3 { font-size: 19px; margin: 0 0 0.4em; }
+h4, h5, h6 { font-size: 16px; font-weight: 500; margin: 0 0 0.4em; }
+
+/* Gold thread: a short 36×2 rule under every h1, the section titles and the
+   Bio/Teaching h2s. Gold is never used as text on the light surface. */
+h1::after,
+.section-title::after,
+.cv-section h2::after,
+.course h2::after,
+.contact h2::after,
+.pub-group h2::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 2px;
+  margin-top: 0.5rem;
+  background: var(--color-gold);
+}
+
+p + p { margin-top: 1em; }
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold); /* gold thread */
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.15em;
+}
+
+b, strong { font-weight: 600; }
+small { font-size: 14px; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 2rem 0;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+}
+
+button,
+summary,
+[role="button"] {
+  cursor: pointer;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--color-accent);
+}
+
+::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.pub-item__meta,
+.cv-row__when,
+.talk__events,
+.data,
+.result-count {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Long-form prose (bio, teaching intro, abstracts). No measure cap: running
+   text fills the .wrap column (owner's note). */
+.prose {
+  max-width: none; /* Tailwind typography caps .prose at 65ch */
+  color: var(--color-text);
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-accent);
+  --tw-prose-links: var(--color-link);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-counters: var(--color-text-muted);
+  --tw-prose-bullets: var(--color-border-strong);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-text);
+  --tw-prose-quote-borders: var(--color-border);
+  --tw-prose-captions: var(--color-text-muted);
+  --tw-prose-code: var(--color-text);
+  --tw-prose-pre-code: var(--color-text);
+  --tw-prose-pre-bg: var(--color-surface);
+  --tw-prose-th-borders: var(--color-border-strong);
+  --tw-prose-td-borders: var(--color-border);
+}
+
+.prose p { margin: 0 0 1.25em; }
+.prose h2 { margin-top: 2em; }
+.prose h3 { margin-top: 1.5em; }
+.prose ul, .prose ol { margin: 0 0 1.25em; padding-left: 1.5em; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li + li { margin-top: 0.3em; }
+
+.prose a {
+  font-weight: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+.prose a:hover {
+  color: var(--color-link-hover);
+  text-decoration-color: var(--color-gold);
+  text-decoration-thickness: 1.5px;
+}
+
+.prose mark,
+.dark .prose-invert mark {
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+  padding: 0 0.15em;
+  border-radius: 0;
+}
+
+/* Metadata */
+.meta,
+.muted {
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Layout primitives and accessibility helpers
+   -------------------------------------------------------------------------- */
+.wrap {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 8px;
+  z-index: 100;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: var(--radius);
+  font-size: 14px;
+}
+
+.skip-link:focus {
+  top: 8px;
+  color: var(--color-bg);
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Navbar
+   -------------------------------------------------------------------------- */
+.page-header {
+  background: transparent;
+}
+
+.site-nav {
+  position: relative;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: var(--nav-h);
+}
+
+.site-nav__brand {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.site-nav__brand:hover {
+  color: var(--color-link-hover);
+  text-decoration: none;
+}
+
+.site-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav__link,
+.site-nav__mobile a {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  padding: 0.35rem 0;
+  border-bottom: 1.5px solid transparent;
+}
+
+.site-nav__link:hover,
+.site-nav__mobile a:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.site-nav__link.is-active,
+.site-nav__mobile a.is-active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-gold);
+}
+
+.site-nav__search,
+.site-nav__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  background: none;
+  border: 0;
+  color: var(--color-text);
+  border-radius: var(--radius);
+}
+
+.site-nav__search:hover,
+.site-nav__toggle:hover {
+  color: var(--color-accent);
+}
+
+.site-nav__search svg { width: 18px; height: 18px; }
+.site-nav__toggle svg { width: 22px; height: 22px; }
+.site-nav__toggle { display: none; }
+
+.site-nav__mobile {
+  display: none;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.site-nav__mobile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem var(--gutter) 0.75rem;
+}
+
+.site-nav__mobile li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+.site-nav__mobile a {
+  display: block;
+  padding: 0.95rem 0;
+  border-bottom: 0;
+}
+
+.site-nav__mobile a.is-active {
+  border-bottom: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.3em;
+}
+
+@media (max-width: 820px) {
+  .site-nav__links { display: none; }
+  .site-nav__toggle { display: inline-flex; }
+  .site-nav.is-open .site-nav__mobile { display: block; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Homepage hero
+   -------------------------------------------------------------------------- */
+.hero {
+  --hero-photo: 160px; /* as tall as the text beside it, now that the intro is one line */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--hero-photo);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+  padding-block: clamp(2rem, 5vw, 3.5rem) 1rem;
+}
+
+/* Portrait: 3:4, taller than wide (owner's pick over the round crop) */
+.hero__photo {
+  width: var(--hero-photo);
+  max-width: 100%;
+}
+
+.hero__photo img,
+img.hero__photo {
+  display: block;
+  width: var(--hero-photo);
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+/* Fallback when the portrait is absent: serif initials on a surface tile */
+.hero__monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--hero-photo);
+  height: auto;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-accent);
+  font-family: var(--font-serif);
+  font-size: 64px;
+  line-height: 1;
+}
+
+.hero__name {
+  font-size: clamp(44px, 6vw, 50px);
+  line-height: 1.05;
+  margin: 0 0 0.4rem;
+}
+
+.hero__tagline {
+  font-size: 18px;
+  margin: 0 0 0.2rem;
+  color: var(--color-text);
+}
+
+.hero__inst {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.hero__inst a {
+  color: var(--color-institution);
+}
+
+.hero__intro {
+  margin: 1.25rem 0 1.5rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.75rem;
+}
+
+.hero__icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__actions > .hero__icons { margin: 0; }
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.icon-link svg {
+  width: 20px;
+  height: 20px;
+  /* social-icon.html draws stroke-based line icons; a CSS fill would override its fill="none" */
+  fill: none;
+  stroke: currentColor;
+}
+
+.icon-link:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .hero__photo { order: -1; }
+  .hero__name::after { margin-inline: auto; } /* the gold rule follows the centred name */
+  .hero__intro { text-align: left; }
+  .hero__actions,
+  .hero__icons { justify-content: center; }
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons and inline actions
+   -------------------------------------------------------------------------- */
+.btn,
+.btn--outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border-strong, var(--color-border));
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-accent);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.btn:hover,
+.btn--outline:hover {
+  border-color: var(--color-gold); /* gold ring on hover */
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.btn--cite {
+  border-color: transparent;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  padding: 0.35rem 0.7rem;
+}
+
+.btn--cite:hover,
+.btn--cite[aria-expanded="true"] {
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.mini-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 2px 8px;
+  border: 1px solid var(--color-border-strong, var(--color-border));
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-accent);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.mini-btn:hover {
+  border-color: var(--color-gold); /* gold ring on hover */
+  background: var(--color-surface);
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.link-arrow {
+  color: var(--color-accent);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.link-arrow:hover {
+  color: var(--color-link-hover);
+}
+
+/* --------------------------------------------------------------------------
+   8. Section heads and research-area accordions (homepage)
+   -------------------------------------------------------------------------- */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.section-title {
+  font-size: 24px;
+  margin: 0;
+}
+
+.section-sub {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+.areas {
+  border-top: 1px solid var(--color-border);
+  margin: 0 0 1.5rem;
+}
+
+details.area {
+  border-bottom: 1px solid var(--color-border);
+}
+
+details.area > summary,
+html.dark details.area > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  list-style: none;
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 17px;
+}
+
+details.area > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.area > summary:hover,
+html.dark details.area > summary:hover {
+  color: var(--color-accent);
+}
+
+details.area > summary h2,
+details.area > summary h3,
+.area__name {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 400;
+  margin: 0;
+  color: inherit;
+}
+
+.area__count,
+.area__meta {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.area__chevron,
+details.area > summary > svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: var(--color-gold); /* gold chevron */
+  transition: transform 0.18s ease;
+}
+
+details.area[open] > summary .area__chevron,
+details.area[open] > summary > svg {
+  transform: rotate(180deg);
+}
+
+/* Chevron drawn in CSS when the markup supplies none */
+details.area > summary:not(:has(svg, .area__chevron))::after {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin: -4px 4px 0 auto;
+  border-right: 1.5px solid var(--color-gold);
+  border-bottom: 1.5px solid var(--color-gold);
+  transform: rotate(45deg);
+  transition: transform 0.18s ease, margin 0.18s ease;
+}
+
+details.area[open] > summary:not(:has(svg, .area__chevron))::after {
+  transform: rotate(225deg);
+  margin-top: 4px;
+}
+
+.area__body {
+  padding: 0 0 1.25rem;
+}
+
+.area__body > p,
+.area__summary {
+  margin: 0 0 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.area__body ul,
+.area-pubs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.area-pub {
+  padding: 0.7rem 0;
+}
+
+.area-pub + .area-pub {
+  border-top: 1px solid var(--color-border);
+}
+
+.area-pub__title {
+  font-size: 19px;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.area-pub__meta {
+  margin-top: 0.15rem;
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+.area-pub__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.4rem;
+  margin-top: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   9. Research list (/publication/)
+   -------------------------------------------------------------------------- */
+.pub-tabs {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 20;
+  display: flex;
+  align-items: stretch;
+  gap: 1.75rem;
+  min-height: var(--tabs-h);
+  margin: 0 0 1.5rem;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+}
+
+.tab-btn {
+  flex: none;
+  padding: 0.9rem 0;
+  background: none;
+  border: 0;
+  border-bottom: 1.5px solid transparent;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--color-text);
+  border-bottom-color: var(--color-gold);
+}
+
+.tab-btn.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-gold);
+}
+
+.pub-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.pub-filters {
+  position: sticky;
+  top: calc(var(--nav-h) + var(--tabs-h) + 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  max-height: calc(100vh - var(--nav-h) - var(--tabs-h) - 2rem);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.filter-group > label,
+.filter-group > legend,
+.filter-group__label {
+  display: block;
+  margin: 0 0 0.4rem;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.pub-layout input[type="search"],
+.pub-layout input[type="text"],
+.pub-layout select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-text-muted);
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: 14.5px;
+}
+
+.pub-layout select {
+  width: auto;
+  max-width: 100%;
+}
+
+.pub-filters select {
+  width: 100%;
+}
+
+.pub-layout input:focus,
+.pub-layout select:focus {
+  border-color: var(--color-accent);
+}
+
+.year-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.year-list li,
+.year-list label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+  font-size: 14.5px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.year-list input {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+}
+
+.result-count {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.pub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: none; /* rows span the whole results column */
+}
+
+.pub-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Research-area headings between the article rows: a small Geist label with
+   the gold thread (rule shared above); no hairline before the first row. */
+.pub-group {
+  margin-top: 2.5rem;
+}
+
+.pub-group h2 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+.pub-item__cite {
+  display: block;
+}
+
+.pub-item__title {
+  font-size: 19px;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.pub-item__meta {
+  margin-top: 0.1rem;
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .pub-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+  .pub-filters { position: static; max-height: none; }
+}
+
+/* --------------------------------------------------------------------------
+   10. Badges
+   -------------------------------------------------------------------------- */
+.badge-jmp,
+.badge-status {
+  display: inline-block;
+  padding: 1px 7px;
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--color-accent);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.badge-status {
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.badge-award {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  font-size: 13.5px;
+}
+
+.award-line {
+  margin-top: 0.3rem;
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+}
+
+/* --------------------------------------------------------------------------
+   11. Paper page (/publication/<slug>/)
+   -------------------------------------------------------------------------- */
+.paper__title {
+  font-size: 32px;
+  line-height: 1.15;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.paper__authors,
+.paper__venue,
+.paper__ranking {
+  color: var(--color-text-muted);
+  font-size: 15px;
+  margin: 0 0 0.25rem;
+}
+
+.paper__authors a {
+  color: var(--color-link);
+}
+
+.paper__abstract {
+  margin: 1.75rem 0;
+}
+
+.paper__abstract p + p {
+  margin-top: 1em;
+}
+
+.paper__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.6rem;
+  margin: 1.25rem 0;
+}
+
+.bibtex {
+  margin: 1rem 0;
+}
+
+pre.bibtex {
+  padding: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.see-also {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.see-also ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.see-also li {
+  padding: 0.4rem 0;
+}
+
+.see-also__kind {
+  margin-right: 0.4rem;
+  color: var(--color-text-muted);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   12. Bio & CV, Teaching, Talks
+   -------------------------------------------------------------------------- */
+/* Bio portrait: 3:4, floated right beside the bio text from 640px, centered
+   above it on phones. The .prose clearfix keeps a tall photo out of the CV. */
+.bio__photo {
+  display: block;
+  width: 240px;
+  height: 320px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  margin: 0 auto 1.5rem;
+  border-radius: var(--radius);
+}
+
+.bio .prose::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (min-width: 640px) {
+  .bio__photo {
+    float: right;
+    margin: 0.35rem 0 1rem 2rem;
+  }
+}
+
+.cv-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.cv-section h2 {
+  margin: 0 0 1rem;
+}
+
+.cv-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.25rem 1.25rem;
+  padding: 0.4rem 0;
+}
+
+.cv-row__when {
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+  padding-top: 0.1em;
+}
+
+.cv-row__what small,
+.cv-row__detail {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+}
+
+/* The rows follow the printed CV: the role, degree or award in bold; under a degree the grade on a
+   line of its own, marked in gold; thesis and advisors in the muted register. */
+.cv-row__title {
+  font-weight: 600;
+}
+
+.cv-row__grade {
+  margin-top: 0.2rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.cv-row__grade::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 0.55rem;
+  background: var(--color-gold);
+  vertical-align: 0.15em;
+}
+
+.cv-row__note {
+  margin-top: 0.15rem;
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+}
+
+/* Awards: the year once, then everything received in it; amounts in a column on the right. */
+.cv-row--award {
+  grid-template-columns: 120px 1fr auto;
+}
+
+.cv-row--year:not(:first-of-type) {
+  margin-top: 0.7rem;
+}
+
+.cv-row__amount {
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+  text-align: right;
+  padding-top: 0.1em;
+}
+
+@media (max-width: 480px) {
+  .cv-row.cv-row--award { grid-template-columns: 1fr auto; column-gap: 1rem; }
+  .cv-row--award .cv-row__when { grid-column: 1 / -1; }
+  .cv-row--award .cv-row__when:empty { display: none; }
+}
+
+/* Bio page head: the title, then the CV button with air under it before the text. */
+.page-head {
+  margin-bottom: 1.75rem;
+}
+
+.page-head__actions {
+  margin: 0;
+}
+
+.contact {
+  margin-top: 2rem;
+  font-size: 15px;
+}
+
+.contact p { margin: 0 0 0.35rem; }
+.contact address { font-style: normal; }
+
+.courses {
+  border-top: 1px solid var(--color-border);
+}
+
+.course {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.course h3 {
+  margin: 0 0 0.25rem;
+}
+
+.course__meta {
+  margin: 0 0 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.course h2 {
+  margin: 0 0 0.5rem;
+}
+
+.talk-year {
+  margin-top: 2.5rem;
+}
+
+.talk-year h2 {
+  margin: 0 0 0.25rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.talk {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.talk h3 {
+  margin: 0;
+}
+
+.talk__events {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+}
+
+.talk__events li {
+  padding: 0.1rem 0;
+}
+
+@media (max-width: 480px) {
+  .cv-row { grid-template-columns: 1fr; gap: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   13. Breadcrumbs
+   -------------------------------------------------------------------------- */
+.breadcrumbs {
+  margin: 0 0 1.25rem;
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+}
+
+.breadcrumbs ol,
+.breadcrumbs ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.45em;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumbs a {
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs a:hover {
+  color: var(--color-accent);
+}
+
+.breadcrumbs .sep,
+.breadcrumbs__sep {
+  margin: 0 0.35em;
+  opacity: 0.7;
+}
+
+.breadcrumbs [aria-current] {
+  color: var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+   14. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  margin-top: 4rem;
+  padding: 2rem 0 2.5rem;
+  border-top: 2px solid var(--color-gold); /* gold thread closes the page */
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.site-footer a {
+  color: var(--color-accent);
+}
+
+.site-footer :has(> .site-footer__links) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2.5rem;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer__meta {
+  margin: 0;
+  text-align: right;
+}
+
+.site-footer__meta p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .site-footer__meta { text-align: left; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Gold thread: owner marker, journal names, list markers
+   -------------------------------------------------------------------------- */
+/* The owner's name in every author list reads as a gold marker; the tokens
+   flip to a denser mix with dark text in dark mode (see section 1). */
+.author--owner {
+  background: var(--color-owner-bg);
+  color: var(--color-owner-text);
+  padding: 0 0.25em;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+/* Journal names in bold, never italic (templates emit <b>; <em> still covered) */
+.pub-item__venue,
+.area-pub__meta b,
+.area-pub__meta em,
+.paper__venue b,
+.paper__venue em {
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Small gold square instead of a bullet on event and see-also lists */
+.see-also li,
+.events li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.see-also li::before,
+.events li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(0.4rem + 0.6em);
+  width: 6px;
+  height: 6px;
+  background: var(--color-gold);
+}
+
+/* --------------------------------------------------------------------------
+   16. Paper page: presentations and awards; Bio "Other presentations"
+   -------------------------------------------------------------------------- */
+.paper__events,
+.paper__awards {
+  margin: 1.75rem 0;
+}
+
+.paper__awards .award-line {
+  margin: 0.3rem 0 0;
+  font-size: 14.5px;
+}
+
+.events {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.event,
+.events li {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.events li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+.events li::before {
+  top: calc(0.5rem + 0.55em);
+}
+
+.event__name {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+a.event__name {
+  color: var(--color-link);
+}
+
+/* Bio: presentations of papers that are not on the site */
+.presentation {
+  padding: 0.85rem 0;
+}
+
+.presentation + .presentation {
+  border-top: 1px solid var(--color-border);
+}
+
+.presentation__title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--color-accent);
+}
+
+.presentation__meta {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+.presentation .events {
+  margin-top: 0.35rem;
+}
+
+/* --------------------------------------------------------------------------
+   17. Research-area network graph (homepage)
+   Gold discs are the areas, labels sit below them in --color-text so the
+   label never becomes gold text; accent dots are papers, hollow for working
+   papers, gold-ringed for the JMPs. Tokens flip in dark mode.
+   -------------------------------------------------------------------------- */
+.net {
+  position: relative;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.net__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Phones: the 1000-unit drawing shrunk to a 343px screen leaves 4px labels,
+   so the figure scrolls sideways instead (the page itself does not). */
+@media (max-width: 640px) {
+  .net { overflow-x: auto; }
+  .net__svg { min-width: 760px; }
+}
+
+.net__link {
+  stroke: var(--color-border);
+  stroke-width: 1.25;
+}
+
+.net__link.is-hot {
+  stroke: var(--color-gold);
+  stroke-width: 2;
+}
+
+.net__area circle {
+  fill: var(--color-gold);
+  stroke: var(--color-bg);
+  stroke-width: 2;
+}
+
+.net__area text {
+  font: 500 13px/1.2 var(--font-sans);
+  fill: var(--color-text);
+  text-anchor: middle;
+}
+
+.net__paper circle {
+  fill: var(--color-accent);
+  stroke: var(--color-bg);
+  stroke-width: 1.5;
+  transition: r 0.15s;
+}
+
+.net__paper--wp circle {
+  fill: var(--color-bg);
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+.net__paper--jmp circle {
+  stroke: var(--color-gold);
+  stroke-width: 2.5;
+}
+
+.net__paper:hover circle,
+.net__paper:focus-visible circle {
+  fill: var(--color-gold);
+}
+
+.net__paper.is-dim {
+  opacity: 0.25;
+}
+
+.net__tip {
+  position: absolute;
+  max-width: 260px;
+  padding: 0.4rem 0.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: 13px/1.4 var(--font-sans);
+  color: var(--color-text);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* --------------------------------------------------------------------------
+   18. Explore buttons (link to static/explore/<slug>/ when it exists)
+   Filled gold; after sections 7 so the hover beats .btn:hover / .mini-btn:hover.
+   -------------------------------------------------------------------------- */
+.btn--explore,
+.mini-btn--explore {
+  background: var(--color-gold);
+  color: var(--color-on-gold);
+  border-color: var(--color-gold);
+}
+
+.btn--explore:hover,
+.mini-btn--explore:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   19. Motion and print
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, ::before, ::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media print {
+  :root, html.dark, [data-theme="dark"] {
+    --color-bg: #fff;
+    --color-surface: #fff;
+    --color-text: #000;
+    --color-text-muted: #333;
+    --color-accent: #000;
+    --color-link-hover: #000;
+    --color-border: #999;
+    --color-border-strong: #666;
+  }
+  .site-nav,
+  .skip-link,
+  .site-nav__search,
+  [data-search-toggle],
+  [x-data^="searchModal"],
+  .pub-filters,
+  .site-footer__credit,
+  .powered-by {
+    display: none !important;
+  }
+  .pub-tabs,
+  .pub-filters {
+    position: static;
+  }
+  .pub-layout {
+    grid-template-columns: 1fr;
+  }
+  a {
+    text-decoration: none;
+  }
+}

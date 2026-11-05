@@ -1,0 +1,149 @@
+[
+  {
+    "title": "Finance and Decision Theory",
+    "institution": "Ludwig Maximilian University of Munich (LMU)",
+    "institution_cv": "LM University of Munich",
+    "country": "Germany",
+    "roles": [
+      {
+        "role": "Course Coordinator",
+        "term": "Winter 2025",
+        "term_cv": "Wint 2025"
+      },
+      {
+        "role": "Teaching Fellow",
+        "term": "2026–2027",
+        "term_cv": "2026-2027"
+      }
+    ],
+    "semester": "Winter",
+    "years_offered": [
+      2025,
+      2026,
+      2027
+    ],
+    "level": null,
+    "description": "The course deals with core concepts of decisions under uncertainty in Financial Economics. Taking the environment as given, we discuss how preferences determine decisions within expected utility theory. Given individual preferences, we also discuss how the environment, as well as changes in the environment, influence decisions."
+  },
+  {
+    "title": "Topics in Financial Innovation & Technology",
+    "institution": "Ludwig Maximilian University of Munich (LMU)",
+    "institution_cv": "LM University of Munich",
+    "country": "Germany",
+    "roles": [
+      {
+        "role": "Course Coordinator",
+        "term": "2025–2027",
+        "term_cv": "2025-2027"
+      }
+    ],
+    "semester": "Summer & Winter",
+    "years_offered": [
+      2025,
+      2026,
+      2027
+    ],
+    "level": null,
+    "description": "The seminar is offered regularly in the winter and summer terms and aims to provide an overview of the most recent developments within the broad context of financial innovation and technology. The focus of the seminar varies but generally covers the topics of Market Microstructure, Big Data Analytics, Data Science, Cryptocurrency & Decentralized Markets, as well as regulatory developments.\n\nStudents learn to elaborate and present scientific results in a structured manner using an academic register. Results are presented and discussed in a final meeting."
+  },
+  {
+    "title": "Digital Finance",
+    "institution": "Ludwig Maximilian University of Munich (LMU)",
+    "institution_cv": "LM University of Munich",
+    "country": "Germany",
+    "roles": [
+      {
+        "role": "Teaching Fellow",
+        "term": "2025–2027",
+        "term_cv": "2025-2027"
+      }
+    ],
+    "semester": "Summer",
+    "years_offered": [
+      2025,
+      2026,
+      2027
+    ],
+    "level": null,
+    "description": "Substantial parts of the financial value chain are continuously being disrupted by technology-based innovators. The course offers a comprehensive exploration of modern securities markets, trading mechanisms, and market microstructure. It addresses both theoretical and practical aspects of financial markets and provides insights into market dynamics. Special focus is placed on algorithmic trading, high-frequency trading, decentralised markets, and the role of technological innovation."
+  },
+  {
+    "title": "Financial Statement Analysis",
+    "institution": "University of Molise",
+    "institution_cv": "University of Molise",
+    "country": "Italy",
+    "roles": [
+      {
+        "role": "Course Coordinator",
+        "term": "2024",
+        "term_cv": "Aut 2024"
+      }
+    ],
+    "semester": "Spring",
+    "years_offered": [
+      2024
+    ],
+    "level": null,
+    "description": "The aim of the course is to provide students with the tools through which to understand the general principles of financial statement analysis and the reclassification of the main documents that make up the financial statement of companies, as well as analyze the various income, equity, and financial ratios and compose the financial statement to complete the balance sheet and income statement."
+  },
+  {
+    "title": "Financial Economics (ECON331)",
+    "title_google": "ECON331: Financial Economics Tutorials",
+    "institution": "University of Wollongong",
+    "institution_cv": "University of Wollongong",
+    "country": "Australia",
+    "roles": [
+      {
+        "role": "Teaching Assistant",
+        "term": "2023",
+        "term_cv": "Spr 2023"
+      }
+    ],
+    "semester": "Autumn",
+    "years_offered": [
+      2023
+    ],
+    "level": null,
+    "description": "This subject deals with investment in production capacity, portfolio analysis, debt accumulation, insolvency and liquidation. Optimal control methods are used for analysing the efficient trajectories of capital investment and borrowing. Portfolio choice and producers' choices of activity sets are analysed within a mean-variance expected utility maximisation framework incorporating the concepts of risk aversion, costs of risk-bearing and diversification."
+  },
+  {
+    "title": "Forensic Accounting Seminar Series",
+    "title_cv": "Forensic Accounting",
+    "institution": "University of Molise",
+    "institution_cv": "University of Molise",
+    "country": "Italy",
+    "roles": [
+      {
+        "role": "Teaching Assistant",
+        "term": "2023",
+        "term_cv": "Aut 2023"
+      }
+    ],
+    "semester": "Spring",
+    "years_offered": [
+      2023
+    ],
+    "level": null,
+    "description": "This course aims to provide students with the tools of forensic accounting, which is the branch of business economics that deals with identifying, collecting and processing information for use in arbitration, civil litigation and criminal cases. According to international standards, forensic accounting includes both accounting assessment and investigation techniques (investigative accounting and fraud auditing) and litigation support activities (litigation support)."
+  },
+  {
+    "title": "Investment Analysis (FIN 223)",
+    "title_google": "FIN 223: Investment Analysis Tutorials",
+    "institution": "University of Wollongong",
+    "institution_cv": "University of Wollongong",
+    "country": "Australia",
+    "roles": [
+      {
+        "role": "Teaching Assistant",
+        "term": "2022",
+        "term_cv": "Spr 2022"
+      }
+    ],
+    "semester": "Autumn",
+    "years_offered": [
+      2022
+    ],
+    "level": null,
+    "description": "This subject deals with investment analysis and portfolio management. The subject is both descriptive, dealing with a range of securities and the market they operate in, and theoretical, considering theories of the market and the equilibrium prices of securities. Topics covered include portfolio theory, the capital asset pricing model, fixed-income securities, socially responsible investing and real estate."
+  }
+]

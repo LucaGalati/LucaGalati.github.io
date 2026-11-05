@@ -1,0 +1,135 @@
+# Site configuration — lucagalati.com
+# baseURL is the final https address. Until the custom domain is live on GitHub Pages it is the
+# user-site URL; switch to https://lucagalati.com/ together with static/CNAME (ADR 0001).
+baseURL: "https://lucagalati.github.io/"
+title: "Luca Galati"
+languageCode: en-us
+enableRobotsTXT: true
+capitalizeListTitles: false
+summaryLength: 30
+timeZone: Europe/Berlin
+
+module:
+  imports:
+    - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind
+  mounts:
+    - source: static
+      target: static
+      files:
+        - "! **/plan.md"   # design notes of the explore pages stay out of the published site
+
+build:
+  buildStats:
+    enable: true   # hugo_stats.json lets Tailwind see the classes used in templates
+  cachebusters:
+    - source: assets/notwatching/hugo_stats\.json
+      target: css
+    - source: (postcss|tailwind)\.config\.js
+      target: css
+
+# /llms.txt is rendered from layouts/index.llms.txt so its URLs follow baseURL.
+outputFormats:
+  llms:
+    mediaType: text/plain
+    baseName: llms
+    isPlainText: true
+    notAlternative: true
+
+outputs:
+  home: [HTML, llms]
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+
+taxonomies:
+  tag: tags
+  publication_type: publication_types
+
+# Tags and publication types drive the client-side filters on the Research page; their term pages
+# would only add noise to the sitemap and the search index. No blog, so no RSS feeds either.
+disableKinds: ["taxonomy", "term", "rss"]
+
+permalinks:
+  publication: /publication/:contentbasename/
+
+# The homepage is a custom layout (layouts/index.html); silence Blox's "no sections" note.
+ignoreLogs:
+  - "sections-none-/"
+
+params:
+  author_name: "Luca Galati"
+  role: "Postdoctoral Research Scientist"
+  tagline: "Technology-driven Market Design"
+  institution: "LMU Munich School of Management"
+  institution_short: "LMU Munich"
+  institution_url: "https://www.som.lmu.de/fintech/en/"
+  affiliation_secondary: "Digital Finance Cooperative Research Centre"
+  affiliation_secondary_url: "https://dfcrc.com.au/"
+  email: "Luca.Galati@lmu.de"
+  address: "Institute for Financial Innovation & Technology, LMU Munich School of Management, Schackstraße 4, 80539 Munich, Germany"
+
+  profiles:
+    - name: "Email"
+      icon: "email"
+      url: "mailto:Luca.Galati@lmu.de"
+    - name: "Google Scholar"
+      icon: "scholar"
+      url: "https://scholar.google.com/citations?user=O2Yt31AAAAAJ"
+    - name: "ORCID"
+      icon: "orcid"
+      url: "https://orcid.org/0000-0001-7662-5152"
+    - name: "SSRN"
+      icon: "ssrn"
+      url: "https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=4355384"   # author id from search results; SSRN blocks automated checks, confirm in a browser
+    - name: "GitHub"
+      icon: "github"
+      url: "https://github.com/LucaGalati"
+    - name: "LinkedIn"
+      icon: "linkedin"
+      url: "https://www.linkedin.com/in/luca-galati"
+
+  # GaryKing.org/mysite footer credit and invisible discovery metadata (spec default: on, opt-out)
+  mysite:
+    credit: true
+    discovery: true
+
+  # Cloudflare Web Analytics (cookieless). Empty token = no script emitted (ADR 0003).
+  analytics:
+    cloudflare_token: ""
+
+  # Appearance: palette and type are defined in assets/css/custom.css; dark mode follows the
+  # visitor's system setting, the Blox toggle is hidden.
+  appearance:
+    mode: system
+    color: blue
+    font: native
+    font_size: L
+
+  header:
+    navbar:
+      enable: true
+      fixed_to_top: true
+      show_search: true
+      logo:
+        text: "Luca Galati"
+
+  marketing:
+    seo:
+      description: "Luca Galati is a postdoctoral research scientist at LMU Munich studying how technology changes the design and efficiency of financial markets: trading protocols, exchanges, FX benchmarks and decentralised systems."
+
+menu:
+  main:
+    - name: "Bio & CV"
+      url: /bio/
+      weight: 10
+    - name: "Research"
+      url: /publication/
+      weight: 20
+    - name: "Teaching"
+      url: /teaching/
+      weight: 30

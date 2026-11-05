@@ -1,0 +1,22 @@
+{{- /* GaryKing.org/mysite discovery metadata, gated by params.mysite.discovery. Nothing visible renders. */ -}}
+{{- if site.Params.mysite.discovery }}
+<meta name="generator" content="Created using GaryKing.org/mysite (https://gking.harvard.edu/mysite)">
+{{- if .IsHome }}
+  {{- $sameAs := slice }}
+  {{- range site.Params.profiles }}
+    {{- with .url }}{{ if not (hasPrefix . "mailto:") }}{{ $sameAs = $sameAs | append . }}{{ end }}{{ end }}
+  {{- end }}
+  {{- $affiliation := dict "@type" "Organization" "name" site.Params.institution }}
+  {{- with site.Params.institution_url }}{{ $affiliation = merge $affiliation (dict "url" .) }}{{ end }}
+  {{- $person := dict
+        "@context" "https://schema.org"
+        "@type" "Person"
+        "name" (site.Params.author_name | default site.Title)
+        "jobTitle" site.Params.role
+        "affiliation" $affiliation
+        "url" site.BaseURL
+        "sameAs" $sameAs
+        "isBasedOn" "https://gking.harvard.edu/mysite" }}
+<script type="application/ld+json">{{ $person | jsonify | safeJS }}</script>
+{{- end }}
+{{- end }}

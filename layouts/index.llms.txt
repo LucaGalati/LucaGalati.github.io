@@ -1,0 +1,13 @@
+# Luca Galati — personal academic website ({{ site.BaseURL }})
+Luca Galati is a Postdoctoral Research Scientist at the Institute for Financial Innovation & Technology, LMU Munich School of Management, Ludwig Maximilian University of Munich (Germany), and an Affiliated Researcher at the Digital Finance Cooperative Research Centre (Australia).
+He studies how technology changes the design and efficiency of financial markets.
+Research areas: market design and microstructure; FX benchmarks and execution; crypto and decentralised markets; networks and price discovery; accounting, governance and ESG.
+Education: Ph.D. in Finance, University of Wollongong (2024); Doctorate in Accounting, University of Molise (2024).
+Home: {{ "" | absURL }}
+Bio and CV: {{ "bio/" | absURL }}
+Research (working papers and articles): {{ "publication/" | absURL }}
+Teaching: {{ "teaching/" | absURL }}
+CV (PDF): {{ "files/luca-galati-cv.pdf" | absURL }}
+Email: {{ site.Params.email }}
+{{- range site.Params.profiles }}{{ if and .url (ne .icon "email") }}
+{{ .name }}: {{ .url }}{{ end }}{{ end }}

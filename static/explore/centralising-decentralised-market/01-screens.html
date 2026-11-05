@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A bond on many screens · Centralising a Decentralised Market</title>
+<meta name="description" content="Deck I of the explorable: where the price of an EU-Bond is, why screens disagree, and the late-2023 quoting arrangement.">
+<link rel="stylesheet" href="explore.css">
+<script src="explore.js" defer></script>
+<script src="../sitebar.js"></script>
+</head>
+<body>
+<lg-sitebar><noscript><a href="../../publication/centralising-decentralised-market/">← Back to the paper</a></noscript><button class="bar__btn" type="button" data-map aria-expanded="false">Map<span class="bar__key"> · m</span></button></lg-sitebar>
+
+<main class="deck" data-deck="01">
+
+  <!-- 1 · Hook -->
+  <section class="slide" id="s1" aria-label="Slide 1">
+    <div class="slide__inner slide__grid">
+      <div class="slide__text">
+        <p class="kicker"><b>I · 1</b> The question</p>
+        <h1>Where is the price of a bond?</h1>
+        <p>An EU-Bond — debt issued by the European Union — trades on many exchanges at once. Each is a lit venue: it shows its prices before anyone trades, in its own order book, the list of offers to buy and to sell. So one bond has many prices, one on every screen.</p>
+        <p>Everything that should move the price of a top-rated bond is public: a central-bank decision, a fiscal announcement. So the screens ought to agree, instantly. Do they? And if a regulator obliges dealers to keep quotes alive on designated screens, does any good come of it?</p>
+      </div>
+      <div class="slide__visual">
+        <div class="venues" id="venues"></div>
+        <p class="venue-line" id="venue-line" aria-live="polite">Some of the exchanges in the paper's data, with illustrative prices. Do they all show the same one? Hover or tap a screen.</p>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#2" data-go="2">Why screens disagree</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Toy -->
+  <section class="slide" id="s2" aria-label="Slide 2">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>I · 2</b> The tension</p>
+        <h2>Dispersed flow, stale screens.</h2>
+        <p>More venues means more competition for the same orders, and competition tends to narrow spreads. But each venue sees only a slice of the flow. In this toy a screen moves only when an order reaches it, so split a day's orders across many screens and, after news, most of them sit on the old price for a while.</p>
+        <p>Try one screen, then seven, then fourteen. News arrives every morning at ten; press the button for more.</p>
+        <p class="note">A toy with made-up numbers, not the paper's model: thirty orders a day, arriving at random and shared equally among the screens. It shows only the cost of more venues. Real screens update their quotes far more often than they trade, so the toy exaggerates how long they stay stale: it shows the direction, not the size.</p>
+      </div>
+      <div class="slide__visual">
+        <div id="toy1"></div>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#3" data-go="3">What the Commission tried</a>
+        <a class="door" href="aside-venues.html">Then why have many venues at all?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · The intervention -->
+  <section class="slide" id="s3" aria-label="Slide 3">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>I · 3</b> The intervention</p>
+        <h2>Late 2023: the quoting arrangement.</h2>
+        <p>In late 2023 the European Commission tried something other than removing screens. To make EU-Bonds easier to trade, it obliged their primary dealers to keep two-way quotes — a price to buy and a price to sell — alive on designated electronic platforms, during set hours, for minimum sizes and within maximum spreads.</p>
+        <p>The rule covered one issuer. Comparable top-rated bonds from KfW, the European Investment Bank, the World Bank and NWB Bank trade on the same exchanges and were left alone.</p>
+      </div>
+      <div class="slide__visual">
+        <div class="figpair">
+          <svg class="fig fig--sm" viewBox="0 0 260 220" role="img" aria-label="Before: three dealers and four exchanges, with quotes that come and go.">
+            <text x="12" y="22" class="s">BEFORE</text>
+            <line x1="54" y1="64" x2="176" y2="59" class="q-dot"></line>
+            <line x1="54" y1="152" x2="176" y2="135" class="q-dot"></line>
+            <line x1="54" y1="108" x2="176" y2="173" class="q-dot"></line>
+            <circle cx="44" cy="64" r="10" class="ink"></circle>
+            <circle cx="44" cy="108" r="10" class="ink"></circle>
+            <circle cx="44" cy="152" r="10" class="ink"></circle>
+            <rect x="176" y="46" width="64" height="26" rx="2" class="box"></rect>
+            <rect x="176" y="84" width="64" height="26" rx="2" class="box"></rect>
+            <rect x="176" y="122" width="64" height="26" rx="2" class="box"></rect>
+            <rect x="176" y="160" width="64" height="26" rx="2" class="box"></rect>
+            <text x="44" y="208" text-anchor="middle" class="m">dealers</text>
+            <text x="208" y="208" text-anchor="middle" class="m">exchanges</text>
+          </svg>
+          <svg class="fig fig--sm" viewBox="0 0 260 220" role="img" aria-label="After: the same dealers must keep quotes alive on a designated platform; every other exchange keeps trading.">
+            <text x="12" y="22" class="s">AFTER</text>
+            <line x1="54" y1="64" x2="176" y2="59" class="q-dot"></line>
+            <line x1="54" y1="152" x2="176" y2="173" class="q-dot"></line>
+            <line x1="54" y1="64" x2="102" y2="100" class="q-solid"></line>
+            <line x1="54" y1="108" x2="102" y2="107" class="q-solid"></line>
+            <line x1="54" y1="152" x2="102" y2="114" class="q-solid"></line>
+            <circle cx="44" cy="64" r="10" class="ink"></circle>
+            <circle cx="44" cy="108" r="10" class="ink"></circle>
+            <circle cx="44" cy="152" r="10" class="ink"></circle>
+            <rect x="102" y="92" width="52" height="30" rx="2" class="gold"></rect>
+            <text x="128" y="142" text-anchor="middle" class="m">designated</text>
+            <rect x="176" y="46" width="64" height="26" rx="2" class="box"></rect>
+            <rect x="176" y="84" width="64" height="26" rx="2" class="box"></rect>
+            <rect x="176" y="122" width="64" height="26" rx="2" class="box"></rect>
+            <rect x="176" y="160" width="64" height="26" rx="2" class="box"></rect>
+            <text x="44" y="208" text-anchor="middle" class="m">dealers</text>
+            <text x="208" y="208" text-anchor="middle" class="m">exchanges</text>
+          </svg>
+        </div>
+        <p class="caption">Schematic. Solid lines: quotes the dealers must keep alive. Every other exchange keeps trading.</p>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="#4" data-go="4">Why this is a clean experiment</a>
+        <a class="door" href="02-measure.html#6">Did trading actually move there?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · The design -->
+  <section class="slide" id="s4" aria-label="Slide 4">
+    <div class="slide__inner slide__grid">
+      <div class="slide__text">
+        <p class="kicker"><b>I · 4</b> The design</p>
+        <h2>Why this counts as an experiment.</h2>
+        <p>Studies of fragmentation usually struggle because venues and liquidity choose each other: an illiquid bond may scatter across venues, or the scatter may make it illiquid. Here the date was set by a regulator, the rule names one issuer, and both groups keep trading on the same exchanges, so whatever hits a venue hits both.</p>
+        <p>The paper pairs each treated EU-Bond with a control bond of the same currency and coupon type and a similar maturity, and compares how the two groups changed after the arrangement.</p>
+      </div>
+      <div class="slide__visual">
+        <svg class="fig" viewBox="0 0 400 330" role="img" aria-label="Schematic: treated EU-Bonds and control bonds both trade on the same exchanges; only the treated bonds connect to the designated platform.">
+          <text x="30" y="26" class="t">EU-Bonds</text>
+          <text x="30" y="44" class="m">treated</text>
+          <text x="230" y="26" class="t">Controls</text>
+          <text x="230" y="44" class="m">KfW, EIB,</text>
+          <text x="230" y="60" class="m">World Bank, NWB</text>
+          <rect x="30" y="72" width="100" height="22" rx="2" class="box-ink"></rect>
+          <rect x="30" y="100" width="100" height="22" rx="2" class="box-ink"></rect>
+          <rect x="30" y="128" width="100" height="22" rx="2" class="box-ink"></rect>
+          <rect x="30" y="156" width="100" height="22" rx="2" class="box-ink"></rect>
+          <text x="80" y="198" text-anchor="middle" class="m">…</text>
+          <rect x="230" y="72" width="100" height="22" rx="2" class="box"></rect>
+          <rect x="230" y="100" width="100" height="22" rx="2" class="box"></rect>
+          <rect x="230" y="128" width="100" height="22" rx="2" class="box"></rect>
+          <rect x="230" y="156" width="100" height="22" rx="2" class="box"></rect>
+          <text x="280" y="198" text-anchor="middle" class="m">…</text>
+          <path d="M 80 206 V 254 H 340 M 280 206 V 254" class="hair"></path>
+          <path d="M 80 222 H 34 V 258" class="goldline"></path>
+          <g id="shelf"></g>
+          <text x="352" y="277" class="m">…</text>
+          <rect x="6" y="258" width="56" height="28" rx="2" class="gold"></rect>
+          <text x="6" y="306" class="m">designated</text>
+          <text x="6" y="322" class="m">EU-Bonds only</text>
+          <text x="96" y="306" class="m">the same exchanges</text>
+        </svg>
+        <p class="caption">Schematic: not to scale. Both groups trade on the same exchanges; the quoting obligation covers EU-Bonds only.</p>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--next" href="02-measure.html#1">Next deck: measuring what public information does</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bar bar--bottom">
+  <button class="bar__btn" type="button" data-prev aria-label="Previous slide">←</button>
+  <div class="dots" data-dots role="group" aria-label="Slides"></div>
+  <span class="bar__count" data-count></span>
+  <button class="bar__btn" type="button" data-next aria-label="Next slide">→</button>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  var el = XP.el, svgEl = XP.svgEl;
+
+  /* --- Slide 1: venues from the paper's data, with illustrative prices (not data) --- */
+  var VENUES = [['Stuttgart', 97.42], ['Frankfurt', 97.42], ['gettex', 97.42], ['Munich', 97.42],
+    ['Berlin', 97.42], ['Düsseldorf', 97.40], ['Milan', 97.42], ['Quotrix', 97.42],
+    ['Luxembourg', 97.45], ['Hamburg', 97.38], ['Hannover', 97.40], ['London', 97.42]];
+  var WORDS = ['', 'one cent', 'two cents', 'three cents', 'four cents', 'five cents'];
+  var box = document.getElementById('venues'), line = document.getElementById('venue-line'), defaultLine = line.textContent;
+  VENUES.forEach(function (v) {
+    var gap = Math.round((v[1] - 97.42) * 100);
+    var said = gap === 0 ? 'in line with most screens' : WORDS[Math.abs(gap)] + (gap < 0 ? ' below' : ' above') + ' most screens';
+    var b = el('button', { type: 'button', 'class': 'venue', 'aria-label': v[0] + ': ' + v[1].toFixed(2) + ', ' + said }, [el('small', { text: v[0] }), el('b', { text: v[1].toFixed(2) })]);
+    function on() {
+      Array.prototype.forEach.call(box.querySelectorAll('.is-on'), function (o) { o.classList.remove('is-on'); });
+      b.classList.add('is-on');
+      line.innerHTML = '<b>' + v[0] + '</b> · ' + v[1].toFixed(2) + ' — ' + said + '. Illustrative prices.';
+    }
+    function off() { b.classList.remove('is-on'); line.textContent = defaultLine; }
+    b.addEventListener('mouseenter', on); b.addEventListener('focus', on); b.addEventListener('click', on);
+    b.addEventListener('mouseleave', off); b.addEventListener('blur', off);
+    box.appendChild(b);
+  });
+
+  /* --- Slide 2: the toy (toy values: 30 orders a day, 1–14 screens) --- */
+  var toy = XP.screensToy(document.getElementById('toy1'), { venues: 7, ordersPerDay: 30, controls: ['venues', 'news'] });
+  var s2 = document.getElementById('s2');
+  s2.addEventListener('xp:show', toy.start);
+  s2.addEventListener('xp:hide', toy.stop);
+  if (s2.classList.contains('is-active')) toy.start();
+
+  /* --- Slide 4: the shelf of shared exchanges --- */
+  var shelf = document.getElementById('shelf');
+  for (var i = 0; i < 7; i++) {
+    shelf.appendChild(svgEl('line', { x1: 110 + i * 36, y1: 254, x2: 110 + i * 36, y2: 262, 'class': 'hair' }));
+    shelf.appendChild(svgEl('rect', { x: 96 + i * 36, y: 262, width: 28, height: 20, rx: 2, 'class': 'box' }));
+  }
+});
+</script>
+</body>
+</html>

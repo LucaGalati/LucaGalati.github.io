@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rules, or event? — Decentralized Payment Systems</title>
+<meta name="description" content="Deck 3 of the explorable: the Merge as a placebo, the two shocks compared on one chart, what the paper concludes and cannot say, and a sandbox with three fee markets.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="explore.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<style>
+  .shock-row { cursor: pointer; outline: none; }
+  .shock-row .rowbg { fill: transparent; }
+  .shock-row:hover .rowbg, .shock-row.is-on .rowbg { fill: var(--gold); fill-opacity: 0.22; }
+  .shock-row:focus-visible .rowbg { fill: var(--gold); fill-opacity: 0.3; stroke: var(--focus); stroke-width: 1.5; }
+  .detail { margin-top: 0.7rem; min-height: 5.2em; font-size: 14px; border-top: 1px solid var(--border); padding-top: 0.55rem; }
+  .detail b { font-weight: 500; }
+  .detail .pair { display: flex; flex-wrap: wrap; gap: 0.2rem 1.5rem; margin-top: 0.2rem; font-variant-numeric: tabular-nums; }
+  .detail .caveat { display: block; margin-top: 0.3rem; color: var(--muted); font-size: 13px; }
+  @media (max-width: 640px) { .detail { min-height: 9em; } }
+
+  .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
+  .ledger h3 { margin-bottom: 0.4rem; }
+  .ledger ul { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  .ledger li { display: flex; justify-content: space-between; gap: 0.75rem; padding: 0.45rem 0; border-top: 1px solid var(--border); }
+  .ledger li:last-child { border-bottom: 1px solid var(--border); }
+  .ledger li b { font-family: var(--serif); font-size: 18px; font-weight: 500; color: var(--blue); white-space: nowrap; font-variant-numeric: tabular-nums lining-nums; }
+  @media (max-width: 520px) { .ledger { grid-template-columns: 1fr; gap: 1rem; } }
+
+  .deflist--cols { max-width: none; }
+  @media (min-width: 861px) {
+    .deflist--cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 2.5rem; }
+    .deflist--cols li:last-child, .deflist--cols li:nth-last-child(2) { border-bottom: 1px solid var(--border); }
+  }
+
+  .sb-lede { max-width: 80ch; }
+  .sb-panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .sb-panel .stage-title { margin-bottom: 0.35rem; font-size: 11.5px; }
+  .sb-bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.25rem 2rem; margin-top: 1rem; align-items: start; }
+  #sb-table td.n, #sb-table thead th.n { width: 16%; text-align: right; }
+  #sb-table th, #sb-table td { padding: 0.36rem 0.45rem; }
+  #sb-table td.n.best { font-weight: 500; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 0.6rem; }
+  .tabs button { background: none; border: 1px solid transparent; border-radius: var(--radius); padding: 0.3rem 0.65rem; font-size: 13px; font-weight: 500; color: var(--muted); }
+  .tabs button[aria-selected="true"] { color: var(--link); border-color: var(--gold); }
+  .tabs button:hover { color: var(--link); }
+  .knob { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) 3.5rem; align-items: center; gap: 0.2rem 0.6rem; font-size: 13.5px; margin-bottom: 0.45rem; }
+  .knob label { color: var(--text); }
+  .knob input[type="range"] { width: 100%; }
+  .knob output { font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; }
+  .knob .hint { grid-column: 1 / -1; font-size: 12.5px; color: var(--muted); margin-top: -0.15rem; }
+  .knob--check { grid-template-columns: auto minmax(0, 1fr); }
+  .tries { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .look { margin-top: 0.6rem; min-height: 6.6em; font-size: 13.5px; line-height: 1.5; padding: 0.55rem 0.75rem; border-left: 3px solid var(--gold); background: var(--bg); }
+  .sb-run { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
+  @media (max-width: 860px) {
+    .sb-panels { grid-template-columns: 1fr; }
+    .sb-bottom { grid-template-columns: 1fr; }
+  }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="03-placebo.html">
+<lg-sitebar>
+  <noscript><a href="../../publication/decentralized-payment-systems/">← Back to the paper</a></noscript>
+  <div class="deck-name"><small>Deck 3 · </small>Rules, or event?</div>
+  <button class="mapbtn" type="button" aria-label="Map" aria-controls="map" aria-expanded="false">Map <kbd>m</kbd></button>
+</lg-sitebar>
+<div class="deck">
+
+  <main class="stage">
+
+    <!-- 1 · a second shock -->
+    <section class="slide slide--split" data-title="A second shock">
+      <div class="text">
+        <p class="kicker">Deck 3 · 1 of 5</p>
+        <h2>A second shock</h2>
+        <div class="prose">
+          <p>Two doubts survive: perhaps any big protocol event shakes fees for a while, rules or no rules; or perhaps bidding moved into side deals that on-chain fees do not show.</p>
+          <p>The paper answers the first doubt with a second shock. For the second it mainly drops transactions that look like <a class="inline-fork" href="#private" data-go="private">private fee deals</a> and gets the same results.</p>
+          <p>On 15 September 2022 the <strong>Merge</strong> moved Ethereum from proof-of-work to <em>proof-of-stake</em>: block producers now lock up ether instead of racing computers, and are called validators (the paper uses the two words for one role). It removed the 2-ETH block subsidy and left the base fee, the tip and the elastic block as they were.</p>
+          <p>Easley, O'Hara and Basu (2019) predict that removing the subsidy leaves user fees alone, as long as blocks keep coming. Relative to Bitcoin, 30 days either side of the Merge, user fees…</p>
+        </div>
+        <div class="bets" id="bet-merge">
+          <button class="btn" type="button" data-bet="up">Rose</button>
+          <button class="btn" type="button" data-bet="same">Did not move</button>
+          <button class="btn" type="button" data-bet="down">Fell</button>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Two shocks to one network</span><span>Bitcoin unchanged in both</span></div>
+        <svg class="chart" id="tl-svg" viewBox="0 0 520 300" role="img" aria-label="A timeline with two events. EIP-1559 on 5 August 2021 changed the fee rules and left the block subsidy unchanged at 2 ETH. The Merge on 15 September 2022 left the fee rules unchanged and removed the block subsidy."></svg>
+        <p class="note">Each event is studied over 60 days, 30 either side, against Bitcoin.</p>
+      </div>
+    </section>
+
+    <!-- side trip · private fee deals -->
+    <section class="slide slide--split slide--branch" data-branch="private" data-title="What about private fee deals?">
+      <div class="text">
+        <p class="kicker">Side trip · from <a href="#1" data-go="1">A second shock</a></p>
+        <h2>What about private fee deals?</h2>
+        <div class="prose">
+          <p>The worry (p. 8): new fee rules may push users toward private channels such as Flashbots, paying the block producer off the books. Then the on-chain fees the paper measures would have changed in composition, not in cost.</p>
+          <p>The direct test (p. 40): drop every transaction that paid nothing, or less than the base fee in force, while still using gas, the footprint of a fee paid privately. Re-estimated on what is left, the results are economically and statistically similar.</p>
+          <p>Why not lean on the Merge? Because soon after it, block building moved to specialised builders through MEV-Boost, and part of the block producers' pay moved into builder payments: the private channel was changing during the placebo window itself (pp. 34–35).</p>
+        </div>
+        <div class="onward">
+          <a class="back" href="#1" data-go="1">← Back to the second shock</a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>The filter, in one block</span><span>schematic</span></div>
+        <svg class="chart" id="pv-svg" viewBox="0 0 520 260" role="img" aria-label="A block of transactions with their fees; two that paid nothing or less than the base fee are struck out, and the estimates are run again on the rest"></svg>
+        <p class="note">Schematic: which transactions the filter removes. The fees drawn are illustrative.</p>
+      </div>
+    </section>
+
+    <!-- 2 · two shocks, one chart -->
+    <section class="slide slide--split" data-title="Two shocks, one chart">
+      <div class="text">
+        <p class="kicker">Deck 3 · 2 of 5 · Playable</p>
+        <h2>Two shocks, one chart</h2>
+        <div class="bet-result" id="bet-merge-result" hidden></div>
+        <div class="prose">
+          <p>Twelve outcomes, twice: the effect of EIP-1559 and of the Merge, each against Bitcoin. Tap a row for its numbers.</p>
+          <p>When the rules changed, user costs moved sharply. When the subsidy went, user costs did not move measurably; what collapsed was the subsidy itself, by about 96 per cent in the paper's records. Those records cover the execution layer only: staking rewards, about 1,600–1,700 ETH a day, moved to the consensus layer and are not in the data, so this is not the change in validators' total income (p. 34).</p>
+          <p>The Merge is a placebo for user costs only. Activity and welfare did move at the Merge, in the opposite direction to EIP-1559 (pp. 35, 38).</p>
+        </div>
+        <div class="onward">
+          <a class="next" href="#3" data-go="3">So what does it mean? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Effect against Bitcoin</span><span>log points</span></div>
+        <svg class="chart" id="shock-svg" viewBox="0 0 520 390" role="img" aria-label="Dot plot comparing the difference-in-differences coefficient of twelve outcomes under EIP-1559 and under the Merge"></svg>
+        <div class="legend"><span><i class="sw-circle"></i>EIP-1559 (fee rules)</span><span><i class="sw-square"></i>the Merge (block subsidy)</span><span><i class="sw-solid"></i>significant at 5% or better</span><span><i class="sw-hollow"></i>not significant</span></div>
+        <div class="detail" id="shock-detail" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- 3 · what it means -->
+    <section class="slide slide--split" data-title="What it means">
+      <div class="text">
+        <p class="kicker">Deck 3 · 3 of 5</p>
+        <h2>What it means</h2>
+        <div class="prose">
+          <p>Replacing the sealed auction with a posted fee bought predictability inside the block and paid for it with higher, more dispersed fees, more pay for the block producer per transaction, and a smaller network, relative to Bitcoin. In the paper's words: lower fee uncertainty, traded for greater rent extraction and reduced welfare.</p>
+          <p>This is not a verdict for Bitcoin. Its auction still makes users overbid, and some of the activity that left Ethereum may simply have moved chains. The point is narrower and more useful: the rules that price and ration block space are a first-order determinant of what a payment network delivers, so a fee mechanism has to be judged on dispersion, congestion and the block producers' response, not on average fees or volatility alone.</p>
+        </div>
+        <div class="forks">
+          <a class="fork fork--primary" href="#4" data-go="4">What can't the paper say? <span aria-hidden="true">→</span></a>
+          <a class="fork" href="#5" data-go="5">Skip to the sandbox <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>The reform's ledger</span><span>against Bitcoin</span></div>
+        <div class="ledger">
+          <div>
+            <h3>What it bought</h3>
+            <ul>
+              <li><span>Within-block fee volatility</span><b>−12%</b></li>
+            </ul>
+          </div>
+          <div>
+            <h3>What it cost</h3>
+            <ul>
+              <li><span>Average fee</span><b>+120–154%</b></li>
+              <li><span>Dollar gap in the block</span><b>+105–112%</b></li>
+              <li><span>Gap per transaction</span><b>+134–164%</b></li>
+              <li><span>Miner's pay per transaction</span><b>+72–77%</b></li>
+              <li><span>Confirmed transactions</span><b>−21%</b></li>
+              <li><span>Value settled</span><b>−38 to −40%</b></li>
+              <li><span>Welfare, a day</span><b>−$80 to −84 bn</b></li>
+            </ul>
+          </div>
+        </div>
+        <p class="note" style="margin-top:0.8rem">30 days either side of 5 August 2021, with controls (Tables 3, 4, 7, 9). The miner's pay rose per transaction, not necessarily per day.</p>
+      </div>
+    </section>
+
+    <!-- 4 · what it cannot say -->
+    <section class="slide slide--stack" data-title="What it cannot say">
+      <p class="kicker">Deck 3 · 4 of 5</p>
+      <h2>What it cannot say</h2>
+      <p class="lede" style="margin:0 0 0.6rem">The paper lists its own limits.</p>
+      <ul class="deflist deflist--cols">
+        <li><b>Welfare is a settlement proxy</b> <span>· value transferred bounds surplus from above; the paper reads the contrast with Bitcoin, not the levels.</span></li>
+        <li><b>Dollar magnitudes are of their period</b> <span>· a proof-of-work era with gas prices far above today's; the mechanism conclusions carry over, the dollars do not.</span></li>
+        <li><b>One upgrade, five changes</b> <span>· EIP-1559 shipped in the London upgrade with four technical EIPs; strictly, the estimates are for London as a whole (fn. 5).</span></li>
+        <li><b>The Merge was a bundle</b> <span>· consensus, issuance and block building changed together, and MEV-Boost spread soon after; the placebo answers one question, whether a pay shock repriced block space for users.</span></li>
+        <li><b>Summer 2021 was not quiet</b> <span>· the NFT boom and DeFi on Ethereum, a mining-ban recovery on Bitcoin; controls, pseudo-event placebos and a six-chain panel address it, but nothing rules out a shock timed to the day.</span></li>
+        <li><b>Two chains</b> <span>· with Litecoin, Dogecoin, Dash and Zcash added as controls, the fee, dispersion, settled-value, contract-activity and welfare results survive; the volatility decline, the drops in confirmed transactions and in the queue, and the revenue results do not.</span></li>
+        <li><b>Robust where it can be</b> <span>· dropping transactions consistent with off-chain fee deals, errors robust to day-to-day correlation, 40-, 80- and 810-day windows, hourly data: the principal estimates hold.</span></li>
+      </ul>
+      <div class="forks">
+        <a class="fork fork--primary" href="#5" data-go="5">Run three fee markets yourself <span aria-hidden="true">→</span></a>
+        <a class="fork" href="../../publication/decentralized-payment-systems/">← Back to the paper</a>
+        <a class="fork fork--quiet" href="https://www.ssrn.com/abstract=5348013" rel="noopener">Read it on SSRN <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- 5 · sandbox -->
+    <section class="slide slide--stack" data-title="Sandbox: three fee markets">
+      <p class="kicker">Deck 3 · 5 of 5 · Sandbox</p>
+      <h2>Three fee markets, one crowd</h2>
+      <p class="prose sb-lede">One crowd, three rules: the sealed auction Ethereum left, the posted fee it adopted, and the uniform price the paper names as the next design to test (p. 44).</p>
+      <div class="stagebox" style="margin-top:0.9rem">
+        <div class="sb-panels">
+          <div class="sb-panel"><div class="stage-title"><span>Sealed auction · block of 15</span></div><canvas id="sb-fp" role="img" aria-label="Clearing price, average fee paid and the range of fees in each block, and block use, under the sealed first-price auction"></canvas></div>
+          <div class="sb-panel"><div class="stage-title"><span>Posted fee + tip · stretches to <span id="sb-captxt">30</span></span></div><canvas id="sb-pf" role="img" aria-label="Base fee, average fee paid and the range of fees in each block, and block use, under the posted fee"></canvas></div>
+          <div class="sb-panel"><div class="stage-title"><span>Uniform price · block of 15</span></div><canvas id="sb-uf" role="img" aria-label="Uniform price paid by everyone in the block, and block use, under the uniform-price auction"></canvas></div>
+        </div>
+        <div class="legend"><span><i class="sw-line"></i>clearing, posted or uniform price</span><span><i class="sw-dot"></i>average fee paid</span><span><i class="sw-range"></i>cheapest to dearest in the block</span><span><i class="sw-target"></i>target of 15</span><span>one shared price scale</span></div>
+        <div class="sb-bottom">
+          <div>
+            <table class="cmp" id="sb-table">
+              <thead><tr><th scope="col">Last 40 blocks</th><th scope="col" class="n">Auction</th><th scope="col" class="n">Posted</th><th scope="col" class="n">Uniform</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Average fee paid</th><td class="n" id="fp-avg">–</td><td class="n" id="pf-avg">–</td><td class="n" id="uf-avg">–</td></tr>
+                <tr><th scope="row">Gap, dearest − cheapest</th><td class="n" id="fp-disp">–</td><td class="n" id="pf-disp">–</td><td class="n" id="uf-disp">–</td></tr>
+                <tr><th scope="row">Price swing per block</th><td class="n" id="fp-swing">–</td><td class="n" id="pf-swing">–</td><td class="n" id="uf-swing">–</td></tr>
+                <tr><th scope="row">Transactions per block</th><td class="n" id="fp-used">–</td><td class="n" id="pf-used">–</td><td class="n" id="uf-used">–</td></tr>
+                <tr><th scope="row">Waiting</th><td class="n" id="fp-queue">–</td><td class="n" id="pf-queue">–</td><td class="n" id="uf-queue">–</td></tr>
+                <tr><th scope="row">Miner's pay per transaction</th><td class="n" id="fp-miner">–</td><td class="n" id="pf-miner">–</td><td class="n" id="uf-miner">–</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="tabs" role="tablist" aria-label="Sandbox controls">
+              <button type="button" role="tab" id="t-try" aria-controls="p-try" aria-selected="true">Try this</button>
+              <button type="button" role="tab" id="t-crowd" aria-controls="p-crowd" aria-selected="false">Crowd</button>
+              <button type="button" role="tab" id="t-bid" aria-controls="p-bid" aria-selected="false">Bidding</button>
+              <button type="button" role="tab" id="t-rules" aria-controls="p-rules" aria-selected="false">Rules</button>
+            </div>
+            <div role="tabpanel" id="p-try" aria-labelledby="t-try">
+              <div class="tries">
+                <button class="btn btn--small" type="button" data-try="demand">Push demand to 25</button>
+                <button class="btn btn--small" type="button" data-try="habit" id="try-habit">Switch the habit off</button>
+                <button class="btn btn--small" type="button" data-try="subsidy">Cut the subsidy to zero</button>
+                <button class="btn btn--small" type="button" data-try="burst">Send a burst</button>
+              </div>
+              <p class="look" id="sb-look" aria-live="polite">Pick an experiment, or open the other tabs. The posted-fee users start with the habit the paper describes: they tip about what they used to bid.</p>
+            </div>
+            <div role="tabpanel" id="p-crowd" aria-labelledby="t-crowd" hidden>
+              <div class="knob"><label for="sb-demand">Demand</label><input type="range" id="sb-demand" min="0" max="40" value="18" step="1"><output id="sb-demandv" for="sb-demand">18</output><span class="hint">users arriving per block; a block holds 15, or up to 30 when it stretches</span></div>
+              <div class="knob"><label for="sb-patience">Patience</label><input type="range" id="sb-patience" min="1" max="12" value="6" step="1"><output id="sb-patiencev" for="sb-patience">6</output><span class="hint">blocks a user waits before giving up</span></div>
+              <button class="btn btn--gold btn--small" id="sb-burst" type="button">Burst of 30</button>
+            </div>
+            <div role="tabpanel" id="p-bid" aria-labelledby="t-bid" hidden>
+              <div class="knob knob--check"><input type="checkbox" id="sb-habit" checked><label for="sb-habit">Users keep bidding as before</label><span class="hint">posted fee: users tip what they would have bid in the auction, the paper's reading of the data (p. 7)</span></div>
+              <div class="knob"><label for="sb-tip">Modest tip</label><input type="range" id="sb-tip" min="0" max="0.3" value="0.08" step="0.01"><output id="sb-tipv" for="sb-tip">0.08</output><span class="hint">posted fee with the habit off: tip as a share of the base fee</span></div>
+              <div class="knob"><label for="sb-markup">Bid mark-up</label><input type="range" id="sb-markup" min="0" max="1" value="0.5" step="0.05"><output id="sb-markupv" for="sb-markup">0.50</output><span class="hint">how far above the last clearing price urgent users bid in the auction</span></div>
+            </div>
+            <div role="tabpanel" id="p-rules" aria-labelledby="t-rules" hidden>
+              <div class="knob"><label for="sb-step">Base-fee step</label><input type="range" id="sb-step" min="0.02" max="0.3" value="0.125" step="0.005"><output id="sb-stepv" for="sb-step">12.5%</output><span class="hint">how far the posted fee moves after a full or an empty block</span></div>
+              <div class="knob"><label for="sb-elastic">Max / target</label><input type="range" id="sb-elastic" min="1" max="3" value="2" step="0.1"><output id="sb-elasticv" for="sb-elastic">2.0</output><span class="hint">how far a posted-fee block can stretch</span></div>
+              <div class="knob"><label for="sb-subsidy">Subsidy / block</label><input type="range" id="sb-subsidy" min="0" max="60" value="20" step="1"><output id="sb-subsidyv" for="sb-subsidy">20</output><span class="hint">paid by the protocol to the miner, under all three rules</span></div>
+            </div>
+            <div class="sb-run">
+              <button class="btn btn--small" id="sb-pause" type="button">Pause</button>
+              <button class="btn btn--small" id="sb-reset" type="button">Reset everything</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:0.8rem">Fee units are arbitrary; one transaction is one million gas. The rules are the paper's descriptions; how simulated users bid and tip is ours. The toy does not track the paper's in-block volatility: with identical transactions and full auction blocks, its cheapest fee is never far below the rest. It also leaves out transaction sizes, ether's price, miners' choice of how full to make blocks and users leaving for other chains, which is why its miners do not earn more per transaction, as they did in the data.</p>
+      <div class="forks">
+        <a class="fork" href="index.html">Back to the map <span aria-hidden="true">→</span></a>
+        <a class="fork fork--primary" href="../../publication/decentralized-payment-systems/">← Back to the paper</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bottombar">
+    <button class="nav-arrow nav-prev" type="button" aria-label="Previous slide">←</button>
+    <div class="dots" role="group" aria-label="Slides"></div>
+    <button class="nav-arrow nav-next" type="button" aria-label="Next slide">→</button>
+  </footer>
+</div>
+
+<div class="map" id="map" aria-hidden="true">
+  <div class="map-head"><h2>Map of the explorable</h2><button class="close" type="button">Close · Esc</button></div>
+  <div class="map-grid"></div>
+  <div class="map-foot"><a href="index.html">Hub</a><a href="../../publication/decentralized-payment-systems/">← Back to the paper</a></div>
+</div>
+
+<script src="explore.js"></script>
+<script src="market.js"></script>
+<script>
+(function () {
+  'use strict';
+  var fmt = explore.fmt;
+  function $(id) { return document.getElementById(id); }
+  function T(x, y, s, cls, anchor) { return '<text x="' + x + '" y="' + y + '"' + (cls ? ' class="' + cls + '"' : '') + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  var mains = Array.prototype.filter.call(document.querySelectorAll('.slide'), function (s) { return !s.hasAttribute('data-branch'); });
+
+  /* ---------- 1 · the timeline ---------- */
+  (function () {
+    var slide = mains[0], svg = $('tl-svg');
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = 300;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var a = wide ? 150 : 95, b = wide ? 380 : 265, h = '';
+      h += '<line class="axis" x1="20" y1="150" x2="' + (W - 20) + '" y2="150"></line>';
+      h += '<line class="event" x1="' + a + '" y1="58" x2="' + a + '" y2="242"></line><line class="event" x1="' + b + '" y1="58" x2="' + b + '" y2="242"></line>';
+      h += '<circle class="gold" cx="' + a + '" cy="150" r="6"></circle><circle class="gold" cx="' + b + '" cy="150" r="6"></circle>';
+      h += T(a, 42, wide ? '5 Aug 2021 · EIP-1559' : '5 Aug 2021', 'strong t-m', 'middle') + T(b, 42, wide ? '15 Sep 2022 · the Merge' : '15 Sep 2022', 'strong t-m', 'middle');
+      if (!wide) h += T(a, 24, 'EIP-1559', 't-s', 'middle') + T(b, 24, 'the Merge', 't-s', 'middle');
+      // labels sit on a halo of the stage colour, so the gold event lines do not strike through them
+      h += T(a, 100, 'fee rules', 'halo', 'middle') + T(a, 118, 'changed', 'strong t-m halo', 'middle');
+      h += T(a, 186, 'block subsidy', 'halo', 'middle') + T(a, 204, 'unchanged (2 ETH)', 't-m halo', 'middle');
+      h += T(b, 100, 'fee rules', 'halo', 'middle') + T(b, 118, 'unchanged', 't-m halo', 'middle');
+      h += T(b, 186, 'block subsidy', 'halo', 'middle') + T(b, 204, 'removed', 'strong t-m halo', 'middle');
+      h += T(20, 276, wide ? 'window: 6 Jul – 3 Sep 2021' : '6 Jul – 3 Sep 2021', 't-s');
+      h += T(W - 20, 276, wide ? 'window: 16 Aug – 14 Oct 2022' : '16 Aug – 14 Oct 2022', 't-s', 'end');
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+    explore.wireBets(slide, 'merge', 2);
+  })();
+
+  /* ---------- side trip · the filter, schematic ---------- */
+  (function () {
+    var slide = document.querySelector('[data-branch="private"]'), svg = $('pv-svg');
+    var fees = [14, 11, 0, 9, 16, 10, 3, 12, 9, 13];   // illustrative; base fee 8
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = 260, n = fees.length, pitch = (W - 40) / n, s = Math.min(34, pitch - 8);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var h = T(20, 24, 'One block, fees in dollars · base fee $8', 'label t-m');
+      h += '<rect class="frame" x="20.5" y="36.5" width="' + (W - 40) + '" height="' + (s + 46) + '"></rect>';
+      fees.forEach(function (f, i) {
+        var x = 20 + i * pitch + (pitch - s) / 2, y = 48, drop = f < 8;
+        h += '<rect class="slot' + (drop ? '' : ' on') + '" x="' + x + '" y="' + y + '" width="' + s + '" height="' + s + '" rx="2"></rect>';
+        h += T(x + s / 2, y + s + 16, '$' + f, drop ? 'strong t-s' : 't-s', 'middle');
+        if (drop) h += '<line class="event" x1="' + (x - 3) + '" y1="' + (y - 3) + '" x2="' + (x + s + 3) + '" y2="' + (y + s + 3) + '" stroke-width="2"></line>';
+      });
+      var y2 = s + 120;
+      h += T(20, y2, 'Struck out: paid nothing, or less than the base fee,', 't-m');
+      h += T(20, y2 + 18, 'while still using gas. Likely paid privately.', 't-m');
+      h += T(20, y2 + 52, 'Estimates re-run on the rest:', 'label t-m');
+      h += T(20, y2 + 70, wide ? 'economically and statistically similar (p. 40).' : 'similar results (p. 40).', 'strong t-m');
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- 2 · the bet, revealed ---------- */
+  function showMergeBet() {
+    var b = explore.getBet('merge'), el = $('bet-merge-result');
+    if (!b) { el.hidden = true; return; }
+    var words = { up: 'rose', same: 'did not move', down: 'fell' };
+    el.hidden = false;
+    el.innerHTML = '<span class="you">You said fees ' + words[b] + '.</span> ' + (b === 'same' ? 'Right: ' : 'Not quite: ') + 'the four user-cost effects at the Merge sit between −0.01 and +0.14 log points, and none is statistically different from zero (Table 5).';
+  }
+  document.addEventListener('slidechange', function (ev) { if (ev.detail.index === 2) showMergeBet(); });
+  showMergeBet();
+
+  /* ---------- 2 · two shocks, one chart ---------- */
+  (function () {
+    var slide = mains[1], svg = $('shock-svg'), detail = $('shock-detail');
+    var EXEC = 'Measured on execution-layer records only: staking rewards, about 1,600–1,700 ETH a day, moved to the consensus layer and are not in the data, so this is not the change in validators’ total income (p. 34).';
+    // [label, short label, EIP coef, EIP sig, Merge coef, Merge sig, meaning, group, caveat]
+    var rows = [
+      ['Fee volatility', 'Fee volatility', -0.13, 3, 0.02, 0, 'the log of the dearest over the cheapest fee in a block', 'User costs'],
+      ['Fee dispersion', 'Fee dispersion', 0.75, 3, 0.03, 0, 'dearest minus cheapest fee in a block, in dollars'],
+      ['Fee inflation', 'Fee inflation', 0.97, 3, 0.04, 0, 'that gap per transaction in the block'],
+      ['Average fee', 'Average fee', 0.93, 3, 0.01, 0, 'what a transaction pays'],
+      ['Base fee', 'Base fee', 2.83, 3, -0.10, 0, 'the burned part; zero before the reform', 'Money'],
+      ['Tip', 'Tip', -0.38, 2, 0.00, 0, 'the part the block producer receives'],
+      ['Subsidy per transaction', 'Subsidy / tx', 0.71, 3, -3.41, 3, 'the block reward spread over the block’s transactions', null, EXEC],
+      ['Miner payoff per transaction', 'Miner pay / tx', 0.54, 3, -3.98, 3, 'tip plus subsidy share', null, EXEC],
+      ['Confirmed transactions', 'Confirmed tx', -0.24, 3, -0.19, 0, 'per day', 'Activity'],
+      ['Dollar value settled', 'Value settled', -0.51, 3, 0.48, 3, 'per day'],
+      ['Zero-value transactions', 'Zero-value tx', -0.63, 3, 0.14, 3, 'contract calls, approvals, deployments'],
+      ['Unconfirmed queue', 'Queue', -0.57, 3, 0.32, 0, 'congestion', null, 'Merge figure from the first specification; it is specification-dependent: +1.97 with full controls, significant at 1% (Table 8).']
+    ];
+    var lo = -1.2, hi = 1.2, current = -1;
+    function pct(b) {
+      var p = (Math.exp(b) - 1) * 100, a = Math.abs(p), s = p > 0.05 ? '+' : (p < -0.05 ? '−' : '');
+      var body = a >= 1000 ? Math.round(a).toLocaleString('en-US') : (a >= 90 && a < 100 ? fmt(a, 1) : fmt(a, 0));
+      return s + body + '%';
+    }
+    function num(b) { return (b > 0 ? '+' : b < 0 ? '−' : '') + fmt(Math.abs(b), 2); }
+    function sig(s) { return s === 3 ? 'significant at 1%' : s === 2 ? 'significant at 5%' : 'not significant'; }
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400;
+      var x0 = wide ? 200 : 132, x1 = W - 20, top = 14, rh = wide ? 22 : 30, gh = wide ? 20 : 24;
+      var ys = [], cursor = top;
+      rows.forEach(function (r) { if (r[7]) cursor += gh; ys.push(cursor + rh / 2); cursor += rh; });
+      var bottom = cursor, H = bottom + (wide ? 42 : 58);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var x = function (v) { return x0 + (Math.max(lo, Math.min(hi, v)) - lo) / (hi - lo) * (x1 - x0); };
+      function mark(v, s, series, cy) {
+        var cls = series + (s >= 2 ? '' : ' ns'), cx = x(v);
+        if (v < lo || v > hi) {
+          var d = v > hi ? 1 : -1;
+          return '<path class="' + cls + '" d="M' + (cx - d * 9) + ',' + (cy - 5.5) + ' L' + cx + ',' + cy + ' L' + (cx - d * 9) + ',' + (cy + 5.5) + ' Z" stroke-width="1.5"></path>';
+        }
+        if (series === 'btc') return '<rect class="' + cls + '" x="' + (cx - 4.5) + '" y="' + (cy - 4.5) + '" width="9" height="9" stroke-width="1.5"></rect>';
+        return '<circle class="' + cls + '" cx="' + cx + '" cy="' + cy + '" r="5" stroke-width="1.5"></circle>';
+      }
+      var h = '';
+      [-1, -0.5, 0, 0.5, 1].forEach(function (t) {
+        h += '<line class="' + (t === 0 ? 'axis' : 'grid') + '" x1="' + x(t) + '" y1="' + (top + 4) + '" x2="' + x(t) + '" y2="' + (bottom + 4) + '"></line>';
+        h += T(x(t), bottom + 20, (t > 0 ? '+' : t < 0 ? '−' : '') + Math.abs(t), 't-s', 'middle');
+      });
+      if (wide) h += T(x1, bottom + 36, 'log points: 0.1 is about +10% · arrows run off the scale', 't-s', 'end');
+      else h += T(12, bottom + 36, 'log points: 0.1 is about +10%', 't-s') + T(12, bottom + 53, 'arrows run off the scale', 't-s');
+      rows.forEach(function (r, i) {
+        var cy = ys[i];
+        if (r[7]) h += T(12, cy - rh / 2 - 6, r[7], 't-up');
+        h += '<g class="shock-row' + (i === current ? ' is-on' : '') + '" tabindex="0" data-i="' + i + '" role="button" aria-label="' + r[0] + '">';
+        h += '<rect class="rowbg" x="8" y="' + (cy - rh / 2) + '" width="' + (W - 16) + '" height="' + rh + '" rx="2"></rect>';
+        h += T(x0 - 10, cy + 4, wide ? r[0] : r[1], 'label', 'end');
+        h += '<line class="link" x1="' + x(r[2]) + '" y1="' + cy + '" x2="' + x(r[4]) + '" y2="' + cy + '"></line>';
+        h += mark(r[4], r[5], 'btc', cy) + mark(r[2], r[3], 'eth', cy);
+        h += '</g>';
+      });
+      svg.innerHTML = h;
+      Array.prototype.forEach.call(svg.querySelectorAll('.shock-row'), function (g) {
+        var i = +g.getAttribute('data-i');
+        g.addEventListener('mouseenter', function () { show(i); });
+        g.addEventListener('focus', function () { show(i); });
+        g.addEventListener('click', function () { show(i); });
+        g.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); show(i); } });
+      });
+    }
+    function show(i) {
+      var r = rows[i];
+      current = i;
+      Array.prototype.forEach.call(svg.querySelectorAll('.shock-row'), function (g) { g.classList.toggle('is-on', +g.getAttribute('data-i') === i); });
+      detail.innerHTML = '<b>' + r[0] + '</b> · ' + r[6] +
+        '<div class="pair"><span>EIP-1559: <b>' + num(r[2]) + '</b> (' + pct(r[2]) + ', ' + sig(r[3]) + ')</span>' +
+        '<span>Merge: <b>' + num(r[4]) + '</b> (' + pct(r[4]) + ', ' + sig(r[5]) + ')</span></div>' +
+        (r[8] ? '<span class="caveat">' + r[8] + '</span>' : '');
+    }
+    detail.innerHTML = 'Tap or focus a row. Welfare, in billions of dollars a day rather than log points: <b>−83.6</b> under EIP-1559 and <b>+29.0 to +51.3</b> under the Merge, all significant at 1% (Tables 9 and 10).';
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- 5 · sandbox: three fee markets, one crowd ---------- */
+  (function () {
+    var slide = mains[4];
+    var DEF = FeeMarket.defaults(); DEF.habit = true;
+    var p, seed = 21, stream, fp, pf, uf, shared;
+    var cv = { fp: $('sb-fp'), pf: $('sb-pf'), uf: $('sb-uf') };
+    var running = !explore.reduced, last = 0, N = 60;
+    var knobs = [
+      ['sb-demand', 'demand', function (v) { return v; }],
+      ['sb-patience', 'patience', function (v) { return v; }],
+      ['sb-tip', 'tipBase', function (v) { return fmt(v, 2); }],
+      ['sb-markup', 'markup', function (v) { return fmt(v, 2); }],
+      ['sb-step', 'step', function (v) { return fmt(v * 100, 1) + '%'; }],
+      ['sb-elastic', 'elasticity', function (v) { return fmt(v, 1); }],
+      ['sb-subsidy', 'subsidy', function (v) { return v; }]
+    ];
+    function syncKnobs() {
+      knobs.forEach(function (k) { var el = $(k[0]); el.value = p[k[1]]; $(k[0] + 'v').textContent = k[2](p[k[1]]); });
+      $('sb-habit').checked = p.habit;
+      $('sb-captxt').textContent = Math.round(p.target * p.elasticity);
+      $('try-habit').textContent = p.habit ? 'Switch the habit off' : 'Switch the habit back on';
+    }
+    function step() { var u = stream.next(p), ref = fp.est; fp.step(u, p); pf.step(u, p, ref); uf.step(u, p); }
+    function axis() { return FeeMarket.axisMax(shared, Math.max(FeeMarket.peak(fp, N), FeeMarket.peak(pf, N), FeeMarket.peak(uf, N))); }
+    function start() {
+      p = JSON.parse(JSON.stringify(DEF));
+      stream = new FeeMarket.Stream(seed); fp = new FeeMarket.Market('firstprice'); pf = new FeeMarket.Market('posted'); uf = new FeeMarket.Market('uniform');
+      shared = {};
+      for (var i = 0; i < 40; i++) { step(); axis(); }
+      syncKnobs(); table();
+    }
+    function cell(id, v) { $(id).textContent = v; }
+    function table() {
+      [['fp', fp], ['pf', pf], ['uf', uf]].forEach(function (m) {
+        var s = m[1].stats(40), k = m[0];
+        cell(k + '-avg', fmt(s.avg, 2)); cell(k + '-disp', fmt(s.disp, 2)); cell(k + '-swing', fmt(s.swing * 100, 0) + '%');
+        cell(k + '-used', fmt(s.used, 1)); cell(k + '-queue', fmt(s.queue, 0)); cell(k + '-miner', fmt(s.miner, 2));
+      });
+    }
+    function height(c) { var w = c.getBoundingClientRect().width; return Math.round(Math.max(150, Math.min(190, w * 0.46))); }
+    function paint() {
+      if (!explore.active(slide)) return;
+      var pm = shared.max || axis();
+      FeeMarket.draw(cv.fp, fp, { height: height(cv.fp), pmax: pm, compact: true, priceLabel: 'clearing price' });
+      FeeMarket.draw(cv.pf, pf, { height: height(cv.pf), pmax: pm, compact: true, priceLabel: 'base fee' });
+      FeeMarket.draw(cv.uf, uf, { height: height(cv.uf), pmax: pm, compact: true, priceLabel: 'uniform price' });
+    }
+    function tick() { step(); axis(); table(); paint(); }
+
+    knobs.forEach(function (k) {
+      $(k[0]).addEventListener('input', function () { p[k[1]] = +$(k[0]).value; syncKnobs(); });
+    });
+    $('sb-habit').addEventListener('change', function () { p.habit = $('sb-habit').checked; syncKnobs(); });
+    $('sb-burst').addEventListener('click', function () { stream.burst(30); if (!running) tick(); });
+    var pause = $('sb-pause');
+    function setRun(on) { running = on; pause.textContent = running ? 'Pause' : 'Run'; }
+    pause.addEventListener('click', function () { setRun(!running); });
+    $('sb-reset').addEventListener('click', function () { seed++; start(); paint(); $('sb-look').textContent = 'A fresh crowd, with every setting back at its start.'; });
+
+    var LOOK = {
+      demand: 'All three fill every block and prices climb. The posted price moves in small steps while the auction and uniform prices jump; its blocks still average about 15. Elastic blocks absorb bursts; they do not add capacity on average.',
+      habitOff: 'With modest tips the posted fee comes out cheaper than the auction, with a narrower gap: what its designers hoped. In the data it was dearer and wider (Tables 3 and 4); the paper’s reading is the habit.',
+      habitOn: 'Back to the paper’s reading: users tip about what they used to bid, on top of the base fee. The posted fee is dearer and its gap wider, while its price stays the steadiest.',
+      subsidy: 'Only the miner’s pay moves. In this toy miners do not react, so user fees cannot move. The Merge showed the same in data, which this toy cannot test.',
+      burst: 'The posted block stretches toward 30 and its base fee climbs a step at a time; the fixed blocks queue the rush, and the auction and uniform prices jump.'
+    };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-try]'), function (b) {
+      b.addEventListener('click', function () {
+        var t = b.getAttribute('data-try'), msg;
+        if (t === 'demand') { p.demand = 25; msg = LOOK.demand; }
+        else if (t === 'habit') { p.habit = !p.habit; msg = p.habit ? LOOK.habitOn : LOOK.habitOff; }
+        else if (t === 'subsidy') { p.subsidy = 0; msg = LOOK.subsidy; }
+        else { stream.burst(30); msg = LOOK.burst; if (!running) tick(); }
+        syncKnobs();
+        $('sb-look').textContent = msg + (running ? '' : ' (Press Run to watch it unfold.)');
+      });
+    });
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+    tabs.forEach(function (tb) {
+      tb.addEventListener('click', function () {
+        tabs.forEach(function (o) { var on = o === tb; o.setAttribute('aria-selected', on ? 'true' : 'false'); $(o.getAttribute('aria-controls')).hidden = !on; });
+      });
+    });
+
+    start(); setRun(running);
+    explore.onShow(slide, paint);
+    function frame(ts) {
+      requestAnimationFrame(frame);
+      if (!running || !explore.active(slide) || document.hidden) return;
+      if (ts - last > 520) { last = ts; tick(); }
+    }
+    requestAnimationFrame(frame);
+  })();
+})();
+</script>
+</body>
+</html>

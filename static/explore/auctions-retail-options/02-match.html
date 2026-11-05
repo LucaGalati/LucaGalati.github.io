@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Like with like · Auctions for Retail-Sized Options</title>
+<meta name="description" content="Deck 2 of the explorable: matching each SPX auction trade to its twin in the book, the single-leg result, the SPY placebo, and why complex orders gain nothing.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<noscript><style>.slide{display:grid !important}.map-btn{display:none}.bet .answer{visibility:visible !important}</style></noscript>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/auctions-retail-options/">← Back to the paper</a></noscript>
+  <div class="deck-label">Deck 2 of 4 · <b>Like with like</b></div>
+  <button type="button" class="map-btn" aria-haspopup="dialog" aria-expanded="false">Map <span class="kbd">m</span></button>
+</lg-sitebar>
+<main>
+
+<section class="slide" id="s1">
+  <div class="inner split">
+    <div>
+      <p class="eyebrow">Like with like</p>
+      <h2>Twins, two weeks apart</h2>
+      <p>Take every auction trade from the two weeks after February 22, 2021. For each one, find the nearest book trade from the two weeks before, on six characteristics: absolute delta, absolute vega, implied volatility, trade size, days to expiration and absolute gamma. One to one; no book trade is used twice.</p>
+      <p>Auction trades with no twin close enough are set aside: they are longer-dated, more directional and face quotes of about 50 cents. What remains are matched samples of 36,830 single-leg and 55,558 complex observations. The estimate speaks for the typical order: about two contracts, six days from expiry.</p>
+    </div>
+    <figure>
+      <div class="seg" role="group" aria-label="Before or after matching">
+        <button type="button" id="segBefore" aria-pressed="true">Before matching</button>
+        <button type="button" id="segAfter" aria-pressed="false">After matching</button>
+      </div>
+      <svg id="dumb" role="img" aria-label="Single-leg SPX trades, auction against book. Before matching: trade size 1.85 against 6.93 contracts, days to expiration 6.95 against 14.17, absolute delta 0.339 against 0.287, implied volatility 0.246 against 0.210. After matching: 1.86 against 1.93, 5.98 against 6.04, 0.325 against 0.325, 0.239 against 0.236." style="margin-top:14px"></svg>
+      <figcaption><span class="key gold"></span>auction trades, two weeks after &nbsp; <span class="key accent"></span>book trades, two weeks before. Single-leg means, Table VI of the paper. Vega, matched too: 1.06 against 1.31 before, 0.96 against 0.88 after. Gamma stays apart: 0.008 against 0.012. Vega: sensitivity to volatility; gamma: how fast delta changes; implied volatility: the volatility priced in.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="inner betgrid">
+    <div class="intro">
+      <p class="eyebrow">Place your bet</p>
+      <h2>Same order, two mechanisms</h2>
+      <p>The twin in the book paid an effective spread of 12.39 cents, at 0.90 of its quoted spread: almost at the quote. The auction trade faced a wider quote, 22.27 cents against 14.94.</p>
+    </div>
+    <figure class="stage">
+      <svg id="quote2" role="img" aria-label="A quote line from bid to ask. The book twin executed at 0.90 of its quoted spread, an effective spread of 12.39 cents."></svg>
+      <figcaption>Position on the line is the effective spread divided by the quoted spread: 1 at the quote, 0 at the midpoint. Matched single-leg means, Table VI of the paper; each trade is drawn against its own quote.</figcaption>
+    </figure>
+    <div class="bet" data-bet="single-leg">
+      <p class="q">What did the auction trade pay?</p>
+      <div class="choices">
+        <button type="button" data-choice="more">More</button>
+        <button type="button" data-choice="same">About the same</button>
+        <button type="button" data-choice="little">A little less</button>
+        <button type="button" data-choice="lot">A lot less</button>
+      </div>
+      <div class="answer">
+        <div class="verdicts">
+          <p data-verdict="more">You bet on more. It paid less, despite the wider quote.</p>
+          <p data-verdict="same">You bet on about the same. It paid a third less.</p>
+          <p data-verdict="little">You bet on a little less. It was more: a third to a half less.</p>
+          <p data-verdict="lot">You bet on a lot less. Right: a third to a half less.</p>
+        </div>
+        <p><strong>8.55 cents</strong>: 3.84 less, or 31 percent. Hold the quote and that week’s market conditions fixed and the gap is 6.71 cents, or 54 percent.</p>
+        <p>Before matching, the same weeks showed a gap of only a third of a cent, 9.98 against 10.29: the auction had drawn the harder orders, on quotes nearly twice as wide. Matching made it look better, not worse.</p>
+        <p class="doors"><a class="door small" href="03-who-pays.html">Who pays for this?</a><a class="door small" href="#s3">Was it the auction, or the week?</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s3">
+  <div class="inner split text-right">
+    <div>
+      <p class="eyebrow">The placebo</p>
+      <h2>The auction, or the week?</h2>
+      <p>Auction trades and their twins come from different weeks. Perhaps execution simply got cheaper in late February. SPY options track one tenth of the same index and saw no change on February 22.</p>
+      <p>Over the same four weeks the single-leg SPY spread rose 19 percent without controls and fell 4 percent with them (+0.146 and −0.032 cents on a mean of 0.77). The first goes the wrong way for a market-wide fall; the second is a small fraction of the 54 percent fall in SPX.</p>
+    </div>
+    <figure>
+      <svg id="placebo" role="img" aria-label="Change in the single-leg effective spread. SPX, auction trade against its twin: minus 31 percent without controls, minus 54 percent with them. SPY, all trades after against before: plus 19 percent without controls, minus 4 percent with them."></svg>
+      <figcaption>Change in the single-leg effective spread. SPX: matched auction trade against its twin, −3.84 and −6.71 cents on a book mean of 12.39 (Table VII). SPY: all trades in the same four weeks, after against before, 4.7 million of them (Table VIII). Controls include the quoted spread, the trade’s characteristics and the VIX.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="slide" id="s4">
+  <div class="inner betgrid">
+    <div class="intro">
+      <p class="eyebrow">A second bet</p>
+      <h2>Do complex orders gain more?</h2>
+      <p>A complex order is a package of options traded at one net price. It is about twice as likely to reach the SPX auction as a single-leg order of the same size and risk. If the auction draws complex orders so readily, surely it does the most for them?</p>
+    </div>
+    <figure class="stage">
+      <svg id="quote4" role="img" aria-label="Two quote lines. Single-leg: the book at 0.90 of the quoted spread, the auction at 0.42. Complex: the book at 0.18."></svg>
+      <figcaption>Effective spread as a fraction of the quoted spread: 1 at the quote, 0 at the midpoint. Single-leg: matched means, Table VI. Complex: full-sample means, Table II; a complex quote is built from the quotes of its legs. The auction draws the smallest, least directional packages: vertical spreads, at an absolute delta of 0.03 to 0.04, carry 60 percent of its complex dollar volume (Table V).</figcaption>
+    </figure>
+    <div class="bet" data-bet="complex">
+      <p class="q">What does the auction do to their cost?</p>
+      <div class="choices">
+        <button type="button" data-choice="more">Cuts it more</button>
+        <button type="button" data-choice="same">About the same</button>
+        <button type="button" data-choice="less">Cuts it less</button>
+        <button type="button" data-choice="nothing">Nothing</button>
+      </div>
+      <div class="answer">
+        <div class="verdicts">
+          <p data-verdict="more">You bet on more. The orders most drawn to it gain nothing.</p>
+          <p data-verdict="same">You bet on about the same. In fact, nothing measurable.</p>
+          <p data-verdict="less">You bet on less. Less, down to nothing measurable.</p>
+          <p data-verdict="nothing">You bet on nothing. Right: nothing measurable.</p>
+        </div>
+        <p>A matched complex auction trade pays <strong>2.95 cents</strong> against 2.60 for its twin: no improvement. The book already fills these orders at 0.18 of the quote, deep inside it, and so does the auction. There is little left to improve.</p>
+        <p class="doors"><a class="door small" href="03-who-pays.html">Who pays for the single-leg gain?</a><a class="door small" href="04-spy.html">And where a wholesaler bought the order?</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="explore.js"></script>
+<script>
+(function () {
+  var E = window.EXPLORE, S = E.svg;
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* Twins: before/after matching, means from Table VI, Panel A. */
+  var dumb = $('dumb'), segB = $('segBefore'), segA = $('segAfter');
+  var ROWS = [
+    { label: 'Trade size, contracts', min: 0, max: 8, before: [1.85, 6.93], after: [1.86, 1.93], d: 2 },
+    { label: 'Days to expiration', min: 0, max: 16, before: [6.95, 14.17], after: [5.98, 6.04], d: 2 },
+    { label: 'Absolute delta', min: 0.25, max: 0.36, before: [0.339, 0.287], after: [0.325, 0.325], d: 3 },
+    { label: 'Implied volatility', min: 0.19, max: 0.26, before: [0.246, 0.210], after: [0.239, 0.236], d: 3 }
+  ];
+  var which = 'before', P = null;
+  function show(state) {
+    which = state;
+    segB.setAttribute('aria-pressed', state === 'before');
+    segA.setAttribute('aria-pressed', state === 'after');
+    if (!P) return;
+    P.parts.forEach(function (p) {
+      var v = p.r[state], xa = P.x(p.r, v[0]), xb = P.x(p.r, v[1]);
+      p.gA.style.transform = 'translate(' + xa + 'px,0)';
+      p.gB.style.transform = 'translate(' + xb + 'px,0)';
+      p.tA.textContent = v[0].toFixed(p.r.d);
+      p.tB.textContent = v[1].toFixed(p.r.d);
+      p.link.setAttribute('x', Math.min(xa, xb));
+      p.link.setAttribute('width', Math.abs(xa - xb));
+    });
+  }
+  E.fit(dumb, function (W) {
+    E.clear(dumb);
+    var wide = W >= 440, X0 = wide ? 156 : 16, X1 = W - 18, RH = wide ? 62 : 80, Y0 = wide ? 30 : 50;
+    P = { parts: [], x: function (r, v) { return X0 + (v - r.min) / (r.max - r.min) * (X1 - X0); } };
+    ROWS.forEach(function (r, i) {
+      var y = Y0 + i * RH;
+      S(dumb, 'text', wide ? { x: 0, y: y + 4, 'class': 't-val' } : { x: 0, y: y - 30, 'class': 't-val' }, r.label);
+      S(dumb, 'line', { x1: X0, y1: y, x2: X1, y2: y, 'class': 's-line' });
+      var link = S(dumb, 'rect', { x: X0, y: y - 1, width: 0, height: 2, 'class': 'f-muted grows' });
+      var gB = S(dumb, 'g', { 'class': 'moves' });
+      S(gB, 'circle', { cx: 0, cy: y, r: 6, 'class': 'f-accent' });
+      var tB = S(gB, 'text', { x: 0, y: y + 22, 'text-anchor': 'middle', 'class': 't-val' });
+      var gA = S(dumb, 'g', { 'class': 'moves' });
+      S(gA, 'circle', { cx: 0, cy: y, r: 6, 'class': 'f-gold' });
+      var tA = S(gA, 'text', { x: 0, y: y - 12, 'text-anchor': 'middle', 'class': 't-val' });
+      P.parts.push({ r: r, link: link, gA: gA, gB: gB, tA: tA, tB: tB });
+    });
+    E.view(dumb, W, Y0 + 3 * RH + 30);
+    show(which);
+  });
+  segB.addEventListener('click', function () { show('before'); });
+  segA.addEventListener('click', function () { show('after'); });
+  /* On first entry the twins pull together by themselves; the buttons replay it. */
+  var played = false;
+  function enter() {
+    if (played) return;
+    played = true;
+    if (E.reduced) { show('after'); return; }
+    show('before');
+    setTimeout(function () { show('after'); }, 900);
+  }
+  document.addEventListener('explore:slide', function (e) { if (e.detail.index === 0) enter(); });
+  if (E.current() === 0) enter();
+
+  /* A quote line from bid to ask; returns the x of a given effective/quoted ratio. */
+  function axis(svg, y, L, R, names) {
+    var MID = (L + R) / 2;
+    S(svg, 'line', { x1: L, y1: y, x2: R, y2: y, 'class': 's-text' });
+    S(svg, 'line', { x1: L, y1: y - 10, x2: L, y2: y + 10, 'class': 's-text', 'stroke-width': 1.5 });
+    S(svg, 'line', { x1: R, y1: y - 10, x2: R, y2: y + 10, 'class': 's-text', 'stroke-width': 1.5 });
+    S(svg, 'line', { x1: MID, y1: y - 14, x2: MID, y2: y + 14, 'class': 's-muted', 'stroke-dasharray': '2 3' });
+    if (names) {
+      S(svg, 'text', { x: L, y: y + 30, 'text-anchor': 'middle', 'class': 't-lab' }, 'bid');
+      S(svg, 'text', { x: MID, y: y + 30, 'text-anchor': 'middle', 'class': 't-lab' }, names === 2 ? 'midpoint · ratio 0' : 'midpoint');
+      S(svg, 'text', { x: R, y: y + 30, 'text-anchor': 'end', 'class': 't-lab' }, names === 2 ? 'ask · ratio 1' : 'ask');
+    }
+    return function (r) { return MID + r * (R - MID); };
+  }
+  function reveal(g, on) { g.style.opacity = on ? 1 : 0; g.style.visibility = on ? 'visible' : 'hidden'; }
+  /* screen readers hear the auction's numbers only once a bet is placed */
+  function label2(on) { $('quote2').setAttribute('aria-label', 'A quote line from bid to ask. The book twin executed at 0.90 of its quoted spread, an effective spread of 12.39 cents' + (on ? '; the matched auction trade at 0.42, 8.55 cents.' : '.')); }
+  function label4(on) { $('quote4').setAttribute('aria-label', 'Two quote lines. Single-leg: the book at 0.90 of the quoted spread, the auction at 0.42. Complex: the book at 0.18' + (on ? ', and the auction at 0.18 too.' : '.')); }
+
+  /* Bet 1: the single-leg pair (Table VI). */
+  var q2 = $('quote2'), rev2 = null;
+  E.fit(q2, function (W) {
+    E.clear(q2);
+    var L = 24, R = W - 24, y = 100, X = axis(q2, y, L, R, 2), xb = X(0.90), xa = X(0.42);
+    S(q2, 'circle', { cx: xb, cy: y, r: 8, 'class': 'f-paper s-accent', 'stroke-width': 1.75 });
+    var cb = E.clamp(xb, 48, 0, W);
+    S(q2, 'text', { x: cb, y: 50, 'text-anchor': 'middle', 'class': 't-val' }, 'book twin');
+    S(q2, 'text', { x: cb, y: 66, 'text-anchor': 'middle', 'class': 't-lab' }, '0.90 · 12.39 ¢');
+    S(q2, 'line', { x1: xb, y1: 73, x2: xb, y2: y - 11, 'class': 's-line' });
+    rev2 = S(q2, 'g', { 'class': 'fades' });
+    S(rev2, 'text', { x: xa - 12, y: 50, 'text-anchor': 'end', 'class': 't-val' }, 'auction trade');
+    S(rev2, 'text', { x: xa - 12, y: 66, 'text-anchor': 'end', 'class': 't-lab' }, '0.42 · 8.55 ¢');
+    S(rev2, 'path', { d: 'M' + (xa - 8) + ' 61 H' + xa + ' V' + (y - 11), 'class': 'f-none s-line' });
+    S(rev2, 'circle', { cx: xa, cy: y, r: 7, 'class': 'f-gold' });
+    E.view(q2, W, y + 38);
+    reveal(rev2, !!E.bet('single-leg'));
+    label2(!!E.bet('single-leg'));
+  });
+
+  /* Placebo: percentage change in the single-leg effective spread (Tables VII and VIII). */
+  var pl = $('placebo');
+  var GROUPS = [
+    { name: 'SPX: auction trade against its twin', rows: [['without controls', -31], ['with controls', -54]], cls: 'f-gold' },
+    { name: 'SPY: all trades, after against before', rows: [['without controls', 19], ['with controls', -4]], cls: 'f-muted' }
+  ];
+  E.fit(pl, function (W) {
+    E.clear(pl);
+    var LBL = W >= 480 ? 124 : 104, A = LBL + 46, B = W - 44, LO = -60, HI = 25;
+    function X(v) { return A + (v - LO) / (HI - LO) * (B - A); }
+    var x0 = X(0), y = 0;
+    GROUPS.forEach(function (g) {
+      S(pl, 'text', { x: 0, y: y + 14, 'class': 't-val' }, g.name);
+      y += 26;
+      g.rows.forEach(function (r) {
+        var xv = X(r[1]);
+        S(pl, 'text', { x: 0, y: y + 15, 'class': 't-lab' }, r[0]);
+        S(pl, 'rect', { x: Math.min(x0, xv), y: y, width: Math.abs(xv - x0), height: 21, rx: 2, 'class': g.cls });
+        S(pl, 'text', { x: r[1] < 0 ? xv - 7 : xv + 7, y: y + 15, 'text-anchor': r[1] < 0 ? 'end' : 'start', 'class': 't-val' }, (r[1] > 0 ? '+' : '−') + Math.abs(r[1]) + '%');
+        y += 30;
+      });
+      y += 14;
+    });
+    S(pl, 'line', { x1: x0, y1: 22, x2: x0, y2: y - 10, 'class': 's-muted' });
+    S(pl, 'text', { x: x0, y: y + 6, 'text-anchor': 'middle', 'class': 't-lab' }, 'no change');
+    E.view(pl, W, y + 10);
+  });
+
+  /* Bet 2: single-leg against complex (Tables VI and II). */
+  var q4 = $('quote4'), rev4 = null;
+  E.fit(q4, function (W) {
+    E.clear(q4);
+    var L = 24, R = W - 24;
+    S(q4, 'text', { x: 0, y: 13, 'class': 't-title' }, 'Single-leg');
+    var X = axis(q4, 62, L, R, 1), xb = X(0.90), xa = X(0.42);
+    S(q4, 'circle', { cx: xb, cy: 62, r: 8, 'class': 'f-paper s-accent', 'stroke-width': 1.75 });
+    S(q4, 'text', { x: E.clamp(xb, 32, 0, W), y: 40, 'text-anchor': 'middle', 'class': 't-lab' }, 'book 0.90');
+    S(q4, 'circle', { cx: xa, cy: 62, r: 7, 'class': 'f-gold' });
+    S(q4, 'text', { x: xa - 10, y: 40, 'text-anchor': 'end', 'class': 't-lab' }, 'auction 0.42');
+    S(q4, 'text', { x: 0, y: 132, 'class': 't-title' }, 'Complex');
+    X = axis(q4, 180, L, R, 1);
+    var xc = X(0.18);
+    S(q4, 'circle', { cx: xc, cy: 180, r: 9, 'class': 'f-paper s-accent', 'stroke-width': 1.75 });
+    S(q4, 'text', { x: xc - 13, y: 160, 'text-anchor': 'end', 'class': 't-lab' }, 'book 0.18');
+    rev4 = S(q4, 'g', { 'class': 'fades' });
+    S(rev4, 'circle', { cx: xc, cy: 180, r: 5, 'class': 'f-gold' });
+    S(rev4, 'text', { x: xc + 13, y: 160, 'text-anchor': 'start', 'class': 't-lab' }, 'auction 0.18');
+    E.view(q4, W, 216);
+    reveal(rev4, !!E.bet('complex'));
+    label4(!!E.bet('complex'));
+  });
+
+  document.addEventListener('explore:bet', function (e) {
+    if (e.detail.id === 'single-leg' && rev2) { reveal(rev2, true); label2(true); }
+    if (e.detail.id === 'complex' && rev4) { reveal(rev4, true); label4(true); }
+  });
+})();
+</script>
+</body>
+</html>

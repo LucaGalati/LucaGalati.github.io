@@ -1,0 +1,43 @@
+{{ define "main" }}
+{{- $data := site.Data.teaching -}}
+{{- $courses := $data -}}
+{{- $intro := "" -}}
+{{- if reflect.IsMap $data }}{{ $courses = $data.courses }}{{ $intro = $data.intro | default "" }}{{ end -}}
+<article class="wrap teaching">
+  {{ partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  <div class="prose">
+    {{- if .Content }}{{ .Content }}{{ else }}{{ with $intro }}<p>{{ . }}</p>{{ end }}{{ end }}
+  </div>
+
+  {{- with $courses }}
+  <div class="courses">
+    {{- range . }}
+    <article class="course">
+      <h2>{{ .title }}</h2>
+      {{- $meta := slice }}
+      {{- with .institution }}{{ $meta = $meta | append . }}{{ end }}
+      {{- with .roles }}
+        {{- if reflect.IsSlice . }}
+          {{- range . }}
+            {{- if reflect.IsMap . }}
+              {{- $r := .role | default "" }}{{ $t := .term | default .terms | default .years | default "" }}
+              {{- if reflect.IsSlice $t }}{{ $t = delimit $t ", " }}{{ end }}
+              {{- if and $r $t }}{{ $meta = $meta | append (printf "%s (%s)" $r $t) }}{{ else }}{{ $meta = $meta | append (print $r $t) }}{{ end }}
+            {{- else }}{{ $meta = $meta | append (printf "%v" .) }}{{ end }}
+          {{- end }}
+        {{- else }}{{ $meta = $meta | append (printf "%v" .) }}{{ end }}
+      {{- else }}
+        {{- with .role }}{{ $meta = $meta | append (printf "%v" .) }}{{ end }}
+        {{- $t := .terms | default .years }}
+        {{- with $t }}{{ if reflect.IsSlice . }}{{ $meta = $meta | append (delimit . ", ") }}{{ else }}{{ $meta = $meta | append (printf "%v" .) }}{{ end }}{{ end }}
+      {{- end }}
+      {{- with .level }}{{ $meta = $meta | append (printf "%v" .) }}{{ end }}
+      <p class="course__meta">{{ delimit $meta " · " }}</p>
+      {{- with .description }}<div class="course__desc">{{ . | markdownify }}</div>{{ end }}
+    </article>
+    {{- end }}
+  </div>
+  {{- end }}
+</article>
+{{ end }}

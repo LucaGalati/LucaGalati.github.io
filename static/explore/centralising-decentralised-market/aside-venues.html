@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why have many venues at all? · Centralising a Decentralised Market</title>
+<meta name="description" content="Side path of the explorable: the cost and the benefit of trading one bond on many venues.">
+<link rel="stylesheet" href="explore.css">
+<script src="explore.js" defer></script>
+<script src="../sitebar.js"></script>
+</head>
+<body>
+<lg-sitebar><noscript><a href="../../publication/centralising-decentralised-market/">← Back to the paper</a></noscript><button class="bar__btn" type="button" data-map aria-expanded="false">Map<span class="bar__key"> · m</span></button></lg-sitebar>
+
+<main class="deck" data-deck="a1">
+  <section class="slide" id="s1" aria-label="Side path">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>Side path</b> Theory</p>
+        <h1>Why have many venues at all?</h1>
+        <p>The toy shows only the cost of spreading trading across screens. Theory sees a benefit as well.</p>
+        <p>In Chen and Duffie's model (2021), one asset trades on several exchanges at once. A trade moves the price only on the exchange where it happens, so traders can trade more aggressively — and, taken together, the exchanges' prices can end up more informative than a single exchange's would be.</p>
+        <p>So more venues bring a cost and a benefit. Which one wins is an empirical question: the one the paper asks of EU-Bonds.</p>
+      </div>
+      <div class="slide__visual">
+        <div class="duo">
+          <div class="card">
+            <svg viewBox="0 0 72 36" aria-hidden="true"><rect x="2" y="8" width="20" height="20" rx="2" style="fill:none;stroke:var(--accent);stroke-width:1.6"></rect><rect x="26" y="8" width="20" height="20" rx="2" style="fill:none;stroke:var(--muted);stroke-width:1.6;stroke-dasharray:3 2"></rect><rect x="50" y="8" width="20" height="20" rx="2" style="fill:none;stroke:var(--muted);stroke-width:1.6;stroke-dasharray:3 2"></rect></svg>
+            <h3>The cost: dispersed flow</h3>
+            <p>Each venue sees only a slice of the orders, so its screen lags behind the news and disagrees with the others.</p>
+          </div>
+          <div class="card">
+            <svg viewBox="0 0 72 36" aria-hidden="true"><rect x="2" y="8" width="20" height="20" rx="2" style="fill:none;stroke:var(--accent);stroke-width:1.6"></rect><rect x="26" y="8" width="20" height="20" rx="2" style="fill:none;stroke:var(--accent);stroke-width:1.6"></rect><rect x="50" y="8" width="20" height="20" rx="2" style="fill:none;stroke:var(--accent);stroke-width:1.6"></rect><circle cx="36" cy="18" r="4" style="fill:var(--gold);stroke:var(--accent)"></circle></svg>
+            <h3>The benefit: isolated impact</h3>
+            <p>A trade moves only its own venue's price, so traders trade more boldly; and venues compete for the same orders, which can narrow spreads.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--back" href="01-screens.html#2">← Back to the toy (I · 2)</a>
+        <a class="door door--back" href="03-frictions.html#1">← Back to the price of a trade (III · 1)</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bar bar--bottom">
+  <button class="bar__btn" type="button" data-prev aria-label="Previous slide">←</button>
+  <div class="dots" data-dots role="group" aria-label="Slides"></div>
+  <span class="bar__count" data-count></span>
+  <button class="bar__btn" type="button" data-next aria-label="Next slide">→</button>
+</footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{{- /* Scholarly metadata: Google Scholar citation_* tags + ScholarlyArticle (or Thesis) JSON-LD
+       on paper pages. Built from the same front matter the page renders. */ -}}
+{{- if and .IsPage (not .Params.private) (eq .Section "publication") }}
+  {{- $thesis := in (.Params.publication_types | default slice) "thesis" }}
+  {{- $authors := slice }}
+  {{- range .Params.authors }}{{ $authors = $authors | append (dict "@type" "Person" "name" .) }}{{ end }}
+<meta name="citation_title" content="{{ .Title }}">
+    {{- range .Params.authors }}
+<meta name="citation_author" content="{{ . }}">
+    {{- end }}
+<meta name="citation_publication_date" content="{{ .Date.Format "2006/01/02" }}">
+    {{- if $thesis }}
+<meta name="citation_dissertation_institution" content="{{ .Params.institution }}">
+    {{- else }}{{ with .Params.journal }}
+<meta name="citation_journal_title" content="{{ . }}">
+    {{- end }}{{ end }}
+    {{- with .Params.volume }}
+<meta name="citation_volume" content="{{ . }}">
+    {{- end }}
+    {{- with .Params.issue }}
+<meta name="citation_issue" content="{{ . }}">
+    {{- end }}
+    {{- with .Params.pages }}
+      {{- $first := index (split (replaceRE `[–—]` "-" (printf "%v" .)) "-") 0 | strings.TrimSpace }}
+      {{- with $first }}
+<meta name="citation_firstpage" content="{{ . }}">
+      {{- end }}
+    {{- end }}
+    {{- with .Params.doi }}
+<meta name="citation_doi" content="{{ . }}">
+    {{- end }}
+    {{- with .Params.url_pdf }}
+<meta name="citation_pdf_url" content="{{ . | absURL }}">
+    {{- end }}
+    {{- $ld := dict
+          "@context" "https://schema.org"
+          "@type" (cond $thesis "Thesis" "ScholarlyArticle")
+          "headline" .Title
+          "author" $authors
+          "datePublished" (.Date.Format "2006-01-02")
+          "url" .Permalink
+          "inLanguage" "en" }}
+    {{- if $thesis }}{{ with .Params.degree }}{{ $ld = merge $ld (dict "inSupportOf" .) }}{{ end }}{{ end }}
+    {{- with .Params.abstract }}{{ $ld = merge $ld (dict "abstract" (. | plainify | htmlUnescape)) }}{{ end }}
+    {{- with .Params.journal }}{{ $ld = merge $ld (dict "isPartOf" (dict "@type" "Periodical" "name" .)) }}{{ end }}
+    {{- with .Params.doi }}{{ $doi := printf "https://doi.org/%s" . }}{{ $ld = merge $ld (dict "identifier" $doi "sameAs" $doi) }}{{ end }}
+    {{- with .Params.tags }}{{ $ld = merge $ld (dict "keywords" (delimit . ", ")) }}{{ end }}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+{{- end }}

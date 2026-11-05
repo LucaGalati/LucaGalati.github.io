@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The limits — Limits to Longer Benchmark Windows</title>
+<meta name="description" content="Part 2 of the explorable: why the client's best fixing window is finite, what the dealer earns and risks, and how a benchmark administrator weighs four objectives.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+  .wmark { fill: var(--gold); stroke: var(--text); stroke-width: 1.2; }
+  .wrange { stroke: var(--gold); stroke-width: 8; stroke-opacity: .5; stroke-linecap: round; }
+  .rowline { stroke: var(--border); stroke-width: 1; }
+  .reveal p:first-child { margin-top: 4px; }
+  .sandbox-ctl h3 { margin: 14px 0 4px; }
+  .verdict { font-weight: 500; }
+  .reveal-slot { min-height: 244px; }   /* the answer appears without moving the bet */
+  @media (max-width: 860px) { .reveal-slot { min-height: 0; } }
+</style>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/benchmark-windows/">← Back to the paper</a></noscript>
+  <div class="deck"><b>The limits</b><span class="n"> · part 2 of 2</span></div>
+  <button type="button" class="map-btn" aria-haspopup="dialog">Map<kbd>m</kbd></button>
+</lg-sitebar>
+
+<main>
+
+<!-- 1 ─────────────────────────────────────────────── -->
+<section class="slide" id="s1">
+  <div class="slide-inner slide--wide">
+    <h2>The price moves on its own</h2>
+    <p>Switch the market back on. The client’s cost is measured from the price when its order arrived, ten minutes before the window; the fix averages wherever the price wandered next. Forty afternoons, forty fixes.</p>
+    <figure class="stage">
+      <svg id="svg-fan" role="img" aria-label="Forty simulated price paths from the order's arrival through the fixing window; each path's fix is marked as a dot after the window"></svg>
+      <figcaption>Forty simulated paths at the paper’s calibrated volatility. Gold dots: each path’s fix. Dashed: the arrival price. Spread = σ√(T<sub>p</sub> + T<sub>f</sub>/3), eq. 18.</figcaption>
+    </figure>
+    <div class="ctls ctls--2">
+      <label class="ctl"><span>Window length</span><input id="tf-fan" type="range" min="1" max="30" step="0.5" value="5"><output id="tf-fan-out">5.0 min</output></label>
+      <div class="toggles" style="margin-top:0"><span>Volatility of</span><span class="seg"><button type="button" class="btn is-on" data-ccy="GBP">GBP/USD</button><button type="button" class="btn" data-ccy="AUD">AUD/USD</button></span></div>
+    </div>
+    <div class="readout" id="ro-fan" aria-live="polite"></div>
+    <p class="gap-top">The fixes spread out, but slowly: most of the spread was there before the window opened, and averaging cancels part of the wandering inside it. Each extra minute adds a third of a minute’s risk, every minute, without end, while the dilution benefit shrinks. That is the core of the argument.</p>
+    <p><a class="next" href="#s2">Put the two together ›</a></p>
+  </div>
+</section>
+
+<!-- 2 ─────────────────────────────────────────────── -->
+<section class="slide" id="s2">
+  <div class="slide-inner slide--wide">
+    <div class="cols cols--stage-right">
+      <div>
+        <h2>Place your bet</h2>
+        <p>Here are both forces for the pension fund’s GBP/USD order. Its expected impact cost falls and flattens. Its <span class="k">risk charge</span>, what it would pay to be rid of the uncertainty, rises in a straight line.</p>
+        <p class="q after" style="font-size:1.12em">Where does their sum bottom out?</p>
+        <div class="bet after" id="bet">
+          <button type="button" class="btn" data-k="0">1–2 minutes</button>
+          <button type="button" class="btn" data-k="1">About five</button>
+          <button type="button" class="btn" data-k="2">10–15 minutes</button>
+          <button type="button" class="btn" data-k="3">30 or more</button>
+        </div>
+        <div class="reveal-slot after">
+        <p class="small" id="bet-skip">Rather not guess? <a href="#bet-reveal" id="bet-skip-link">Show the answer</a>.</p>
+        <div class="reveal" id="bet-reveal" hidden>
+          <p><span class="verdict" id="bet-verdict"></span> The total bottoms out near <span class="k">eleven and a half minutes</span>, more than twice today’s five.</p>
+          <p class="small">In the paper’s full calibration, where the dealer also picks its own split and charges its fee, the median week lands in the same place: 11.5 minutes (Table E.1). Across all weeks, the median of the weekly optima is 10.7 (Figure 7).</p>
+          <p><a class="next" href="#s3">What moves the bottom ›</a></p>
+        </div>
+        </div>
+      </div>
+      <div>
+        <figure class="stage">
+          <svg id="svg-bet" role="img" aria-label="The client's expected impact cost falling and its risk charge rising with window length; after the bet, their sum and its minimum"></svg>
+          <figcaption>Cost per unit of the £50 million order, basis points, at the paper’s GBP/USD medians. The dealer pre-hedges a tenth; no dealer fee yet (eq. 26).</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ─────────────────────────────────────────────── -->
+<section class="slide" id="s3">
+  <div class="slide-inner slide--wide">
+    <div class="cols cols--stage">
+      <div>
+        <figure class="stage">
+          <svg id="svg-u" role="img" aria-label="Client cost against window length: falling impact cost plus rising risk charge, with the minimum marked and a dashed reference curve at the GBP/USD medians"></svg>
+          <figcaption>Same chart, now yours to change. Dashed: the GBP/USD medians, for reference. Split held at a tenth, no fee.</figcaption>
+        </figure>
+        <div class="readout" id="ro-u" aria-live="polite"></div>
+        <div class="ctls">
+          <label class="ctl"><span>Volatility<i>typical one-minute move</i></span><input id="u-sig" type="range" min="0.5" max="4" step="0.05" value="1.6"><output id="u-sig-out"></output></label>
+          <label class="ctl"><span>Transient impact<i>fading bump per million</i></span><input id="u-lam" type="range" min="0.005" max="0.3" step="0.005" value="0.065"><output id="u-lam-out"></output></label>
+        </div>
+        <details class="more"><summary>More: risk aversion, bump half-life, permanent impact</summary>
+          <div class="ctls" style="margin-top:4px">
+            <label class="ctl"><span>Risk aversion<i>cost given up per bp of risk</i></span><input id="u-gc" type="range" min="0.0001" max="0.002" step="0.0001" value="0.0005"><output id="u-gc-out"></output></label>
+            <label class="ctl"><span>Bump half-life<i>how slowly liquidity recovers</i></span><input id="u-beta" type="range" min="15" max="200" step="0.1" value="50.7"><output id="u-beta-out"></output></label>
+            <label class="ctl"><span>Permanent impact<i>lasting move per million</i></span><input id="u-kap" type="range" min="0" max="0.1" step="0.005" value="0.01"><output id="u-kap-out"></output></label>
+          </div>
+        </details>
+        <div class="btns"><span class="seg"><button type="button" class="btn is-on" data-preset="GBP">GBP/USD medians</button><button type="button" class="btn" data-preset="AUD">AUD/USD medians</button></span></div>
+      </div>
+      <div>
+        <h2>What moves the bottom</h2>
+        <p>The bottom is not fixed; it moves with the market. <b>Predict first:</b> if the market gets more volatile, does the best window get longer or shorter? Then drag volatility and see.</p>
+        <p class="small after">Each control you move goes into this notebook: what raising it does to the best window.</p>
+        <ul class="notebook after" id="notebook"></ul>
+        <p class="small after" id="u-corr" hidden>Volatility, transient impact, risk aversion and permanent impact are the paper’s Corollary 1: the bottom moves, or stays put, as you saw. The half-life effect comes from its calibration (Table 2: faster recovery, shorter window).</p>
+        <p class="after"><a class="next" href="#s4">The dealer has a window problem too ›</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ─────────────────────────────────────────────── -->
+<section class="slide" id="s4">
+  <div class="slide-inner slide--wide">
+    <div class="cols cols--stage-right">
+      <div>
+        <h2>The dealer’s window</h2>
+        <p>The dealer is paid the fix. Part of what the fix captures is the <span class="k">dealer’s own fading impact</span>, so a short window is a source of revenue. A longer window dilutes that revenue faster than it saves the dealer on execution.</p>
+        <p>On top of that, matching a continuous average with 25 discrete trades leaves a tracking error that grows with the window. Both push its risk-adjusted profit down; past a <span class="k">break-even</span> window it is negative.</p>
+        <p class="small after">In GBP/USD, from one minute to ten: revenue −0.81 bp, execution cost saved +0.76, tracking charge −0.05. Drag the window and read the dealer’s book.</p>
+        <p class="after"><a class="door" href="03-behind.html#s1">Why does it trade before the window at all?</a></p>
+      </div>
+      <div>
+        <figure class="stage">
+          <svg id="svg-ud" role="img" aria-label="Dealer risk-adjusted profit against window length, crossing zero at the break-even window"></svg>
+          <figcaption>Dealer’s risk-adjusted profit before fees, bp per unit of the order (eq. 34), one median week, split held at a tenth. In the paper’s weekly calibration the median dealer turns negative at about seven minutes for GBP/USD and already at one for AUD/USD (p. 34).</figcaption>
+        </figure>
+        <div class="ctls">
+          <label class="ctl"><span>Window length</span><input id="tf-ud" type="range" min="1" max="30" step="0.5" value="10"><output id="tf-ud-out">10.0 min</output></label>
+        </div>
+        <div class="toggles"><span class="seg"><button type="button" class="btn is-on" data-ccy="GBP">GBP/USD</button><button type="button" class="btn" data-ccy="AUD">AUD/USD</button></span></div>
+        <table class="ledger" id="ledger" aria-live="polite"></table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ─────────────────────────────────────────────── -->
+<section class="slide" id="s5">
+  <div class="slide-inner slide--wide">
+    <div class="cols cols--stage">
+      <div>
+        <figure class="stage">
+          <svg id="svg-fee" role="img" aria-label="Client cost with and without the dealer's fee; the fee opens up beyond the break-even window and moves the client's best window"></svg>
+          <figcaption>Client cost per unit: thin, without the fee; bold, with the competitive fee max(0, −U<sub>D</sub>) added (eq. 46). Gold: the fee. Ring and dot: the best window without and with it.</figcaption>
+        </figure>
+        <div class="readout" id="ro-fee" aria-live="polite"></div>
+        <div class="toggles">
+          <span class="seg"><button type="button" class="btn is-on" data-ccy="GBP">GBP/USD</button><button type="button" class="btn" data-ccy="AUD">AUD/USD</button></span>
+          <span>Dealer’s split</span><span class="seg"><button type="button" class="btn is-on" data-split="tenth">a fixed tenth</button><button type="button" class="btn" data-split="own">its own best</button></span>
+        </div>
+      </div>
+      <div>
+        <h2>The fee</h2>
+        <p>A dealer facing competition does not work at a loss. It charges a fee equal to the shortfall, and the client pays it. Beyond the break-even window the client’s true cost bends upward, and its <span class="k">best window moves in</span>.</p>
+        <p class="after">With the split held at a tenth, the fee is easy to see: 11.5 minutes become 9.6. Now let the dealer choose <em>its own best split</em>. It needs a far smaller fee, about 0.02 bp in a median GBP/USD week, and the client’s window barely moves: 11.9 to 11.5, the paper’s median-week answer (Table E.1).</p>
+        <p class="small after">The fee is the channel by which the dealer’s risk reaches the client. In the paper’s weekly data it matters most in the more volatile AUD/USD and at longer windows (p. 34).</p>
+        <p class="after"><a class="door" href="03-behind.html#s2">What if the dealer changes its strategy as the window changes?</a></p>
+        <p class="after"><a class="next" href="#s6">The fix has other users ›</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 ─────────────────────────────────────────────── -->
+<section class="slide" id="s6">
+  <div class="slide-inner slide--wide">
+    <h2>Four objectives, four answers</h2>
+    <p>The client is not the only user of the fix. The paper scores four objectives in the same cost units: the client’s cost, the dealer’s profit, <a class="door-inline" href="03-behind.html#s3">representativeness</a> (how close the published rate stays to the untouched 4pm price) and <a class="door-inline" href="03-behind.html#s4">attainability</a> (how closely anyone can replicate the fix by trading).</p>
+    <figure class="stage">
+      <svg id="svg-four" role="img" aria-label="Four rows, one per objective, with each objective's best window marked on a common axis"></svg>
+      <figcaption>Weekly calibration, July 2024 – June 2026, dealer choosing its own split. Median weeks: median of the weekly optima (Figure 7, p. 33). Stressed weeks: the fixed 1–30 minute window with the lowest 99th-percentile outcome (Table B.1). Attainability: eq. 87.</figcaption>
+    </figure>
+    <div class="toggles">
+      <span class="seg"><button type="button" class="btn is-on" data-ccy="GBP">GBP/USD</button><button type="button" class="btn" data-ccy="AUD">AUD/USD</button></span>
+      <span class="seg"><button type="button" class="btn is-on" data-mode="med">Median weeks</button><button type="button" class="btn" data-mode="stress">Stressed weeks</button></span>
+    </div>
+    <p class="gap-top">The dealer wants the shortest window: a short one brings it the most impact revenue and the least tracking risk. Attainability agrees. Representativeness sits <span class="k">left of the client</span>: its risk weight is eight times larger and its variance grows four times more slowly. In stressed weeks those two move left: even the client wants about five minutes for GBP/USD and two for AUD/USD.</p>
+    <p><a class="next" href="#s7">One window for everyone ›</a></p>
+  </div>
+</section>
+
+<!-- 7 ─────────────────────────────────────────────── -->
+<section class="slide" id="s7">
+  <div class="slide-inner slide--wide">
+    <div class="cols cols--stage">
+      <div>
+        <figure class="stage">
+          <svg id="svg-admin" role="img" aria-label="The benchmark administrator's weighted loss against window length, with its minimum and the five-minute window marked"></svg>
+          <figcaption>Administrator’s weighted loss per unit (eq. 76), bp, with the dealer choosing its own split for each window. Gold dot: the best window. Ring: five minutes.</figcaption>
+        </figure>
+        <div class="readout" id="ro-admin" aria-live="polite"></div>
+        <div class="sandbox-ctl">
+          <h3>The market</h3>
+          <div class="ctls ctls--tight" style="margin-top:4px">
+            <label class="ctl"><span>Volatility</span><input id="a-sig" type="range" min="0.5" max="4" step="0.05" value="1.6"><output id="a-sig-out"></output></label>
+            <label class="ctl"><span>Transient impact</span><input id="a-lam" type="range" min="0.005" max="0.3" step="0.005" value="0.065"><output id="a-lam-out"></output></label>
+            <label class="ctl"><span>Bump half-life</span><input id="a-beta" type="range" min="15" max="200" step="0.1" value="50.7"><output id="a-beta-out"></output></label>
+            <label class="ctl"><span>Permanent impact</span><input id="a-kap" type="range" min="0" max="0.1" step="0.005" value="0.01"><output id="a-kap-out"></output></label>
+          </div>
+          <div class="toggles">
+            <span class="seg"><button type="button" class="btn is-on" data-preset="GBP">GBP/USD medians</button><button type="button" class="btn" data-preset="AUD">AUD/USD medians</button></span>
+            <span>Fear of risk</span><span class="seg"><button type="button" class="btn" data-risk="low">lower</button><button type="button" class="btn is-on" data-risk="mid">baseline</button><button type="button" class="btn" data-risk="high">higher</button></span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>One window for everyone</h2>
+        <p>An administrator cannot publish a different window for each user. The paper’s administrator minimises a weighted sum of the four losses — <span class="k">35% client, 15% dealer, 35% representativeness, 15% attainability</span>. This is the sandbox.</p>
+        <p>Move the market first: it is the market, more than the weights, that moves the window. Watch the readout too: at the GBP/USD medians five minutes costs about 6% more than the best window; at the AUD/USD medians, almost nothing.</p>
+        <p class="small after">The paper’s own numbers: across two years of weeks, the median of the weekly optimal windows is 8.56 minutes for GBP/USD and 4.47 for AUD/USD (Figure 9); at the median parameters it finds about 9 and 4.5 (Table E.1). This toy gives both currencies the same rounded impact parameters and lands near 9.2 and 5.8.</p>
+        <details class="more after"><summary>Change who counts how much</summary>
+          <div class="ctls" style="margin-top:4px">
+            <label class="ctl"><span>Client</span><input id="a-wc" type="range" min="0" max="100" step="5" value="35"><output id="a-wc-out"></output></label>
+            <label class="ctl"><span>Dealer</span><input id="a-wd" type="range" min="0" max="100" step="5" value="15"><output id="a-wd-out"></output></label>
+            <label class="ctl"><span>Representativeness</span><input id="a-wb" type="range" min="0" max="100" step="5" value="35"><output id="a-wb-out"></output></label>
+            <label class="ctl"><span>Attainability</span><input id="a-wa" type="range" min="0" max="100" step="5" value="15"><output id="a-wa-out"></output></label>
+          </div>
+          <div class="btns"><span class="seg"><button type="button" class="btn is-on" data-w="paper">Paper’s weights</button><button type="button" class="btn" data-w="equal">Equal weights</button></span></div>
+          <p class="small" style="margin-top:8px">Equal weights move the answer by less than a minute (footnote 21). Push one weight to the extreme and you get that user’s own answer.</p>
+        </details>
+        <p class="gap-top after"><a class="door" href="03-behind.html#s5">Where do these numbers come from?</a></p>
+        <p class="after"><a class="next" href="#s8">But a benchmark cannot change every week ›</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 ─────────────────────────────────────────────── -->
+<section class="slide" id="s8">
+  <div class="slide-inner slide--wide">
+    <h2>Where five minutes sits</h2>
+    <p>A benchmark has to use the same window every week. So the paper asks which <em>fixed</em> window does best across all the weeks: in a typical week (lowest median loss) and in a stressed one (lowest 99th-percentile loss).</p>
+    <figure class="stage">
+      <svg id="svg-five" role="img" aria-label="For GBP/USD and AUD/USD, in typical and stressed weeks, the fixed windows the administrator prefers, against a line at five minutes"></svg>
+      <figcaption>Administrator, paper’s weights. Bars: the ranges the paper reads off its Figure 9 (p. 35), baseline risk settings. Dots: the fixed window with the lowest median or 99th-percentile loss (Table B.1).</figcaption>
+    </figure>
+    <div class="toggles">
+      <span>Everyone’s fear of risk</span><span class="seg"><button type="button" class="btn" data-risk="low">lower</button><button type="button" class="btn is-on" data-risk="mid">baseline</button><button type="button" class="btn" data-risk="high">higher</button></span>
+      <span class="readout" id="ro-five" style="margin-top:0"></span>
+    </div>
+    <p class="gap-top">Five minutes is “not the exact optimum for every participant, currency, or market state”, the paper concludes, but it sits in a relatively robust region: inside the stressed range for GBP/USD and the typical range for AUD/USD, a few minutes from the rest. How close depends on everyone’s fear of risk, which the paper sets rather than estimates. Flip it.</p>
+    <div class="doors">
+      <a class="door" href="03-behind.html#s5">What the numbers rest on</a>
+      <a class="door" href="03-behind.html#s6">Where the model stops</a>
+      <a class="next" href="../../publication/benchmark-windows/">Back to the paper ›</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="nav">
+  <div><a class="arrow prev" href="#s1">‹ Previous</a></div>
+  <div class="dots"></div>
+  <div class="r"><a class="arrow next-arrow" href="#s2">Next ›</a></div>
+</footer>
+
+<script src="bw.js"></script>
+<script>
+(function () {
+  'use strict';
+  var B = window.BW;
+  B.initDeck('limits');
+  var LO = 0.05, HI = 30;
+  function signed(v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v); }
+  /* the bump half-life control works in seconds: beta = ln 2 · 60 / half-life (0.82 per minute ↔ 50.7 s) */
+  function HL(sec) { return Math.log(2) * 60 / sec; }
+  function HLs(beta) { return Math.round(Math.log(2) * 60 / beta * 10) / 10; }
+  function min30(v) { return v === 30 ? '30 min' : String(v); }
+  var X30 = [0, 5, 10, 15, 20, 25, [30, '30 min']], X30m = [0, 10, 20, [30, '30 min']];
+  function el(id) { return document.getElementById(id); }
+
+  /* ---------- slide 1: the fan ---------- */
+  (function () {
+    var svg = el('svg-fan'), ro = el('ro-fan'); if (!svg) return;
+    var N = 40, dt = 0.1, Tmax = 40, steps = Tmax / dt, paths = [], k, sigma = B.PRESETS.GBP.sigma, Tf = 5, C, band, winLab, lines, dots;
+    for (k = 0; k < N; k++) paths.push(B.bm(1000 + k, steps, dt, 1));
+    function build() {
+      C = B.chart(svg, { W: 900, H: 180, x: [0, Tmax + 2], y: [-40, 40], clip: true, pad: { l: 58, r: 16, t: 14, b: 30 },
+        xticks: [[0, 'order arrives'], [10, 'window opens'], [20, '20'], [30, '30'], [40, '40 min']], yticks: [-30, 0, 30], yfmt: function (v) { return signed(v) + ' bp'; },
+        mobile: { W: 420, H: 290, pad: { l: 40, r: 12, t: 26, b: 30 }, xticks: [[0, 'order'], [10, 'opens'], [20, '20'], [30, '30'], [40, '40 min']], yfmt: signed, ylabel: 'bp' } });
+      band = B.mk('rect', { 'class': 'band', y: C.top, height: C.bottom - C.top }, C.under);
+      B.mk('line', { x1: C.X(0), x2: C.X(Tmax + 2), y1: C.Y(0), y2: C.Y(0), 'class': 'hair' }, C.under);
+      lines = []; dots = [];
+      for (k = 0; k < N; k++) { lines.push(B.mk('path', { 'class': 'faint' }, C.g)); dots.push(B.mk('circle', { r: 3.2, 'class': 'gold-dot' }, C.over)); }
+      winLab = B.mk('text', { 'class': 'lbl', 'text-anchor': 'middle', y: C.top + 13, text: 'window' }, C.over);
+      draw();
+    }
+    function draw() {
+      var end = 10 + Tf, iEnd = Math.round(end / dt), i0 = Math.round(10 / dt), i, j, s, pts, fx;
+      band.setAttribute('x', C.X(10)); band.setAttribute('width', C.X(end) - C.X(10)); winLab.setAttribute('x', C.X(10 + Tf / 2));
+      for (i = 0; i < N; i++) {
+        pts = []; s = 0;
+        for (j = 0; j <= iEnd; j++) { pts.push([C.X(j * dt), C.Y(sigma * paths[i][j])]); if (j >= i0) s += sigma * paths[i][j]; }
+        fx = s / (iEnd - i0 + 1); lines[i].setAttribute('d', B.pathOf(pts));
+        dots[i].setAttribute('cx', C.X(end) + 7); dots[i].setAttribute('cy', B.clamp(C.Y(fx), C.top + 3, C.bottom - 3));
+      }
+      var sd = function (T) { return sigma * Math.sqrt(10 + T / 3); };
+      ro.innerHTML = '<span class="sw"></span>spread of the fix around the arrival price (s.d.): <b>' + B.fmt(sd(Tf), 2) + ' bp</b> · with a one-minute window <b>' + B.fmt(sd(1), 2) + '</b>, with thirty <b>' + B.fmt(sd(30), 2) + '</b>';
+    }
+    B.bind(el('tf-fan'), el('tf-fan-out'), function (v) { Tf = v; if (C) draw(); }, function (v) { return B.fmt(v, 1) + ' min'; }).refresh();
+    B.seg(el('s1'), 'data-ccy', function (c) { sigma = B.PRESETS[c].sigma; draw(); });
+    B.layout(build);
+  })();
+
+  /* ---------- slide 2: place your bet ---------- */
+  (function () {
+    var svg = el('svg-bet'); if (!svg) return;
+    var p = B.params(B.PRESETS.GBP), m = B.argmin(function (T) { return B.model(T, p.theta, p).CEC; }, LO, HI, 0.05), shown = false;
+    var C, total, dot, lab, l3;
+    var btns = Array.prototype.slice.call(document.querySelectorAll('#bet .btn')), reveal = el('bet-reveal'), verdict = el('bet-verdict'), skip = el('bet-skip');
+    var RANGES = [[1, 2], [4, 6], [10, 15], [30, 1e9]], NAMES = ['1–2 minutes', 'about five', '10–15 minutes', '30 or more'];
+    function build() {
+      C = B.chart(svg, { W: 620, H: 300, x: [0, 30], y: [0, 2.5], clip: true, pad: { l: 46, r: 14, t: 16, b: 30 }, xticks: X30, yticks: [0, 0.5, 1, 1.5, 2, 2.5],
+        mobile: { W: 420, H: 300, xticks: X30m, yticks: [0, 1, 2] } });
+      B.five(C);
+      var a = [], b = [], c = [], T, r;
+      for (T = LO; T <= HI + 1e-9; T += 0.05) { r = B.model(T, p.theta, p); a.push([C.X(T), C.Y(p.X * r.ETC)]); b.push([C.X(T), C.Y(p.X * r.risk)]); c.push([C.X(T), C.Y(p.X * r.CEC)]); }
+      B.mk('path', { d: B.pathOf(a), 'class': 'price' }, C.g); B.mk('path', { d: B.pathOf(b), 'class': 'thin' }, C.g); total = B.mk('path', { d: B.pathOf(c), 'class': 'ink' }, C.g);
+      var r30 = B.model(30, p.theta, p);
+      B.mk('text', { x: C.right - 2, y: C.Y(p.X * r30.ETC) - 7, 'text-anchor': 'end', 'class': 'lbl', text: 'expected impact cost' }, C.over);
+      B.mk('text', { x: C.right - 2, y: C.Y(p.X * r30.risk) + 16, 'text-anchor': 'end', 'class': 'lbl', text: 'risk charge' }, C.over);
+      l3 = B.mk('text', { x: C.right - 2, y: C.Y(p.X * r30.CEC) - 8, 'text-anchor': 'end', 'class': 'lbl-strong', text: 'total' }, C.over);
+      dot = B.mk('circle', { r: 6, 'class': 'gold-dot', cx: C.X(m.t), cy: C.Y(p.X * m.v) }, C.over);
+      lab = B.mk('text', { x: C.X(m.t), y: C.Y(p.X * m.v) - 13, 'text-anchor': 'middle', 'class': 'lbl-strong', text: 'bottom: ' + B.fmt(m.t, 1) + ' min' }, C.over);
+      paint();
+    }
+    function paint() { [total, dot, lab, l3].forEach(function (n) { n.style.opacity = shown ? 1 : 0; }); }
+    function choose(k, restoring) {
+      btns.forEach(function (b, i) { b.classList.toggle('is-on', i === k); b.setAttribute('aria-pressed', i === k ? 'true' : 'false'); });
+      shown = true; paint(); reveal.hidden = false; skip.hidden = true;
+      if (k < 0) verdict.textContent = 'No bet placed.';
+      else { var ok = m.t >= RANGES[k][0] && m.t <= RANGES[k][1]; verdict.textContent = 'You bet ' + NAMES[k] + (ok ? '. Right.' : (k === 1 ? ': the industry’s answer, not this client’s.' : '. Not quite.')); }
+      B.save('bw.bet2', k);
+      if (!restoring && reveal.scrollIntoView) reveal.scrollIntoView({ block: 'nearest' });
+    }
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); b.addEventListener('click', function () { choose(parseInt(b.getAttribute('data-k'), 10)); }); });
+    el('bet-skip-link').addEventListener('click', function (e) { e.preventDefault(); choose(-1); });
+    B.layout(build);
+    var saved = B.load('bw.bet2', -2); if (typeof saved === 'number' && saved >= -1 && saved <= 3) choose(saved, true);
+  })();
+
+  /* ---------- slide 3: what moves the bottom ---------- */
+  (function () {
+    var svg = el('svg-u'), ro = el('ro-u'), nb = el('notebook'), corr = el('u-corr'); if (!svg) return;
+    var p = B.params(B.PRESETS.GBP), ref = B.params(B.PRESETS.GBP), ymax = 3, C, impact, risk, total, dot, lab, l1, l2, l3;
+    function opt(q) { q = q || p; return B.argmin(function (T) { return B.model(T, q.theta, q).CEC; }, LO, HI, 0.05); }
+    var refOpt = opt(ref);
+    var KEYS = [['sig', 'Volatility'], ['lam', 'Transient impact'], ['gc', 'Risk aversion'], ['beta', 'Bump half-life'], ['kap', 'Permanent impact']];
+    var found = B.load('bw.notebook', {}); if (!found || typeof found !== 'object') found = {};
+    var WORDS = { shorter: 'raise it: shorter window', longer: 'raise it: longer window', same: 'raise it: the bottom stays put' };
+    function renderNotebook() {
+      nb.innerHTML = ''; var n = 0;
+      KEYS.forEach(function (k) {
+        var f = WORDS[found[k[0]]], li = B.el('li', { 'class': f ? 'found' : '' }, nb);
+        B.el('span', { text: k[1] }, li); B.el('span', { text: f || '…' }, li); if (f) n++;
+      });
+      corr.hidden = n < 2;
+    }
+    function ticks(y) { var st = y <= 3 ? 1 : y <= 6 ? 2 : 5, out = [], v; for (v = 0; v < y - 1e-9; v += st) out.push(v); out.push([y, y + ' bp']); return out; }
+    function build() {
+      C = B.chart(svg, { W: 620, H: 290, x: [0, 30], y: [0, ymax], clip: true, pad: { l: 46, r: 14, t: 16, b: 30 }, xticks: X30, yticks: ticks(ymax),
+        mobile: { W: 420, H: 290, xticks: X30m } });
+      B.five(C);
+      var g = [], T; for (T = LO; T <= HI + 1e-9; T += 0.1) g.push([C.X(T), C.Y(ref.X * B.model(T, ref.theta, ref).CEC)]);
+      B.mk('path', { d: B.pathOf(g), 'class': 'ghost' }, C.g);
+      B.mk('circle', { cx: C.X(refOpt.t), cy: C.Y(ref.X * refOpt.v), r: 4, 'class': 'ring' }, C.g);
+      impact = B.mk('path', { 'class': 'price' }, C.g); risk = B.mk('path', { 'class': 'thin' }, C.g); total = B.mk('path', { 'class': 'ink' }, C.g);
+      dot = B.mk('circle', { r: 6, 'class': 'gold-dot' }, C.over); lab = B.mk('text', { 'class': 'lbl-strong' }, C.over);
+      l1 = B.mk('text', { 'class': 'lbl', 'text-anchor': 'end', x: C.right - 2, text: 'impact cost' }, C.over);
+      l2 = B.mk('text', { 'class': 'lbl', 'text-anchor': 'end', x: C.right - 2, text: 'risk charge' }, C.over);
+      l3 = B.mk('text', { 'class': 'lbl-strong', 'text-anchor': 'end', x: C.right - 2, text: 'total' }, C.over);
+      draw();
+    }
+    function draw() {
+      var m = opt(), ym = p.X * m.v, need = Math.max(3, Math.ceil(2 * (ym + 1)) / 2);
+      if (need !== ymax) { ymax = need; build(); return; }
+      var a = [], b = [], c = [], T, r;
+      for (T = LO; T <= HI + 1e-9; T += 0.05) { r = B.model(T, p.theta, p); a.push([C.X(T), C.Y(p.X * r.ETC)]); b.push([C.X(T), C.Y(p.X * r.risk)]); c.push([C.X(T), C.Y(p.X * r.CEC)]); }
+      impact.setAttribute('d', B.pathOf(a)); risk.setAttribute('d', B.pathOf(b)); total.setAttribute('d', B.pathOf(c));
+      var x = C.X(m.t), y = C.Y(ym);
+      dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+      lab.setAttribute('x', x); lab.setAttribute('y', B.clamp(y - 13, C.top + 12, C.bottom - 6)); lab.setAttribute('text-anchor', B.anchorFor(x, C, 70));
+      lab.textContent = 'best: ' + B.optLabel(m.t, LO, HI);
+      var r30 = B.model(30, p.theta, p), ys = [C.Y(p.X * r30.ETC) - 6, C.Y(p.X * r30.risk) + 15, C.Y(p.X * r30.CEC) - 7];
+      [l1, l2, l3].forEach(function (n, i) { n.setAttribute('y', B.clamp(ys[i], C.top + 12, C.bottom - 6)); });
+      ro.innerHTML = '<span class="sw"></span>best window: <b>' + B.optLabel(m.t, LO, HI) + '</b> · cost there <b>' + B.fmt(ym, 2) + ' bp</b> · at five minutes <b>' + B.fmt(p.X * B.model(5, p.theta, p).CEC, 2) + ' bp</b>';
+    }
+    var presetSeg, ctl = {};
+    function hand() { if (presetSeg) presetSeg.clear(); }
+    ctl.sig = B.bind(el('u-sig'), el('u-sig-out'), function (v) { p.sigma = v; if (C) draw(); }, function (v) { return B.fmt(v, 2) + ' bp'; });
+    ctl.lam = B.bind(el('u-lam'), el('u-lam-out'), function (v) { p.lam = v; if (C) draw(); }, function (v) { return B.fmt(v, 3) + ' bp'; });
+    ctl.gc = B.bind(el('u-gc'), el('u-gc-out'), function (v) { p.gC = v; if (C) draw(); }, function (v) { return B.fmt(v * B.ETA_C, 2) + ' bp'; });
+    ctl.beta = B.bind(el('u-beta'), el('u-beta-out'), function (v) { p.beta = HL(v); if (C) draw(); }, function (v) { return Math.round(v) + ' s'; });
+    ctl.kap = B.bind(el('u-kap'), el('u-kap-out'), function (v) { p.kappa = v; if (C) draw(); }, function (v) { return B.fmt(v, 3) + ' bp'; });
+    KEYS.forEach(function (k) {
+      var input = el('u-' + k[0]), v0 = null, t0 = null;
+      function begin() { if (v0 === null) { v0 = parseFloat(input.value); t0 = opt().t; } }
+      input.addEventListener('pointerdown', begin); input.addEventListener('keydown', begin); input.addEventListener('input', hand);
+      input.addEventListener('change', function () {
+        if (v0 === null) return; var v = parseFloat(input.value), t = opt().t, edge = function (z) { return z <= LO + 1e-9 || z >= HI - 1e-9; };
+        if (v !== v0 && !(edge(t) && edge(t0))) {
+          var d = (t - t0) * (v > v0 ? 1 : -1);
+          found[k[0]] = Math.abs(t - t0) < 0.05 ? 'same' : (d < 0 ? 'shorter' : 'longer');
+          B.save('bw.notebook', found); renderNotebook();
+        }
+        v0 = null;
+      });
+    });
+    function preset(name) { var q = B.PRESETS[name]; ctl.sig.set(q.sigma); ctl.lam.set(q.lam); ctl.beta.set(HLs(q.beta)); ctl.kap.set(q.kappa); ctl.gc.set(B.BASE.gC); p.beta = q.beta; if (C) draw(); }
+    presetSeg = B.seg(el('s3'), 'data-preset', preset);
+    ['sig', 'lam', 'gc', 'beta', 'kap'].forEach(function (k) { ctl[k].refresh(); }); p.beta = B.PRESETS.GBP.beta;
+    renderNotebook();
+    B.layout(build);
+  })();
+
+  /* ---------- slide 4: the dealer's book ---------- */
+  (function () {
+    var svg = el('svg-ud'), led = el('ledger'); if (!svg) return;
+    var p = B.params(B.PRESETS.GBP), Tf = 10, C, curve, mark, mlab, be, beLab;
+    function build() {
+      C = B.chart(svg, { W: 620, H: 220, x: [0, 30], y: [-0.5, 0.1], clip: true, pad: { l: 50, r: 14, t: 14, b: 30 }, xticks: X30,
+        yticks: [[-0.4, '−0.4'], [-0.2, '−0.2'], [0, '0 bp']], mobile: { W: 420, H: 240, xticks: X30m } });
+      B.mk('line', { x1: C.left, x2: C.right, y1: C.Y(0), y2: C.Y(0), 'class': 'zero' }, C.under);
+      B.mk('text', { x: C.right - 4, y: C.Y(0) - 7, 'text-anchor': 'end', 'class': 'lbl', text: 'profit' }, C.under);
+      B.mk('text', { x: C.right - 4, y: C.Y(0) + 16, 'text-anchor': 'end', 'class': 'lbl', text: 'loss' }, C.under);
+      be = B.mk('line', { 'class': 'band-edge', y1: C.top, y2: C.bottom }, C.under); beLab = B.mk('text', { 'class': 'lbl-strong', y: C.top + 12 }, C.over);
+      curve = B.mk('path', { 'class': 'ink' }, C.g); mark = B.mk('circle', { r: 6, 'class': 'gold-dot' }, C.over); mlab = B.mk('text', { 'class': 'lbl-strong' }, C.over);
+      draw();
+    }
+    function row(name, a, b, cls) { return '<tr' + (cls ? ' class="' + cls + '"' : '') + '><td>' + name + '</td><td>' + B.sgn(a, 2) + '</td><td>' + B.sgn(b, 2) + '</td><td>' + B.sgn(b - a, 2) + '</td></tr>'; }
+    function draw() {
+      var pts = [], T, r, brk = null;
+      for (T = LO; T <= HI + 1e-9; T += 0.05) { r = B.model(T, p.theta, p); pts.push([C.X(T), C.Y(p.X * r.UD)]); if (brk === null && r.UD < 0) brk = T; }
+      curve.setAttribute('d', B.pathOf(pts));
+      var none = brk !== null && brk <= LO + 1e-9;
+      be.style.opacity = (brk === null || none) ? 0 : 1;
+      if (brk !== null && !none) { be.setAttribute('x1', C.X(brk)); be.setAttribute('x2', C.X(brk)); beLab.setAttribute('x', C.X(brk) + 6); beLab.setAttribute('text-anchor', 'start'); beLab.textContent = 'break-even ' + B.fmt(brk, 1) + ' min'; }
+      else { beLab.setAttribute('x', C.X(15)); beLab.setAttribute('text-anchor', 'middle'); beLab.textContent = none ? 'negative at every window' : 'positive up to 30 min'; }
+      var L1 = B.ledger(1, p.theta, p), L = B.ledger(Tf, p.theta, p), y = C.Y(L.U), x = C.X(Tf);
+      mark.setAttribute('cx', x); mark.setAttribute('cy', y);
+      mlab.setAttribute('x', x); mlab.setAttribute('y', B.clamp(y + 22, C.top + 12, C.bottom - 6)); mlab.setAttribute('text-anchor', B.anchorFor(x, C, 60)); mlab.textContent = B.sgn(L.U, 2) + ' bp at ' + B.fmt(Tf, Tf % 1 ? 1 : 0) + ' min';
+      var w = B.fmt(Tf, Tf % 1 ? 1 : 0);
+      led.innerHTML = '<thead><tr><th>The dealer’s book, bp per unit</th><th>1 min</th><th>' + w + ' min</th><th>change</th></tr></thead><tbody>' +
+        row('Revenue: its own impact, captured by the fix', L1.rev, L.rev) + row('Cost of its own impact while buying', -L1.exec, -L.exec) +
+        row('Permanent impact, net', L1.perm, L.perm) + row('Tracking-risk charge', -L1.risk, -L.risk) + row('Risk-adjusted profit', L1.U, L.U, 'total') + '</tbody>';
+    }
+    B.bind(el('tf-ud'), el('tf-ud-out'), function (v) { Tf = v; if (C) draw(); }, function (v) { return B.fmt(v, 1) + ' min'; }).refresh();
+    B.seg(el('s4'), 'data-ccy', function (c) { p = B.params(B.PRESETS[c]); draw(); });
+    B.layout(build);
+  })();
+
+  /* ---------- slide 5: the fee ---------- */
+  (function () {
+    var svg = el('svg-fee'), ro = el('ro-fee'); if (!svg) return;
+    var ccy = 'GBP', split = 'tenth', p = B.params(B.PRESETS.GBP), C, nofee, fee, fill, d1, d2, lab1, lab2, be, beLab;
+    function th(T) { return split === 'own' ? B.thetaD(T, p) : p.theta; }
+    function r(T) { return B.model(T, th(T), p); }
+    function build() {
+      var lo = Infinity, T; for (T = 1; T <= HI; T += 0.5) lo = Math.min(lo, p.X * r(T).CEC);
+      var y0 = Math.floor((lo - 0.25) * 5) / 5, y1 = y0 + 1.6;
+      C = B.chart(svg, { W: 620, H: 280, x: [0, 30], y: [y0, y1], clip: true, pad: { l: 50, r: 14, t: 16, b: 30 }, xticks: X30,
+        yticks: [[y0 + 0.4, B.fmt(y0 + 0.4, 1)], [y0 + 0.8, B.fmt(y0 + 0.8, 1)], [y0 + 1.2, B.fmt(y0 + 1.2, 1)], [y1, B.fmt(y1, 1) + ' bp']], mobile: { W: 420, H: 290, xticks: X30m } });
+      B.five(C);
+      be = B.mk('line', { 'class': 'band-edge', y1: C.top, y2: C.bottom }, C.under); beLab = B.mk('text', { 'class': 'lbl', y: C.bottom - 22 }, C.under);
+      fill = B.mk('path', { 'class': 'fill-gold' }, C.g); nofee = B.mk('path', { 'class': 'thin' }, C.g); fee = B.mk('path', { 'class': 'ink' }, C.g);
+      d1 = B.mk('circle', { r: 4.5, 'class': 'ring' }, C.over); d2 = B.mk('circle', { r: 6, 'class': 'gold-dot' }, C.over);
+      lab1 = B.mk('text', { 'class': 'lbl' }, C.over); lab2 = B.mk('text', { 'class': 'lbl-strong' }, C.over);
+      draw();
+    }
+    function draw() {
+      var a = [], b = [], T, q, brk = null;
+      for (T = LO; T <= HI + 1e-9; T += 0.05) { q = r(T); a.push([C.X(T), C.Y(p.X * q.CEC)]); b.push([C.X(T), C.Y(p.X * q.CEfee)]); if (brk === null && q.UD < 0) brk = T; }
+      nofee.setAttribute('d', B.pathOf(a)); fee.setAttribute('d', B.pathOf(b));
+      fill.setAttribute('d', B.pathOf(b) + B.pathOf(a.slice().reverse()).replace('M', 'L') + 'Z');
+      var none = brk !== null && brk <= LO + 1e-9;
+      be.style.opacity = brk !== null && !none ? 1 : 0;
+      if (brk !== null && !none) { be.setAttribute('x1', C.X(brk)); be.setAttribute('x2', C.X(brk)); beLab.setAttribute('x', C.X(brk) + 5); beLab.textContent = 'break-even'; } else beLab.textContent = '';
+      var m1 = B.argmin(function (t) { return r(t).CEC; }, LO, HI, 0.05), m2 = B.argmin(function (t) { return r(t).CEfee; }, LO, HI, 0.05);
+      var x1 = C.X(m1.t), y1 = C.Y(p.X * m1.v), x2 = C.X(m2.t), y2 = C.Y(p.X * m2.v), close = Math.abs(x1 - x2) < 60;
+      d1.setAttribute('cx', x1); d1.setAttribute('cy', y1); d2.setAttribute('cx', x2); d2.setAttribute('cy', y2);
+      lab1.setAttribute('x', x1); lab1.setAttribute('y', y1 + 20); lab1.setAttribute('text-anchor', close ? 'start' : 'middle'); lab1.textContent = 'no fee: ' + B.fmt(m1.t, 1);
+      lab2.setAttribute('x', x2); lab2.setAttribute('y', y2 - 13); lab2.setAttribute('text-anchor', close ? 'end' : 'middle'); lab2.textContent = 'with fee: ' + B.fmt(m2.t, 1) + ' min';
+      var f2 = p.X * r(m2.t).FD;
+      ro.innerHTML = 'Break-even <b>' + (brk === null ? 'beyond 30 min' : none ? 'none, negative at every window' : B.fmt(brk, 1) + ' min') + '</b> · client’s best window without the fee <b>' + B.optLabel(m1.t, LO, HI) + '</b>, with it <b>' + B.optLabel(m2.t, LO, HI) + '</b> · fee there <b>' + B.fmt(f2, 3) + ' bp</b> (' + B.money(f2, p.X) + ')';
+    }
+    B.seg(el('s5'), 'data-ccy', function (c) { ccy = c; p = B.params(B.PRESETS[c]); build(); });
+    B.seg(el('s5'), 'data-split', function (s) { split = s; build(); });
+    B.layout(build);
+  })();
+
+  /* ---------- slide 6: four objectives ---------- */
+  (function () {
+    var svg = el('svg-four'); if (!svg) return;
+    /* Section 4.2 (p. 33) and Table B.1 (moderate risk aversion). 'min' = shortest feasible (0.05 min grid); 'min1' = shortest on the 1–30 min grid. */
+    var DATA = {
+      GBP: { med: { client: 10.7, repr: 6.8, dealer: 'min', attain: 'min' }, stress: { client: 5, repr: 4, dealer: 'min1', attain: 'min1' } },
+      AUD: { med: { client: 6.1, repr: 3.5, dealer: 'min', attain: 'min' }, stress: { client: 2, repr: 1, dealer: 'min1', attain: 'min1' } }
+    };
+    var ROWS = [['client', 'Client’s cost'], ['repr', 'Representativeness'], ['dealer', 'Dealer’s profit'], ['attain', 'Attainability']];
+    var ccy = 'GBP', mode = 'med', C, marks;
+    function build() {
+      var nar = B.narrow();
+      C = B.chart(svg, { W: 900, H: 156, x: [0, 15], y: [0, 4], pad: { l: 190, r: 24, t: 15, b: 26 }, noYAxis: true,
+        xticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, [15, '15 min']],
+        mobile: { W: 420, H: 312, pad: { l: 14, r: 14, t: 28, b: 30 }, xticks: [0, 5, 10, [15, '15 min']] } });
+      B.five(C, null, nar); marks = {};
+      ROWS.forEach(function (rw, i) {
+        var y = C.Y(3.5 - i) + (nar ? 10 : 0);
+        B.mk('line', { x1: C.left, x2: C.right, y1: y, y2: y, 'class': 'rowline' }, C.under);
+        if (nar) B.mk('text', { x: C.left, y: y - 16, 'class': 'row-lbl', text: rw[1] }, C.g);
+        else B.mk('text', { x: C.left - 14, y: y + 4, 'text-anchor': 'end', 'class': 'row-lbl', text: rw[1] }, C.g);
+        marks[rw[0]] = { dot: B.mk('circle', { r: 7, cy: y, 'class': 'wmark' }, C.g), lab: B.mk('text', { y: y - 12, 'class': 'lbl-strong' }, C.g) };
+      });
+      draw();
+    }
+    function draw() {
+      ROWS.forEach(function (rw) {
+        var d = DATA[ccy][mode][rw[0]], m = marks[rw[0]], x = d === 'min' ? 0.05 : d === 'min1' ? 1 : d;
+        var txt = d === 'min' ? 'the shortest feasible' : d === 'min1' ? 'the shortest tested (1 min)' : B.fmt(d, d % 1 ? 1 : 0) + ' min';
+        m.dot.setAttribute('cx', C.X(x));
+        var X = C.X(x), cy = parseFloat(m.dot.getAttribute('cy')), right = X > C.right - 100, side = C.narrow || X < C.left + 60;
+        /* beside the dot on phones and at the left edge (clear of the row label), above it otherwise */
+        m.lab.setAttribute('x', right ? X - 12 : (side ? X + 12 : X)); m.lab.setAttribute('text-anchor', right ? 'end' : (side ? 'start' : 'middle'));
+        m.lab.setAttribute('y', side || right && C.narrow ? cy + 4 : cy - 12);
+        m.lab.textContent = txt;
+      });
+    }
+    B.seg(el('s6'), 'data-ccy', function (c) { ccy = c; draw(); });
+    B.seg(el('s6'), 'data-mode', function (m) { mode = m; draw(); });
+    B.layout(build);
+  })();
+
+  /* ---------- slide 7: the administrator's sandbox ---------- */
+  (function () {
+    var svg = el('svg-admin'), ro = el('ro-admin'); if (!svg) return;
+    var p = B.params(B.PRESETS.GBP), w = [35, 15, 35, 15], risk = 'mid', C, curve, dot, lab, d5, range = null;
+    function weights() { var s = w[0] + w[1] + w[2] + w[3]; return s <= 0 ? [0.25, 0.25, 0.25, 0.25] : [w[0] / s, w[1] / s, w[2] / s, w[3] / s]; }
+    function frame(y0, y1) {
+      var st = (y1 - y0) / 4;
+      C = B.chart(svg, { W: 620, H: 260, x: [0, 30], y: [y0, y1], clip: true, pad: { l: 50, r: 14, t: 16, b: 30 }, xticks: X30,
+        yticks: [0, 1, 2, 3].map(function (i) { var v = y0 + i * st; return [v, B.fmt(v, 1)]; }), ylabel: 'bp', mobile: { W: 420, H: 270, xticks: X30m } });
+      B.five(C);
+      curve = B.mk('path', { 'class': 'ink' }, C.g); d5 = B.mk('circle', { r: 4.5, 'class': 'ring' }, C.over); dot = B.mk('circle', { r: 6, 'class': 'gold-dot' }, C.over); lab = B.mk('text', { 'class': 'lbl-strong' }, C.over);
+    }
+    function build() { range = null; draw(); }
+    function draw() {
+      var W = weights(), vals = [], T, v, lo = Infinity;
+      for (T = LO; T <= HI + 1e-9; T += 0.1) { v = p.X * B.J(T, p, W); vals.push([T, v]); lo = Math.min(lo, v); }
+      var y0 = Math.floor((lo - 0.06) * 10) / 10, y1 = y0 + 0.8, key = y0.toFixed(2);  /* 0.8 bp tall window over the curve's floor */
+      if (range !== key) { range = key; frame(y0, y1); }
+      curve.setAttribute('d', B.pathOf(vals.map(function (q) { return [C.X(q[0]), C.Y(q[1])]; })));
+      var m = B.argmin(function (t) { return B.J(t, p, W); }, LO, HI, 0.05), j5 = B.J(5, p, W), x = C.X(m.t), y = C.Y(p.X * m.v);
+      dot.setAttribute('cx', x); dot.setAttribute('cy', y); d5.setAttribute('cx', C.X(5)); d5.setAttribute('cy', C.Y(p.X * j5));
+      lab.setAttribute('x', x); lab.setAttribute('y', B.clamp(y - 13, C.top + 12, C.bottom - 6)); lab.setAttribute('text-anchor', B.anchorFor(x, C, 70)); lab.textContent = 'best: ' + B.optLabel(m.t, LO, HI);
+      var gap = p.X * (j5 - m.v), base = p.X * m.v;
+      ro.innerHTML = '<span class="sw"></span>best window: <b>' + B.optLabel(m.t, LO, HI) + '</b> · five minutes costs <b>' + B.fmt(gap, 3) + ' bp</b> more' + (base > 0.05 ? ' (<b>' + (gap / base * 100 < 0.05 ? '0' : B.fmt(gap / base * 100, 1)) + '%</b>)' : '') + ' · the dealer pre-hedges <b>' + B.fmt(100 * B.thetaD(m.t, p), 1) + '%</b> there';
+    }
+    var ctl = {}, presetSeg, wSeg, riskSeg;
+    ctl.sig = B.bind(el('a-sig'), el('a-sig-out'), function (v) { p.sigma = v; if (C) draw(); }, function (v) { return B.fmt(v, 2) + ' bp'; });
+    ctl.lam = B.bind(el('a-lam'), el('a-lam-out'), function (v) { p.lam = v; if (C) draw(); }, function (v) { return B.fmt(v, 3) + ' bp'; });
+    ctl.beta = B.bind(el('a-beta'), el('a-beta-out'), function (v) { p.beta = HL(v); if (C) draw(); }, function (v) { return Math.round(v) + ' s'; });
+    ctl.kap = B.bind(el('a-kap'), el('a-kap-out'), function (v) { p.kappa = v; if (C) draw(); }, function (v) { return B.fmt(v, 3) + ' bp'; });
+    ['a-sig', 'a-lam', 'a-beta', 'a-kap'].forEach(function (id) { el(id).addEventListener('input', function () { if (presetSeg) presetSeg.clear(); }); });
+    ['a-wc', 'a-wd', 'a-wb', 'a-wa'].forEach(function (id, i) {
+      ctl[id] = B.bind(el(id), el(id + '-out'), function (v) { w[i] = v; if (C) draw(); }, function (v) { return v + '%'; });
+      el(id).addEventListener('input', function () { if (wSeg) wSeg.clear(); });
+    });
+    function preset(name) { var q = B.PRESETS[name]; ctl.sig.set(q.sigma); ctl.lam.set(q.lam); ctl.beta.set(HLs(q.beta)); ctl.kap.set(q.kappa); p.beta = q.beta; if (C) draw(); }
+    presetSeg = B.seg(el('s7'), 'data-preset', preset);
+    riskSeg = B.seg(el('s7'), 'data-risk', function (k) { risk = k; var R = B.RISK[k]; p.gC = R.gC; p.gD = R.gD; p.gB = R.gB; p.gA = R.gA; draw(); });
+    wSeg = B.seg(el('s7'), 'data-w', function (k) { var v = k === 'equal' ? [25, 25, 25, 25] : [35, 15, 35, 15]; ctl['a-wc'].set(v[0]); ctl['a-wd'].set(v[1]); ctl['a-wb'].set(v[2]); ctl['a-wa'].set(v[3]); });
+    ['sig', 'lam', 'beta', 'kap', 'a-wc', 'a-wd', 'a-wb', 'a-wa'].forEach(function (k) { ctl[k].refresh(); }); p.beta = B.PRESETS.GBP.beta;
+    B.layout(build);
+  })();
+
+  /* ---------- slide 8: where five minutes sits ---------- */
+  (function () {
+    var svg = el('svg-five'), ro = el('ro-five'); if (!svg) return;
+    /* ranges: p. 35 (Figure 9), baseline only. points: Table B.1, panel D, "Optimal Median / 99%ile Welfare Loss Window". medopt: "Median Optimal Window". */
+    var RANGES = { GBP: { typ: [8, 12], str: [3, 5] }, AUD: { typ: [4, 5], str: [2, 3] } };
+    var POINTS = { low: { GBP: { typ: 14, str: 7 }, AUD: { typ: 9, str: 5 } }, mid: { GBP: { typ: 10, str: 4 }, AUD: { typ: 5, str: 3 } }, high: { GBP: { typ: 6, str: 1 }, AUD: { typ: 3, str: 1 } } };
+    var MEDOPT = { low: { GBP: 13.49, AUD: 7.89 }, mid: { GBP: 8.56, AUD: 4.47 }, high: { GBP: 4.80, AUD: 2.11 } };
+    var ROWS = [['GBP', 'typ', 'GBP/USD, typical week'], ['GBP', 'str', 'GBP/USD, stressed week'], ['AUD', 'typ', 'AUD/USD, typical week'], ['AUD', 'str', 'AUD/USD, stressed week']];
+    var risk = 'mid', C, marks;
+    function build() {
+      var nar = B.narrow();
+      C = B.chart(svg, { W: 900, H: 176, x: [0, 15], y: [0, 4], pad: { l: 190, r: 24, t: 16, b: 28 }, noYAxis: true,
+        xticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, [15, '15 min']],
+        mobile: { W: 420, H: 312, pad: { l: 14, r: 14, t: 28, b: 30 }, xticks: [0, 5, 10, [15, '15 min']] } });
+      B.five(C, null, nar); marks = [];
+      ROWS.forEach(function (rw, i) {
+        var y = C.Y(3.5 - i) + (nar ? 10 : 0);
+        B.mk('line', { x1: C.left, x2: C.right, y1: y, y2: y, 'class': 'rowline' }, C.under);
+        if (nar) B.mk('text', { x: C.left, y: y - 16, 'class': 'row-lbl', text: rw[2] }, C.g);
+        else B.mk('text', { x: C.left - 14, y: y + 4, 'text-anchor': 'end', 'class': 'row-lbl', text: rw[2] }, C.g);
+        marks.push({ range: B.mk('line', { 'class': 'wrange', y1: y, y2: y }, C.g), dot: B.mk('circle', { r: 6.5, cy: y, 'class': 'wmark' }, C.g), lab: B.mk('text', { y: y - 12, 'class': 'lbl-strong', 'text-anchor': 'middle' }, C.g), y: y });
+      });
+      draw();
+    }
+    function draw() {
+      ROWS.forEach(function (rw, i) {
+        var m = marks[i], pt = POINTS[risk][rw[0]][rw[1]], rg = RANGES[rw[0]][rw[1]], showR = risk === 'mid';
+        m.range.style.opacity = showR ? 1 : 0; m.range.setAttribute('x1', C.X(rg[0])); m.range.setAttribute('x2', C.X(rg[1]));
+        m.dot.setAttribute('cx', C.X(pt)); m.lab.textContent = pt + ' min';
+        if (C.narrow) { var rt = C.X(pt) > C.right - 70; m.lab.setAttribute('x', C.X(pt) + (rt ? -11 : 11)); m.lab.setAttribute('y', m.y + 4); m.lab.setAttribute('text-anchor', rt ? 'end' : 'start'); }
+        else { m.lab.setAttribute('x', C.X(pt)); m.lab.setAttribute('y', m.y - 12); m.lab.setAttribute('text-anchor', B.anchorFor(C.X(pt), C, 80)); }
+      });
+      ro.innerHTML = 'median of the weekly optima: GBP/USD <b>' + B.fmt(MEDOPT[risk].GBP, 2) + ' min</b>, AUD/USD <b>' + B.fmt(MEDOPT[risk].AUD, 2) + ' min</b> (Table B.1)';
+    }
+    B.seg(el('s8'), 'data-risk', function (k) { risk = k; draw(); });
+    B.layout(build);
+  })();
+})();
+</script>
+</body>
+</html>

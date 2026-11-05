@@ -1,0 +1,21 @@
+{{- /* Site footer: hairline top (CSS), site links + contact email left, build date + credit right. */ -}}
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <ul class="site-footer__links">
+      <li><a href="{{ site.Home.RelPermalink }}">{{ i18n "home" }}</a></li>
+      {{- range site.Menus.main }}
+        {{- $url := .URL | relLangURL }}{{ with .Page }}{{ $url = .RelPermalink }}{{ end }}
+        <li><a href="{{ $url }}">{{ .Name }}</a></li>
+      {{- end }}
+      {{- with site.Params.email }}
+        <li><a href="mailto:{{ . }}">{{ . }}</a></li>
+      {{- end }}
+    </ul>
+    <div class="site-footer__meta">
+      <p class="site-footer__updated">{{ i18n "last_updated" }} {{ now.Format "January 2006" }}</p>
+      {{- if site.Params.mysite.credit }}
+      <p class="site-footer__credit">{{ i18n "created_using" }} <a href="https://garyking.org/mysite">GaryKing.org/mysite</a></p>
+      {{- end }}
+    </div>
+  </div>
+</footer>

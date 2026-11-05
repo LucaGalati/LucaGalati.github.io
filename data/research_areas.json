@@ -1,0 +1,75 @@
+{
+  "map_order": [
+    "market-design",
+    "fx-benchmarks",
+    "accounting-esg",
+    "networks",
+    "crypto"
+  ],
+  "areas": [
+    {
+      "id": "market-design",
+      "name": "Market design and microstructure",
+      "summary": "How trading protocols shape execution quality: options floors and auctions, block and off-market trades, the centralisation of bond markets, war and liquidity, fee design.",
+      "papers": [
+        "options-trading-floors",
+        "auctions-retail-options",
+        "centralising-decentralised-market",
+        "war-market-functioning",
+        "decentralized-payment-systems",
+        "delayed-block-trades-crypto",
+        "no-fee-trading",
+        "off-market-reporting-delays",
+        "futures-liquidity-24-years"
+      ]
+    },
+    {
+      "id": "fx-benchmarks",
+      "name": "FX benchmarks and execution",
+      "summary": "The WM/R fix, the 4pm fix and the length of benchmark windows: how benchmark design affects dealers, clients and representativeness.",
+      "papers": [
+        "benchmark-windows",
+        "fix-4pm-effectiveness",
+        "wmr-fix-representativeness"
+      ]
+    },
+    {
+      "id": "crypto",
+      "name": "Crypto and decentralised markets",
+      "summary": "Market quality in decentralised payment systems and crypto exchanges: fee mechanisms, exchange collapses, stablecoins, memecoins and block trades.",
+      "papers": [
+        "decentralized-payment-systems",
+        "delayed-block-trades-crypto",
+        "guns-n-roses-crypto",
+        "ftx-stranded-assets",
+        "memecoins-spillover",
+        "no-fee-trading",
+        "svb-stablecoins",
+        "ftx-information-flow",
+        "ftt-collapse-contagion",
+        "stablecoins-intelligent-design"
+      ]
+    },
+    {
+      "id": "networks",
+      "name": "Networks and price discovery",
+      "summary": "Network methods for price leadership, information flow and portfolio choice.",
+      "papers": [
+        "mtd-portfolio-optimization",
+        "ftx-information-flow"
+      ]
+    },
+    {
+      "id": "accounting-esg",
+      "name": "Accounting, governance and ESG",
+      "summary": "Earnings quality around elections, municipally owned entities, diversity and inclusion, and the tone of ESG disclosure.",
+      "papers": [
+        "diversity-inclusion-innovation",
+        "social-tone-nfrd",
+        "elections-benford",
+        "proportional-appropriation-moe",
+        "local-elections-benford-moe"
+      ]
+    }
+  ]
+}

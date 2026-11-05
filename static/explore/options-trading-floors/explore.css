@@ -1,0 +1,307 @@
+/* Explorable explanations on lucagalati.com — shared stylesheet.
+   Tokens mirror assets/css/custom.css. Fonts are the site's self-hosted files, two levels up. */
+
+@font-face{font-family:"Vollkorn";font-style:normal;font-weight:400 900;font-display:swap;src:url("../../fonts/vollkorn-latin-wght-normal.woff2") format("woff2");}
+@font-face{font-family:"Vollkorn";font-style:italic;font-weight:400 900;font-display:swap;src:url("../../fonts/vollkorn-latin-wght-italic.woff2") format("woff2");}
+@font-face{font-family:"Geist";font-style:normal;font-weight:100 900;font-display:swap;src:url("../../fonts/geist-latin-wght-normal.woff2") format("woff2");}
+
+:root{
+  --blue:#003262;
+  --gold:#FDB515;
+  --bg:#FCFBF8;
+  --surface:#F3F0E8;
+  --text:#1C1C1A;
+  --muted:#5A5A56;
+  --border:#D9D6CE;
+  --border-strong:#C7C3B9;
+  --link:#003262;
+  --on-gold:#003262;
+  --ink:#003262;            /* chart ink: blue in light, light blue in dark */
+  --ink-soft:#7E98B5;       /* secondary series */
+  --serif:"Vollkorn",Georgia,"Times New Roman",serif;
+  --sans:"Geist",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --radius:3px;
+  --bar-h:60px;
+  --gutter:clamp(16px,4vw,56px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1A2E; --surface:#13263F; --text:#E8EDF3; --muted:#A7B3C2;
+    --border:#23395A; --border-strong:#2E4768; --link:#8EC1E6; --on-gold:#0B1A2E;
+    --ink:#8EC1E6; --ink-soft:#4E6A8C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1A2E; --surface:#13263F; --text:#E8EDF3; --muted:#A7B3C2;
+  --border:#23395A; --border-strong:#2E4768; --link:#8EC1E6; --on-gold:#0B1A2E;
+  --ink:#8EC1E6; --ink-soft:#4E6A8C;
+}
+
+*{box-sizing:border-box}
+html{height:100%}
+body{
+  margin:0; min-height:100%; background:var(--bg); color:var(--text);
+  font-family:var(--serif); font-size:17.5px; line-height:1.6; font-weight:400;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+a{color:var(--link); text-decoration:none; border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
+a:hover{border-bottom-color:var(--link)}
+h1,h2,h3{font-weight:500; line-height:1.15; margin:0 0 .5em; letter-spacing:-0.005em}
+h1{font-size:clamp(30px,4.2vw,46px)}
+h2{font-size:clamp(24px,3vw,32px)}
+h3{font-size:19px}
+h1:focus,h2:focus{outline:none}
+p{margin:0 0 1em}
+em{font-style:italic}
+strong{font-weight:500}
+kbd{font-family:var(--sans); font-size:11px; border:1px solid var(--border-strong); border-radius:var(--radius); padding:0 5px; line-height:1.5; color:var(--muted)}
+button{font-family:var(--sans)}
+.sans{font-family:var(--sans)}
+.muted{color:var(--muted)}
+.small{font-size:14.5px; line-height:1.5}
+.kicker{font-family:var(--sans); font-size:12.5px; letter-spacing:.11em; text-transform:uppercase; font-weight:500; color:var(--muted)}
+.num{font-family:var(--sans); font-variant-numeric:tabular-nums}
+
+/* ---------- page chrome ---------- */
+/* the site bar (../sitebar.js) is the top header: the slide label and the Map button sit at its right end.
+   Its content lines up with the page: on the decks with the bottom nav (full width, gutter padding),
+   on the hub with the .hub column (1120px, gutter padding). */
+lg-sitebar{--lg-sitebar-max:none; --lg-sitebar-pad:var(--gutter)}
+lg-sitebar.on-hub{--lg-sitebar-max:1120px}
+/* without JavaScript the bar is not drawn: only the <noscript> link back to the paper shows */
+lg-sitebar:not(:defined){display:block; padding:10px var(--gutter); font-family:var(--sans); font-size:14px}
+lg-sitebar:not(:defined)>:not(noscript){display:none}
+lg-sitebar .where{min-width:0; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; font-size:11.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+lg-sitebar .mapbtn{
+  flex:none; background:none; border:1px solid var(--border-strong); border-radius:var(--radius); color:var(--text);
+  padding:4px 10px; font-family:var(--sans); font-size:12.5px; line-height:1.3; cursor:pointer; display:inline-flex; align-items:center; gap:8px
+}
+lg-sitebar .mapbtn:hover{border-color:var(--text)}
+
+.bar{
+  position:fixed; inset:auto 0 0 0; height:var(--bar-h); z-index:5;
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  padding:0 var(--gutter); background:color-mix(in srgb,var(--bg) 92%,transparent);
+  border-top:1px solid var(--border);
+}
+.bar .nav{display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px}
+.bar .nav.next{justify-content:flex-end}
+.bar .navbtn{
+  background:none; border:1px solid var(--border-strong); border-radius:var(--radius); color:var(--text);
+  padding:6px 12px; cursor:pointer; font-size:13px; font-family:var(--sans); white-space:nowrap
+}
+.bar .navbtn[disabled]{opacity:.35; cursor:default}
+.bar .navbtn:not([disabled]):hover{border-color:var(--text)}
+/* progress dots: 24px targets, 12px marks */
+.dots{display:flex; gap:2px; align-items:center; justify-content:center}
+.dots button{position:relative; width:24px; height:24px; border:0; border-radius:50%; background:none; padding:0; cursor:pointer}
+.dots button::before{content:""; position:absolute; inset:6px; border-radius:50%; border:1.5px solid var(--border-strong)}
+.dots button.seen::before{border-color:var(--ink); background:color-mix(in srgb,var(--ink) 25%,transparent)}
+.dots button[aria-current="true"]::before{background:var(--gold); border-color:var(--gold)}
+.dots button[disabled]{cursor:default; opacity:.6}
+.dots button:not([disabled]):hover::before{border-color:var(--gold)}
+.dots button:focus-visible{outline:2px solid var(--ink); outline-offset:0}
+
+/* ---------- stage & slides ---------- */
+.stage{min-height:calc(100svh - var(--lg-sitebar-h,0px)); padding:8px 0 calc(var(--bar-h) + 8px)}
+.slide{display:none; min-height:calc(100svh - var(--lg-sitebar-h,0px) - var(--bar-h) - 16px); padding:0 var(--gutter)}
+.slide.on{display:flex; flex-direction:column; justify-content:center; animation:fade .32s ease both}
+@keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion: reduce){ .slide.on{animation:none} }
+
+.wrap{width:100%; max-width:1120px; margin:0 auto}
+.prose{max-width:60ch}
+.prose p{margin-bottom:.9em}
+.prose p:last-child{margin-bottom:0}
+.center{align-items:center; text-align:center}
+.center .prose{margin-left:auto; margin-right:auto}
+
+.split{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:clamp(28px,5vw,72px); align-items:center}
+.split.rev{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}
+.split.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.stack{display:grid; gap:28px}
+@media (max-width:860px){ .split,.split.rev,.split.even{grid-template-columns:minmax(0,1fr); gap:28px} }
+
+figure{margin:0}
+figcaption{font-family:var(--sans); font-size:13px; color:var(--muted); margin-top:10px; line-height:1.45}
+.fig{width:100%; height:auto; display:block}
+svg text{font-family:var(--sans)}
+
+/* two stacked alternatives that share one box, so swapping them never moves the layout */
+.swap{display:grid}
+.swap>*{grid-area:1/1/2/2}
+.swap>.off{visibility:hidden}
+
+/* ---------- controls ---------- */
+.cta{
+  display:inline-flex; align-items:center; gap:10px; margin-top:22px;
+  font-family:var(--sans); font-size:14.5px; font-weight:500; color:var(--text);
+  border:1px solid var(--text); border-radius:var(--radius); padding:10px 16px; background:none; cursor:pointer;
+  transition:background .15s, color .15s;
+}
+.cta:hover{background:var(--gold); border-color:var(--gold); color:var(--on-gold)}
+.cta.quiet{border-color:var(--border-strong); color:var(--muted)}
+.cta.quiet:hover{background:var(--surface); color:var(--text); border-color:var(--text)}
+.ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; align-items:center}
+.ctas .cta{margin-top:0}
+.backlink{font-family:var(--sans); font-size:13.5px; color:var(--muted); border-bottom-color:var(--border-strong)}
+
+.chips{display:flex; flex-wrap:wrap; gap:8px; font-family:var(--sans)}
+.chip{
+  border:1px solid var(--border-strong); background:none; color:var(--text); border-radius:var(--radius);
+  padding:6px 11px; font-size:13px; cursor:pointer; font-family:var(--sans)
+}
+.chip:hover{border-color:var(--text)}
+.chip[aria-pressed="true"]{background:var(--gold); border-color:var(--gold); color:var(--on-gold); font-weight:500}
+.chip[disabled]{opacity:.45; cursor:default}
+
+.bet{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 8px}
+.bet button{
+  font-family:var(--sans); font-size:14px; padding:10px 14px; border:1px solid var(--border-strong); background:none;
+  color:var(--text); border-radius:var(--radius); cursor:pointer; outline-offset:2px
+}
+.bet button:hover{border-color:var(--text)}
+.bet button[aria-pressed="true"]{background:var(--gold); border-color:var(--gold); color:var(--on-gold); font-weight:500}
+.bet[data-done="1"] button:not([aria-pressed="true"]){opacity:.45}
+.bet.nudge button{outline:2px solid var(--gold)}
+/* gated content keeps its space while hidden, so revealing it never moves the slide */
+.reveal{visibility:hidden}
+.reveal.on{visibility:visible; animation:fade .4s ease both}
+.verdict{font-family:var(--sans); font-size:13.5px; color:var(--muted); margin:6px 0 0; min-height:1.45em}
+.def{font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--muted); border-left:2px solid var(--border-strong); padding-left:12px; margin:12px 0 4px}
+
+input[type=range]{
+  -webkit-appearance:none; appearance:none; display:block; width:100%; height:28px; background:transparent; margin:0; cursor:pointer
+}
+input[type=range]:focus{outline:none}
+input[type=range]::-webkit-slider-runnable-track{height:2px; background:var(--border-strong)}
+input[type=range]::-moz-range-track{height:2px; background:var(--border-strong)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--gold); border:2px solid var(--bg);
+  margin-top:-9px
+}
+input[type=range]::-moz-range-thumb{width:16px; height:16px; border-radius:50%; background:var(--gold); border:2px solid var(--bg)}
+input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--ink); outline-offset:1px}
+input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--ink); outline-offset:1px}
+.axis-note{font-family:var(--sans); font-size:12px; color:var(--muted); display:flex; justify-content:space-between; margin-top:-2px}
+
+/* readouts keep one line per label, value and note, so their height never changes */
+.readout{
+  font-family:var(--sans); border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  padding:12px 0; margin-top:12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px 24px
+}
+.readout.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.readout.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.readout>div{min-width:0}
+.readout .k{font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.readout .v{font-size:21px; font-weight:400; margin-top:2px; font-variant-numeric:tabular-nums; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.readout .v small{display:block; margin:2px 0 0; font-size:12.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+.tablewrap{overflow-x:auto}
+table.stats{border-collapse:collapse; font-family:var(--sans); font-size:13.5px; width:100%; font-variant-numeric:tabular-nums}
+table.stats th,table.stats td{padding:6px 10px; text-align:right; border-bottom:1px solid var(--border)}
+table.stats th{font-weight:500; color:var(--muted); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; vertical-align:bottom}
+table.stats td:first-child,table.stats th:first-child{text-align:left; color:var(--muted); padding-left:0}
+table.stats tr.hi td{color:var(--text); font-weight:500}
+
+.tiles{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:12px}
+@media (max-width:760px){ .tiles{grid-template-columns:minmax(0,1fr)} }
+.tile{
+  display:block; position:relative; border:1px solid var(--border-strong); border-radius:var(--radius); padding:20px 20px 18px; color:var(--text);
+  background:none; text-align:left; cursor:pointer; font-family:var(--serif); transition:border-color .15s
+}
+.tile:hover{border-color:var(--gold)}
+.tile .kicker{margin-bottom:8px; display:block}
+.tile h3{margin:0 0 6px; font-size:20px}
+.tile p{margin:0; font-size:15px; color:var(--muted); line-height:1.5}
+.tile svg{display:block; margin-bottom:12px}
+.tile .seenmark{position:absolute; top:18px; right:18px; font-family:var(--sans); font-size:11.5px; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; visibility:hidden}
+.tile.seen .seenmark{visibility:visible}
+
+.note{font-family:var(--sans); font-size:13px; color:var(--muted); line-height:1.5; border-left:2px solid var(--gold); padding-left:12px; margin-top:16px}
+.source{font-family:var(--sans); font-size:12px; color:var(--muted); margin-top:12px}
+
+/* ---------- map overlay ---------- */
+.map{position:fixed; inset:var(--lg-sitebar-h,0px) 0 0 0; z-index:20; background:var(--bg); overflow:auto; padding:24px var(--gutter) 48px}
+.map[hidden]{display:none}
+.map .inner{max-width:980px; margin:0 auto}
+.map header{display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:22px}
+.map header h2{margin:0}
+.map .close{background:none; border:1px solid var(--border-strong); border-radius:var(--radius); color:var(--text); padding:6px 10px; cursor:pointer; font-family:var(--sans); font-size:12.5px}
+.decks{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px}
+@media (max-width:860px){ .decks{grid-template-columns:minmax(0,1fr)} }
+.deck{border:1px solid var(--border); border-radius:var(--radius); padding:16px 16px 14px; display:flex; flex-direction:column}
+.deck.here{border-color:var(--gold)}
+.deck .kicker{display:block; margin-bottom:4px}
+.deck h3{margin:0 0 10px; font-size:19px}
+.deck ol{list-style:none; margin:0 0 auto; padding:0}
+.deck li{margin:0}
+.deck ol a{
+  display:grid; grid-template-columns:14px 1fr; gap:10px; align-items:baseline; padding:6px 0; border:0; color:var(--text);
+  font-family:var(--sans); font-size:14px
+}
+.deck ol a:hover{color:var(--link)}
+.deck ol a .d{width:10px; height:10px; border-radius:50%; border:1.5px solid var(--border-strong); display:inline-block; position:relative; top:0}
+.deck ol a.seen .d{border-color:var(--ink); background:color-mix(in srgb,var(--ink) 25%,transparent)}
+.deck ol a.here .d{background:var(--gold); border-color:var(--gold)}
+.deck ol a.here{font-weight:500}
+.deck .cta{align-self:flex-start}
+.legend{font-family:var(--sans); font-size:12.5px; color:var(--muted); margin-top:18px; display:flex; gap:18px; flex-wrap:wrap}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend i{width:10px; height:10px; border-radius:50%; border:1.5px solid var(--border-strong); display:inline-block}
+.legend i.seen{border-color:var(--ink); background:color-mix(in srgb,var(--ink) 25%,transparent)}
+.legend i.here{background:var(--gold); border-color:var(--gold)}
+
+/* ---------- shared playable bits ---------- */
+.ray{stroke-dasharray:420; stroke-dashoffset:420; animation:ray .9s ease forwards; animation-delay:calc(.3s + var(--d) * .16s)}
+@keyframes ray{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion: reduce){ .ray{animation:none; stroke-dashoffset:0} }
+
+/* horizontal HTML bars (legible at any width) */
+.hbars{display:grid; gap:12px; font-family:var(--sans); font-size:13.5px}
+.hb{display:grid; grid-template-columns:minmax(0,11em) minmax(0,1fr) 3.6em; gap:12px; align-items:center}
+.hb .lab{color:var(--muted); line-height:1.3}
+.hb .track{position:relative; height:24px}
+.hb .track i{position:absolute; left:0; top:0; bottom:0; width:0; background:var(--ink); transition:width .8s ease}
+.hb.soft .track i{background:var(--ink-soft)}
+.hb .val{font-variant-numeric:tabular-nums; color:var(--text)}
+.hbars.go .track i{width:var(--w)}
+.instant,.instant *{transition:none !important; animation:none !important}
+@media (prefers-reduced-motion: reduce){ .hb .track i{transition:none} }
+
+/* ---------- hub ---------- */
+.hub{max-width:1120px; margin:0 auto; padding:40px var(--gutter) 72px}
+.hub .lede{max-width:62ch}
+.hub .paths{margin-top:40px}
+.hub .paths .decks{margin-top:14px}
+
+@media (max-height:860px) and (min-width:861px){
+  body{font-size:16.5px}
+  h1{font-size:clamp(26px,3.2vw,38px)}
+  h2{font-size:clamp(21px,2.5vw,27px)}
+  .prose p{margin-bottom:.75em}
+  .readout{padding:9px 0; margin-top:9px}
+  .readout .v{font-size:18.5px}
+  .cta{margin-top:14px; padding:8px 14px}
+  .ctas{margin-top:14px}
+  figcaption{margin-top:6px; font-size:12.5px}
+}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .bar{grid-template-columns:auto 1fr auto; gap:6px}
+  .bar .navbtn{padding:6px 9px}
+  .readout .v{font-size:18.5px}
+  .hb{grid-template-columns:minmax(0,8.5em) minmax(0,1fr) 3.4em; gap:8px}
+}
+/* the slide label shrinks with an ellipsis; below 641px too little of it would be left to read */
+@media (max-width:640px){ lg-sitebar .where{display:none} }
+/* phones: the bar's three links leave room only for a label in the bar's own style */
+@media (max-width:440px){
+  lg-sitebar .mapbtn kbd{display:none}
+  lg-sitebar .mapbtn{
+    padding:.4rem 0; border:0; border-bottom:1.5px solid transparent; border-radius:0;
+    font:inherit; letter-spacing:inherit; text-transform:uppercase; color:inherit
+  }
+  lg-sitebar .mapbtn:hover,lg-sitebar .mapbtn:focus-visible{border-bottom-color:var(--gold)}
+}

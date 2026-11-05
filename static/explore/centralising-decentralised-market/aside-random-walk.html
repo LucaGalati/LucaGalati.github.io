@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why a random walk scores 1 · Centralising a Decentralised Market</title>
+<meta name="description" content="Side path of the explorable: why the variance ratio of a random walk is one, and what pushes it above or below.">
+<link rel="stylesheet" href="explore.css">
+<script src="explore.js" defer></script>
+<script src="../sitebar.js"></script>
+</head>
+<body>
+<lg-sitebar><noscript><a href="../../publication/centralising-decentralised-market/">← Back to the paper</a></noscript><button class="bar__btn" type="button" data-map aria-expanded="false">Map<span class="bar__key"> · m</span></button></lg-sitebar>
+
+<main class="deck" data-deck="a2">
+  <section class="slide" id="s1" aria-label="Side path">
+    <div class="slide__inner slide__grid slide__grid--textfirst">
+      <div class="slide__text">
+        <p class="kicker"><b>Side path</b> The variance ratio</p>
+        <h1>Why a random walk scores 1.</h1>
+        <p>An hour holds twelve five-minute steps. If each step ignores the one before it, their variances simply add up: the variance of the hour's move is twelve times the variance of one step, and the ratio of the two is 1.</p>
+        <p>Make each step undo part of the last, and the hour's moves bunch together: the ratio falls below 1. Make each step repeat part of the last, and they fan out: the ratio rises above 1.</p>
+        <p class="note">Simulated hours with made-up numbers. Every step has the same spread on average; only its link to the step before changes.</p>
+      </div>
+      <div class="slide__visual">
+        <div class="ctl-row">
+          <div class="ctl"><div class="ctl__label"><span>Each five-minute step</span><output id="rw-out">ignores the last one</output></div><input type="range" id="rw" min="-50" max="50" step="5" value="0" aria-label="How each step relates to the step before"></div>
+        </div>
+        <div class="stage">
+          <svg class="fig fan" id="fan" viewBox="0 0 400 240" role="img" aria-label="Sixty simulated hours of twelve steps each, fanning out from a common start; two bars at the right compare their spread with a random walk's."></svg>
+        </div>
+        <p class="lab__key"><span><span class="sw sw--s1" aria-hidden="true"></span>simulated hours</span><span><span class="sw sw--s2" aria-hidden="true" style="border-top-width:3px"></span>spread of a random walk's hour</span><span><span class="sw sw--d" aria-hidden="true"></span>spread of these hours</span></p>
+        <div class="readouts">
+          <div><span>Variance ratio</span><b id="rw-vr">1.00</b><small>variance of the hour ÷ (12 × variance of a step)</small></div>
+        </div>
+      </div>
+      <div class="slide__actions">
+        <a class="door door--back" href="02-measure.html#3">← Back to the gauges (II · 3)</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bar bar--bottom">
+  <button class="bar__btn" type="button" data-prev aria-label="Previous slide">←</button>
+  <div class="dots" data-dots role="group" aria-label="Slides"></div>
+  <span class="bar__count" data-count></span>
+  <button class="bar__btn" type="button" data-next aria-label="Next slide">→</button>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  var svgEl = XP.svgEl, F = document.getElementById('fan'), inp = document.getElementById('rw');
+  var out = document.getElementById('rw-out'), vrEl = document.getElementById('rw-vr');
+  var PATHS = 60, STEPS = 12, MID = 120, K = 6.5;          // K: SVG units per step's standard deviation
+  function X(t) { return 20 + t * 25; }
+  F.appendChild(svgEl('line', { x1: 20, y1: MID, x2: 320, y2: MID, 'class': 'guide' }));
+  var paths = [];
+  for (var p = 0; p < PATHS; p++) paths.push(F.appendChild(svgEl('path', {})));
+  var ref = F.appendChild(svgEl('line', { x1: 348, x2: 348, 'class': 'ref' }));
+  var now = F.appendChild(svgEl('line', { x1: 370, x2: 370, 'class': 'now' }));
+  function vr(rho) {  // exact ratio for steps with first-order autocorrelation rho (an AR(1) process)
+    var s = 0; for (var j = 1; j < STEPS; j++) s += (1 - j / STEPS) * Math.pow(rho, j);
+    return 1 + 2 * s;
+  }
+  function draw() {
+    var rho = +inp.value / 100, r = XP.rng(5), c = Math.sqrt(1 - rho * rho);
+    out.textContent = rho === 0 ? 'ignores the last one' : rho < 0 ? 'undoes ' + Math.round(-rho * 100) + '% of the last one' : 'repeats ' + Math.round(rho * 100) + '% of the last one';
+    paths.forEach(function (path) {
+      var x = XP.gauss(r), sum = 0, d = 'M ' + X(0) + ' ' + MID;
+      for (var t = 1; t <= STEPS; t++) {
+        if (t > 1) x = rho * x + c * XP.gauss(r);           // each step has unit variance whatever rho is
+        sum += x;
+        d += ' L ' + X(t) + ' ' + Math.max(6, Math.min(234, MID - sum * K)).toFixed(1);
+      }
+      path.setAttribute('d', d);
+    });
+    var v = vr(rho), sdRw = Math.sqrt(STEPS) * K, sdNow = Math.sqrt(STEPS * v) * K;
+    ref.setAttribute('y1', MID - sdRw); ref.setAttribute('y2', MID + sdRw);
+    now.setAttribute('y1', MID - sdNow); now.setAttribute('y2', MID + sdNow);
+    vrEl.textContent = v.toFixed(2);
+  }
+  inp.addEventListener('input', draw);
+  draw();
+});
+</script>
+</body>
+</html>

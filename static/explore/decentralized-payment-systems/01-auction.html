@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The auction you cannot see — Decentralized Payment Systems</title>
+<meta name="description" content="Deck 1 of the explorable: why block space is scarce, what a sealed first-price auction costs its users, and how EIP-1559 replaced it with a posted fee.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="explore.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<style>
+  #s3-msg { min-height: 4.6em; }
+  .rules { list-style: none; margin: 0.2rem 0 0; padding: 0; }
+  .rules li { padding: 0.45rem 0; border-top: 1px solid var(--border); }
+  .rules li:last-child { border-bottom: 1px solid var(--border); }
+  .rules b { font-weight: 500; color: var(--blue); }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="01-auction.html">
+<lg-sitebar>
+  <noscript><a href="../../publication/decentralized-payment-systems/">← Back to the paper</a></noscript>
+  <div class="deck-name"><small>Deck 1 · </small>The auction you cannot see</div>
+  <button class="mapbtn" type="button" aria-label="Map" aria-controls="map" aria-expanded="false">Map <kbd>m</kbd></button>
+</lg-sitebar>
+<div class="deck">
+
+  <main class="stage">
+
+    <!-- 1 · hook -->
+    <section class="slide slide--center" data-title="A trillion-dollar network with a strange bill">
+      <p class="kicker">One paper, three decks</p>
+      <h1>A trillion-dollar network with a strange bill</h1>
+      <div class="figures">
+        <div class="figure"><div class="big">$3.01&nbsp;tn</div><div class="cap">settled on Ethereum in 2023</div></div>
+        <div class="figure"><div class="big">$20–60</div><div class="cap">fee to move $1,000 on Ethereum, after the 2021 fee reform</div></div>
+        <div class="figure"><div class="big">$5–25</div><div class="cap">the same transfer on Visa or Mastercard</div></div>
+      </div>
+      <div class="prose">
+        <p>Ethereum settles about a quarter of what Visa settles in a year. The volume is there; the price is not. Visa posts its fees in advance. A blockchain user has to <em>win an auction</em> for space in the next block, at a clearing price nobody knows at the moment they submit.</p>
+        <p>And that bill is what users paid <em>after</em> the reform designed to fix the auction. To see what the reform changed, start with the thing being sold.</p>
+      </div>
+      <p class="note" style="margin-top:1rem">The paper sets the two totals side by side only as orders of magnitude; they are compiled differently (p. 1, fn. 1).</p>
+      <div class="onward" style="justify-content:center">
+        <a class="next" href="#2" data-go="2">What is being sold? <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- 2 · scarcity -->
+    <section class="slide slide--split" data-title="Space in a block is scarce">
+      <div class="text">
+        <p class="kicker">Deck 1 · 2 of 5</p>
+        <h2>Space in a block is scarce</h2>
+        <div class="prose">
+          <p>A block has a maximum size, and it cannot be expanded the way a payment processor adds servers. Users attach a fee to each transaction. <em>Miners</em>, who build the blocks, pick which transactions go in and keep the fees, along with a subsidy the protocol pays them for each block.</p>
+          <p>Unlike a stock exchange's order book, a blockchain does not serve you in order of arrival. In the seconds between two blocks, the mechanism itself decides who gets in. Some rationing rule is unavoidable. The question is not <em>whether</em> to price priority, but <em>how</em>.</p>
+        </div>
+        <div class="onward">
+          <a class="next" href="#3" data-go="3">Try bidding for a slot <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Who gets in</span><span id="s2-cut">round 1</span></div>
+        <svg class="chart" id="s2-svg" viewBox="0 0 520 290" role="img" aria-label="Twelve arriving transactions with fee tags; the eight with the highest fees move into a block with eight slots and four are left to wait"></svg>
+        <div class="controls">
+          <button class="btn btn--gold" id="s2-next" type="button">Next round</button>
+          <span class="note" style="margin:0">A new crowd arrives with new fees. Watch where the cut falls, and how far it moves.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · playable: sealed first-price auction -->
+    <section class="slide slide--split" data-title="Bid for a slot">
+      <div class="text">
+        <p class="kicker">Deck 1 · 3 of 5 · Playable</p>
+        <h2>Bid for a slot</h2>
+        <div class="prose">
+          <p>This is the auction Ethereum used until 2021: sealed, and you pay what you bid. You cannot see the other bids until the block is sealed, and the crowd changes from block to block.</p>
+          <p>Your task: get five transactions in, as cheaply as you can. Every block you wait costs you $10 in delay. Bid high and you overpay; bid low and you wait.</p>
+        </div>
+        <div class="readouts" id="s3-tally" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <div class="readout"><div class="k">In</div><div class="v" id="t-in">0 / 5</div></div>
+          <div class="readout"><div class="k">Blocks waited</div><div class="v" id="t-wait">0</div></div>
+          <div class="readout"><div class="k">Overpaid</div><div class="v" id="t-over">$0</div><div class="s">above the highest losing bid</div></div>
+          <div class="readout"><div class="k">Total cost</div><div class="v" id="t-total">$0</div><div class="s">fees + $10 a block waited</div></div>
+        </div>
+        <div class="onward">
+          <a class="next" href="#4" data-go="4">What did Ethereum change? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Sealed first-price auction · 8 slots</span><span id="s3-status">block 1 open</span></div>
+        <svg class="chart" id="s3-svg" viewBox="0 0 520 300" role="img" aria-label="A block with eight slots; after you submit, the winning bids, the clearing price and the bids left outside are revealed"></svg>
+        <div class="controls">
+          <div class="control"><label for="s3-bid">Your fee</label><input type="range" id="s3-bid" min="1" max="80" value="12" step="1"><output id="s3-bidv" for="s3-bid">$12</output></div>
+          <button class="btn btn--gold" id="s3-submit" type="button">Submit to the next block</button>
+          <button class="btn" id="s3-reset" type="button">Start over</button>
+        </div>
+        <p class="note" id="s3-msg" aria-live="polite">Choose a fee and submit. The other bidders are drawn by this page and the $10 waiting cost is ours, not the paper's: the point is the rule, not the numbers.</p>
+      </div>
+    </section>
+
+    <!-- 4 · the fix -->
+    <section class="slide slide--split" data-title="The fix: a posted fee">
+      <div class="text">
+        <p class="kicker">Deck 1 · 4 of 5</p>
+        <h2>The fix: a posted fee</h2>
+        <div class="prose">
+          <p>On 5 August 2021 Ethereum activated <strong>EIP-1559</strong>. Three rules replaced the auction:</p>
+          <ul class="rules">
+            <li><b>One price for everyone.</b> Each transaction pays the same <em>base fee</em>, set by the protocol: up after a block more than half full, down after one less than half full. It is <a class="inline-fork" href="#burn" data-go="burn">burned</a>: destroyed, paid to nobody.</li>
+            <li><b>A tip.</b> An optional extra, the only part the miner receives.</li>
+            <li><b>Elastic blocks.</b> A block can stretch from 15 to 30 million gas when demand spikes.</li>
+          </ul>
+          <p style="margin-top:0.8em"><em>Gas</em> measures computation: every step a transaction asks of the network costs gas, and fees are quoted per unit of gas in <em>gwei</em>, a billionth of an ether.</p>
+        </div>
+        <div class="forks">
+          <a class="fork fork--primary" href="#5" data-go="5">Watch the base fee find its level <span aria-hidden="true">→</span></a>
+          <a class="fork" href="02-evidence.html#1">Skip to what the data said <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>What one transaction pays</span><span>the paper's example</span></div>
+        <svg class="chart" id="s4-svg" viewBox="0 0 520 300" role="img" aria-label="A bar showing 100 gwei of base fee that is burned and 10 gwei of tip that goes to the miner; below it, a block that can stretch from a 15 million gas target to a 30 million gas maximum"></svg>
+        <p class="note">Rules as described in the paper (Section I and Appendix C); the 100 + 10 gwei example is the paper's. The base fee no longer needs to be guessed; the tip is where users still compete.</p>
+      </div>
+    </section>
+
+    <!-- side trip · why burn -->
+    <section class="slide slide--split slide--branch" data-branch="burn" data-title="Why burn the fee?">
+      <div class="text">
+        <p class="kicker">Side trip · from <a href="#4" data-go="4">The fix: a posted fee</a></p>
+        <h2>Why burn the fee?</h2>
+        <div class="prose">
+          <p>Burning takes the base fee out of circulation. Nobody receives it: it is subtracted from the supply of ether, offsetting the new ether issued to miners, and in busy periods more is burned than issued (Appendix C). The benefit is spread over everyone who holds ether (p. 5). The paper cites Félez-Viñas et al. (2021): in the months after the reform, burning cut the net issuance of new ether by roughly half.</p>
+          <p>Why not hand it to the miner? Because a miner who never receives the base fee has nothing to gain from steering it, and nothing to share with users in a side deal. The paper cites Roughgarden (2024): the design is incentive-compatible for short-sighted miners and robust to off-chain agreements.</p>
+          <p>Miners objected, since part of their income was gone; they kept the tips and the 2-ETH block subsidy (Appendix C).</p>
+        </div>
+        <div class="onward">
+          <a class="back" href="#4" data-go="4">← Back to the posted fee</a>
+          <a class="next" href="#5" data-go="5">Watch the base fee find its level <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>New ether, before and after the burn</span><span>schematic</span></div>
+        <svg class="chart" id="burn-svg" viewBox="0 0 520 260" role="img" aria-label="Two bars: new ether issued to miners, and the same issuance net of the burn, about half as long"></svg>
+        <p class="note">Schematic: the paper reports "roughly half" (citing Félez-Viñas et al. 2021), not a series. The paper also counts the burn in a second welfare measure; in its window the two measures are nearly identical (deck 2).</p>
+      </div>
+    </section>
+
+    <!-- 5 · playable: thermostat -->
+    <section class="slide slide--split" data-title="The thermostat">
+      <div class="text">
+        <p class="kicker">Deck 1 · 5 of 5 · Playable</p>
+        <h2>The thermostat</h2>
+        <div class="prose">
+          <p>Think of the base fee as a thermostat. Demand has just risen to 18 transactions a block, above the target of 15, so the fee climbs until just enough people are willing to pay. Drop demand below 15 and it falls. Press <em>burst</em>: the block stretches toward 30 to absorb the spike, and the fee rises a step at a time instead of jumping.</p>
+          <p>Then notice what the thermostat cannot do. Keep demand high and the fee stays high. A posted price removes the guesswork; it does not create space. Roughgarden (2020) argues that no fee mechanism can substantially lower average fees when capacity is the constraint.</p>
+        </div>
+        <div class="onward">
+          <a class="next" href="02-evidence.html#1">So did it make Ethereum cheaper? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Posted base fee · elastic block</span><span id="s5-status">running</span></div>
+        <canvas id="s5-canvas" role="img" aria-label="Base fee over recent blocks, with the average fee paid and the range of fees in each block, and the number of transactions in each block against a target of 15 and a maximum of 30"></canvas>
+        <div class="legend"><span><i class="sw-line"></i>base fee</span><span><i class="sw-dot"></i>average paid</span><span><i class="sw-range"></i>cheapest to dearest in a block</span><span><i class="sw-target"></i>target 15</span></div>
+        <div class="controls">
+          <div class="control"><label for="s5-demand">Demand</label><input type="range" id="s5-demand" min="0" max="40" value="18" step="1"><output id="s5-demandv" for="s5-demand">18</output></div>
+          <button class="btn btn--gold" id="s5-burst" type="button">Burst of 30</button>
+          <div class="control"><label for="s5-step">Step</label><input type="range" id="s5-step" min="0.02" max="0.3" value="0.125" step="0.005"><output id="s5-stepv" for="s5-step">12.5%</output></div>
+          <button class="btn" id="s5-pause" type="button">Pause</button>
+        </div>
+        <div class="readouts" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+          <div class="readout"><div class="k">Base fee</div><div class="v" id="s5-base">–</div></div>
+          <div class="readout"><div class="k">Last block</div><div class="v" id="s5-used">–</div></div>
+          <div class="readout"><div class="k">Avg paid</div><div class="v" id="s5-avg">–</div><div class="s">last 20 blocks</div></div>
+          <div class="readout"><div class="k">Waiting</div><div class="v" id="s5-queue">–</div></div>
+        </div>
+        <p class="note">A toy: one transaction is a million gas; fee units are arbitrary. The paper describes the step only in words ("increases slightly"); 12.5% is the protocol's constant.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bottombar">
+    <button class="nav-arrow nav-prev" type="button" aria-label="Previous slide">←</button>
+    <div class="dots" role="group" aria-label="Slides"></div>
+    <button class="nav-arrow nav-next" type="button" aria-label="Next slide">→</button>
+  </footer>
+</div>
+
+<div class="map" id="map" aria-hidden="true">
+  <div class="map-head"><h2>Map of the explorable</h2><button class="close" type="button">Close · Esc</button></div>
+  <div class="map-grid"></div>
+  <div class="map-foot"><a href="index.html">Hub</a><a href="../../publication/decentralized-payment-systems/">← Back to the paper</a></div>
+</div>
+
+<script src="explore.js"></script>
+<script src="market.js"></script>
+<script>
+(function () {
+  'use strict';
+  var fmt = explore.fmt;
+  function $(id) { return document.getElementById(id); }
+  function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function randn(r) { var u = 1 - r(), v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  function T(x, y, s, cls, anchor) { return '<text x="' + x + '" y="' + y + '"' + (cls ? ' class="' + cls + '"' : '') + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  var mains = Array.prototype.filter.call(document.querySelectorAll('.slide'), function (s) { return !s.hasAttribute('data-branch'); });
+
+  /* ---------- 2 · who gets in: the reader deals each round ---------- */
+  (function () {
+    var slide = mains[1], svg = $('s2-svg'), cut = $('s2-cut'), btn = $('s2-next');
+    var r = mulberry(3), level = 10, round = 0, tx = [], H = 290;
+    function deal() {
+      level = Math.min(40, Math.max(4, level * Math.exp(0.35 * randn(r))));
+      tx = [];
+      for (var i = 0; i < 12; i++) tx.push({ fee: Math.max(1, Math.round(level * Math.exp(0.5 * randn(r)))), i: i });
+      tx.slice().sort(function (a, b) { return b.fee - a.fee; }).forEach(function (t, k) { t.rank = k; t.in = k < 8; });
+      round++;
+    }
+    function geo(W) {
+      var ts = W > 400 ? 32 : 20, pitch = (W - 60) / 8, ap = (W - 40) / 12;
+      return { ts: ts, slotY: 50, arrY: 172,
+               slotX: function (k) { return 30 + k * pitch + (pitch - ts) / 2; },
+               arrX: function (i) { return 20 + i * ap + (ap - ts) / 2; } };
+    }
+    function render(animate) {
+      var W = explore.chartW(svg), g = geo(W);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var clearing = Math.min.apply(null, tx.filter(function (t) { return t.in; }).map(function (t) { return t.fee; }));
+      var h = T(20, 24, 'The next block · 8 slots', 'label t-m');
+      h += '<rect class="frame" x="20.5" y="36.5" width="' + (W - 40) + '" height="92"></rect>';
+      for (var k = 0; k < 8; k++) h += '<rect class="slot" x="' + g.slotX(k) + '" y="' + g.slotY + '" width="' + g.ts + '" height="' + g.ts + '" rx="2" stroke-dasharray="3 2"></rect>';
+      h += T(20, 156, 'Arrived this round · fee attached', 'label t-m');
+      tx.forEach(function (t) {
+        h += '<g class="tx" data-i="' + t.i + '" style="transform: translate(' + g.arrX(t.i) + 'px, ' + g.arrY + 'px)">' +
+             '<rect class="slot" width="' + g.ts + '" height="' + g.ts + '" rx="2"></rect>' +
+             T(g.ts / 2, g.ts + 15, '$' + t.fee, 't-s', 'middle') + '</g>';
+      });
+      h += '<line class="event" x1="20" y1="244" x2="' + (W - 20) + '" y2="244"></line>';
+      h += T(20, 266, 'lowest fee that got in: $' + clearing, 'strong t-m');
+      h += T(20, 284, 'the other four wait for the next block', 't-s');
+      svg.innerHTML = h;
+      cut.textContent = 'round ' + round + ' · cut $' + clearing;
+      function settle() {
+        tx.forEach(function (t) {
+          var el = svg.querySelector('.tx[data-i="' + t.i + '"]');
+          if (!el) return;
+          if (t.in) {
+            el.querySelector('rect').setAttribute('class', 'slot on');
+            el.querySelector('text').setAttribute('class', 'strong t-s');
+            el.style.transform = 'translate(' + g.slotX(t.rank) + 'px, ' + g.slotY + 'px)';
+          }
+        });
+      }
+      if (animate && !explore.reduced) requestAnimationFrame(function () { requestAnimationFrame(settle); });
+      else { svg.querySelectorAll('.tx').forEach(function (el) { el.style.transition = 'none'; }); settle(); }
+    }
+    deal();
+    btn.addEventListener('click', function () { deal(); render(true); });
+    explore.onShow(slide, function () { render(false); });
+  })();
+
+  /* ---------- 3 · sealed first-price auction, with a goal ---------- */
+  (function () {
+    var slide = mains[2], svg = $('s3-svg'), bid = $('s3-bid'), bidv = $('s3-bidv');
+    var submit = $('s3-submit'), reset = $('s3-reset'), status = $('s3-status'), msg = $('s3-msg');
+    var SLOTS = 8, GOAL = 5, WAIT = 10, H = 300;
+    var INTRO = msg.textContent;
+    var r = mulberry(Date.now() & 0xffff), level = 12, tally, clears, last;
+    function fresh() { tally = { rounds: 0, inc: 0, over: 0, wait: 0, fees: 0 }; clears = []; last = null; }
+    var saved = explore.recall('s3');
+    if (saved && saved.tally) { tally = saved.tally; clears = saved.clears || []; last = saved.last || null; } else fresh();
+    function done() { return tally.inc >= GOAL; }
+    function persist() { explore.remember('s3', { tally: tally, clears: clears.slice(-24), last: last }); }
+    function updateTally() {
+      $('t-in').textContent = tally.inc + ' / ' + GOAL;
+      $('t-wait').textContent = tally.wait;
+      $('t-over').textContent = '$' + fmt(tally.over, 0);
+      $('t-total').textContent = '$' + fmt(tally.fees + WAIT * tally.wait, 0);
+      status.textContent = done() ? 'five in' : 'block ' + (tally.rounds + 1) + ' open';
+      submit.disabled = done();
+      reset.textContent = done() ? 'Play again' : 'Start over';
+    }
+    function summary() {
+      return 'Five in after ' + tally.rounds + ' blocks. You paid $' + fmt(tally.fees, 0) + ' in fees, $' + fmt(tally.over, 0) +
+        ' of it more than winning took, and $' + fmt(WAIT * tally.wait, 0) + ' in waiting: $' + fmt(tally.fees + WAIT * tally.wait, 0) +
+        ' in all. Overbidding and waiting are the two costs the paper names. Play again with another strategy.';
+    }
+    bid.addEventListener('input', function () { bidv.textContent = '$' + bid.value; if (!last) draw(); });
+    function play() {
+      if (done()) return;
+      level = Math.min(60, Math.max(3, level * Math.exp(0.4 * randn(r))));
+      var n = 9 + Math.floor(r() * 7), others = [];
+      for (var i = 0; i < n; i++) others.push({ fee: Math.max(1, Math.round(level * Math.exp(0.45 * randn(r)))), you: false });
+      var you = { fee: parseInt(bid.value, 10), you: true };
+      var all = others.concat([you]).sort(function (a, b) { return b.fee - a.fee || (a.you ? -1 : 1); });
+      var inc = all.slice(0, SLOTS), out = all.slice(SLOTS);
+      var clearing = inc[inc.length - 1].fee, got = inc.indexOf(you) !== -1;
+      var lose = out.length ? out[0].fee : 0, need = Math.max(1, lose);   // ties go to you, so the highest losing bid was enough
+      tally.rounds++;
+      if (got) { tally.inc++; tally.fees += you.fee; tally.over += you.fee - need; } else tally.wait++;
+      clears.push(clearing);
+      last = { inc: inc, out: out, clearing: clearing, got: got, lose: lose, you: you.fee };
+      updateTally(); draw(); persist();
+      if (done()) msg.textContent = summary();
+      else if (got) msg.textContent = 'In. You paid $' + you.fee + '; $' + need + ' would have done it' + (out.length ? ' (the highest losing bid).' : ' (the crowd was thin).') +
+        ' Inside this block the same service cost between $' + clearing + ' and $' + inc[0].fee + '.';
+      else msg.textContent = 'Not this time: the block filled at $' + clearing + ' and you bid $' + you.fee + '. You wait, at $' + WAIT + ' a block. Raise the fee, or hold and hope the crowd thins.';
+    }
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var pitch = (W - 60) / SLOTS, ss = wide ? 50 : 30;
+      var h = T(20, 22, last ? 'Sealed block ' + tally.rounds : 'Block ' + (tally.rounds + 1) + ' · bids hidden until it is sealed', 'label t-m');
+      h += '<rect class="frame" x="20.5" y="32.5" width="' + (W - 40) + '" height="96"></rect>';
+      for (var i = 0; i < SLOTS; i++) {
+        var x = 30 + i * pitch + (pitch - ss) / 2, t = last ? last.inc[i] : null;
+        h += '<rect class="' + (t ? (t.you ? 'slot gold' : 'slot on') : 'slot') + '" x="' + x + '" y="42" width="' + ss + '" height="' + ss + '" rx="2"></rect>';
+        h += T(x + ss / 2, 114, t ? '$' + t.fee : '?', t && t.you ? 'strong t-m' : 't-s', 'middle');
+      }
+      if (last) {
+        h += '<line class="event" x1="20" y1="142" x2="' + (W - 20) + '" y2="142"></line>';
+        h += T(20, 162, 'clearing price · $' + last.clearing, 'strong t-m');
+        h += T(W - 20, 162, last.got ? 'you are in (gold)' : 'you wait (gold, below)', 't-s', 'end');
+        h += T(20, 190, 'Left outside this block', 'label t-m');
+        var pp = wide ? 39 : 26, bs = wide ? 32 : 20, maxShow = Math.floor((W - 40) / pp);
+        last.out.slice(0, maxShow).forEach(function (o, j) {
+          var bx = 20 + j * pp;
+          h += '<rect class="slot' + (o.you ? ' gold' : '') + '" x="' + bx + '" y="200" width="' + bs + '" height="' + bs + '" rx="2"></rect>';
+          h += T(bx + bs / 2, 200 + bs + 15, '$' + o.fee, o.you ? 'strong t-s' : 't-s', 'middle');
+        });
+        if (!last.out.length) h += T(20, 220, 'nobody: the crowd was thin', 't-s');
+      } else {
+        h += T(20, 162, 'Your fee: $' + bid.value + '. Submit, and the block seals.', 't-m');
+        h += T(20, 196, 'Then the winning bids, the clearing price', 't-s');
+        h += T(20, 213, 'and the bids left outside appear here.', 't-s');
+      }
+      if (clears.length) {
+        var cx0 = 20, cx1 = W - 20, cy0 = H - 4, ch = 14, maxc = Math.max.apply(null, clears.concat([1]));
+        var pts = clears.slice(-24).map(function (c, k, arr) { return [cx0 + (arr.length === 1 ? 0 : k * (cx1 - cx0) / (arr.length - 1)), cy0 - (c / maxc) * ch]; });
+        h += '<polyline fill="none" class="btc" stroke-width="1.5" points="' + pts.map(function (p) { return p.join(','); }).join(' ') + '"></polyline>';
+        h += T(20, cy0 - ch - 7, 'clearing prices so far: ' + clears.slice(wide ? -8 : -5).map(function (c) { return '$' + c; }).join(' · '), 't-s');
+      }
+      svg.innerHTML = h;
+    }
+    submit.addEventListener('click', play);
+    reset.addEventListener('click', function () { fresh(); persist(); updateTally(); draw(); msg.textContent = INTRO; });
+    updateTally();
+    if (done()) msg.textContent = summary();
+    else if (last) msg.textContent = 'Welcome back: ' + tally.inc + ' of ' + GOAL + ' in so far. Your last block is shown; submit again to continue.';
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- 4 · the paper's fee example ---------- */
+  (function () {
+    var slide = mains[3], svg = $('s4-svg');
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = wide ? 300 : 312, w = W - 40;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var bw = Math.round(w * 340 / 480), tw = Math.max(22, Math.round(w * 34 / 480)), tx = 20 + bw + tw + 8;
+      var h = T(20, 26, 'Fee per unit of gas', 'label t-m');
+      h += '<rect class="burn" x="20.5" y="40.5" width="' + bw + '" height="40"></rect>';
+      h += '<rect class="gold" x="' + (20 + bw) + '" y="40" width="' + tw + '" height="41" stroke="none"></rect>';
+      h += T(30, 65, 'base fee · 100 gwei · burned', 'strong t-m');
+      h += T(tx, 57, 'tip · 10 gwei', 'strong t-m') + T(tx, 74, 'to the miner', 't-s');
+      if (wide) h += T(20, 108, 'The user pays 110 gwei per gas; the miner receives 10; 100 is destroyed.', 't-m');
+      else h += T(20, 104, 'The user pays 110 gwei per gas;', 't-m') + T(20, 121, 'the miner receives 10; 100 is destroyed.', 't-m');
+      var y0 = wide ? 156 : 166;
+      h += T(20, y0, 'Block capacity (million gas)', 'label t-m');
+      h += '<rect class="axis" x="20.5" y="' + (y0 + 14.5) + '" width="' + w + '" height="34" fill="none" stroke-dasharray="3 3"></rect>';
+      h += '<rect class="eth" x="20" y="' + (y0 + 14) + '" width="' + (w / 2) + '" height="35" stroke="none"></rect>';
+      h += '<line class="event" x1="' + (20 + w / 2) + '" y1="' + (y0 + 4) + '" x2="' + (20 + w / 2) + '" y2="' + (y0 + 60) + '"></line>';
+      h += T(30, y0 + 36, 'target · 15', 'on-fill t-m');
+      h += T(W - 20, y0 + 4, 'maximum · 30', 't-s', 'end');
+      if (wide) {
+        h += T(28 + w / 2, y0 + 74, 'above the target, the next base fee rises', 't-s');
+        h += T(20, y0 + 104, 'Below the target, the next base fee falls. A busy block borrows', 't-m');
+        h += T(20, y0 + 122, 'capacity from its neighbours instead of letting the price jump.', 't-m');
+      } else {
+        h += T(20, y0 + 76, 'Above the target the next base fee rises;', 't-m');
+        h += T(20, y0 + 94, 'below it, the fee falls. A busy block borrows', 't-m');
+        h += T(20, y0 + 112, 'capacity from its neighbours instead of', 't-m');
+        h += T(20, y0 + 130, 'letting the price jump.', 't-m');
+      }
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- side trip · the burn, schematic ---------- */
+  (function () {
+    var slide = document.querySelector('[data-branch="burn"]'), svg = $('burn-svg');
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = 260, w = W - 40;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var h = T(20, 26, 'New ether issued to miners', 'label t-m');
+      h += '<rect class="eth" x="20" y="38" width="' + w + '" height="34" stroke="none"></rect>';
+      h += T(30, 60, wide ? 'the block subsidy: 2 ETH a block' : '2 ETH a block', 'on-fill t-m');
+      h += T(20, 112, wide ? 'The same issuance, net of the burn' : 'Net of the burn', 'label t-m');
+      h += '<rect class="eth" x="20" y="124" width="' + (w / 2) + '" height="34" stroke="none"></rect>';
+      h += '<rect class="burn" x="' + (20.5 + w / 2) + '" y="124.5" width="' + (w / 2 - 1) + '" height="33"></rect>';
+      h += T(30, 146, 'net new ether', 'on-fill t-m');
+      h += T(28 + w / 2, 146, 'burned', 't-m');
+      h += '<line class="bracket" x1="20" y1="172" x2="' + (20 + w / 2) + '" y2="172"></line>';
+      h += T(20, 194, 'roughly half, in the months after the reform', 'strong t-m');
+      h += T(20, 212, '(Félez-Viñas et al. 2021, cited on pp. 5–6)', 't-s');
+      h += T(20, 244, wide ? 'Paid to nobody: each holder’s share of the supply grows a little.' : 'Paid to nobody: every holder gains a little.', 't-m');
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- 5 · thermostat ---------- */
+  (function () {
+    var slide = mains[4], canvas = $('s5-canvas');
+    var p = FeeMarket.defaults(); p.demand = 15;
+    var stream = new FeeMarket.Stream(5), mk = new FeeMarket.Market('posted');
+    var dem = $('s5-demand'), demv = $('s5-demandv'), step = $('s5-step'), stepv = $('s5-stepv');
+    var pause = $('s5-pause'), status = $('s5-status');
+    var running = !explore.reduced, last = 0;
+    mk.base = 0.6; mk.axis.max = 1.5;        // a calm, cheaper start, with room on the axis for the climb
+    for (var i = 0; i < 40; i++) mk.step(stream.next(p), p);   // demand at the target: the fee holds steady
+    p.demand = +dem.value;                    // then demand rises to 18 as the reader arrives, and the fee climbs
+    function readouts() {
+      var rec = mk.history[mk.history.length - 1];
+      $('s5-base').textContent = fmt(mk.base, 2);
+      $('s5-used').textContent = rec.used + ' / ' + p.target;
+      $('s5-avg').textContent = fmt(mk.stats(20).avg, 2);
+      $('s5-queue').textContent = rec.queue;
+    }
+    function height() { var w = canvas.getBoundingClientRect().width; return Math.round(Math.max(220, Math.min(260, w * 0.5))); }
+    function paint() { FeeMarket.draw(canvas, mk, { height: height() }); }
+    function tick() { mk.step(stream.next(p), p); FeeMarket.axisMax(mk.axis, FeeMarket.peak(mk, 80)); readouts(); paint(); }
+    function setRun(on) { running = on; pause.textContent = running ? 'Pause' : 'Run'; status.textContent = running ? 'running' : 'paused'; }
+    dem.addEventListener('input', function () { p.demand = +dem.value; demv.textContent = dem.value; });
+    step.addEventListener('input', function () { p.step = +step.value; stepv.textContent = fmt(p.step * 100, 1) + '%'; });
+    $('s5-burst').addEventListener('click', function () { stream.burst(30); if (!running) tick(); });
+    pause.addEventListener('click', function () { setRun(!running); });
+    setRun(running);
+    readouts();
+    explore.onShow(slide, paint);
+    function frame(ts) {
+      requestAnimationFrame(frame);
+      if (!running || !explore.active(slide) || document.hidden) return;
+      if (ts - last > 520) { last = ts; tick(); }
+    }
+    requestAnimationFrame(frame);
+  })();
+})();
+</script>
+</body>
+</html>

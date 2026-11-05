@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eleven billion ticks · The Effects of War on Market Functioning</title>
+<meta name="description" content="Side path of an explorable explanation of Federle, Galati and Riordan, The Effects of War on Market Functioning: how 48,403 firms became a sample of 2,747, what a jolt measured in standard deviations means, what the regression holds fixed, and how the comparison is checked.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="04-data.html">
+<lg-sitebar><noscript><a href="../../publication/war-market-functioning/">← Back to the paper</a></noscript></lg-sitebar>
+<main class="deck">
+
+<section class="slide wide" data-title="Why only 2,747 firms?">
+  <div class="inner">
+    <p class="kicker">Side path · Eleven billion ticks · 1 of 4</p>
+    <h2>From 48,403 firms to 2,747</h2>
+    <div class="two">
+      <div>
+        <p>Every firm starts as a postal code. Headquarters are placed on the map through the GeoNames database, as in an earlier study by Federle and coauthors, and firms whose address cannot be located drop out first. Russia, Ukraine and the aerospace and defence sector are removed on purpose: the question is the spillover to third countries, not the belligerents or the arms makers.</p>
+        <p>LSEG Tick History then supplies every trade and every best quote over forty trading days, 27 January to 23 March 2022; the download held about 11.2 billion messages, 9.3 billion of them quote updates and 1.8 billion trades. Requiring a complete daily record for all forty days leaves 2,747 firms on 54 exchanges in 46 countries. That requirement keeps the firms that traded every day, the more liquid ones.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What does “six standard deviations” mean?&nbsp;→</button>
+          <a class="btn return-link" href="01-shock.html#s4">← Return to the main path</a>
+        </div>
+        <p class="note">Table 13 and Appendix B. Market value and price filters use US dollars. The 11.2 billion messages cover the 18,512 instruments downloaded, a wider set than the final sample.</p>
+      </div>
+      <div class="stage">
+        <div class="fig" id="funnel"></div>
+        <p class="legend"><span><i class="sq" style="background:var(--far)"></i>firms kept</span><span><i class="sq" style="background:var(--near)"></i>of which in the two rings</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide wide" data-title="What does “six standard deviations” mean?">
+  <div class="inner">
+    <p class="kicker">Side path · Eleven billion ticks · 2 of 4</p>
+    <h2>Six standard deviations from normal</h2>
+    <p class="lead">Deck 1 measured the jolt in standard deviations, not in percent. Here is why, with an invented firm.</p>
+    <div class="two">
+      <div>
+        <p>Each firm is compared with itself: the same trading hour on five ordinary days a fortnight before the invasion, days <span class="num">−10</span> to <span class="num">−6</span>. Subtract its average there, divide by its usual wobble, its <strong>standard deviation</strong>, and you have the jolt.</p>
+        <p>A calm firm and a jumpy firm can show the same rise in percent and very different jolts. Measured this way, the jolt means the same thing for a firm in Warsaw and a firm in New York, so it can be averaged across them.</p>
+        <div class="actions">
+          <button class="btn primary" type="button" data-next>What the regression does&nbsp;→</button>
+          <a class="btn return-link" href="01-shock.html#s3">← Return to the main path</a>
+        </div>
+        <p class="note">Invented numbers, for illustration. Table 2 reports the average of this measure across firms, 54 nearby and 961 distant; the paper also trims extreme values (winsorizing at 2.5% and 97.5%).</p>
+      </div>
+      <div class="stage">
+        <div class="ctl"><span>Pick</span><div class="seg" id="z-firm"></div></div>
+        <div class="fig" id="z-chart"></div>
+        <label class="ctl" for="z-open">Its spread at the open on 24 February</label>
+        <input type="range" id="z-open" min="0.2" max="0.7" step="0.01" value="0.44">
+        <p class="readout" id="z-read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What does the regression hold fixed?">
+  <div class="inner">
+    <p class="kicker">Side path · Eleven billion ticks · 3 of 4</p>
+    <h2>One equation, five ways to be exposed</h2>
+    <p class="eq">Outcome<sub>firm, day</sub> = <span class="beta">β</span> × Exposure<sub>firm</sub> × War<sub>day</sub> + controls + firm effect + day effect + noise</p>
+    <p>War<sub>day</sub> switches on from 24 February. The <strong>firm effect</strong> absorbs everything permanently true of a firm: a Warsaw small-cap is always less liquid than a Frankfurt blue chip. The <strong>day effect</strong> absorbs everything true of a day for everyone: 24 February was a bad day everywhere. What is left, <span class="num">β</span>, is how much more the exposed firms moved after the invasion than the rest.</p>
+    <ul class="facts">
+      <li><b>Exposure</b>bordering Ukraine; one border away; either; <span class="num">1 ÷ (1 + distance in km)</span>; the firm’s own return on 24 February, with intraday volatility as a further check.</li>
+      <li><b>Controls</b>log market value, one over the share price, log number of quote updates.</li>
+      <li><b>Uncertainty</b>standard errors clustered by firm and by date.</li>
+    </ul>
+    <div class="actions">
+      <button class="btn primary" type="button" data-next>Can the comparison be trusted?&nbsp;→</button>
+      <a class="btn return-link" href="02-gradient.html#s2">← Return to the main path</a>
+    </div>
+    <p class="note">Equation (10) and Section 3 of the paper.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Can the comparison be trusted?">
+  <div class="inner">
+    <p class="kicker">Side path · Eleven billion ticks · 4 of 4</p>
+    <h2>Two checks</h2>
+    <p><strong>Parallel trends.</strong> Before the invasion, were exposed firms already drifting away from the rest? For firms bordering Ukraine, quoted spreads and trading show no differential trend; effective spreads do. The second ring’s trading and the distance measure for quoted spreads also show some drift, and the paper reports them all (Table 12).</p>
+    <p><strong>A matched sample.</strong> Each of the 448 firms in the rings is paired with a distant firm of similar size and share price. That gives a similar picture: quoted-spread and trading effects survive; effective-spread effects shrink by about half (Appendix C).</p>
+    <table class="score">
+      <thead><tr><th>Bordering firms, extra after the invasion</th><th>Quoted spread</th><th>Effective spread</th><th>Dollar volume</th></tr></thead>
+      <tbody>
+        <tr><td>Main sample, 2,747 firms (Tables 5, 6)</td><td class="n">0.12 · 0.09</td><td class="n">0.10 · 0.09</td><td class="n">0.22 · 0.20</td></tr>
+        <tr><td>Matched sample, 896 firms (Tables 20, 21)</td><td class="n">0.12 · 0.08</td><td class="n">0.06 · 0.04</td><td class="n">0.21 · 0.21</td></tr>
+      </tbody>
+    </table>
+    <div class="actions">
+      <a class="btn primary return-link" href="02-gradient.html#s1">← Return to the main path</a>
+      <a class="btn" href="02-gradient.html#s1">Go on to the results&nbsp;→</a>
+    </div>
+    <p class="note">Each cell: without · with controls. Spreads in percentage points, dollar volume in logs.</p>
+  </div>
+</section>
+
+</main>
+
+<nav class="bar" aria-label="Deck navigation">
+  <div class="bar-left">
+    <a class="back" href="../../publication/war-market-functioning/">← <span class="long">Back to the paper</span><span class="short">Paper</span></a>
+    <button class="mapbtn" type="button">Map<kbd>m</kbd></button>
+  </div>
+  <div class="dots" role="group" aria-label="Slides"></div>
+  <div class="bar-right">
+    <button class="arrow prev" type="button" aria-label="Previous slide">←</button>
+    <button class="arrow next" type="button" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script src="explore.js"></script>
+<script>
+/* ---------- slide 1: the attrition funnel (Table 13) ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text, th = E.thousands;
+  var box = document.getElementById('funnel');
+  var items = [
+    { bar: 48403, label: 'Active, primary-listed equities in Datastream', short: 'Listed equities in Datastream', first: true },
+    { drop: 9222, label: 'no postal code' },
+    { drop: 14425, label: 'postal code not found in GeoNames' },
+    { drop: 6075, label: 'too many missing prices' },
+    { drop: 169, label: 'no tick history' },
+    { drop: 22, label: 'data only outside trading hours' },
+    { drop: 1068, label: 'market value missing or under $10m' },
+    { drop: 4618, label: 'share price under $1' },
+    { drop: 84, label: 'aerospace and defence' },
+    { drop: 79, label: 'headquartered in Russia or Ukraine' },
+    { bar: 12641, label: 'Eligible for high-frequency analysis', short: 'Eligible for tick data' },
+    { drop: 9894, label: 'incomplete daily record over 40 days' },
+    { bar: 2747, ring: 448, label: 'Balanced daily sample · 448 in the two rings', short: 'Daily sample · 448 in the rings' },
+    { drop: 1732, label: 'incomplete intraday record' },
+    { bar: 1015, ring: 54, label: 'Balanced intraday sample · 54 in the two rings', short: 'Intraday sample · 54 in the rings' }
+  ];
+  E.fit(box, function (W) {
+    box.innerHTML = '';
+    var root = S('svg', { role: 'img', 'aria-label': 'Attrition from 48,403 firms to 12,641 eligible, 2,747 with a complete daily record (448 of them in the two rings) and 1,015 with a complete intraday record (54 in the rings).' }, box);
+    var y = 4, barMax = W;
+    items.forEach(function (it) {
+      if (it.bar != null) {
+        T(root, 0, y + 12, W < 480 ? it.short : it.label, { 'class': 'label' });
+        T(root, W, y + 12, th(it.bar), { 'text-anchor': 'end', 'class': 'strong' });
+        var w = Math.max(3, barMax * it.bar / 48403);
+        S('rect', { x: it.first ? 0.75 : 0, y: y + 18, width: it.first ? w - 1.5 : w, height: 16, 'class': it.first ? 'hollow-far' : 'far-fill' }, root);
+        if (it.ring) S('rect', { x: 0, y: y + 18, width: Math.max(1.5, w * it.ring / it.bar), height: 16, 'class': 'near-fill' }, root);
+        y += 46;
+      } else {
+        T(root, 14, y + 10, '− ' + th(it.drop) + '  ' + it.label);
+        y += 17;
+      }
+    });
+    root.setAttribute('viewBox', '0 0 ' + W + ' ' + (y + 2));
+  }, { min: 300, max: 640 });
+})();
+
+/* ---------- slide 2: a jolt in standard deviations, with an invented firm ---------- */
+(function () {
+  var E = Explore, S = E.svg, T = E.text;
+  var FIRMS = {
+    calm: { days: [0.28, 0.33, 0.30, 0.32, 0.32], name: 'A calm firm' },
+    jumpy: { days: [0.20, 0.42, 0.27, 0.38, 0.28], name: 'A jumpy firm' }
+  };
+  function stats(a) {
+    var m = a.reduce(function (s, x) { return s + x; }, 0) / a.length;
+    var v = a.reduce(function (s, x) { return s + (x - m) * (x - m); }, 0) / (a.length - 1);
+    return [m, Math.sqrt(v)];
+  }
+  var box = document.getElementById('z-chart'), slider = document.getElementById('z-open'), read = document.getElementById('z-read');
+  var firm = 'calm', geo = null, LO = 0.1, HI = 0.72;
+  function build(W) {
+    box.innerHTML = '';
+    var H = 236, L = 44, R = 78, TOP = 10, B = 38;
+    function Y(v) { return TOP + (H - TOP - B) * (HI - v) / (HI - LO); }
+    var plotW = W - L - R;
+    function X(i) { return i < 5 ? L + plotW * (0.06 + i * 0.15) : L + plotW * 0.96; }
+    var root = S('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img',
+      'aria-label': 'An invented firm’s opening-hour spread on five benchmark days, its average and its normal range, and its spread at the open on 24 February, measured in standard deviations from that average.' }, box);
+    [0.2, 0.4, 0.6].forEach(function (v) {
+      S('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), 'class': 'grid' }, root);
+      T(root, L - 6, Y(v) + 4, v.toFixed(2) + '%', { 'text-anchor': 'end' });
+    });
+    [-10, -9, -8, -7, -6].forEach(function (d, i) { T(root, X(i), H - B + 16, '−' + Math.abs(d), { 'text-anchor': 'middle' }); });
+    T(root, (X(0) + X(4)) / 2, H - 6, 'benchmark days', { 'text-anchor': 'middle' });
+    T(root, X(5), H - B + 16, '24 Feb', { 'text-anchor': 'middle', 'class': 'label' });
+    geo = { X: X, Y: Y, W: W, L: L, R: R, dyn: S('g', {}, root) };
+    draw();
+  }
+  function draw() {
+    var f = FIRMS[firm], s = stats(f.days), m = s[0], sd = s[1], v = +slider.value, z = (v - m) / sd;
+    slider.setAttribute('aria-valuetext', v.toFixed(2) + ' percent');
+    read.innerHTML = '(' + v.toFixed(2) + '% − ' + m.toFixed(2) + '%) ÷ ' + sd.toFixed(3) + '% = <strong>' + E.plus(z, 1) + ' standard deviations</strong> from its own normal' + (Math.abs(z) <= 1 ? ': an ordinary day.' : '.');
+    if (!geo) return;
+    var g = geo.dyn, X = geo.X, Y = geo.Y, L = geo.L, xr = geo.W - geo.R;
+    g.innerHTML = '';
+    S('rect', { x: L, y: Y(m + sd), width: xr - L, height: Math.max(1, Y(m - sd) - Y(m + sd)), 'class': 'band-normal' }, g);
+    S('line', { x1: L, x2: xr, y1: Y(m), y2: Y(m), 'class': 'ghost' }, g);
+    T(g, L + 4, Y(0.665), geo.W < 440 ? 'dashed: average · shaded: ±1 sd' : 'dashed: its average · shaded: ±1 sd, its normal wobble', { 'class': 'halo' });
+    f.days.forEach(function (d, i) { S('circle', { cx: X(i), cy: Y(d), r: 4.5, 'class': 'text-fill' }, g); });
+    var x5 = X(5), bx = x5 + 14;
+    S('path', { d: 'M' + (bx - 5) + ',' + Y(m).toFixed(1) + ' H' + bx + ' V' + Y(v).toFixed(1) + ' H' + (bx - 5), 'class': 'bracket' }, g);
+    S('circle', { cx: x5, cy: Y(v), r: 6, 'class': 'link-fill' }, g);
+    T(g, bx + 6, (Y(m) + Y(v)) / 2 + 4, E.plus(z, 1) + ' sd', { 'class': 'strong' });
+  }
+  E.seg(document.getElementById('z-firm'), [['calm', 'A calm firm'], ['jumpy', 'A jumpy firm']], 'calm', function (k) { firm = k; draw(); }, 'Pick a firm');
+  slider.addEventListener('input', draw);
+  draw();
+  E.fit(box, build, { min: 300, max: 640 });
+})();
+</script>
+</body>
+</html>

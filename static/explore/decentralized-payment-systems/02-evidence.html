@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What the data said — Decentralized Payment Systems</title>
+<meta name="description" content="Deck 2 of the explorable: the difference-in-differences against Bitcoin, and what EIP-1559 did to fees, to miners' pay and to the network's activity.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="explore.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<style>
+  .did-range { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: 0.7rem; font-size: 13.5px; }
+  .did-range input[type="range"] { flex: 1 1 160px; width: auto; min-width: 140px; }
+  .did-range label { color: var(--muted); }
+  .did-range output { font-variant-numeric: tabular-nums; font-weight: 500; min-width: 4.5ch; }
+  .cmp--sig td.n b { font-weight: 500; }
+</style>
+<script src="../sitebar.js"></script>
+</head>
+<body data-deck="02-evidence.html">
+<lg-sitebar>
+  <noscript><a href="../../publication/decentralized-payment-systems/">← Back to the paper</a></noscript>
+  <div class="deck-name"><small>Deck 2 · </small>What the data said</div>
+  <button class="mapbtn" type="button" aria-label="Map" aria-controls="map" aria-expanded="false">Map <kbd>m</kbd></button>
+</lg-sitebar>
+<div class="deck">
+
+  <main class="stage">
+
+    <!-- 1 · the counterfactual, with the bet on the main result -->
+    <section class="slide slide--split" data-title="The counterfactual: place your bet">
+      <div class="text">
+        <p class="kicker">Deck 2 · 1 of 8 · Playable</p>
+        <h2>The counterfactual</h2>
+        <div class="prose">
+          <p>Did the posted fee make Ethereum cheaper? Before-and-after cannot say: fees move with the coin's price, with congestion, with whatever else happened that summer.</p>
+          <p>So the paper adds a control: Bitcoin. It runs the same <em>proof-of-work</em> design, in which miners compete with computing power to build each block; its fees were of the same order; and it left its auction alone. <a class="inline-fork" href="#control" data-go="control">Is that a fair comparison?</a> The reform gets credit only for the part of Ethereum's move that Bitcoin did not share.</p>
+          <p id="did-ask">Thirty days after the switch, relative to Bitcoin, Ethereum's average fee had…</p>
+        </div>
+        <div class="bets" id="bet-fee">
+          <button class="btn" type="button" data-bet="down">Gone down</button>
+          <button class="btn" type="button" data-bet="same">Stayed about the same</button>
+          <button class="btn" type="button" data-bet="up">Gone up</button>
+        </div>
+        <div class="bet-result" id="bet-fee-result" aria-live="polite" hidden></div>
+        <div class="onward" id="did-onward" hidden>
+          <a class="next" href="#2" data-go="2">Why did it get dearer? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Average fee per transaction, US$</span><span>6 Jul – 3 Sep 2021</span></div>
+        <svg class="chart" id="did-svg" viewBox="0 0 520 300" role="img" aria-label="Ethereum and Bitcoin average fees 30 days before and after 5 August 2021. Ethereum's after value is hidden until you bet; then a dashed line shows Ethereum had it moved like Bitcoin, and Bitcoin's after point can be moved."></svg>
+        <div class="legend"><span><i class="sw-line"></i>Ethereum</span><span><i class="sw-fill sw-btc"></i>Bitcoin</span><span><i class="sw-cf"></i>Ethereum had it moved like Bitcoin</span><span><i class="sw-handle"></i>movable</span></div>
+        <div class="did-range">
+          <label for="did-range">Bitcoin after</label>
+          <input type="range" id="did-range" min="0" max="38" step="0.01" value="2.78" disabled>
+          <output id="did-rangev" for="did-range">$2.78</output>
+          <button class="btn btn--small" id="did-reset" type="button" disabled>Back to the data</button>
+        </div>
+        <div class="readouts">
+          <div class="readout"><div class="k">Ethereum, after minus before</div><div class="v" id="did-eth">?</div></div>
+          <div class="readout"><div class="k">Bitcoin, after minus before</div><div class="v" id="did-btc">−$0.37</div></div>
+          <div class="readout"><div class="k">Difference-in-differences</div><div class="v" id="did-est">?</div></div>
+        </div>
+        <p class="note" id="did-note">Means from Table 2. Bet first; the slider unlocks once you have.</p>
+      </div>
+    </section>
+
+    <!-- side trip · is Bitcoin a fair control? -->
+    <section class="slide slide--split slide--branch" data-branch="control" data-title="Is Bitcoin a fair control?">
+      <div class="text">
+        <p class="kicker">Side trip · from <a href="#1" data-go="1">The counterfactual</a></p>
+        <h2>Is Bitcoin a fair control?</h2>
+        <div class="prose">
+          <p>The paper's case (p. 4): Bitcoin shares Ethereum's original proof-of-work design, the two are the most widely used chains, their fees were of the same order, and Bitcoin changed neither its auction nor its block rules during the window.</p>
+          <p>It also names the doubts. Bitcoin's own supply of block space moved as its miners recovered from the mid-2021 Chinese mining ban, so every specification controls for block difficulty and block size. Ethereum runs applications and Bitcoin mostly payments, so the controls include contract activity, transaction size and prices. Before the switch, the two chains' fees track each other (Figure 1), and placebo dates before the event show no comparable jumps.</p>
+          <p>The hardest test removes the reliance on one control: four smaller chains join Bitcoin. Some results survive; some do not.</p>
+        </div>
+        <div class="onward">
+          <a class="back" href="#1" data-go="1">← Back to the counterfactual</a>
+          <a class="next" href="#2" data-go="2">Why did it get dearer? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Effect of EIP-1559, two controls</span><span>log points</span></div>
+        <table class="cmp cmp--sig">
+          <thead><tr><th scope="col">Outcome</th><th scope="col" class="n">Control: Bitcoin</th><th scope="col" class="n">Five control chains</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Average fee</th><td class="n"><b>+0.93</b></td><td class="n"><b>+0.59</b></td></tr>
+            <tr><th scope="row">Fee dispersion</th><td class="n"><b>+0.75</b></td><td class="n"><b>+0.51</b></td></tr>
+            <tr><th scope="row">Fee inflation</th><td class="n"><b>+0.97</b></td><td class="n"><b>+0.58</b></td></tr>
+            <tr><th scope="row">Dollar value settled</th><td class="n"><b>−0.51</b></td><td class="n"><b>−0.67</b></td></tr>
+            <tr><th scope="row">Zero-value transactions</th><td class="n"><b>−0.63</b></td><td class="n"><b>−0.74</b></td></tr>
+            <tr><th scope="row">Welfare, $ bn a day</th><td class="n"><b>−83.6</b></td><td class="n"><b>−57.9</b></td></tr>
+            <tr><th scope="row">Fee volatility</th><td class="n"><b>−0.13</b></td><td class="n ns">+0.02 ns</td></tr>
+            <tr><th scope="row">Confirmed transactions</th><td class="n"><b>−0.24</b></td><td class="n ns">−0.08 ns</td></tr>
+            <tr><th scope="row">Unconfirmed queue</th><td class="n"><b>−0.57</b></td><td class="n ns">+0.13 ns</td></tr>
+            <tr><th scope="row">Miner payoff per transaction</th><td class="n"><b>+0.54</b></td><td class="n ns">+0.08 ns</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Bold: significant at 1%. ns: not significant. The five control chains are Bitcoin, Litecoin, Dogecoin, Dash and Zcash, with chain and day fixed effects and errors clustered by both (Tables 3, 4, 7, 9 and A1–A4, first specification).</p>
+      </div>
+    </section>
+
+    <!-- 2 · why dearer -->
+    <section class="slide slide--split" data-title="Why did it get dearer?">
+      <div class="text">
+        <p class="kicker">Deck 2 · 2 of 8</p>
+        <h2>Why did it get dearer?</h2>
+        <div class="prose">
+          <p>Look at what a transaction paid. Before the reform the whole fee was a bid: $8.90 on average, all of it to the miner. After it, the tip, the part users still bid for priority, averaged $8.37: about what the whole fee used to be. On top of it came the base fee, $22.38, burned.</p>
+          <p>The paper's reading: users kept bidding for priority much as before and paid a burned base fee on top (p. 7). It does not claim to have isolated this channel.</p>
+          <p>In raw dollars the tip barely moved. In the regressions, which also hold ether's price and transaction size fixed, tips fell 32 to 39 per cent relative to Bitcoin (Table 4): the "about a third" of the paper's abstract.</p>
+        </div>
+        <div class="onward">
+          <a class="next" href="#3" data-go="3">Then what did the reform fix? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>What one Ethereum transaction paid, US$</span><span>Table 2 means</span></div>
+        <svg class="chart" id="dearer-svg" viewBox="0 0 520 300" role="img" aria-label="Before the reform, an 8.90 dollar fee, all of it a bid. After, an 8.37 dollar tip, about the old fee, plus a 22.38 dollar base fee that is burned: 30.75 in all."></svg>
+        <div class="legend"><span><i class="sw-fill sw-eth"></i>bid for priority, to the miner</span><span><i class="sw-burn"></i>base fee, burned</span><span><i class="sw-guide"></i>the old fee's level</span></div>
+        <p class="note">30 days either side of 5 August 2021. Against Bitcoin in raw means, the tip's change is +$0.18 and not significant (Table 2, Panel C).</p>
+      </div>
+    </section>
+
+    <!-- 3 · the promise kept -->
+    <section class="slide slide--stack" data-title="The promise kept">
+      <p class="kicker">Deck 2 · 3 of 8</p>
+      <h2>The promise kept</h2>
+      <div class="prose">
+        <p>The reform promised predictability, and inside the block it delivered some. The paper's <em>fee volatility</em>, the logarithm of the highest fee over the lowest in each block, fell by about 12 per cent relative to Bitcoin.</p>
+        <p>Day to day, the typical change in Ethereum's average fee fell by a quarter while Bitcoin's stayed flat, though that estimate is too noisy to be significant in a 60-day window.</p>
+      </div>
+      <div class="tiles">
+        <div class="tile tile--gold"><div class="v">−12%</div><div class="k">Within-block fee volatility</div><div class="s">−0.13 in logs · significant at 1%</div></div>
+        <div class="tile"><div class="v">0.40 <small>to</small> 0.30</div><div class="k">Day-to-day fee change, Ethereum</div><div class="s">not significant (Table A6)</div></div>
+        <div class="tile"><div class="v">0.14 <small>to</small> 0.15</div><div class="k">Same measure, Bitcoin</div><div class="s">the control stays flat</div></div>
+      </div>
+      <p class="note">Of the paper's four fee measures, this is the one that disappears when Litecoin, Dogecoin, Dash and Zcash join the control group (Table A1). Log points: 0.10 is about +10%; the percentages are given alongside.</p>
+      <div class="onward">
+        <a class="next" href="#4" data-go="4">And the gap between dearest and cheapest, in dollars? <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- 4 · the gap in dollars -->
+    <section class="slide slide--stack" data-title="The gap in dollars">
+      <p class="kicker">Deck 2 · 4 of 8</p>
+      <h2>The gap in dollars widened</h2>
+      <div class="prose">
+        <p>Take the same two transactions, the dearest and the cheapest in a block, and subtract. The paper calls the difference <em>dispersion</em>. On Ethereum it went from $127 to $341, up 105 to 112 per cent relative to Bitcoin. Divided by the number of transactions in the block it becomes the gap per transaction, which the paper calls <em>fee inflation</em>: $1.15 to $3.71, up 134 to 164 per cent.</p>
+        <p>Two cautions. Transactions that use more computation cost more, so not all of a dollar gap is unequal pricing (pp. 17–18). And Bitcoin's in-block gap was larger still: $430 before, $392 after. <a class="inline-fork" href="#liu" data-go="liu">Didn't another study find the gap fell?</a></p>
+      </div>
+      <div class="tiles">
+        <div class="tile tile--gold"><div class="v">$127 <small>to</small> $341</div><div class="k">Dispersion, Ethereum</div><div class="s">+105 to +112% against Bitcoin</div></div>
+        <div class="tile"><div class="v">$1.15 <small>to</small> $3.71</div><div class="k">Gap per transaction</div><div class="s">+134 to +164% against Bitcoin</div></div>
+        <div class="tile"><div class="v">$430 <small>to</small> $392</div><div class="k">Dispersion, Bitcoin</div><div class="s">wider still, and drifting down</div></div>
+      </div>
+      <div class="prose"><p>Wait. The last slide said the spread inside a block narrowed. This one says it widened. Both are true, and the reason is arithmetic.</p></div>
+      <div class="onward">
+        <a class="next" href="#5" data-go="5">How can both be true? <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- side trip · Liu et al. -->
+    <section class="slide slide--split slide--branch" data-branch="liu" data-title="Didn't another study find the gap fell?">
+      <div class="text">
+        <p class="kicker">Side trip · from <a href="#4" data-go="4">The gap in dollars</a></p>
+        <h2>Didn't another study find the gap fell?</h2>
+        <div class="prose">
+          <p>Liu et al. (2022) studied the same reform on Ethereum alone. They found average gas prices essentially unchanged, waits shorter and fees easier to estimate, and a dispersion measure that fell as the new transaction format spread. The paper reconciles the two findings (p. 30): different objects, horizons and comparisons.</p>
+          <p>Read together: in the middle of the distribution, price differences per unit of gas narrowed as adoption spread; at the top, the dollar cost of priority, and the average dollar cost of settling, rose sharply. Nor is that a currency artifact: median gas prices rose from about 60 gwei at activation to about 180 gwei in September and October 2021 (Karaivanov and Zarifian 2025).</p>
+        </div>
+        <div class="onward">
+          <a class="back" href="#4" data-go="4">← Back to the gap in dollars</a>
+          <a class="next" href="#5" data-go="5">How can both be true? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Two studies, two measures</span><span>p. 30</span></div>
+        <table class="cmp">
+          <thead><tr><th scope="col"></th><th scope="col">Liu et al. (2022)</th><th scope="col">This paper</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Measures</th><td>the middle half of gas prices in a block, per unit of gas</td><td>dearest minus cheapest fee, in dollars</td></tr>
+            <tr><th scope="row">Sensitive to</th><td>the interior of the distribution</td><td>the tails, where priority competition concentrates</td></tr>
+            <tr><th scope="row">Horizon</th><td>rose right after activation (0.26 to 0.34), then fell as the new format spread</td><td>30 days either side, when about half of transactions used the new format</td></tr>
+            <tr><th scope="row">Compared with</th><td>Ethereum before the reform</td><td>Bitcoin, as a control</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Liu et al.'s measure is the standardized interquartile range of gas prices in gwei.</p>
+      </div>
+    </section>
+
+    <!-- 5 · narrower ratio, wider gap -->
+    <section class="slide slide--split" data-title="Narrower ratio, wider gap">
+      <div class="text">
+        <p class="kicker">Deck 2 · 5 of 8 · Playable</p>
+        <h2>Narrower ratio, wider gap</h2>
+        <div class="prose">
+          <p>Take the cheapest and the dearest transaction in a block. The paper's fee volatility is the logarithm of their ratio; its dispersion is their difference in dollars.</p>
+          <p>Slide a common floor under both, which is what a base fee does: the ratio shrinks and the gap does not move. Scale both up, which is what tripling fees does: the gap widens and the ratio does not move. Do both and you have the paper's pattern: lower volatility, higher dispersion.</p>
+          <p>Two views of one block. Together they say the fee distribution moved up and tightened at the bottom, while the contest for priority at the top went on.</p>
+        </div>
+        <div class="onward">
+          <a class="next" href="#6" data-go="6">Who got the extra money? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Two fees in one block</span><span>arithmetic, not data</span></div>
+        <svg class="chart" id="gap-svg" viewBox="0 0 520 300" role="img" aria-label="Two bars for the lowest and highest fee in a block, before and after a common floor and a scale factor are applied"></svg>
+        <div class="controls">
+          <div class="control"><label for="gap-floor">Common floor</label><input type="range" id="gap-floor" min="0" max="5" value="0" step="0.5"><output id="gap-floorv" for="gap-floor">0</output></div>
+          <div class="control"><label for="gap-scale">Scale</label><input type="range" id="gap-scale" min="1" max="3" value="1" step="0.1"><output id="gap-scalev" for="gap-scale">×1.0</output></div>
+          <button class="btn" id="gap-paper" type="button">Floor and triple</button>
+          <button class="btn" id="gap-reset" type="button">Reset</button>
+        </div>
+        <div class="readouts">
+          <div class="readout"><div class="k">Fee volatility · ln(high/low)</div><div class="v" id="gap-vol">2.30</div></div>
+          <div class="readout"><div class="k">Dispersion · high − low</div><div class="v" id="gap-disp">9.0</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · who got the money -->
+    <section class="slide slide--split" data-title="Who got the money">
+      <div class="text">
+        <p class="kicker">Deck 2 · 6 of 8</p>
+        <h2>Who got the money</h2>
+        <div class="prose">
+          <p>Now the miner's side. Before the reform the miner kept the whole fee, $8.90, plus a protocol subsidy worth $33.69 per transaction. After it, the miner kept the tip, $8.37; the base fee went to nobody; and the subsidy per transaction had risen to $99.36.</p>
+          <p>The subsidy is fixed per block, 2 ETH at the time, so per transaction it rises when blocks carry fewer transactions, and in dollars when ether's price rises, which the regressions hold fixed. Net of Bitcoin, the subsidy per transaction rose 103 to 112 per cent, and the miner's total payoff per transaction 72 to 77 per cent.</p>
+          <p>So users paid more, and the extra was burned. Miners still earned more per transaction, but not from users: the fixed subsidy was shared by fewer transactions. Per transaction is not per day; the paper notes this does not mean miners' total income rose (p. 31).</p>
+        </div>
+        <div class="onward">
+          <a class="next" href="#7" data-go="7">What happened to activity? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>What the miner received per transaction, US$</span><span>Table 2 means</span></div>
+        <svg class="chart" id="money-svg" viewBox="0 0 520 300" role="img" aria-label="Before: the miner received an 8.90 dollar fee and a 33.69 dollar subsidy per transaction. After: an 8.37 dollar tip and a 99.36 dollar subsidy. Beside it, the 22.38 dollar base fee, burned and paid to nobody."></svg>
+        <div class="legend"><span><i class="sw-fill sw-gold"></i>fee or tip, from the user</span><span><i class="sw-fill sw-eth"></i>block subsidy, from the protocol</span><span><i class="sw-burn"></i>base fee, burned</span></div>
+        <p class="note">The paper's miner total (fee or tip plus subsidy) is $42.25 before and $107.73 after; the burned base fee is not part of it.</p>
+      </div>
+    </section>
+
+    <!-- 7 · relative to Bitcoin, the network shrank -->
+    <section class="slide slide--split" data-title="Relative to Bitcoin, the network shrank">
+      <div class="text">
+        <p class="kicker">Deck 2 · 7 of 8</p>
+        <h2>Relative to Bitcoin, the network shrank</h2>
+        <div class="prose">
+          <p>Elastic blocks were meant to let more through. Relative to Bitcoin, less did: about a fifth (21–22%) fewer confirmed transactions, 38 to 40 per cent less value settled, and 46 per cent fewer zero-value transactions, the contract calls that make Ethereum more than a payment rail. The unconfirmed queue shrank 43 to 44 per cent.</p>
+          <p>In raw terms Ethereum's activity barely moved; Bitcoin's surged, and the estimates measure the gap. Congestion fell alongside activity, and plausibly because of it.</p>
+          <p>Why would less get through? One reading the paper offers but cannot test: with the base fee burned, one more low-tip transaction earns a miner almost nothing. (That emptier blocks raise the subsidy per transaction is arithmetic, not a motive.)</p>
+        </div>
+        <div class="onward">
+          <a class="next" href="#8" data-go="8">What did that cost in welfare? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Effect of the reform, net of Bitcoin</span><span>Table 7</span></div>
+        <svg class="chart" id="act-svg" viewBox="0 0 520 300" role="img" aria-label="Four bars: confirmed transactions minus 21 percent, dollar value settled minus 38 to 40 percent, zero-value transactions minus 46 to 47 percent, unconfirmed queue minus 43 to 44 percent"></svg>
+        <p class="note">All four are significant at 1%. Ranges are the table's two specifications; bars show the first. Raw: Ethereum confirmed 1.22 million transactions a day before, 1.20 million after (Table 2).</p>
+      </div>
+    </section>
+
+    <!-- 8 · welfare -->
+    <section class="slide slide--split" data-title="What it cost in welfare">
+      <div class="text">
+        <p class="kicker">Deck 2 · 8 of 8</p>
+        <h2>What it cost in welfare</h2>
+        <div class="eqn"><span class="term">value transferred</span><span class="op">−</span><span class="term">fees paid</span><span class="op">+</span><span class="term">what miners earn</span></div>
+        <div class="prose">
+          <p>The paper sums this over every confirmed transaction in a day, following Basu, Easley, O'Hara and Sirer (2023). It is a settlement proxy: value transferred is an upper bound on what a transaction is worth, and a zero-value contract call counts as minus its fee. So the paper reads the contrast with Bitcoin, not the levels.</p>
+          <p>Ethereum's average daily welfare rose by $6.4 billion (from $14.6 to $21.0 billion a day) and Bitcoin's by $60.2 billion a day. That is a gap of $54 billion a day in raw means, and $80 to 84 billion a day once coin prices and block size are controlled for. Most of the gap is Bitcoin's surge: its settled value rose about 70 per cent in the window (Table 2).</p>
+        </div>
+        <details class="more">
+          <summary>How robust is it?</summary>
+          <ul class="deflist">
+            <li><b>Raw means</b> <span>· −$53.8 bn a day (Table 2)</span></li>
+            <li><b>With controls</b> <span>· −$83.6 bn a day (coin price, block size) and −$80.2 bn (adding coin volatility and block difficulty), significant at 1%, also when errors may be correlated from day to day (White, Newey-West and Driscoll-Kraay errors; Tables 9, A5)</span></li>
+            <li><b>Day fixed effects</b> <span>· −$59.6 to −67.9 bn a day (two-way fixed effects, errors clustered by chain and day)</span></li>
+            <li><b>Five control chains</b> <span>· −$57.9 to −57.3 bn a day (Table A4)</span></li>
+            <li><b>Counting the burn</b> <span>· a second measure adds the burned base fee back; it is nearly identical, because the burn is small next to the value settled</span></li>
+          </ul>
+        </details>
+        <div class="onward">
+          <a class="next" href="03-placebo.html#1">Was it the rules, or just a big event? <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="stagebox">
+        <div class="stage-title"><span>Average welfare per day, US$ billion</span><span>Table 2</span></div>
+        <svg class="chart" id="welfare-svg" viewBox="0 0 520 300" role="img" aria-label="Average daily welfare: Ethereum from 14.6 to 21.0 billion dollars, Bitcoin from 80.1 to 140.3 billion. Had Ethereum gained what Bitcoin gained, it would have reached 74.8 billion: a gap of 53.8 billion dollars a day."></svg>
+        <div class="legend"><span><i class="sw-line"></i>Ethereum</span><span><i class="sw-fill sw-btc"></i>Bitcoin</span><span><i class="sw-cf"></i>Ethereum had it gained the dollars Bitcoin gained</span></div>
+        <p class="note">The raw difference-in-differences in levels asks Ethereum to have gained the same dollars as Bitcoin, five times its size. The regressions add controls; the paper reads the sign and the contrast, not a structural surplus.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bottombar">
+    <button class="nav-arrow nav-prev" type="button" aria-label="Previous slide">←</button>
+    <div class="dots" role="group" aria-label="Slides"></div>
+    <button class="nav-arrow nav-next" type="button" aria-label="Next slide">→</button>
+  </footer>
+</div>
+
+<div class="map" id="map" aria-hidden="true">
+  <div class="map-head"><h2>Map of the explorable</h2><button class="close" type="button">Close · Esc</button></div>
+  <div class="map-grid"></div>
+  <div class="map-foot"><a href="index.html">Hub</a><a href="../../publication/decentralized-payment-systems/">← Back to the paper</a></div>
+</div>
+
+<script src="explore.js"></script>
+<script>
+(function () {
+  'use strict';
+  var fmt = explore.fmt;
+  function $(id) { return document.getElementById(id); }
+  function T(x, y, s, cls, anchor) { return '<text x="' + x + '" y="' + y + '"' + (cls ? ' class="' + cls + '"' : '') + (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + s + '</text>'; }
+  function money(x) { return (x < -0.004 ? '−' : '+') + '$' + fmt(Math.abs(x), 2); }
+  var mains = Array.prototype.filter.call(document.querySelectorAll('.slide'), function (s) { return !s.hasAttribute('data-branch'); });
+
+  /* ---------- 1 · the counterfactual: bet, reveal, then move the control ---------- */
+  (function () {
+    var slide = mains[0], svg = $('did-svg'), range = $('did-range'), rangev = $('did-rangev'), resetBtn = $('did-reset');
+    var ethPre = 8.90, ethPost = 30.75, btcPre = 3.15, btcData = 2.78, btcPost = btcData, ymax = 40, H = 300;
+    var revealed = false, dragging = false, geom = null;
+    function render() {
+      var W = explore.chartW(svg), wide = W > 400;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var padL = wide ? 50 : 40, padR = wide ? 40 : 34, padT = 30, padB = 44;
+      var xPre = padL + (wide ? 100 : 66), xPost = W - padR - (wide ? 100 : 66);
+      var y = function (v) { return padT + (H - padT - padB) * (1 - v / ymax); };
+      geom = { y: y, padT: padT, padB: padB };
+      var cf = ethPre + (btcPost - btcPre), did = ethPost - cf, h = '';
+      for (var v = 0; v <= 40; v += 10) {
+        h += '<line class="grid" x1="' + padL + '" y1="' + y(v) + '" x2="' + (W - padR) + '" y2="' + y(v) + '"></line>';
+        h += T(padL - 8, y(v) + 4, '$' + v, 't-s', 'end');
+      }
+      h += '<line class="event" x1="' + (W / 2) + '" y1="' + (padT - 8) + '" x2="' + (W / 2) + '" y2="' + (H - padB + 6) + '"></line>';
+      h += T(W / 2 + 6, padT - 12, wide ? '5 Aug 2021 · EIP-1559' : '5 Aug 2021', 't-s');
+      h += T(xPre, H - padB + 22, '30 days before', 't-s', 'middle') + T(xPost, H - padB + 22, '30 days after', 't-s', 'middle');
+      // Bitcoin, the control
+      h += '<line class="btc" x1="' + xPre + '" y1="' + y(btcPre) + '" x2="' + xPost + '" y2="' + y(btcPost) + '" stroke-width="2"></line>';
+      h += '<circle class="btc" cx="' + xPre + '" cy="' + y(btcPre) + '" r="5"></circle>';
+      h += T(xPre - 11, y(btcPre) + 4, wide ? 'Bitcoin $3.15' : '$3.15', 'label', 'end');
+      // Ethereum before
+      h += '<circle class="eth" cx="' + xPre + '" cy="' + y(ethPre) + '" r="5"></circle>';
+      h += T(xPre - 11, y(ethPre) + 4, wide ? 'Ethereum $8.90' : '$8.90', 'label', 'end');
+      if (!revealed) {
+        // the unknown: a dashed range over the whole axis, not a point that hints at a level
+        h += '<line class="burn" x1="' + xPost + '" y1="' + y(38.5) + '" x2="' + xPost + '" y2="' + y(4.5) + '"></line>';
+        h += '<rect class="burn" x="' + (xPost - 13) + '" y="' + (y(38.5) - 2) + '" width="26" height="24" rx="3" style="fill:var(--surface)"></rect>';
+        h += T(xPost, y(38.5) + 15, '?', 'strong t-l', 'middle');
+        h += T(xPost - 20, y(38.5) + 14, wide ? 'Ethereum, after: your bet' : 'your bet', 't-s halo', 'end');
+        h += '<circle class="btc" cx="' + xPost + '" cy="' + y(btcPost) + '" r="5"></circle>';
+        h += T(xPost - 11, y(btcPost) + 16, '$2.78', 'label', 'end');
+      } else {
+        h += '<line class="cf" x1="' + xPre + '" y1="' + y(ethPre) + '" x2="' + xPost + '" y2="' + y(cf) + '" stroke-width="1.5"></line>';
+        h += '<line class="bracket" x1="' + (xPost + 6) + '" y1="' + y(cf) + '" x2="' + (xPost + 6) + '" y2="' + y(ethPost) + '"></line>';
+        h += T(xPost + 13, (y(cf) + y(ethPost)) / 2 + 4, money(did), 'strong t-m');
+        h += '<line class="eth" x1="' + xPre + '" y1="' + y(ethPre) + '" x2="' + xPost + '" y2="' + y(ethPost) + '" stroke-width="2"></line>';
+        h += '<circle class="eth" cx="' + xPost + '" cy="' + y(ethPost) + '" r="5"></circle>';
+        h += T(xPost - 11, y(ethPost) - 7, '$30.75', 'label', 'end');
+        var isData = Math.abs(btcPost - btcData) < 0.005;
+        h += '<g class="handle' + (dragging ? ' is-drag' : '') + '" id="did-handle" tabindex="0" role="slider" aria-label="Bitcoin average fee after the event, in dollars" aria-valuemin="0" aria-valuemax="38" aria-valuenow="' + fmt(btcPost, 2) + '" aria-valuetext="$' + fmt(btcPost, 2) + '">' +
+             '<circle class="hit" cx="' + xPost + '" cy="' + y(btcPost) + '" r="22"></circle>' +
+             '<circle class="ring" cx="' + xPost + '" cy="' + y(btcPost) + '" r="7"></circle>' +
+             T(xPost - 13, y(btcPost) + 17, '$' + fmt(btcPost, 2) + (isData ? ' (data)' : ' (what if)'), 'label', 'end') + '</g>';
+      }
+      svg.innerHTML = h;
+      $('did-btc').textContent = money(btcPost - btcPre);
+      $('did-eth').textContent = revealed ? money(ethPost - ethPre) : '?';
+      var est = $('did-est');
+      est.textContent = revealed ? money(did) : '?';
+      est.classList.toggle('gold', revealed);
+      range.value = btcPost; rangev.textContent = '$' + fmt(btcPost, 2);
+      var hd = $('did-handle');
+      if (hd) {
+        hd.addEventListener('pointerdown', function (ev) { dragging = true; try { svg.setPointerCapture(ev.pointerId); } catch (e) { /* not supported */ } ev.preventDefault(); render(); });
+        hd.addEventListener('keydown', function (ev) {
+          var k = ev.key;
+          if (k === 'ArrowUp' || k === 'ArrowRight') btcPost = Math.min(38, btcPost + 0.5);
+          else if (k === 'ArrowDown' || k === 'ArrowLeft') btcPost = Math.max(0, btcPost - 0.5);
+          else if (k === 'Home') btcPost = btcData;
+          else return;
+          ev.preventDefault(); ev.stopPropagation(); render(); $('did-handle').focus();
+        });
+      }
+    }
+    function toValue(ev) {
+      var r = svg.getBoundingClientRect(), py = (ev.clientY - r.top) * H / r.height;
+      return Math.max(0, Math.min(38, (1 - (py - geom.padT) / (H - geom.padT - geom.padB)) * ymax));
+    }
+    svg.addEventListener('pointermove', function (ev) { if (!dragging) return; btcPost = toValue(ev); render(); });
+    var stop = function () { if (dragging) { dragging = false; render(); } };
+    svg.addEventListener('pointerup', stop); svg.addEventListener('pointercancel', stop); svg.addEventListener('lostpointercapture', stop);
+    range.addEventListener('input', function () { btcPost = +range.value; render(); });
+    resetBtn.addEventListener('click', function () { btcPost = btcData; render(); });
+
+    var words = { down: 'gone down', same: 'stayed about the same', up: 'gone up' };
+    function reveal(b) {
+      revealed = true;
+      $('did-ask').hidden = true; $('bet-fee').hidden = true; $('did-onward').hidden = false;
+      range.disabled = false; resetBtn.disabled = false;
+      var el = $('bet-fee-result');
+      el.hidden = false;
+      el.innerHTML = '<span class="you">You bet it had ' + words[b] + '.</span> ' + (b === 'up' ? 'Right. ' : 'It went up. ') +
+        '$8.90 to $30.75: $22.22 more than Bitcoin’s own change. The regressions work in logs and hold coin price, transaction size and turnover fixed, so their estimate, +120 to +154 per cent, is smaller than the raw dollar gap suggests. Now move Bitcoin’s after point: the more Bitcoin rises on its own, the less the reform gets credit for.';
+      $('did-note').textContent = 'Means from Table 2. Regression estimate: 0.79 to 0.93 log points (Table 3); 0.10 log points is about +10%. Drag the gold point, use the slider, or focus the point and use the arrow keys.';
+      render();
+    }
+    var prior = explore.wireBets(slide, 'fee', reveal);
+    if (prior) reveal(prior);
+    explore.onShow(slide, render);
+  })();
+
+  /* ---------- 2 · why dearer: the user's bill ---------- */
+  (function () {
+    var slide = mains[1], svg = $('dearer-svg');
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = 300, base = 252, top = 46, vmax = 35;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var y = function (v) { return base - (v / vmax) * (base - top); };
+      var bw = wide ? 74 : 52, x0 = wide ? 70 : 30, x1 = wide ? 250 : 176, lx = x1 + bw + 10;
+      var h = '<line class="axis" x1="20" y1="' + base + '" x2="' + (W - 20) + '" y2="' + base + '"></line>';
+      // before: one bid
+      h += '<rect class="eth" x="' + x0 + '" y="' + y(8.90) + '" width="' + bw + '" height="' + (base - y(8.90)) + '" stroke="none"></rect>';
+      h += T(x0 + bw / 2, y(8.90) - 26, '$8.90', 'strong t-l', 'middle') + T(x0 + bw / 2, y(8.90) - 10, wide ? 'the whole fee, a bid' : 'a bid', 't-s', 'middle');
+      // after: tip (still a bid) + base fee (burned)
+      h += '<rect class="eth" x="' + x1 + '" y="' + y(8.37) + '" width="' + bw + '" height="' + (base - y(8.37)) + '" stroke="none"></rect>';
+      h += '<rect class="burn" x="' + (x1 + 0.75) + '" y="' + (y(30.75) + 0.75) + '" width="' + (bw - 1.5) + '" height="' + (y(8.37) - y(30.75) - 1.5) + '"></rect>';
+      h += '<line class="guide" x1="' + (x0 + bw) + '" y1="' + y(8.90) + '" x2="' + x1 + '" y2="' + y(8.90) + '"></line>';
+      h += T((x0 + bw + x1) / 2, y(8.90) + 16, 'about the same', 't-s', 'middle');
+      h += T(lx, y(8.37 / 2) + 4, wide ? '$8.37 · the tip, still a bid' : '$8.37 tip', 'label');
+      h += T(lx, y(19.56) - 4, wide ? '$22.38 · base fee,' : '$22.38', 'label') + T(lx, y(19.56) + 12, wide ? 'burned, paid to nobody' : 'base fee,', 't-s');
+      if (!wide) h += T(lx, y(19.56) + 26, 'burned', 't-s');
+      h += T(x1 + bw / 2, y(30.75) - 10, '$30.75 in all', 'strong t-m', 'middle');
+      h += T(x0 + bw / 2, base + 20, 'Before', 'label', 'middle') + T(x1 + bw / 2, base + 20, 'After', 'label', 'middle');
+      h += T(x0 + bw / 2, base + 36, '30 days', 't-s', 'middle') + T(x1 + bw / 2, base + 36, '30 days', 't-s', 'middle');
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- 5 · floor and scale ---------- */
+  (function () {
+    var slide = mains[4], svg = $('gap-svg');
+    var fl = $('gap-floor'), sc = $('gap-scale');
+    var LOW = 1, HIGH = 10, H = 300, base = 226, maxv = 48;
+    function render() {
+      var W = explore.chartW(svg), wide = W > 400;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var bw = wide ? 56 : 40, gap = wide ? 14 : 10, xa = wide ? 50 : 24, xb = wide ? 300 : 196;
+      var y = function (v) { return base - (v / maxv) * 190; };
+      function bar(x, v, cls, label, under) {
+        return '<rect class="' + cls + '" x="' + x + '" y="' + y(v) + '" width="' + bw + '" height="' + (base - y(v)) + '" stroke="none"></rect>' +
+               T(x + bw / 2, y(v) - 7, label, 'strong t-m', 'middle') + T(x + bw / 2, base + 16, under, 't-s', 'middle');
+      }
+      var F = +fl.value, k = +sc.value, lo = k * (LOW + F), hi = k * (HIGH + F);
+      var h = '<line class="axis" x1="20" y1="' + base + '" x2="' + (W - 20) + '" y2="' + base + '"></line>';
+      h += T(xa, 22, 'Original block', 'label t-m');
+      h += bar(xa, LOW, 'btc', '1', 'lowest') + bar(xa + bw + gap, HIGH, 'btc', '10', 'highest');
+      h += T(xb, 22, wide ? 'After floor ' + F + ' and scale ×' + fmt(k, 1) : 'Floor ' + F + ', ×' + fmt(k, 1), 'label t-m');
+      h += bar(xb, lo, 'eth', fmt(lo, 1), 'lowest') + bar(xb + bw + gap, hi, 'eth', fmt(hi, 1), 'highest');
+      if (F > 0) {
+        h += '<rect x="' + xb + '" y="' + y(k * F) + '" width="' + (2 * bw + gap) + '" height="' + (base - y(k * F)) + '" class="guide"></rect>';
+        h += T(xb + bw + gap / 2, Math.min(base - 6, y(k * F) + 14), 'floor', 't-s', 'middle');
+      }
+      h += T(xa, base + 42, 'volatility 2.30', 't-m') + T(xa, base + 61, 'gap 9.0', 't-m');
+      h += T(xb, base + 42, 'volatility ' + fmt(Math.log(hi / lo), 2), 'strong t-m') + T(xb, base + 61, 'gap ' + fmt(hi - lo, 1), 'strong t-m');
+      svg.innerHTML = h;
+      $('gap-vol').textContent = fmt(Math.log(hi / lo), 2);
+      $('gap-disp').textContent = fmt(hi - lo, 1);
+      $('gap-floorv').textContent = F;
+      $('gap-scalev').textContent = '×' + fmt(k, 1);
+    }
+    fl.addEventListener('input', render); sc.addEventListener('input', render);
+    $('gap-paper').addEventListener('click', function () { fl.value = 5; sc.value = 3; render(); });
+    $('gap-reset').addEventListener('click', function () { fl.value = 0; sc.value = 1; render(); });
+    explore.onShow(slide, render);
+  })();
+
+  /* ---------- 6 · what the miner received ---------- */
+  (function () {
+    var slide = mains[5], svg = $('money-svg');
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = 300, base = 246, top = 52, vmax = 110;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var y = function (v) { return base - (v / vmax) * (base - top); };
+      var bw = wide ? 80 : 58, xb = wide ? 60 : 26, xa = wide ? 220 : 120, xr = wide ? 336 : 208, rw = wide ? 56 : 42, lx = xr + rw + 8;
+      function seg(x, w, from, to, cls, label, labelCls) {
+        var s = '<rect class="' + cls + '" x="' + x + '" y="' + y(to) + '" width="' + w + '" height="' + (y(from) - y(to)) + '" stroke="none"></rect>';
+        if (label) s += T(x + w / 2, (y(from) + y(to)) / 2 + 4, label, labelCls, 'middle');
+        return s;
+      }
+      var h = '<line class="axis" x1="20" y1="' + base + '" x2="' + (W - 20) + '" y2="' + base + '"></line>';
+      h += seg(xb, bw, 0, 8.90, 'gold', '$8.90', 'on-gold-t t-s');
+      h += seg(xb, bw, 8.90, 42.59, 'eth', '$33.69', 'on-fill t-m');
+      h += T(xb + bw / 2, y(42.59) - 27, "miner's total", 't-s', 'middle') + T(xb + bw / 2, y(42.59) - 8, '$42.25', 'strong t-l', 'middle');
+      h += seg(xa, bw, 0, 8.37, 'gold', '$8.37', 'on-gold-t t-s');
+      h += seg(xa, bw, 8.37, 107.73, 'eth', '$99.36', 'on-fill t-m');
+      h += T(xa + bw / 2, y(107.73) - 27, "miner's total", 't-s', 'middle') + T(xa + bw / 2, y(107.73) - 8, '$107.73', 'strong t-l', 'middle');
+      h += '<rect class="burn" x="' + (xr + 0.75) + '" y="' + (y(22.38) + 0.75) + '" width="' + (rw - 1.5) + '" height="' + (base - y(22.38) - 1.5) + '"></rect>';
+      h += T(lx, y(22.38) + 8, '$22.38 burned,', 'label') + T(lx, y(22.38) + 24, wide ? 'paid to nobody' : 'to nobody', 't-s');
+      h += T(xb + bw / 2, base + 18, 'Before', 'label', 'middle') + T(xa + bw / 2, base + 18, 'After', 'label', 'middle');
+      h += T(20, H - 8, 'The user paid $8.37 + $22.38 = $30.75 after; $8.90 before.', 't-s');
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- 7 · activity ---------- */
+  (function () {
+    var slide = mains[6], svg = $('act-svg');
+    var rows = [
+      ['Confirmed transactions', -21.3, '−21%', 'Confirmed transactions'],
+      ['Dollar value settled', -39.9, '−38 to −40%', 'Dollar value settled'],
+      ['Zero-value (contract) transactions', -46.6, '−46 to −47%', 'Zero-value transactions'],
+      ['Unconfirmed queue (congestion)', -43.4, '−43 to −44%', 'Unconfirmed queue']
+    ];
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = 300;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var x0 = wide ? 300 : 236, len = wide ? 180 : 150, h = '';
+      h += '<line class="axis" x1="' + x0 + '" y1="16" x2="' + x0 + '" y2="266"></line>';
+      h += '<line class="grid" x1="' + (x0 - len) + '" y1="16" x2="' + (x0 - len) + '" y2="266"></line>';
+      h += T(x0, 284, '0', 't-s', 'middle') + T(x0 - len, 284, '−50%', 't-s', 'middle');
+      rows.forEach(function (r, i) {
+        var yy = 42 + i * 58, bw = (-r[1] / 50) * len;
+        h += T(x0 - 10, yy - 9, wide ? r[0] : r[3], 'label t-m', 'end');
+        h += '<rect class="eth" x="' + (x0 - bw) + '" y="' + yy + '" width="' + bw + '" height="22" stroke="none"></rect>';
+        h += T(x0 + 8, yy + 15, r[2], 'strong t-m');
+      });
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+  })();
+
+  /* ---------- 8 · welfare, a day at a time ---------- */
+  (function () {
+    var slide = mains[7], svg = $('welfare-svg');
+    var ethPre = 14.56, ethPost = 20.97, btcPre = 80.08, btcPost = 140.27, cf = ethPre + (btcPost - btcPre);
+    function draw() {
+      var W = explore.chartW(svg), wide = W > 400, H = 300, padT = 22, padB = 44, vmax = 150;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var padL = wide ? 50 : 40, xPre = padL + (wide ? 70 : 50), xPost = W - (wide ? 170 : 120);
+      var y = function (v) { return padT + (H - padT - padB) * (1 - v / vmax); };
+      var h = '';
+      [0, 50, 100, 150].forEach(function (v) {
+        h += '<line class="grid" x1="' + padL + '" y1="' + y(v) + '" x2="' + (W - 20) + '" y2="' + y(v) + '"></line>';
+        h += T(padL - 8, y(v) + 4, '$' + v, 't-s', 'end');
+      });
+      h += T(xPre, H - padB + 22, '30 days before', 't-s', 'middle') + T(xPost, H - padB + 22, '30 days after', 't-s', 'middle');
+      h += '<line class="btc" x1="' + xPre + '" y1="' + y(btcPre) + '" x2="' + xPost + '" y2="' + y(btcPost) + '" stroke-width="2"></line>';
+      h += '<circle class="btc" cx="' + xPre + '" cy="' + y(btcPre) + '" r="4.5"></circle><circle class="btc" cx="' + xPost + '" cy="' + y(btcPost) + '" r="4.5"></circle>';
+      h += '<line class="cf" x1="' + xPre + '" y1="' + y(ethPre) + '" x2="' + xPost + '" y2="' + y(cf) + '" stroke-width="1.5"></line>';
+      h += '<line class="eth" x1="' + xPre + '" y1="' + y(ethPre) + '" x2="' + xPost + '" y2="' + y(ethPost) + '" stroke-width="2"></line>';
+      h += '<circle class="eth" cx="' + xPre + '" cy="' + y(ethPre) + '" r="4.5"></circle><circle class="eth" cx="' + xPost + '" cy="' + y(ethPost) + '" r="4.5"></circle>';
+      h += '<line class="bracket" x1="' + (xPost + 7) + '" y1="' + y(cf) + '" x2="' + (xPost + 7) + '" y2="' + y(ethPost) + '"></line>';
+      h += T(xPre - 9, y(btcPre) + 4, '$80.1', 'label', 'end') + T(xPre - 9, y(ethPre) + 4, '$14.6', 'label', 'end');
+      h += T(xPost + 14, y(btcPost) + 4, wide ? 'Bitcoin $140.3' : '$140.3', 'label');
+      h += T(xPost + 14, y(cf) + 4, '$74.8', 't-s');
+      h += T(xPost + 14, y(ethPost) + 4, wide ? 'Ethereum $21.0' : '$21.0', 'label');
+      h += T(xPost + 14, (y(cf) + y(ethPost)) / 2 + 4, '−$53.8 bn', 'strong t-m');
+      h += T(xPost + 14, (y(cf) + y(ethPost)) / 2 + 20, 'a day', 't-s');
+      svg.innerHTML = h;
+    }
+    explore.onShow(slide, draw);
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{{ define "main" }}
+<section class="wrap not-found" data-pagefind-ignore>
+  <h1>{{ i18n "page_not_found" }}</h1>
+  <p>{{ i18n "page_not_found_help" }}</p>
+  <p class="hero__actions">
+    {{- if site.Params.header.navbar.show_search }}
+    <button class="btn btn--outline" type="button" data-search-toggle>{{ i18n "search" }}</button>
+    {{- end }}
+    <a class="btn btn--outline" href="{{ site.Home.RelPermalink }}">{{ i18n "home" }}</a>
+    {{- with site.GetPage "/publication" }}
+    <a class="btn btn--outline" href="{{ .RelPermalink }}">{{ i18n "research" }}</a>
+    {{- end }}
+  </p>
+</section>
+{{ end }}

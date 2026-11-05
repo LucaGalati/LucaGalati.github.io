@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the crowd — Not Dead Yet, explorable</title>
+<meta name="description" content="Path 3 of the explorable explanation of Not Dead Yet: Options Trading Floors: pre-commitment, flexibility and screening, what disappears when the floor closes, and where each order belongs.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="explore.css">
+<script src="../sitebar.js"></script>
+<style>
+.lane-chip,.lane-piece{transition:transform .9s ease, opacity .4s ease}
+.lane-piece{opacity:0}
+.lane-note{opacity:0; transition:opacity .4s ease}
+.lane-note.on{opacity:1}
+.instant .lane-chip,.instant .lane-piece,.instant .lane-note{transition:none}
+@media (prefers-reduced-motion: reduce){ .lane-chip,.lane-piece,.lane-note{transition:none} }
+.figbtn{margin-left:6px; padding:2px 9px; font-size:12px}
+/* 3.3 fill grids */
+.gband{font-family:var(--sans); font-size:13.5px; color:var(--text); margin:12px 0 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.grids{display:flex; gap:28px; flex-wrap:wrap; font-family:var(--sans)}
+.gh{font-size:12.5px; color:var(--muted); margin-bottom:6px; white-space:nowrap}
+.gh b{font-weight:500; color:var(--text); font-size:15px; font-variant-numeric:tabular-nums}
+.grid{display:grid; grid-template-columns:repeat(10,9px); gap:2px}
+.grid i{display:block; width:9px; height:9px; border:1px solid var(--border-strong)}
+#gaim i.f{background:var(--ink-soft); border-color:var(--ink-soft)}
+#gfloor i.f{background:var(--ink); border-color:var(--ink)}
+/* 3.6 routing */
+.routes{display:grid; gap:0; margin-top:10px; font-family:var(--sans)}
+.route{display:grid; grid-template-columns:7.5em auto; gap:4px 14px; align-items:center; padding:10px 0; border-top:1px solid var(--border)}
+.route:last-child{border-bottom:1px solid var(--border)}
+.route .rq{font-size:14px; color:var(--muted)}
+.route .rq b{font-weight:500; color:var(--text); font-size:17px; font-variant-numeric:tabular-nums}
+.route .rb{display:flex; gap:8px}
+.route .ra{grid-column:1/-1; font-size:13px; line-height:1.45; color:var(--muted); min-height:2.9em}
+@media (max-width:640px){ .route{grid-template-columns:6.5em auto} }
+</style>
+</head>
+<body>
+<lg-sitebar>
+  <noscript><a href="../../publication/options-trading-floors/">← Back to the paper</a></noscript>
+  <span class="where"></span>
+  <button class="mapbtn" type="button" aria-label="Open the map" aria-expanded="false">Map <kbd>m</kbd></button>
+</lg-sitebar>
+
+<main class="stage">
+
+  <!-- 3.1 Three differences -->
+  <section class="slide" data-id="three">
+    <div class="wrap">
+      <div class="prose">
+        <span class="kicker">Path 3 · Inside the crowd</span>
+        <h2>An auction and a crowd differ in three ways that matter for a big package.</h2>
+        <p>On the screens, comparable trades were cheaper. Yet the biggest packages keep going to the crowd. The paper points to three differences: who must commit before anything happens, how the order can be divided, and what the parties know about each other. The first is written in the rule book; for the other two the paper brings evidence. Take them in any order.</p>
+      </div>
+      <div class="tiles" id="tiles">
+        <a class="tile" href="#2" data-go="2" data-k="commit">
+          <span class="seenmark">seen</span>
+          <svg width="56" height="36" viewBox="0 0 56 36" aria-hidden="true"><rect x="1" y="8" width="26" height="20" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5"/><line x1="36" y1="4" x2="36" y2="32" stroke="var(--ink)" stroke-width="2"/><line x1="42" y1="4" x2="42" y2="32" stroke="var(--ink)" stroke-width="2"/><line x1="27" y1="18" x2="34" y2="18" stroke="var(--gold)" stroke-width="2"/></svg>
+          <span class="kicker">1 · Pre-commitment</span>
+          <h3>Who must commit first</h3>
+          <p>AIM, the electronic auction that drew the largest packages, cannot start until one firm guarantees the whole trade. The crowd needs no one lined up.</p>
+        </a>
+        <a class="tile" href="#3" data-go="3" data-k="flex">
+          <span class="seenmark">seen</span>
+          <svg width="56" height="36" viewBox="0 0 56 36" aria-hidden="true"><rect x="1" y="10" width="18" height="16" fill="var(--ink)"/><rect x="21" y="10" width="11" height="16" fill="var(--ink)" opacity=".75"/><rect x="34" y="10" width="7" height="16" fill="var(--ink)" opacity=".55"/><rect x="43" y="10" width="12" height="16" fill="var(--ink)" opacity=".4"/></svg>
+          <span class="kicker">2 · Flexibility</span>
+          <h3>How the order is divided</h3>
+          <p>An algorithm allocates in fixed shares. The crowd sizes its own pieces, and shares the risk of the largest trades.</p>
+        </a>
+        <a class="tile" href="#4" data-go="4" data-k="screen">
+          <span class="seenmark">seen</span>
+          <svg width="56" height="36" viewBox="0 0 56 36" aria-hidden="true"><circle cx="16" cy="18" r="11" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle cx="40" cy="18" r="11" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle cx="16" cy="18" r="3" fill="var(--gold)"/><circle cx="40" cy="18" r="3" fill="var(--gold)"/></svg>
+          <span class="kicker">3 · Screening</span>
+          <h3>What they know about each other</h3>
+          <p>Faces are known on the floor. A broker can vouch for a client's motive, and the futures market hints at whether it works.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.2 Pre-commitment -->
+  <section class="slide" data-id="commit">
+    <div class="wrap">
+      <figure style="max-width:940px; margin:0 auto">
+        <svg id="lanes" class="fig" role="img" aria-label="A 1,950-contract package sent down four routes: it rests unfilled in the book, is partly filled by the 100-millisecond auction, cannot start in AIM without one firm committing to the whole size, and is divided among the crowd on the floor"></svg>
+        <figcaption>One 1,950-contract package, sent down each route at once. The sizes of the crowd's pieces are illustrative. <button class="chip figbtn" id="send" type="button">Send again</button></figcaption>
+      </figure>
+      <div class="split even" style="margin-top:14px; align-items:start">
+        <div class="prose">
+          <h2>AIM cannot start until one firm guarantees the whole trade.</h2>
+          <p>Why the screen struggles with a big package: market makers have no duty to quote packages, and in the book they mostly take liquidity rather than offer it. They start 94.5% of the trades there, by picking off orders that rest in it.</p>
+        </div>
+        <div class="prose">
+          <p>So without the floor, a large package trades in one piece only if a single firm commits to all of it, at a stop price, before the auction starts. On the floor nobody has to: the broker shows the order, and the crowd divides it.</p>
+          <div class="ctas">
+            <a class="cta" id="next-commit" href="#3" data-go="3">How does the crowd divide it? →</a>
+            <a class="backlink" href="#1" data-go="1">← The three differences</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.3 Flexibility -->
+  <section class="slide" data-id="flex">
+    <div class="wrap split rev" style="align-items:start">
+      <div>
+        <figure>
+          <svg id="fills" class="fig" role="img" aria-label="Share of fills that take a whole order leg, by trade size: the floor's line starts above AIM's for small orders and falls below it for orders of 840 contracts or more"></svg>
+        </figure>
+        <input type="range" id="sizer2" min="0" max="1000" step="0.1" value="900" aria-label="Trade size in contracts">
+        <div class="axis-note" id="fillnote"><span>10 contracts</span><span>5,000</span></div>
+        <div aria-live="polite">
+          <p class="gband" id="gband"></p>
+          <div class="grids">
+            <div><div class="gh" id="gha"></div><div class="grid" id="gaim" aria-hidden="true"></div></div>
+            <div><div class="gh" id="ghf"></div><div class="grid" id="gfloor" aria-hidden="true"></div></div>
+          </div>
+        </div>
+        <figcaption>Fills that take the whole order leg, % of fills in each size band: AIM June 1–12, floor June 15–26, 2020. Within size bands, the average floor fill covers a larger share of its leg than AIM's below the 75th percentile of size and about the same share above it.</figcaption>
+      </div>
+      <div class="prose">
+        <h2>The crowd sizes its own pieces.</h2>
+        <p>A fill is one execution in one leg of a package. In AIM an algorithm allocates: the firm that started the auction gets up to 50% or 40% of the order, and many of its fills land exactly on those shares. On the floor several market makers can share an order at one price, and the pieces come in many sizes.</p>
+        <p>Drag the dial left toward small orders. There the floor more often hands a whole leg to one counterparty: 46.8% of fills against 29.9% in AIM. For the largest orders it almost never does: 1.3% against 3.9%. Each market maker takes the slice that fits its own book, holds less unhedged risk until it can hedge, and can quote a better price.</p>
+        <p>That is consistent with what the <a href="02-price.html#2">size dial</a> shows: from 1,949 contracts up, the floor is 4.35 cents per unit cheaper.</p>
+        <div class="ctas">
+          <a class="cta" id="next-flex" href="#4" data-go="4">What do they know about each other? →</a>
+          <a class="backlink" href="#1" data-go="1">← The three differences</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.4 Screening -->
+  <section class="slide" data-id="screen">
+    <div class="wrap split rev" style="align-items:start">
+      <figure>
+        <svg id="impact" class="fig" role="img" aria-label="Futures price impact per ten thousand dollars of signed delta: electronic trades move the E-mini by 0.43 basis points in ten seconds, floor trades by 0.54 less; among the largest trades the floor's impact is about one basis point lower"></svg>
+        <figcaption>Basis points of E-mini S&amp;P 500 futures return per $10,000 of signed delta, from 100 ms before the trade, with date fixed effects. Bars: electronic trades. Arrows: floor minus electronic, the tested difference (* p&lt;0.10, ** p&lt;0.05, *** p&lt;0.01). Open circles: where that leaves floor trades, not above zero. Small trades, 166 contracts or fewer, show no detectable impact on either venue.</figcaption>
+      </figure>
+      <div class="prose">
+        <h2>Faces are known in the crowd.</h2>
+        <p>A floor broker can tell the crowd why a client is trading and how much is left, and a client can build a reputation through the broker. A trader who can credibly show a liquidity motive separates from informed traders (Seppi, 1990), and repeated dealing lets a specialist discipline brokers who bring informed orders (Benveniste, Marcus and Wilhelm, 1992). If the floor screens, its trades should move the S&amp;P 500 futures less than electronic trades with the same delta.</p>
+        <p>They do. Each $10,000 of signed delta moves the E-mini by 0.43 basis points within ten seconds when the trade is electronic; on the floor the same delta moves it 0.54 basis points less, so floor trades show no positive impact. Among the largest trades the gap is about one basis point.</p>
+        <p class="small muted">The paper is careful here: the large-trade estimate rests on 672 trades; the gap is not significantly larger than for mid-sized trades; uninformed traders may simply choose the floor for their largest trades; and hedging pressure and the timing of the window can differ by venue. Suggestive, not conclusive.</p>
+        <div class="ctas">
+          <a class="cta" id="next-screen" href="#5" data-go="5">So what is the floor for? →</a>
+          <a class="backlink" href="#1" data-go="1">← The three differences</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.5 Not dead yet -->
+  <section class="slide" data-id="notdead">
+    <div class="wrap">
+      <figure style="max-width:940px; margin:0 auto">
+        <svg id="tl2" class="fig" role="img" aria-label="Share of complex SPX dollar volume from the largest and most complex trades: about 24 percent before the closure, 13 percent during it, 21 percent after the reopening"></svg>
+        <figcaption>Trades larger than the median floor trade without a twin, in both contracts and legs, as a share of complex SPX dollar volume. Blue: period means. Gold: daily means of the two weeks either side of the reopening, and the weekly low.</figcaption>
+      </figure>
+      <div class="split even" style="margin-top:14px; align-items:start">
+        <div class="prose">
+          <h2>When the floor closed, the trades it exists for became half as common.</h2>
+          <p>About 24% of complex SPX dollar volume before the closure, about 13% during it, about 21% after. The weekly low, about 8.5%, came in the week of June 1: Cboe had announced on May 26 that the floor would reopen on June 8, then on June 3 pushed the date to June 15. The low is consistent with traders holding large trades back until the floor returned; weaker demand during the pandemic may explain part of the dip.</p>
+        </div>
+        <div class="prose">
+          <p><strong>What did the market lose when the floor closed?</strong> About half of its largest, most complex trades. <strong>What did it gain?</strong> Cheaper execution for the smaller packages that screens handle well.</p>
+          <p>The floor facilitates the most difficult trades, which the exchange's electronic mechanisms execute <a href="02-price.html#3">at higher cost</a> or not at all. It also raises the cost of the less difficult ones.</p>
+          <a class="cta" href="#6" data-go="6">So where should each order go? →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.6 Route the orders -->
+  <section class="slide" data-id="route">
+    <div class="wrap split" style="align-items:center">
+      <div>
+        <h2>Your turn: route five orders.</h2>
+        <p class="small muted sans" style="margin:0">One example order from each size band. Send each where you expect it to cost less; the paper's estimate for its band appears as you choose.</p>
+        <div class="routes" id="routes"></div>
+      </div>
+      <div class="prose">
+        <p class="reveal" id="routeend">Screens for the smallest, the floor for the largest, and in between the paper cannot tell the two apart. That is the division of labor Harris (2003) predicted.</p>
+        <p>Keeping the floor open while leaving AIM switched on for SPX packages could lower total costs, if orders go where they fit. Whether the floor would survive if its small trades left, and why no electronic auction offers the crowd's flexibility, the paper leaves open.</p>
+        <p><em>The trading floor is not dead yet.</em></p>
+        <div class="ctas">
+          <a class="cta" href="../../publication/options-trading-floors/">← Back to the paper</a>
+          <a class="cta quiet" id="otherpath" href="02-price.html#1">The other path: the price of a handshake →</a>
+          <button class="cta quiet" type="button" id="mapcta">Map</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bar">
+  <div class="nav"><button class="navbtn prev" type="button">← Previous</button></div>
+  <nav class="dots" aria-label="Slides"></nav>
+  <div class="nav next"><button class="navbtn next" type="button">Next →</button></div>
+</footer>
+
+<script src="explore.js"></script>
+<script>
+(function () {
+  var S = Explore.svg, clear = Explore.clear, fmt = Explore.fmt, textW = Explore.textW;
+  var D = Explore.deck('crowd', { next: 'index.html', nextLabel: 'Overview →' });
+  var LG = Math.log10(5000) - 1, CUTS = [166.5, 380.5, 839.5, 1948.5];
+  function tToSize(t) { return Math.round(Math.pow(10, 1 + t / 1000 * LG)); }
+
+  /* ---------- 3.1–3.4: the three differences can be taken in any order ---------- */
+  (function () {
+    var TOPICS = [['commit', 2, 'Who must commit first? →'], ['flex', 3, 'How does the crowd divide it? →'], ['screen', 4, 'What do they know about each other? →']];
+    function nextFor(cur) {
+      var i = TOPICS.map(function (t) { return t[0]; }).indexOf(cur);
+      for (var j = 1; j <= 2; j++) { var t = TOPICS[(i + j) % 3]; if (!D.seenSlide('crowd/' + t[0])) return t; }
+      return [null, 5, 'So what is the floor for? →'];
+    }
+    TOPICS.forEach(function (t) {
+      var a = document.getElementById('next-' + t[0]);
+      D.onShow(t[0], function () { var nx = nextFor(t[0]); a.setAttribute('data-go', nx[1]); a.href = '#' + nx[1]; a.textContent = nx[2]; });
+    });
+    D.onShow('three', function () {
+      document.querySelectorAll('#tiles .tile').forEach(function (tile) { tile.classList.toggle('seen', D.seenSlide('crowd/' + tile.getAttribute('data-k'))); });
+    });
+  })();
+
+  /* ---------- 3.2 four routes (rules: Section IV.D; 94.5% from Section II.C) ---------- */
+  (function () {
+    var svg = document.getElementById('lanes'), send = document.getElementById('send');
+    var LANES = [{ id: 'book', name: 'Complex order book' }, { id: 'coa', name: 'Complex Order Auction' }, { id: 'aim', name: 'AIM auction' }, { id: 'floor', name: 'Trading floor' }];
+    var PIECES = [0.30, 0.20, 0.15, 0.15, 0.12, 0.08];
+    var timers = [], E = null, ran = !!D.state.sent;
+    function move(g, x, y) { g.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)'; }
+    function chip(w, label, parent) {
+      var g = S('g', { 'class': 'lane-chip' }, parent);
+      S('rect', { x: 0, y: -11, width: w, height: 22, rx: 3, fill: 'var(--ink)' }, g);
+      var t = label ? S('text', { x: w / 2, y: 4, 'text-anchor': 'middle', 'font-size': 11.5, fill: 'var(--bg)', 'font-weight': 500, text: label }, g) : null;
+      return { g: g, t: t };
+    }
+    function draw(W) {
+      timers.forEach(clearTimeout); timers = [];
+      clear(svg);
+      var compact = W < 600, x0 = compact ? 2 : 182, x1 = W - 6, span = x1 - x0, cw = compact ? 50 : 58;
+      function px(f) { return x0 + f * span; }
+      var gap = compact ? 84 : 72, top = compact ? 48 : 38, H = top + gap * 3 + (compact ? 40 : 38);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      E = { px: px, cw: cw, compact: compact, l: {} };
+      LANES.forEach(function (l, i) {
+        var y = top + i * gap, e = { y: y };
+        if (compact) S('text', { x: x0, y: y - 24, 'font-size': 12.5, 'font-weight': 500, fill: 'var(--text)', text: l.name }, svg);
+        else S('text', { x: 0, y: y + 4, 'font-size': 13, fill: 'var(--text)', text: l.name }, svg);
+        S('line', { x1: x0, y1: y, x2: x1, y2: y, stroke: 'var(--border)' }, svg);
+        e.note = S('text', { x: px(compact ? 0 : 0.28), y: y + 27, 'font-size': 11.5, fill: 'var(--muted)', 'class': 'lane-note', text: '' }, svg);
+        if (l.id === 'book') {
+          S('rect', { x: px(0.66), y: y - 11, width: cw, height: 22, rx: 3, fill: 'none', stroke: 'var(--border-strong)', 'stroke-dasharray': '3 3' }, svg);
+          if (!compact) S('text', { x: px(0.66) + cw / 2, y: y - 17, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: 'no resting interest of this size' }, svg);
+        }
+        if (l.id === 'coa') {
+          if (!compact) e.ms = S('text', { x: px(0.5), y: y - 17, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', 'class': 'lane-note', text: '100 ms' }, svg);
+          e.part = chip(12, '', svg); e.part.g.setAttribute('class', 'lane-piece');
+        }
+        if (l.id === 'aim') {
+          S('line', { x1: px(0.5), y1: y - 17, x2: px(0.5), y2: y + 17, stroke: 'var(--ink)', 'stroke-width': 2 }, svg);
+          S('line', { x1: px(0.5) + 7, y1: y - 17, x2: px(0.5) + 7, y2: y + 17, stroke: 'var(--ink)', 'stroke-width': 2 }, svg);
+          if (!compact) S('text', { x: px(0.5) + 16, y: y - 6, 'font-size': 11, fill: 'var(--muted)', text: 'one firm for all 1,950?' }, svg);
+        }
+        if (l.id === 'floor') {
+          S('circle', { cx: px(0.34), cy: y, r: 6, fill: 'var(--gold)' }, svg);
+          if (!compact) S('text', { x: px(0.34), y: y - 17, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: 'broker' }, svg);
+          e.crowd = PIECES.map(function (p, k) {
+            var cx = px(0.50 + k * 0.088);
+            S('circle', { cx: cx, cy: y, r: compact ? 8 : 10, fill: 'var(--bg)', stroke: 'var(--ink)', 'stroke-width': 1.25 }, svg);
+            var w = Math.max(5, p * (compact ? 48 : 64)), c = chip(w, '', svg);
+            c.g.setAttribute('class', 'lane-piece'); c.g.querySelector('rect').setAttribute('height', 10); c.g.querySelector('rect').setAttribute('y', -5);
+            return { c: c, x: cx - w / 2, w: w };
+          });
+        }
+        e.chip = chip(cw, '1,950', svg);
+        E.l[l.id] = e;
+      });
+      if (ran) finish(true); else start();
+    }
+    function start() {
+      Object.keys(E.l).forEach(function (id) {
+        var e = E.l[id];
+        move(e.chip.g, E.px(0) + 2, e.y); e.chip.g.style.opacity = 1;
+        if (e.chip.t) e.chip.t.textContent = '1,950';
+        e.note.setAttribute('class', 'lane-note'); e.note.textContent = '';
+        if (e.ms) e.ms.setAttribute('class', 'lane-note');
+        if (e.part) { move(e.part.g, E.px(0.28), e.y); e.part.g.style.opacity = 0; }
+        if (e.crowd) e.crowd.forEach(function (c) { move(c.c.g, E.px(0.34) - c.w / 2, e.y); c.c.g.style.opacity = 0; });
+      });
+    }
+    var NOTES = {
+      book: ['rests in the book, unfilled', 'rests in the book, unfilled'],
+      coa: ['fills what it can in about 100 ms; the balance rests in the book', 'fills what it can in 100 ms; the balance rests'],
+      aim: ['cannot start until a firm commits to the whole size, at a stop price', 'waits for one firm to commit to all 1,950'],
+      floor: ['the crowd takes pieces of many sizes', 'the crowd takes pieces of many sizes']
+    };
+    function stage1() {
+      var l = E.l;
+      move(l.book.chip.g, E.px(0.28), l.book.y);
+      move(l.coa.chip.g, E.px(0.28), l.coa.y);
+      move(l.aim.chip.g, E.px(0.5) - E.cw - 6, l.aim.y);
+      move(l.floor.chip.g, E.px(0.34) - E.cw / 2, l.floor.y);
+    }
+    function stage2() {
+      var l = E.l, c = E.compact ? 1 : 0;
+      ['book', 'aim'].forEach(function (id) { l[id].note.textContent = NOTES[id][c]; l[id].note.setAttribute('class', 'lane-note on'); });
+      if (l.coa.ms) l.coa.ms.setAttribute('class', 'lane-note on');
+    }
+    function stage3() {
+      var l = E.l, c = E.compact ? 1 : 0;
+      l.coa.part.g.style.opacity = 1; move(l.coa.part.g, E.px(0.9), l.coa.y);
+      l.coa.chip.t.textContent = 'balance';
+      l.coa.note.textContent = NOTES.coa[c]; l.coa.note.setAttribute('class', 'lane-note on');
+      l.floor.chip.g.style.opacity = 0;
+      l.floor.crowd.forEach(function (p) { p.c.g.style.opacity = 1; move(p.c.g, p.x, l.floor.y - 21); });
+      l.floor.note.textContent = NOTES.floor[c]; l.floor.note.setAttribute('class', 'lane-note on');
+    }
+    function finish(instant) {
+      if (instant) svg.classList.add('instant');
+      stage1(); stage2(); stage3();
+      if (instant) requestAnimationFrame(function () { svg.classList.remove('instant'); });
+    }
+    function run() {
+      timers.forEach(clearTimeout); timers = [];
+      ran = true; D.state.sent = true; D.save();
+      if (Explore.reduced) { finish(true); return; }
+      svg.classList.add('instant'); start();
+      requestAnimationFrame(function () { svg.classList.remove('instant'); });
+      timers.push(setTimeout(stage1, 60), setTimeout(stage2, 1050), setTimeout(stage3, 1550));
+    }
+    send.addEventListener('click', run);
+    Explore.fit(svg, draw, 940);
+    D.onShow('commit', function () { if (!ran) run(); });
+  })();
+
+  /* ---------- 3.3 whole-leg fills by size (Table X) ---------- */
+  (function () {
+    var FILLS = [
+      { hi: 166, name: '166 contracts or fewer', aim: 29.9, floor: 46.8 },
+      { hi: 380, name: '167 to 380 contracts', aim: 16.3, floor: 27.2 },
+      { hi: 839, name: '381 to 839 contracts', aim: 12.4, floor: 13.6 },
+      { hi: 1948, name: '840 to 1,948 contracts', aim: 7.0, floor: 3.4 },
+      { hi: 5000, name: '1,949 contracts or more', aim: 3.9, floor: 1.3 }
+    ];
+    var svg = document.getElementById('fills'), rng = document.getElementById('sizer2'), note = document.getElementById('fillnote');
+    var gband = document.getElementById('gband'), gha = document.getElementById('gha'), ghf = document.getElementById('ghf');
+    var ga = document.getElementById('gaim'), gf = document.getElementById('gfloor'), G = null, drag = false, i;
+    for (i = 0; i < 100; i++) { ga.appendChild(document.createElement('i')); gf.appendChild(document.createElement('i')); }
+    if (D.state.t2 != null) rng.value = D.state.t2;
+    function bandOf(v) { for (var j = 0; j < FILLS.length; j++) if (v <= FILLS[j].hi) return j; return 4; }
+    function draw(W) {
+      clear(svg);
+      var compact = W < 520, L = 36, R = 8, T = 12, B = 40, H = compact ? 196 : 206, plotW = W - L - R;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      function X(v) { return L + (Math.log10(v) - 1) / LG * plotW; }
+      function Y(p) { return T + (50 - p) / 50 * (H - T - B); }
+      [10, 20, 30, 40, 50].forEach(function (p) {
+        S('line', { x1: L, y1: Y(p), x2: W - R, y2: Y(p), stroke: 'var(--border)' }, svg);
+        S('text', { x: L - 6, y: Y(p) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)', text: p + '%' }, svg);
+      });
+      S('line', { x1: L, y1: Y(0), x2: W - R, y2: Y(0), stroke: 'var(--text)' }, svg);
+      S('text', { x: L - 6, y: Y(0) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)', text: '0' }, svg);
+      CUTS.forEach(function (cut, k) {
+        S('line', { x1: X(cut), y1: T, x2: X(cut), y2: H - B + 5, stroke: 'var(--border-strong)', 'stroke-dasharray': '2 3' }, svg);
+        S('text', { x: X(cut), y: H - B + 18, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: ['166', '380', '839', '1,948'][k] }, svg);
+      });
+      S('text', { x: L + plotW / 2, y: H - 6, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: 'order size, contracts (log scale)' }, svg);
+      var hl = S('rect', { x: 0, y: T, width: 0, height: H - B - T, fill: 'var(--gold)', opacity: .14 }, svg);
+      function path(key) {
+        var d = '';
+        FILLS.forEach(function (b, k) {
+          var x0 = X(k ? CUTS[k - 1] : 10), x1 = X(k < 4 ? CUTS[k] : 5000);
+          d += (k ? 'L' : 'M') + x0.toFixed(1) + ' ' + Y(b[key]).toFixed(1) + 'L' + x1.toFixed(1) + ' ' + Y(b[key]).toFixed(1);
+        });
+        return d;
+      }
+      S('path', { d: path('aim'), fill: 'none', stroke: 'var(--ink-soft)', 'stroke-width': 2.5, 'stroke-dasharray': '6 4' }, svg);
+      S('path', { d: path('floor'), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2.5 }, svg);
+      S('text', { x: L + 6, y: Y(46.8) - 7, 'font-size': 12, 'font-weight': 500, fill: 'var(--text)', text: 'floor' }, svg);
+      S('text', { x: L + 6, y: Y(29.9) - 7, 'font-size': 12, fill: 'var(--muted)', text: 'AIM' }, svg);
+      var cx = X(CUTS[2]);
+      S('circle', { cx: cx, cy: Y(10), r: 5, fill: 'none', stroke: 'var(--gold)', 'stroke-width': 2 }, svg);
+      var lab = compact ? 'lines cross' : 'the lines cross', lx = cx + 9;
+      S('text', { x: lx + textW(lab) > W - R ? cx - 9 : lx, y: Y(10) - 9, 'text-anchor': lx + textW(lab) > W - R ? 'end' : 'start', 'font-size': 11, fill: 'var(--text)', text: lab }, svg);
+      G = { W: W, L: L, plotW: plotW, X: X, hl: hl };
+      Explore.alignRange(rng, svg, W, L, plotW, note);
+      render();
+    }
+    function render() {
+      var t = +rng.value, v = tToSize(t), bi = bandOf(v), b = FILLS[bi];
+      if (G) { var x0 = G.X(bi ? CUTS[bi - 1] : 10), x1 = G.X(bi < 4 ? CUTS[bi] : 5000); G.hl.setAttribute('x', x0); G.hl.setAttribute('width', x1 - x0); }
+      var na = Math.round(b.aim), nf = Math.round(b.floor);
+      ga.querySelectorAll('i').forEach(function (c, k) { c.classList.toggle('f', k < na); });
+      gf.querySelectorAll('i').forEach(function (c, k) { c.classList.toggle('f', k < nf); });
+      gband.textContent = 'Orders of ' + b.name + ' · dial at ' + fmt(v);
+      gha.innerHTML = 'AIM · <b>' + b.aim.toFixed(1) + '%</b> take a whole leg';
+      ghf.innerHTML = 'Floor · <b>' + b.floor.toFixed(1) + '%</b> take a whole leg';
+      rng.setAttribute('aria-valuetext', fmt(v) + ' contracts: AIM ' + b.aim.toFixed(1) + '%, floor ' + b.floor.toFixed(1) + '% of fills take a whole leg');
+      D.state.t2 = t;
+    }
+    function move(e) {
+      var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * (G.W / r.width);
+      rng.value = (Math.max(0, Math.min(1, (x - G.L) / G.plotW)) * 1000).toFixed(1); render();
+    }
+    svg.style.touchAction = 'pan-y'; svg.style.cursor = 'ew-resize';
+    svg.addEventListener('pointerdown', function (e) { if (!G) return; drag = true; try { svg.setPointerCapture(e.pointerId); } catch (x) {} move(e); });
+    svg.addEventListener('pointermove', function (e) { if (drag) move(e); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (n) { svg.addEventListener(n, function () { if (drag) { drag = false; D.save(); } }); });
+    rng.addEventListener('input', render);
+    rng.addEventListener('change', function () { D.save(); });
+    Explore.rangeKeys(rng);
+    Explore.fit(svg, draw, 760);
+    render();
+  })();
+
+  /* ---------- 3.4 futures price impact (Tables VIII and XI, without strategy fixed effects) ---------- */
+  (function () {
+    var GR = [
+      { name: 'ALL TRADES', n: '204,969 trades', h: [{ t: '10 s', e: 0.43, d: -0.54, star: '**' }, { t: '15 s', e: 0.42, d: -0.68, star: '***' }] },
+      { name: 'LARGEST TENTH', n: '672 trades', h: [{ t: '10 s', e: 0.26, d: -0.99, star: '**' }, { t: '15 s', e: 0.27, d: -1.03, star: '*' }] }
+    ];
+    var svg = document.getElementById('impact');
+    function sg(v) { return (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(2); }
+    Explore.fit(svg, function (W) {
+      clear(svg);
+      var compact = W < 520, L = 42, R = 6, T = 46, B = 34, H = 314;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      function Y(v) { return T + (0.6 - v) / 1.6 * (H - T - B); }
+      [0.6, 0.4, 0.2, -0.2, -0.4, -0.6, -0.8, -1.0].forEach(function (v) {
+        S('line', { x1: L, y1: Y(v), x2: W - R, y2: Y(v), stroke: 'var(--border)' }, svg);
+        S('text', { x: L - 6, y: Y(v) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)', text: (v > 0 ? '+' : '−') + Math.abs(v).toFixed(1) }, svg);
+      });
+      S('line', { x1: L, y1: Y(0), x2: W - R, y2: Y(0), stroke: 'var(--text)' }, svg);
+      S('text', { x: L - 6, y: Y(0) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)', text: '0 bp' }, svg);
+      var gw = (W - L - R) / 2, bw = compact ? 18 : 26;
+      GR.forEach(function (g, gi) {
+        var gx = L + gi * gw;
+        S('text', { x: gx + gw / 2, y: 15, 'text-anchor': 'middle', 'font-size': 11.5, 'font-weight': 500, 'letter-spacing': '.06em', fill: 'var(--muted)', text: g.name }, svg);
+        S('text', { x: gx + gw / 2, y: 30, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--muted)', text: g.n }, svg);
+        g.h.forEach(function (h, hi) {
+          var cx = gx + gw * (hi + 0.5) / 2, xb = cx - bw - 3, xa = cx + 7, yEnd = Y(h.e + h.d);
+          S('rect', { x: xb, y: Y(h.e), width: bw, height: Y(0) - Y(h.e), fill: 'var(--ink-soft)' }, svg);
+          S('text', { x: xb + bw / 2, y: Y(h.e) - 6, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--text)', text: sg(h.e) }, svg);
+          S('line', { x1: xb + bw, y1: Y(h.e), x2: xa, y2: Y(h.e), stroke: 'var(--ink)', 'stroke-dasharray': '2 2' }, svg);
+          S('line', { x1: xa, y1: Y(h.e), x2: xa, y2: yEnd - 7, stroke: 'var(--ink)', 'stroke-width': 2 }, svg);
+          S('path', { d: 'M' + (xa - 4.5) + ' ' + (yEnd - 9) + 'L' + (xa + 4.5) + ' ' + (yEnd - 9) + 'L' + xa + ' ' + (yEnd - 2) + 'Z', fill: 'var(--ink)' }, svg);
+          S('circle', { cx: xa, cy: yEnd + 3, r: 4, fill: 'var(--bg)', stroke: 'var(--ink)', 'stroke-width': 1.5 }, svg);
+          S('text', { x: xa, y: yEnd + 21, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 500, fill: 'var(--text)', text: sg(h.d) + h.star }, svg);
+          S('text', { x: cx, y: H - 10, 'text-anchor': 'middle', 'font-size': 11.5, fill: 'var(--muted)', text: h.t }, svg);
+        });
+      });
+    }, 700);
+  })();
+
+  /* ---------- 3.5 the large-trade share on the 2020 timeline (Figure 7) ---------- */
+  (function () {
+    var svg = document.getElementById('tl2');
+    Explore.fit(svg, function (W) {
+      var compact = W < 560, top = 34, bot = 150, yBar = 176, H = yBar + 16 + 40 + 16 + 3 * 15 + 10;
+      var t = Explore.timeline(svg, { W: W, H: H, yBar: yBar, L: 40, R: 16 });
+      var x = t.x;
+      function Y(p) { return bot - p / 30 * (bot - top); }
+      [0, 10, 20, 30].forEach(function (p) {
+        S('line', { x1: x(2), y1: Y(p), x2: x(295), y2: Y(p), stroke: 'var(--border)' }, svg);
+        S('text', { x: x(2) - 6, y: Y(p) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--muted)', text: p + '%' }, svg);
+      });
+      S('text', { x: x(2), y: 14, 'font-size': 11.5, fill: 'var(--muted)', 'font-weight': 500, 'letter-spacing': '.06em', text: compact ? 'LARGEST, MOST COMPLEX TRADES' : 'SHARE OF COMPLEX SPX DOLLAR VOLUME FROM THE LARGEST, MOST COMPLEX TRADES' }, svg);
+      [[2, 76, 24], [76, 167, 13], [167, 295, 21]].forEach(function (sg) {
+        S('line', { x1: x(sg[0]), y1: Y(sg[2]), x2: x(sg[1]), y2: Y(sg[2]), stroke: 'var(--ink)', 'stroke-width': 3 }, svg);
+        S('text', { x: (x(sg[0]) + x(sg[1])) / 2, y: Y(sg[2]) - 8, 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--text)', text: 'about ' + sg[2] + '%' }, svg);
+      });
+      S('line', { x1: x(153), y1: Y(11.6), x2: x(164), y2: Y(11.6), stroke: 'var(--gold)', 'stroke-width': 3 }, svg);
+      S('line', { x1: x(167), y1: Y(19.6), x2: x(178), y2: Y(19.6), stroke: 'var(--gold)', 'stroke-width': 3 }, svg);
+      S('text', { x: x(151), y: Y(11.6) + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--text)', text: '11.6%' }, svg);
+      S('text', { x: x(180), y: Y(19.6) + 4, 'font-size': 11, fill: 'var(--text)', text: '19.6%' }, svg);
+      S('circle', { cx: x(155), cy: Y(8.5), r: 4.5, fill: 'var(--gold)' }, svg);
+      S('text', { x: x(155), y: Y(8.5) + 17, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--text)', text: compact ? 'low 8.5%' : 'weekly low 8.5%, week of June 1' }, svg);
+      // the five dated events, below the months; later events sit closer to the bar so no stem crosses a label
+      var rows = { close: 0, open: 0, planned: 1, delay: 2, ann: 3 };
+      var short = { close: 'closes', ann: 'announced', delay: 'postponed', planned: 'planned date', open: 'reopens' };
+      var y0 = yBar + 16 + 40;
+      Explore.events.forEach(function (ev) {
+        var xx = x(ev.d), y = y0 + rows[ev.id] * 15;
+        S('line', { x1: xx, y1: yBar + 16, x2: xx, y2: yBar + 21, stroke: 'var(--ink)', 'stroke-width': 1.5 }, svg);
+        S('line', { x1: xx, y1: yBar + 38, x2: xx, y2: y - 4, stroke: 'var(--ink)', 'stroke-width': 1 }, svg);
+        S('text', { x: xx + 4, y: y, 'font-size': 11, fill: 'var(--text)', text: ev.date + ' ' + (compact ? short[ev.id] : ev.what) }, svg);
+      });
+    }, 940);
+  })();
+
+  /* ---------- 3.6 route five orders (Table VII, column 3) ---------- */
+  (function () {
+    var ORD = [
+      { size: '100', best: 'screen', ans: 'trades this size cost 3.49 cents more per unit on the floor (p < 0.01).' },
+      { size: '250', best: null, ans: 'Either venue: the floor’s +1.10 cents is not distinguishable from zero.' },
+      { size: '600', best: null, ans: 'Either venue: the floor’s +0.66 cents is not distinguishable from zero.' },
+      { size: '1,200', best: null, ans: 'Either venue: the floor’s −0.48 cents is not distinguishable from zero.' },
+      { size: '2,500', best: 'floor', ans: 'the floor is 4.35 cents per unit cheaper (p < 0.01), and on the screens this order trades as one package only if a single firm commits to all of it.' }
+    ];
+    var box = document.getElementById('routes'), end = document.getElementById('routeend');
+    var picks = D.state.route || {};
+    ORD.forEach(function (o, i) {
+      var row = document.createElement('div'); row.className = 'route';
+      row.innerHTML = '<div class="rq"><b>' + o.size + '</b> contracts</div>' +
+        '<div class="rb" role="group" aria-label="Route the ' + o.size + '-contract order"><button class="chip" type="button" data-v="floor">Floor</button><button class="chip" type="button" data-v="screen">Screen</button></div>' +
+        '<div class="ra" aria-live="polite"></div>';
+      var ra = row.querySelector('.ra');
+      function show(v) {
+        row.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-v') === v ? 'true' : 'false'); });
+        ra.textContent = (o.best ? (o.best === v ? 'The paper agrees: ' : 'The paper points the other way: ') : '') + o.ans;
+        ra.style.color = 'var(--text)';
+      }
+      row.querySelectorAll('button').forEach(function (b) {
+        b.setAttribute('aria-pressed', 'false');
+        b.addEventListener('click', function () {
+          picks[i] = b.getAttribute('data-v'); D.state.route = picks; D.save(); show(picks[i]);
+          if (Object.keys(picks).length === ORD.length) end.classList.add('on');
+        });
+      });
+      if (picks[i]) show(picks[i]);
+      box.appendChild(row);
+    });
+    if (Object.keys(picks).length === ORD.length) end.classList.add('on');
+    var other = document.getElementById('otherpath');
+    if (D.done('price')) { other.textContent = 'Replay the size dial →'; other.href = '02-price.html#2'; }
+    document.getElementById('mapcta').addEventListener('click', function () { D.openMap(); });
+  })();
+})();
+</script>
+</body>
+</html>
